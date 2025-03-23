@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title|default:"豆瓣数据分析" }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <h1>凡眼工作台</h1>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-item">首页</a>
+            <a href="{% url 'douban' %}" class="nav-item active">豆瓣数据</a>
+            <a href="#" class="nav-item">设置</a>
+            <a href="#" class="nav-item">帮助</a>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <!-- 左侧工作台 -->
+        <div class="sidebar">
+            <h2>工作台</h2>
+            <div class="menu-list">
+                <a href="{% url 'douban_overview' %}" class="menu-item {% if active_menu == 'douban_overview' %}active{% endif %}">
+                    <span>数据概览</span>
+                </a>
+                <a href="{% url 'movie_list' %}" class="menu-item {% if active_menu == 'movie_list' %}active{% endif %}">
+                    <span>电影列表</span>
+                </a>
+                <a href="{% url 'tv_list' %}" class="menu-item {% if active_menu == 'tv_list' %}active{% endif %}">
+                    <span>电视剧列表</span>
+                </a>
+                <a href="{% url 'data_trend' %}" class="menu-item {% if active_menu == 'data_trend' %}active{% endif %}">
+                    <span>数据趋势</span>
+                </a>
+                <a href="{% url 'douban_settings' %}" class="menu-item {% if active_menu == 'douban_settings' %}active{% endif %}">
+                    <span>采集设置</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 右侧内容区域 -->
+        <div class="content-area">
+            <div class="content-header">
+                <h2>{{ page_title|default:"豆瓣数据" }}</h2>
+            </div>
+            <div class="content-body">
+                {% if active_menu == 'movie_list' %}
+                    <!-- 电影列表内容 -->
+                    <div class="table-container">
+                        <div class="table-actions">
+                            <button class="btn btn-primary">采集数据</button>
+                            <div class="search-box">
+                                <input type="text" placeholder="搜索电影...">
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>电影名称</th>
+                                    <th>导演</th>
+                                    <th>主演</th>
+                                    <th>上映年份</th>
+                                    <th>评分</th>
+                                    <th>评分人数</th>
+                                    <th>类型</th>
+                                    <th>国家/地区</th>
+                                    <th>片长</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for movie in movies %}
+                                <tr>
+                                    <td>{{ movie.title }}</td>
+                                    <td>{{ movie.director }}</td>
+                                    <td>{{ movie.actors }}</td>
+                                    <td>{{ movie.year }}</td>
+                                    <td>{{ movie.rating }}</td>
+                                    <td>{{ movie.rating_count }}</td>
+                                    <td>{{ movie.genre }}</td>
+                                    <td>{{ movie.region }}</td>
+                                    <td>{{ movie.duration }}</td>
+                                    <td>{{ movie.update_time }}</td>
+                                    <td>
+                                        <button class="btn-icon" title="详情">📋</button>
+                                        <button class="btn-icon" title="更新">🔄</button>
+                                        <button class="btn-icon" title="删除">🗑️</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <!-- 分页控件 -->
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

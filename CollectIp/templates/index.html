@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凡眼工作台</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle.css' %}">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <h1>凡眼工作台</h1>
+        </div>
+        <div class="nav-links">
+            <a href="/ip_pool" class="nav-item active">IP池</a>
+            <a href="#" class="nav-item">设置</a>
+            <a href="#" class="nav-item">帮助</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="button-grid">
+            <div class="grid-item">
+                <h3>IP池管理</h3>
+                <p>管理和监控IP资源池</p>
+                <a href="/ip_pool/">
+                    <button type="button">进入</button>
+                </a>
+            </div>
+            <div class="grid-item">
+                <h3>微信公众号</h3>
+                <p>管理微信公众号图文</p>
+                <a href="{% url 'wechat' %}">
+                    <button type="button">进入</button>
+                </a>
+            </div>
+            <div class="grid-item">
+                <h3>豆瓣数据分析</h3>
+                <p>豆瓣数据分析</p>
+                <a href="/douban/">
+                    <button type="button">进入</button>
+                </a>
+            </div>
+            <div class="grid-item">
+                <h3>用户管理</h3>
+                <p>管理系统用户权限</p>
+                <button>进入</button>
+            </div>
+            <div class="grid-item">
+                <h3>日志查询</h3>
+                <p>系统操作日志记录</p>
+                <button>进入</button>
+            </div>
+            <div class="grid-item">
+                <h3>帮助文档</h3>
+                <p>使用指南与帮助</p>
+                <button>进入</button>
+            </div>
+            <div class="grid-item">
+                <h3>豆瓣数据</h3>
+                <p>豆瓣影视数据分析</p>
+                <a href="{% url 'douban' %}">
+                    <button type="button">进入</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
