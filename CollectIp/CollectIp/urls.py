@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from index.views import (
     login_view, register_view, ip_pool_view,
     ip_manage_view, proxy_settings_view,
@@ -37,7 +37,7 @@ urlpatterns = [
     path('', login_required(views.index), name='home'),  # 根路径
     path('ip_pool/', ip_pool_view, name='ip_pool'),
     path('ip_pool/manage/', ip_manage_view, name='ip_manage'),
-    path('ip_pool/proxy/', proxy_settings_view, name='proxy_settings'),
+    path('proxy/settings/', proxy_settings_view, name='proxy_settings'),
     path('ip_pool/monitoring/', monitoring_view, name='monitoring'),
     path('ip_pool/logs/', operation_log_view, name='operation_log'),
     path('wechat/', wechat_view, name='wechat'),
@@ -57,3 +57,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

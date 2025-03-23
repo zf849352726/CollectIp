@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title|default:"IP池管理" }}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/ip_poolstyle.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- 顶部标题栏 -->
@@ -16,7 +17,9 @@
         <div class="nav-links">
             <a href="/" class="nav-item">首页</a>
             <a href="{% url 'ip_pool' %}" class="nav-item active">IP池</a>
-            <a href="#" class="nav-item">设置</a>
+            <a href="javascript:void(0)" class="nav-item" onclick="openSettingsModal()">
+                <i class="fas fa-cog"></i> 设置
+            </a>
             <a href="#" class="nav-item">帮助</a>
         </div>
     </nav>
@@ -136,5 +139,125 @@
             </div>
         </div>
     </div>
+
+    <!-- 在页面底部添加模态框 -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>IP池配置</h3>
+                <span class="close" onclick="closeSettingsModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="settingsForm" class="settings-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="crawler_interval">爬虫采集间隔（秒）</label>
+                        <div class="input-with-unit">
+                            <input type="number" 
+                                   id="crawler_interval" 
+                                   name="crawler_interval" 
+                                   value="{{ proxy_settings.crawler_interval }}"
+                                   min="60"
+                                   required>
+                            <span class="unit">秒</span>
+                        </div>
+                        <small class="form-text">爬虫多久运行一次（最小60秒）</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="score_interval">IP评分间隔（秒）</label>
+                        <div class="input-with-unit">
+                            <input type="number" 
+                                   id="score_interval" 
+                                   name="score_interval" 
+                                   value="{{ proxy_settings.score_interval }}"
+                                   min="60"
+                                   required>
+                            <span class="unit">秒</span>
+                        </div>
+                        <small class="form-text">IP池中的代理多久评分一次（最小60秒）</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="min_score">最低分数阈值</label>
+                        <div class="input-with-unit">
+                            <input type="number" 
+                                   id="min_score" 
+                                   name="min_score" 
+                                   value="{{ proxy_settings.min_score }}"
+                                   min="0"
+                                   max="100"
+                                   required>
+                            <span class="unit">分</span>
+                        </div>
+                        <small class="form-text">低于此分数的IP将被删除（0-100）</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">保存设置</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeSettingsModal()">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 在页面底部添加脚本引用 -->
+    {% block scripts %}
+    <script src="{% static 'js/ip_pool.js' %}"></script>
+    <script>
+    // 确保DOM加载完成后再绑定事件
+    document.addEventListener('DOMContentLoaded', function() {
+        // 模态框控制
+        window.openSettingsModal = function() {
+            document.getElementById('settingsModal').style.display = 'block';
+            fetchCurrentSettings();
+        };
+
+        window.closeSettingsModal = function() {
+            document.getElementById('settingsModal').style.display = 'none';
+        };
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('settingsModal');
+            if (event.target == modal) {
+                closeSettingsModal();
+            }
+        };
+
+        // 表单提交处理
+        const settingsForm = document.getElementById('settingsForm');
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                try {
+                    const response = await fetch('/proxy/settings/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        alert('设置已更新');
+                        closeSettingsModal();
+                    } else {
+                        alert(result.error || '更新失败');
+                    }
+                } catch (error) {
+                    alert('保存设置时发生错误');
+                }
+            });
+        }
+    });
+    </script>
+    {% endblock %}
 </body>
 </html>

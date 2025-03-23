@@ -4,8 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from .models import IpData, Movie
+from .models import IpData, Movie, ProxySettings
 from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def login_view(request):
@@ -70,18 +75,25 @@ def register_view(request):
 def ip_pool_view(request):
     # 从数据库获取IP统计数据
     total_ips = IpData.objects.count()
-    # 根据score字段判断IP是否可用,score大于60认为是活跃的
     active_ips = IpData.objects.filter(score__gt=60).count()
     inactive_ips = total_ips - active_ips
     
+    # 获取代理设置
+    proxy_settings, _ = ProxySettings.objects.get_or_create(id=1, defaults={
+        'crawler_interval': 3600,
+        'score_interval': 1800,
+        'min_score': 10
+    })
+    
     context = {
         'page_title': 'IP池管理',
-        'active_menu': 'ip_pool_overview',  # 当前激活的菜单项
+        'active_menu': 'ip_pool_overview',
         'ip_stats': {
             'total': total_ips,
             'active': active_ips, 
             'inactive': inactive_ips
-        }
+        },
+        'proxy_settings': proxy_settings  # 确保设置数据传递到模板
     }
     return render(request, 'ip_pool.html', context)
 
@@ -112,8 +124,86 @@ def ip_manage_view(request):
     return render(request, 'ip_pool.html', context)
 
 @login_required
+@require_http_methods(["GET", "POST"])
 def proxy_settings_view(request):
-    return render(request, 'ip_pool.html', {'active_menu': 'proxy_settings'})
+    """处理代理设置的API端点"""
+    logger.info(f"Received {request.method} request for proxy settings")
+    try:
+        settings, created = ProxySettings.objects.get_or_create(
+            id=1,
+            defaults={
+                'crawler_interval': 3600,
+                'score_interval': 1800,
+                'min_score': 10
+            }
+        )
+        
+        if request.method == 'GET':
+            logger.info("Returning current settings")
+            return JsonResponse({
+                'success': True,
+                'data': {
+                    'crawler_interval': settings.crawler_interval,
+                    'score_interval': settings.score_interval,
+                    'min_score': settings.min_score
+                }
+            })
+        
+        elif request.method == 'POST':
+            try:
+                crawler_interval = int(request.POST.get('crawler_interval', 0))
+                score_interval = int(request.POST.get('score_interval', 0))
+                min_score = int(request.POST.get('min_score', 0))
+                
+                if crawler_interval < 60:
+                    return JsonResponse({
+                        'success': False,
+                        'error': "爬虫间隔不能小于60秒"
+                    })
+                
+                if score_interval < 60:
+                    return JsonResponse({
+                        'success': False,
+                        'error': "评分间隔不能小于60秒"
+                    })
+                
+                if not (0 <= min_score <= 100):
+                    return JsonResponse({
+                        'success': False,
+                        'error': "最低分数必须在0-100之间"
+                    })
+                
+                settings.crawler_interval = crawler_interval
+                settings.score_interval = score_interval
+                settings.min_score = min_score
+                settings.save()
+                
+                return JsonResponse({
+                    'success': True,
+                    'message': '设置已更新',
+                    'data': {
+                        'crawler_interval': crawler_interval,
+                        'score_interval': score_interval,
+                        'min_score': min_score
+                    }
+                })
+                
+            except ValueError:
+                return JsonResponse({
+                    'success': False,
+                    'error': "请输入有效的数字"
+                })
+            except Exception as e:
+                return JsonResponse({
+                    'success': False,
+                    'error': str(e)
+                })
+    
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        })
 
 @login_required
 def monitoring_view(request):

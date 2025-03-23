@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'ip_operator.apps.IpOperatorConfig',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'CollectIp.urls'
@@ -145,3 +148,61 @@ LOGOUT_REDIRECT_URL = '/login/'  # 登出后重定向到登录页面
 # 会话配置
 SESSION_COOKIE_AGE = 1209600  # 两周
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # 关闭浏览器后是否清除session
+
+# IP池配置
+IP_POOL_CONFIG = {
+    'CRAWLER_INTERVAL': 3600,  # 爬虫间隔（秒）
+    'SCORE_INTERVAL': 1800,    # 评分间隔（秒）
+    'MIN_SCORE': 10,          # 最低分数
+    'TEST_URLS': [
+        'http://www.baidu.com',
+        'http://www.qq.com',
+    ],
+    # 添加爬虫配置
+    'CRAWLER': {
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'DOWNLOAD_DELAY': 2,
+        'CONCURRENT_REQUESTS': 16,
+    }
+}
+
+# 确保logs目录存在
+if not os.path.exists(os.path.join(BASE_DIR, 'logs')):
+    os.makedirs(os.path.join(BASE_DIR, 'logs'))
+
+# 日志配置
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'ip_operator': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',  # 使用时间轮转处理器
+            'filename': os.path.join(BASE_DIR, 'logs', 'ip_operator.log'),
+            'formatter': 'verbose',
+            'when': 'midnight',  # 每天午夜进行轮转
+            'interval': 1,       # 每1天轮转一次
+            'backupCount': 3,    # 保留3个备份文件
+            'encoding': 'utf-8', # 使用utf-8编码
+        },
+    },
+    'loggers': {
+        'ip_operator': {
+            'handlers': ['ip_operator'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+# 在开发环境中启用debug工具栏
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]

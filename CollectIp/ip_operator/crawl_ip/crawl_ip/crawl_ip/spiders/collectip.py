@@ -1,0 +1,273 @@
+import scrapy
+import time
+import json
+import os
+from selenium.webdriver import Chrome
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from ..items import IpItem
+from ddddocr import DdddOcr
+import base64
+
+class CollectipSpider(scrapy.Spider):
+    name = "collectip"
+    allowed_domains = ["freeproxylist.org"]
+    start_urls = ["https://freeproxylist.org/en/free-proxy-list.htm"]
+
+    def parse(self, response):
+        options = Options()
+
+        # 设置请求头
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+            'Referer': 'https://freeproxylist.org',
+            'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+        }
+        # options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument(f'user-agent={headers["User-Agent"]}')
+        options.add_argument(f'referer={headers["Referer"]}')
+        options.add_argument(f'accept-language={headers["Accept-Language"]}')
+
+        options.add_experimental_option('detach', True)
+
+        url = 'https://freeproxylist.org/en/free-proxy-list.htm'
+        try:
+            # 自动下载和配置 ChromeDriver
+            driver_path = ChromeDriverManager().install()
+        except ValueError as e:
+            driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
+        # 创建 Service 对象，传入 ChromeDriver 的路径
+        service = Service(driver_path)
+
+        # 创建 Chrome 对象时，传入 service 和 options 对象
+        driver = Chrome(service=service, options=options)
+        driver.get(url)
+
+        # # 筛选条件
+        # 找到下拉框元素
+        select_elem_free = driver.find_element(By.ID, 'select9')
+
+        # 创建 Select 对象
+        select = Select(select_elem_free)
+
+        # 通过文本内容选择选项
+        select.select_by_visible_text('free proxy servers')
+        #
+        # # 找到下拉框元素
+        # select_elem_https = driver.find_element(By.ID, 'select2')
+        #
+        # # 创建 Select 对象
+        # select = Select(select_elem_https)
+        #
+        # # 通过文本内容选择选项
+        # select.select_by_visible_text('yes')
+        #
+        # # 找到下拉框元素
+        # select_elem_coon = driver.find_element(By.ID, 'select4')
+        #
+        # # 创建 Select 对象
+        # select = Select(select_elem_coon)
+        #
+        # # 通过文本内容选择选项
+        # select.select_by_visible_text('yes')
+        #
+        # # 找到下拉框元素
+        # select_elem_post = driver.find_element(By.ID, 'select8')
+        #
+        # # 创建 Select 对象
+        # select = Select(select_elem_post)
+        #
+        # # 通过文本内容选择选项
+        # select.select_by_visible_text('yes')
+
+        # 替换手动输入验证码的部分
+        code = self.get_captcha_text(driver)
+        print(code)
+        # 找到验证码文本框
+        code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
+        code_input.send_keys(code)
+
+        # 提交筛选
+        submit_tag = driver.find_element(By.XPATH, '// *[@id="filter"]')
+        submit_tag.click()
+        # 检查验证码是否有效
+        first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
+        first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+        print(first_server)
+        
+        # 如果server中包含*号,说明验证码无效,需要重新获取
+        while '*' in first_server:
+            # 重新获取验证码
+            code = self.get_captcha_text(driver)
+            # 清空验证码输入框
+            code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
+            code_input.clear()
+            # 输入新验证码
+            code_input.send_keys(code)
+            # 重新提交
+            submit_tag = driver.find_element(By.XPATH, '// *[@id="filter"]')
+            submit_tag.click()
+            # 重新检查第一行数据
+            first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
+            first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+
+        ip_data = {}
+
+        pages = driver.find_element(By.XPATH, '(//*[@id="container"]/table/tbody/tr[4]/td/div/div/a)[last()]').text
+
+        for p in range(1, int(pages)):
+            trs = driver.find_elements(By.XPATH, '//*[@id="proxytable"]/tbody/tr')
+            for i, tr in enumerate(trs[1:]):
+                td_list = tr.find_elements(By.XPATH, './/td')  # td合集
+                item = IpItem()
+
+                server = td_list[1].text
+                ping = td_list[2].text
+                speed = td_list[3].text
+                uptime1 = td_list[4].text
+                uptime2 = td_list[5].text
+                type_data = td_list[6].text
+                country = td_list[7].text
+                ssl = td_list[8].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
+                conn = td_list[9].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
+                post = td_list[10].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
+                last_work_time = td_list[11].find_elements(By.TAG_NAME, 'div')[0].get_attribute('title')
+
+                item['server'] = server
+                # 查数据库 如果ip不存在执行以下代码
+                item['ping'] = ping
+                item['speed'] = speed
+                item['uptime1'] = uptime1
+                item['uptime2'] = uptime2
+                item['type_data'] = type_data
+                item['country'] = country
+                item['ssl'] = ssl
+                item['conn'] = conn
+                item['post'] = post
+                item['last_work_time'] = last_work_time
+                yield item
+
+                # ip_data[server] = {
+                #     'Ping': ping,
+                #     'Speed': speed,
+                #     'Uptime1': uptime1,
+                #     'Uptime2': uptime2,
+                #     'Type': type_data,
+                #     'Country': country,
+                #     'SSL': ssl,
+                #     'COON.': conn,
+                #     'POST': post,
+                #     'Last work time': last_work_time,
+                # }
+                # # # 存在则跳过
+                # # continue
+
+            page_number = driver.find_element(By.XPATH, f'//*[@id="container"]/table/tbody/tr[4]/td/div/div/a[{p}]')
+            page_number.click()
+            time.sleep(1)
+        # # 1. 将字典转换为 JSON 格式
+        # json_data = json.dumps(ip_data, indent=4)
+        #
+        # # 使用绝对路径
+        # base_dir = os.path.dirname(os.path.abspath(__file__))
+        # file_path = os.path.join(base_dir, 'ip_data', 'ip_data.json')
+        #
+        # # 2. 将 JSON 数据写入文件
+        # with open(file_path, 'w') as json_file:
+        #     json_file.write(json_data)
+        time.sleep(10)
+        driver.quit()
+
+    def get_captcha_text(self, driver):
+        # 找到验证码图片元素
+        img_element = driver.find_element(By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img')  # 请根据实际验证码图片的xpath修改
+        
+        # 获取验证码图片的base64数据
+        img_base64 = driver.execute_script("""
+            var ele = arguments[0];
+            var cnv = document.createElement('canvas');
+            cnv.width = ele.width;
+            cnv.height = ele.height;
+            cnv.getContext('2d').drawImage(ele, 0, 0);
+            return cnv.toDataURL('image/jpeg').substring(22);
+        """, img_element)
+        
+        # 将base64转换为bytes
+        img_bytes = base64.b64decode(img_base64)
+        
+        # 使用ddddocr识别验证码
+        ocr = DdddOcr(show_ad=False)
+        result = ocr.classification(img_bytes)
+        return result
+
+    def test_captcha_recognition(self):
+        """
+        测试验证码识别功能
+        """
+        options = Options()
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+            'Referer': 'https://freeproxylist.org',
+            'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+        }
+        options.add_argument('--disable-gpu')
+        options.add_argument(f'user-agent={headers["User-Agent"]}')
+        options.add_argument(f'referer={headers["Referer"]}')
+        options.add_argument(f'accept-language={headers["Accept-Language"]}')
+        options.add_experimental_option('detach', False)
+
+        try:
+            driver_path = ChromeDriverManager().install()
+        except ValueError:
+            driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
+
+        service = Service(driver_path)
+        driver = Chrome(service=service, options=options)
+
+        try:
+            # 访问目标网页
+            driver.get("https://freeproxylist.org/en/free-proxy-list.htm")
+            time.sleep(2)  # 等待页面加载
+
+            # 测试验证码识别
+            for i in range(3):  # 测试3次
+                print(f"\n开始第{i + 1}次测试:")
+                code = self.get_captcha_text(driver)
+                print(f"识别结果: {code}")
+
+                # 尝试输入验证码
+                code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
+                code_input.clear()  # 清除之前的输入
+                code_input.send_keys(code)
+
+                # 点击提交按钮
+                submit_tag = driver.find_element(By.XPATH, '// *[@id="filter"]')
+                submit_tag.click()
+
+                time.sleep(2)  # 等待结果
+
+                # 检查是否成功（这里需要根据实际页面响应来判断）
+                try:
+                    # 尝试获取数据表格，如果能获取到说明验证码正确
+                    driver.find_element(By.XPATH, '//*[@id="proxytable"]')
+                    print("验证码识别成功！")
+                    break
+                except:
+                    print("验证码可能识别错误，将重试")
+                    # 刷新页面重试
+                    driver.refresh()
+                    time.sleep(2)
+
+        finally:
+            time.sleep(3)
+            driver.quit()
+
+
+if __name__ == "__main__":
+    # 创建爬虫实例并测试验证码识别
+    spider = CollectipSpider()
+    spider.test_captcha_recognition()

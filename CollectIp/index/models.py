@@ -63,3 +63,24 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+class ProxySettings(models.Model):
+    crawler_interval = models.IntegerField(
+        verbose_name='爬虫采集间隔(秒)', 
+        default=3600,
+        help_text='爬虫多久运行一次'
+    )
+    score_interval = models.IntegerField(
+        verbose_name='IP评分间隔(秒)', 
+        default=1800,
+        help_text='IP池中的代理多久评分一次'
+    )
+    min_score = models.IntegerField(
+        verbose_name='最低分数阈值', 
+        default=10,
+        help_text='低于此分数的IP将被删除'
+    )
+    
+    class Meta:
+        verbose_name = '代理设置'
+        verbose_name_plural = verbose_name
