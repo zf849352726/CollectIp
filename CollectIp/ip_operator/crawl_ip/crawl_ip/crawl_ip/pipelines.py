@@ -43,6 +43,25 @@ class SaveIpPipeline:
             # 直接获取server字段
             server = adapter.get('server', '')
             
+            # 数据清洗 - 确保ping和speed字段为数字或None
+            ping = adapter.get('ping', None)
+            speed = adapter.get('speed', None)
+            
+            # 再次验证ping和speed是否为有效数字，若非数字则设为None
+            if ping is not None and not isinstance(ping, (int, float)):
+                try:
+                    ping = float(ping) if ping and ping != '?' else None
+                except (ValueError, TypeError):
+                    logger.warning(f"无效的ping值: {ping}，已设为None")
+                    ping = None
+            
+            if speed is not None and not isinstance(speed, (int, float)):
+                try:
+                    speed = float(speed) if speed and speed != '?' else None
+                except (ValueError, TypeError):
+                    logger.warning(f"无效的speed值: {speed}，已设为None")
+                    speed = None
+            
             # 准备SQL语句，包含所有必需的字段，并用反引号括起关键字
             sql = """
                 INSERT INTO index_ipdata (
@@ -61,19 +80,29 @@ class SaveIpPipeline:
                 `updated_at` = NOW()
             """
             
+            # 截断长字符串，确保不超过数据库字段长度限制
+            uptime1 = adapter.get('uptime1', 'N/A')[:5]  # 最大长度5
+            uptime2 = adapter.get('uptime2', 'N/A')[:5]  # 最大长度5
+            type_data = adapter.get('type_data', 'Unknown')[:20]  # 最大长度20
+            country = adapter.get('country', 'Unknown')[:20]  # 最大长度20
+            ssl = adapter.get('ssl', 'N/A')[:50]  # 最大长度50
+            conn = adapter.get('conn', 'N/A')[:50]  # 最大长度50
+            post = adapter.get('post', 'N/A')[:50]  # 最大长度50
+            last_work_time = adapter.get('last_work_time', 'N/A')[:30]  # 最大长度30
+            
             # 执行SQL
             self.cursor.execute(sql, (
                 server,
-                adapter.get('ping', None),  # 延迟，可能为空
-                adapter.get('speed', None),  # 速度，可能为空
-                adapter.get('uptime1', 'N/A'),  # 上传时间1
-                adapter.get('uptime2', 'N/A'),  # 上传时间2
-                adapter.get('type_data', 'Unknown'),
-                adapter.get('country', 'Unknown'),  # 国家
-                adapter.get('ssl', 'N/A'),  # SSL支持
-                adapter.get('conn', 'N/A'),  # 连接类型
-                adapter.get('post', 'N/A'),  # POST支持
-                adapter.get('last_work_time', 'N/A'),  # 最近工作时间
+                ping,  # 延迟，已处理为数字或None
+                speed,  # 速度，已处理为数字或None
+                uptime1,  # 上传时间1
+                uptime2,  # 上传时间2
+                type_data,
+                country,  # 国家
+                ssl,  # SSL支持
+                conn,  # 连接类型
+                post,  # POST支持
+                last_work_time,  # 最近工作时间
                 100  # 默认分数
             ))
             
@@ -82,7 +111,7 @@ class SaveIpPipeline:
             
         except Exception as e:
             spider.logger.error(f"保存IP数据失败: {str(e)}")
-            spider.logger.error(f"错误详情: {item}")
+            spider.logger.error(f"错误详情: {dict(ItemAdapter(item))}")
             self.connection.rollback()
             
         return item

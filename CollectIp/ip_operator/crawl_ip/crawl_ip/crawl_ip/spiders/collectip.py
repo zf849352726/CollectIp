@@ -169,8 +169,26 @@ class CollectipSpider(scrapy.Spider):
 
                     item['server'] = server
                     # 查数据库 如果ip不存在执行以下代码
-                    item['ping'] = ping
-                    item['speed'] = speed
+                    
+                    # 清洗ping数据，将非数字值转换为None
+                    if ping == '?' or not ping or not ping.replace('.', '').isdigit():
+                        item['ping'] = None
+                    else:
+                        try:
+                            item['ping'] = float(ping)
+                        except ValueError:
+                            item['ping'] = None
+                    
+                    # 清洗speed数据，将非数字值转换为None
+                    if speed == '?' or not speed or not speed.replace('.', '').isdigit():
+                        item['speed'] = None
+                    else:
+                        try:
+                            item['speed'] = float(speed)
+                        except ValueError:
+                            item['speed'] = None
+                            
+                    # 其他字段正常赋值
                     item['uptime1'] = uptime1
                     item['uptime2'] = uptime2
                     item['type_data'] = type_data
