@@ -30,33 +30,35 @@ else:
 
 logger = logging.getLogger(__name__)
 
-def run_spider_process(settings_module, project_path):
-    """在独立进程中运行爬虫"""
+def run_spider_process(spider_name, project_root, movie_name):
+    """在单独进程中运行爬虫"""
     try:
-        # 设置工作目录
-        os.chdir(project_path)
+        # 切换到爬虫项目目录
+        os.chdir(project_root)
         
-        # 设置Scrapy设置模块
-        os.environ['SCRAPY_SETTINGS_MODULE'] = settings_module
+        # 导入和设置Scrapy
+        from scrapy.crawler import CrawlerProcess
+        from scrapy.utils.project import get_project_settings
         
-        # 获取爬虫设置
+        # 获取爬虫类
+        if spider_name == 'douban':
+            from crawl_ip.spiders.douban_spider import DoubanSpider
+            spider_class = DoubanSpider
+        else:
+            from crawl_ip.spiders.collectip import CollectipSpider
+            spider_class = CollectipSpider
+        
+        # 运行爬虫
         settings = get_project_settings()
-        
-        # 手动覆盖pipeline设置
-        settings.set('ITEM_PIPELINES', {
-            'crawl_ip.pipelines.SaveIpPipeline': 300
-        })
-        
-        # 创建爬虫进程
         process = CrawlerProcess(settings)
-        
-        # 导入并运行爬虫
-        from crawl_ip.spiders.collectip import CollectipSpider
-        process.crawl(CollectipSpider)
-        process.start(stop_after_crawl=True)
+        process.crawl(spider_class, movie_names=movie_name)
+        process.start()
         
     except Exception as e:
-        print(f"爬虫执行失败: {str(e)}")
+        print(f"爬虫运行错误: {str(e)}")
+        import traceback
+        print(traceback.format_exc())
+        sys.exit(1)
 
 def start_crawl():
     """
@@ -114,6 +116,64 @@ def start_crawl():
         logger.exception("详细错误信息：")
         return False
 
+def start_douban_crawl(movie_name):
+    """
+    启动豆瓣爬虫进程
+    Args:
+        movie_name: 要爬取的电影名称
+    Returns:
+        bool: 爬虫是否成功执行
+    """
+    try:
+        # 设置爬虫项目路径
+        CRAWLER_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        PROJECT_ROOT = os.path.join(CRAWLER_ROOT, 'crawl_ip', 'crawl_ip')
+        
+        # 添加路径到 Python 路径
+        if PROJECT_ROOT not in sys.path:
+            sys.path.insert(0, PROJECT_ROOT)
+            
+        # 保存原始工作目录
+        original_dir = os.getcwd()
+        
+        try:
+            # 检查爬虫项目目录是否存在
+            if not os.path.exists(PROJECT_ROOT):
+                logger.error(f"爬虫项目目录不存在: {PROJECT_ROOT}")
+                raise FileNotFoundError(f"爬虫项目目录不存在: {PROJECT_ROOT}")
+                
+            # 记录调试信息
+            logger.info(f"Python路径: {sys.path}")
+            logger.info(f"爬虫项目目录: {PROJECT_ROOT}")
+            logger.info(f"当前工作目录: {os.getcwd()}")
+            
+            # 创建并启动子进程
+            spider_process = Process(
+                target=run_spider_process,
+                args=('douban', PROJECT_ROOT, movie_name)
+            )
+            spider_process.start()
+            
+            # 等待爬虫完成
+            logger.info("豆瓣爬虫进程已启动，等待完成...")
+            spider_process.join()
+            
+            if spider_process.exitcode == 0:
+                logger.info("豆瓣电影采集任务执行完成")
+                return True
+            else:
+                logger.error(f"豆瓣电影采集进程异常退出，退出代码: {spider_process.exitcode}")
+                return False
+                
+        finally:
+            # 恢复原始工作目录
+            os.chdir(original_dir)
+            
+    except Exception as e:
+        logger.error(f"豆瓣电影采集任务执行失败: {str(e)}")
+        logger.exception("详细错误信息：")
+        return False
 
 if __name__ == '__main__':
-    start_crawl()
+    # start_crawl()
+    start_douban_crawl('肖申克的救赎')

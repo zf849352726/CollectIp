@@ -8,6 +8,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from ..items import IpItem
 from ddddocr import DdddOcr
@@ -30,7 +32,7 @@ class CollectipSpider(scrapy.Spider):
             'Referer': 'https://freeproxylist.org',
             'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
         }
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         options.add_argument(f'user-agent={headers["User-Agent"]}')
         options.add_argument(f'referer={headers["Referer"]}')
@@ -192,6 +194,10 @@ class CollectipSpider(scrapy.Spider):
         driver.quit()
 
     def get_captcha_text(self, driver):
+        # 等待验证码图片元素出现
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img'))
+        )
         # 找到验证码图片元素
         img_element = driver.find_element(By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img')  # 请根据实际验证码图片的xpath修改
         

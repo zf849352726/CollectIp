@@ -367,3 +367,81 @@ class RandomUserAgentMiddleware:
             request.headers.update(extra_headers)
 
         return None
+
+
+class DoubanDownloaderMiddleware:
+    """豆瓣网站下载中间件，处理响应内容"""
+    
+    @classmethod
+    def from_crawler(cls, crawler):
+        """从settings获取设置"""
+        return cls()
+        
+    def process_request(self, request, spider):
+        """处理请求，添加必要的请求头和标记"""
+        # 仅处理豆瓣的请求
+        if spider.name == 'douban' and 'douban.com' in request.url:
+            # 始终添加高质量请求头
+            request.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Connection': 'keep-alive',
+                'Cache-Control': 'max-age=0',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'none',
+                'Sec-Fetch-User': '?1',
+                'Upgrade-Insecure-Requests': '1',
+                'sec-ch-ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+            })
+            
+            # 对于详情页和搜索页，直接标记为使用Selenium
+            if 'subject' in request.url or 'search' in request.url:
+                request.meta['use_selenium'] = True
+                spider.logger.info(f"设置请求使用Selenium: {request.url}")
+                
+        return None
+        
+    def process_response(self, request, response, spider):
+        """处理响应，检查是否需要重试"""
+        # 仅处理豆瓣的响应
+        if spider.name == 'douban' and 'douban.com' in request.url:
+            # 检查响应状态码
+            if response.status != 200:
+                spider.logger.warning(f"响应状态码异常: {response.status}, URL: {response.url}")
+                # 标记使用Selenium重试
+                request.meta['use_selenium'] = True
+                request.dont_filter = True
+                return request
+                
+            # 检查内容类型
+            content_type = response.headers.get('Content-Type', b'').decode('utf-8', 'ignore')
+            if 'text/html' not in content_type.lower():
+                spider.logger.warning(f"响应内容类型异常: {content_type}, URL: {response.url}")
+                # 标记使用Selenium重试
+                request.meta['use_selenium'] = True
+                request.dont_filter = True
+                return request
+            
+            # 检查响应内容长度
+            if len(response.body) < 1000:  # 如果内容太短，可能是被反爬了
+                spider.logger.warning(f"响应内容过短({len(response.body)}字节), 可能是被反爬: {response.url}")
+                request.meta['use_selenium'] = True
+                request.dont_filter = True
+                return request
+                
+        return response
+        
+    def process_exception(self, request, exception, spider):
+        """处理异常"""
+        if spider.name == 'douban':
+            spider.logger.error(f"请求异常: {exception}, URL: {request.url}")
+            # 标记这个请求用Selenium重试
+            request.meta['use_selenium'] = True
+            request.dont_filter = True
+            return request
+        return None
