@@ -70,8 +70,13 @@ class CollectipSpider(scrapy.Spider):
         options.add_argument(f'referer={headers["Referer"]}')
         options.add_argument(f'accept-language={headers["Accept-Language"]}')
 
-        options.add_experimental_option('detach', True)
-
+        # 移除detach选项，确保浏览器随脚本关闭
+        # options.add_experimental_option('detach', True)
+        
+        # 添加不显示infobars和自动化控制提示
+        options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
+        options.add_experimental_option('useAutomationExtension', False)
+        
         url = 'https://freeproxylist.org/en/free-proxy-list.htm'
         driver = None
         
@@ -236,10 +241,21 @@ class CollectipSpider(scrapy.Spider):
         options.add_argument(f'user-agent={headers["User-Agent"]}')
         options.add_argument(f'referer={headers["Referer"]}')
         options.add_argument(f'accept-language={headers["Accept-Language"]}')
+        
+        # 确保不分离浏览器进程
         options.add_experimental_option('detach', False)
+        
+        # 增加退出时清理所有相关进程的选项
+        options.add_argument("--remote-debugging-port=0")
+        options.add_argument("--no-sandbox")
+        
+        # 添加不显示infobars和自动化控制提示
+        options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
+        options.add_experimental_option('useAutomationExtension', False)
 
         # 明确初始化driver为None
         driver = None
+        self.test_driver = None  # 在Spider实例上存储driver引用，便于清理
         
         try:
             try:
@@ -249,6 +265,7 @@ class CollectipSpider(scrapy.Spider):
 
             service = Service(driver_path)
             driver = Chrome(service=service, options=options)
+            self.test_driver = driver  # 保存引用到Spider实例
 
             # 访问目标网页
             driver.get("https://freeproxylist.org/en/free-proxy-list.htm")
@@ -299,9 +316,63 @@ class CollectipSpider(scrapy.Spider):
                 print("关闭Chrome浏览器")
                 try:
                     driver.quit()
+                    self.test_driver = None  # 清除引用
+                    
+                    # 添加额外的进程清理
+                    import os
+                    import signal
+                    import platform
+                    
+                    try:
+                        # 尝试使用psutil进行更彻底的清理
+                        import psutil
+                        for proc in psutil.process_iter(['pid', 'name']):
+                            try:
+                                # 如果是测试期间创建的Chrome进程，尝试终止它
+                                if 'chrome' in proc.name().lower():
+                                    print(f"尝试终止可能的Chrome残留进程: {proc.pid}")
+                                    if platform.system() == 'Windows':
+                                        os.kill(proc.pid, signal.SIGTERM)
+                                    else:
+                                        os.kill(proc.pid, signal.SIGKILL)
+                            except (psutil.NoSuchProcess, psutil.AccessDenied, OSError):
+                                pass
+                    except ImportError:
+                        print("psutil不可用，无法进行额外的进程清理")
+                        
                 except Exception as e:
                     print(f"关闭浏览器时出错: {e}")
 
+    def closed(self, reason):
+        """Spider关闭时的清理操作，确保所有WebDriver实例都被关闭"""
+        logger.warning(f"爬虫正在关闭: {reason}")
+        
+        # 尝试清理可能存在的WebDriver实例
+        driver_attrs = [attr for attr in dir(self) if attr.endswith('driver') and getattr(self, attr) is not None]
+        for attr in driver_attrs:
+            try:
+                driver = getattr(self, attr)
+                if hasattr(driver, 'quit'):
+                    logger.info(f"关闭WebDriver实例: {attr}")
+                    driver.quit()
+            except Exception as e:
+                logger.error(f"关闭WebDriver实例 {attr} 时出错: {e}")
+        
+        # 额外的清理操作
+        try:
+            # 使用psutil查找和终止可能的残留Chrome进程
+            import psutil
+            for proc in psutil.process_iter(['pid', 'name']):
+                try:
+                    if 'chrome' in proc.name().lower() and 'webdriver' in ' '.join(proc.cmdline()).lower():
+                        logger.warning(f"尝试终止残留的Chrome WebDriver进程: {proc.pid}")
+                        proc.terminate()
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    pass
+        except ImportError:
+            logger.warning("psutil不可用，无法清理残留的Chrome进程")
+            
+        logger.warning("爬虫关闭完成")
 
 if __name__ == "__main__":
     # 创建爬虫实例并测试验证码识别
