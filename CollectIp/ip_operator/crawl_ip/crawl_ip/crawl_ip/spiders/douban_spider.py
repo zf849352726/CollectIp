@@ -23,16 +23,16 @@ if PROJECT_DIR not in sys.path:
 # 引入自定义日志设置
 try:
     from ip_operator.services.crawler import setup_logging
-    logger = setup_logging("douban_spider")
+    # 设置日志级别为WARNING以减少输出
+    logger = setup_logging("douban_spider", logging.WARNING)
 except ImportError:
     # 如果无法导入，使用基本日志设置
     logger = logging.getLogger("douban_spider")
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.WARNING)  # 提高日志级别，减少输出
     handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')  # 简化日志格式
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-    logger.info("使用基本日志设置，无法导入自定义日志函数")
 
 # 导入Django设置和模型
 try:
@@ -46,20 +46,57 @@ except Exception as e:
 try:
     from crawl_ip.items import MovieItem
 except ImportError:
-    logger.error("无法导入MovieItem，尝试绝对导入")
-    from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import MovieItem
+    try:
+        from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import MovieItem
+    except ImportError:
+        logger.error("无法导入MovieItem")
+
+# 设置Selenium的日志级别
+selenium_logger = logging.getLogger('selenium')
+selenium_logger.setLevel(logging.ERROR)  # 仅记录错误
+
+# 设置urllib3的日志级别
+urllib3_logger = logging.getLogger('urllib3')
+urllib3_logger.setLevel(logging.ERROR)  # 仅记录错误
 
 class DoubanSpider(scrapy.Spider):
     name = 'douban'
     allowed_domains = ['douban.com']
     
     def __init__(self, movie_names=None, *args, **kwargs):
-        """初始化配置"""
+        """初始化爬虫"""
         super(DoubanSpider, self).__init__(*args, **kwargs)
         
-        # 保存电影名称参数
-        self.movie_names = movie_names
-        logger.info(f"初始化豆瓣爬虫，电影名称: {movie_names}")
+        # 从环境变量中获取电影名，优先级高于参数
+        env_movie_name = os.environ.get('MOVIE_NAME')
+        if env_movie_name:
+            self.movie_names = [env_movie_name]
+        elif movie_names:
+            if isinstance(movie_names, str):
+                self.movie_names = [movie_names]
+            else:
+                self.movie_names = movie_names
+        else:
+            self.movie_names = ['肖申克的救赎']  # 默认电影
+            
+        # 记录电影名
+        logger.warning(f"豆瓣爬虫爬取电影: {self.movie_names}")
+        
+        # 设置ChromeDriver路径
+        try:
+            self.driver_path = ChromeDriverManager().install()
+            # 只在DEBUG模式记录详细信息
+            if logger.level <= logging.DEBUG:
+                logger.debug(f"ChromeDriver安装路径: {self.driver_path}")
+        except Exception as e:
+            logger.error(f"ChromeDriver安装失败: {e}")
+            self.driver_path = None
+            
+        # 初始化driver为None
+        self.driver = None
+        
+        # 设置每个电影抓取的评论数量
+        self.comments_per_movie = 50
         
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -74,15 +111,6 @@ class DoubanSpider(scrapy.Spider):
         self.options.add_argument(f'user-agent={self.headers["User-Agent"]}')
         self.options.add_argument('--disable-blink-features=AutomationControlled')
         self.options.add_argument('--headless')  # 使用无头模式
-        
-        try:
-            self.driver_path = ChromeDriverManager().install()
-            logger.info(f"ChromeDriver安装成功: {self.driver_path}")
-        except ValueError as e:
-            self.driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
-            logger.warning(f"ChromeDriver安装失败，使用备用路径: {self.driver_path}，错误: {str(e)}")
-            
-        self.service = Service(self.driver_path)
         
     def start_requests(self):
         """定义起始URL并传递电影名称"""
@@ -103,134 +131,124 @@ class DoubanSpider(scrapy.Spider):
             
     def get_driver(self):
         """获取Chrome驱动实例"""
-        driver = webdriver.Chrome(service=self.service, options=self.options)
-        return driver
+        if self.driver_path:
+            self.driver = webdriver.Chrome(service=Service(self.driver_path), options=self.options)
+            return self.driver
+        else:
+            logger.error("无法获取有效的Chrome驱动")
+            return None
     
     def generate_search_urls(self, movie_names=None):
-        """生成搜索链接"""
-        # 基础搜索URL
-        base_url = "https://movie.douban.com/subject_search"
-        
-        # 如果没有传入电影名称，使用默认值
-        if not movie_names:
-            movie_names = '肖申克的救赎'  # 默认电影名称
-            logger.warning(f"未提供电影名称，使用默认名称: {movie_names}")
+        """生成电影搜索URL列表"""
+        if movie_names is None:
+            movie_names = self.movie_names
             
-        # 确保电影名称是字符串
-        if isinstance(movie_names, (list, tuple)):
+        # 如果有多个电影名，只使用第一个
+        if isinstance(movie_names, list) and len(movie_names) > 1:
+            # 只在DEBUG模式记录详细信息
+            if logger.level <= logging.DEBUG:
+                logger.debug(f"处理多个电影名，使用第一个: {movie_names[0]}")
             movie_names = movie_names[0]
-            logger.info(f"接收到多个电影名称，使用第一个: {movie_names}")
-            
-        # 记录日志
-        logger.info(f"生成电影搜索链接: {movie_names}")
-        
-        # 搜索参数
-        search_params = {
-            'search_text': movie_names,  # 搜索关键词
-            'cat': '1002',  # 电影分类
-        }
+        elif isinstance(movie_names, list):
+            movie_names = movie_names[0]
             
         # 生成搜索URL
-        params = urllib.parse.urlencode(search_params)
-        search_url = f"{base_url}?{params}"
-            
-        return search_url
+        search_url = f"https://search.douban.com/movie/subject_search?search_text={urllib.parse.quote(movie_names)}"
+        logger.warning(f"搜索电影: {movie_names}")
+        
+        return [search_url]
     
     def parse(self, response):
-        """
-        解析页面
-        这里是示例解析方法，需要根据具体需求修改
-        """
-        # 从请求元数据中获取电影名称，如果没有则使用默认值
-        movie_names = response.meta.get('movie_names', None)
-        
-        # 获取搜索链接
-        search_url = self.generate_search_urls(movie_names)
-        
-        # 检查是否使用Selenium
+        """根据请求元数据决定使用哪个解析器"""
+        # 检查是否需要使用Selenium
         use_selenium = response.meta.get('use_selenium', False)
+        movie_names = response.meta.get('movie_names', self.movie_names)
+        
         if use_selenium:
-            self.logger.info(f"基于标记使用Selenium获取: {search_url}")
-            return self.parse_with_selenium(search_url, movie_names)
-            
-        # 使用普通请求
-        yield scrapy.Request(
-            url=search_url,
-            headers=self.headers,
-            callback=self.parse_search_results,
-            dont_filter=True,
-            meta={'movie_names': movie_names}
-        )
+            # 删除不必要的日志
+            url = response.url
+            yield from self.parse_with_selenium(url, movie_names)
+        else:
+            # 常规解析
+            yield from self.parse_search_results(response)
         
     def parse_with_selenium(self, url, movie_names):
-        """使用Selenium解析页面"""
-        driver = None
+        """使用Selenium解析搜索结果页"""
+        # 获取WebDriver
+        driver = self.get_driver()
+        if not driver:
+            logger.error("无法获取WebDriver")
+            return
+            
         try:
-            driver = self.get_driver()
-            
             # 访问搜索页面
-            self.logger.info(f"Selenium访问搜索页面: {url}")
+            logger.warning(f"访问搜索页面: {url}")
             driver.get(url)
+            self.random_sleep()
             
-            # 等待页面加载
-            self.random_sleep(2, 3)
-            
-            # 处理可能出现的验证码
+            # 处理验证码或其他异常
             self.handle_verification(driver)
             
-            # 等待搜索结果加载
+            # 尝试找到第一个电影结果
             try:
+                # 等待搜索结果加载
                 WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, '.item-root'))
+                    EC.presence_of_element_located((By.CSS_SELECTOR, ".item-root"))
                 )
                 
-                # 获取第一个搜索结果的详情页链接
-                detail_link = driver.find_element(By.CSS_SELECTOR, '.item-root a').get_attribute('href')
+                # 查找第一个电影结果的链接
+                movie_links = driver.find_elements(By.CSS_SELECTOR, ".item-root a")
+                if movie_links:
+                    # 找到第一个包含'subject'的链接，这通常是电影详情页
+                    detail_link = None
+                    for link in movie_links:
+                        href = link.get_attribute('href')
+                        if 'subject' in href:
+                            detail_link = href
+                            break
+                            
+                    if detail_link:
+                        logger.warning(f'找到电影详情页: {detail_link}')
+                        
+                        # 解析详情页
+                        yield from self.parse_detail_with_selenium(detail_link)
+                        return
+            except Exception as e:
+                logger.error(f"查找电影链接出错: {e}")
                 
-                if detail_link:
-                    # 记录日志
-                    self.logger.info(f'找到电影详情页链接: {detail_link}')
-                    
-                    # 获取详情页的内容
-                    return self.parse_detail_with_selenium(detail_link)
-                else:
-                    self.logger.warning(f'未找到电影 {movie_names} 的详情页链接')
+            # 如果没有找到结果，尝试直接在豆瓣主站搜索
+            try:
+                direct_search_url = f"https://www.douban.com/search?q={urllib.parse.quote(movie_names)}"
+                logger.warning(f"尝试直接搜索: {direct_search_url}")
+                driver.get(direct_search_url)
+                self.random_sleep()
+                
+                # 处理验证码
+                self.handle_verification(driver)
+                
+                # 查找第一个电影结果
+                movie_elements = driver.find_elements(By.CSS_SELECTOR, ".result h3 a")
+                first_movie_link = None
+                for element in movie_elements:
+                    href = element.get_attribute('href')
+                    if 'subject' in href and '/movie/' in href:
+                        first_movie_link = href
+                        break
+                        
+                if first_movie_link:
+                    logger.warning(f'找到电影链接: {first_movie_link}')
+                    yield from self.parse_detail_with_selenium(first_movie_link)
                     
             except Exception as e:
-                self.logger.error(f'等待/查找搜索结果失败: {str(e)}')
-                
-                # 尝试直接使用搜索词进行查询
-                if movie_names:
-                    try:
-                        # 构建详情页搜索链接
-                        direct_search_url = f"https://www.douban.com/search?q={movie_names}"
-                        self.logger.info(f"尝试直接搜索: {direct_search_url}")
-                        
-                        # 访问搜索页
-                        driver.get(direct_search_url)
-                        self.random_sleep(2, 3)
-                        
-                        # 查找电影搜索结果
-                        movie_links = driver.find_elements(By.XPATH, '//div[contains(@class, "result")]//a[contains(@href, "movie.douban.com/subject/")]')
-                        
-                        if movie_links:
-                            first_movie_link = movie_links[0].get_attribute('href')
-                            self.logger.info(f'直接搜索找到电影链接: {first_movie_link}')
-                            return self.parse_detail_with_selenium(first_movie_link)
-                    except Exception as direct_search_err:
-                        self.logger.error(f'直接搜索失败: {str(direct_search_err)}')
+                logger.error(f"直接搜索出错: {e}")
                 
         except Exception as e:
-            self.logger.error(f'使用Selenium获取详情页链接失败: {str(e)}')
-            import traceback
-            self.logger.error(traceback.format_exc())
+            logger.error(f"Selenium解析出错: {e}")
             
         finally:
-            if driver:
-                driver.quit()
-                
-        return None
-        
+            # 不用每次都关闭，让爬虫结束时统一关闭
+            pass
+    
     def parse_search_results(self, response):
         """解析搜索结果页面"""
         try:
@@ -238,9 +256,9 @@ class DoubanSpider(scrapy.Spider):
             return self.parse_with_selenium(response.url, response.meta.get('movie_names'))
                 
         except Exception as e:
-            self.logger.error(f'解析搜索结果失败: {str(e)}')
+            logger.error(f'解析搜索结果失败: {str(e)}')
             import traceback
-            self.logger.error(traceback.format_exc())
+            logger.error(traceback.format_exc())
             return None
     
     def parse_detail(self, response):
@@ -249,33 +267,54 @@ class DoubanSpider(scrapy.Spider):
     
     def parse_detail_with_selenium(self, url):
         """使用Selenium解析电影详情页"""
-        self.logger.info(f"使用Selenium解析URL: {url}")
-        driver = None
-        try:
-            driver = self.get_driver()
-            driver.get(url)
-            self.random_sleep(2, 4)
+        logger.warning(f"解析电影详情页: {url}")
+        
+        # 获取WebDriver
+        driver = self.get_driver()
+        if not driver:
+            logger.error("无法获取WebDriver")
+            return
             
-            # 处理可能的验证码
+        try:
+            # 访问详情页
+            driver.get(url)
+            self.random_sleep()
+            
+            # 处理验证码
             self.handle_verification(driver)
             
-            # 尝试获取页面元素
-            try:
-                title = driver.find_element(By.CSS_SELECTOR, 'h1 span[property="v:itemreviewed"]').text
-            except:
-                try:
-                    title = driver.find_element(By.CSS_SELECTOR, 'h1.title span').text
-                except:
-                    title = '未知'
+            # 等待页面加载
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.TAG_NAME, "h1"))
+            )
             
-            # 获取导演
+            # 创建电影项
+            movie_item = MovieItem()
+            
+            # 提取电影标题
             try:
-                director = driver.find_element(By.CSS_SELECTOR, 'a[rel="v:directedBy"]').text
-            except:
+                title_elem = driver.find_element(By.CSS_SELECTOR, "h1 span:first-child")
+                movie_item['title'] = title_elem.text.strip()
+            except Exception:
                 try:
-                    director = driver.find_element(By.XPATH, '//span[contains(text(), "导演")]/following-sibling::span//a').text
-                except:
-                    director = '未知'
+                    # 备用选择器
+                    title_elem = driver.find_element(By.TAG_NAME, "h1")
+                    movie_item['title'] = title_elem.text.strip()
+                except Exception:
+                    movie_item['title'] = "未知标题"
+                    logger.error(f"无法提取电影标题: {url}")
+            
+            # 提取导演信息
+            try:
+                director_elem = driver.find_element(By.CSS_SELECTOR, 'a[rel="v:directedBy"]')
+                movie_item['director'] = director_elem.text.strip()
+            except Exception:
+                try:
+                    # 备用方式：查找包含"导演"的文本
+                    director_text = driver.find_element(By.XPATH, "//*[contains(text(), '导演')]/following-sibling::*")
+                    movie_item['director'] = director_text.text.strip()
+                except Exception:
+                    movie_item['director'] = "未知导演"
             
             # 获取主演
             try:
@@ -335,10 +374,10 @@ class DoubanSpider(scrapy.Spider):
                 except:
                     duration = '未知'
             
+            # 记录提取的关键信息
+            logger.warning(f"电影数据: {movie_item['title']}, {movie_item['year']}, 评分:{movie_item['rating']}")
+            
             # 创建MovieItem实例
-            movie_item = MovieItem()
-            movie_item['title'] = title
-            movie_item['director'] = director
             movie_item['actors'] = actors
             movie_item['year'] = year
             movie_item['rating'] = rating
@@ -347,8 +386,6 @@ class DoubanSpider(scrapy.Spider):
             movie_item['region'] = region
             movie_item['duration'] = duration
             movie_item['comments'] = []
-            
-            self.logger.info(f"Selenium获取到电影数据: {title}, {year}, {rating}分")
             
             # 获取评论
             try:
@@ -360,31 +397,31 @@ class DoubanSpider(scrapy.Spider):
                 
                 # 再获取评论
                 driver.get(comments_url)
-                self.random_sleep(2, 3)
+                self.random_sleep()
                 
                 # 获取评论内容
                 comment_elements = driver.find_elements(By.CSS_SELECTOR, '.comment-item .comment-content')
                 comments = [elem.text for elem in comment_elements if elem.text]
                 
                 if comments:
-                    self.logger.info(f"获取到{len(comments)}条评论")
+                    logger.warning(f"获取到{len(comments)}条评论")
                     movie_item_with_comments = movie_item.copy()
                     movie_item_with_comments['comments'] = comments
                     yield movie_item_with_comments
                 else:
-                    self.logger.warning("未找到评论内容")
+                    logger.warning("未找到评论内容")
                     
             except Exception as e:
-                self.logger.error(f"获取评论出错: {str(e)}")
+                logger.error(f"获取评论出错: {str(e)}")
                 import traceback
-                self.logger.error(traceback.format_exc())
+                logger.error(traceback.format_exc())
                 
             return None
             
         except Exception as e:
-            self.logger.error(f"Selenium解析电影详情出错: {str(e)}")
+            logger.error(f"Selenium解析电影详情出错: {str(e)}")
             import traceback
-            self.logger.error(traceback.format_exc())
+            logger.error(traceback.format_exc())
             return None
             
         finally:
@@ -392,7 +429,10 @@ class DoubanSpider(scrapy.Spider):
                 driver.quit()
     
     def parse_comments(self, response):
-        """解析评论页面"""
+        """解析电影评论页面"""
+        movie_id = response.meta.get('movie_id')
+        comments = []
+        
         try:
             # 获取电影信息
             movie_item = response.meta.get('movie_item').copy()
@@ -407,17 +447,17 @@ class DoubanSpider(scrapy.Spider):
                     movie_item['comments'] = []
                 
                 movie_item['comments'].extend(comments)
-                self.logger.info(f"获取到{len(comments)}条评论")
+                logger.warning(f"获取到{len(comments)}条评论")
             else:
-                self.logger.warning("响应不是HTML，无法获取评论")
+                logger.warning("响应不是HTML，无法获取评论")
             
             # 返回带有评论的电影信息
             yield movie_item
             
         except Exception as e:
-            self.logger.error(f"解析评论出错: {str(e)}")
+            logger.error(f"解析评论出错: {str(e)}")
             import traceback
-            self.logger.error(traceback.format_exc())
+            logger.error(traceback.format_exc())
     
     def random_sleep(self, min_seconds=1, max_seconds=3):
         """随机延时，防止反爬"""
@@ -439,8 +479,19 @@ class DoubanSpider(scrapy.Spider):
             pass
             
     def closed(self, reason):
-        """爬虫关闭时的清理工作"""
-        self.logger.info(f'爬虫关闭，原因: {reason}') 
+        """爬虫关闭时的清理操作"""
+        logger.warning(f'爬虫关闭: {reason}')
+        
+        # 关闭WebDriver
+        if hasattr(self, 'driver') and self.driver:
+            try:
+                self.driver.quit()
+                logger.warning("WebDriver已关闭")
+            except Exception as e:
+                logger.error(f"关闭WebDriver出错: {e}")
+                
+        # 其他清理操作
+        logger.warning("爬虫资源已清理完毕")
 
 if __name__ == '__main__':
     movie_names = '肖申克的救赎'

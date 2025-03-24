@@ -24,7 +24,8 @@ from index.views import (
     douban_view, douban_overview, movie_list,
     tv_list, data_trend, douban_settings,
     crawl_once_view,
-    score_once_view
+    score_once_view,
+    crawl_movie_view
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -56,6 +57,7 @@ urlpatterns = [
     path('douban/settings/', douban_settings, name='douban_settings'),
     path('crawl_once/', crawl_once_view, name='crawl_once'),
     path('score_once/', score_once_view, name='score_once'),
+    path('crawl_movie/', crawl_movie_view, name='crawl_movie'),
 ]
 
 if settings.DEBUG:

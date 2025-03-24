@@ -91,7 +91,23 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-LOG_LEVEL = 'INFO'
+# 将日志级别提高到WARNING，减少输出
+LOG_LEVEL = 'WARNING'
+
+# 增加超时设置，防止爬虫卡住
+DOWNLOAD_TIMEOUT = 30
+DNS_TIMEOUT = 15
+
+# 关闭重定向
+REDIRECT_ENABLED = False
+
+# 降低重试次数
+RETRY_TIMES = 2
+
+# 关闭辅助日志，降低输出
+LOG_STDOUT = False
+LOG_FILE_APPEND = False
+STATS_DUMP = False
 
 # django接口
 import sys
@@ -117,7 +133,6 @@ DOWNLOAD_TIMEOUT = 120
 
 # 配置重试
 RETRY_ENABLED = True
-RETRY_TIMES = 2
 RETRY_HTTP_CODES = [500, 502, 503, 504, 408, 429, 403]
 
 # 配置并发

@@ -46,10 +46,10 @@ except Exception as e:
 
 # 导入自定义项目
 try:
-    from crawl_ip.items import IndexIpItem, IpItem
+    from crawl_ip.items import IpItem
 except ImportError:
     logger.error("无法导入Items，尝试绝对导入")
-    from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import IndexIpItem, IpItem
+    from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import IpItem
 
 class CollectipSpider(scrapy.Spider):
     name = "collectip"
