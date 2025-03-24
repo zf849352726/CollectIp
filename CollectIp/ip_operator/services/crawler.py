@@ -97,7 +97,25 @@ def run_spider_process(spider_name, project_root, movie_name):
     
     try:
         # 设置当前工作目录为爬虫项目目录
-        crawler_dir = os.path.join(project_root, 'ip_operator', 'crawl_ip', 'crawl_ip')
+        # 原来的路径不正确，修改为正确的路径
+        crawler_dir = os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip')
+        logger.info(f"尝试切换到目录: {crawler_dir}")
+        
+        # 检查目录是否存在
+        if not os.path.exists(crawler_dir):
+            logger.error(f"目录不存在: {crawler_dir}")
+            
+            # 尝试查找正确的目录
+            alt_dir = os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip')
+            logger.info(f"尝试备用目录: {alt_dir}")
+            
+            if os.path.exists(alt_dir):
+                crawler_dir = alt_dir
+                logger.info(f"使用备用目录: {crawler_dir}")
+            else:
+                raise FileNotFoundError(f"找不到爬虫目录: {crawler_dir} 或 {alt_dir}")
+        
+        # 切换工作目录
         os.chdir(crawler_dir)
         
         # 检查目录
@@ -119,17 +137,37 @@ def run_spider_process(spider_name, project_root, movie_name):
         process = CrawlerProcess(settings)
         
         # 动态导入爬虫类
-        spider_module = import_module(f"crawl_ip.spiders.{spider_name}")
+        try:
+            # 先尝试直接导入
+            spider_module = import_module(f"crawl_ip.spiders.{spider_name}")
+            logger.info(f"成功导入模块: crawl_ip.spiders.{spider_name}")
+        except ImportError as e:
+            logger.warning(f"导入模块失败: {e}，尝试备用导入方式")
+            # 备用导入方式
+            try:
+                spider_module = import_module(f"crawl_ip.crawl_ip.spiders.{spider_name}")
+                logger.info(f"成功使用备用方式导入模块: crawl_ip.crawl_ip.spiders.{spider_name}")
+            except ImportError:
+                # 完整路径尝试
+                spider_module = import_module(f"ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}")
+                logger.info(f"成功使用完整路径导入模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}")
         
         # 找到爬虫类并启动
+        spider_class = None
         for obj_name in dir(spider_module):
             obj = getattr(spider_module, obj_name)
             # 检查是否是爬虫类且名称匹配
             if hasattr(obj, 'name') and obj.name == spider_name:
                 logger.info(f"启动爬虫: {obj.name}")
-                
-                process.crawl(obj, movie_name=movie_name)
+                spider_class = obj
                 break
+        
+        if spider_class is None:
+            logger.error(f"未找到爬虫类: {spider_name}")
+            raise ValueError(f"在模块中未找到名为 {spider_name} 的爬虫类")
+                
+        # 启动爬虫
+        process.crawl(spider_class, movie_name=movie_name)
         
         # 启动爬虫进程
         process.start()  # 这会阻塞直到所有爬虫完成
