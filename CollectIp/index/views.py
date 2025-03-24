@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import logging
-from ip_operator.services.crawler import start_crawl
+from ip_operator.services.crawler import start_crawl, start_douban_crawl
 from ip_operator.services.scorer import start_score
 import threading
 
@@ -290,6 +290,49 @@ def data_trend(request):
 @login_required
 def douban_settings(request):
     return render(request, 'douban.html', {'active_menu': 'douban_settings'})
+
+@login_required
+@require_http_methods(["POST"])
+def crawl_movie_view(request):
+    """接收电影名称并启动豆瓣爬虫"""
+    import json
+    from ip_operator.services.crawler import start_douban_crawl
+    
+    try:
+        # 从请求体获取电影名称
+        data = json.loads(request.body)
+        movie_name = data.get('movie_name')
+        
+        if not movie_name:
+            return JsonResponse({
+                'success': False,
+                'error': '电影名称不能为空'
+            })
+            
+        # 记录日志
+        logger.info(f"接收到电影采集请求: {movie_name}")
+        
+        # 使用我们的新方法启动爬虫
+        result = start_douban_crawl(movie_name)
+        
+        if result:
+            return JsonResponse({
+                'success': True,
+                'message': f'已开始采集电影: {movie_name}'
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'error': '爬虫启动失败，请查看日志'
+            })
+    except Exception as e:
+        logger.error(f"启动电影采集失败: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        })
 
 @login_required
 @require_http_methods(["POST"])
