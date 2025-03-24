@@ -23,7 +23,7 @@ class IPScorer:
         }
         proxies = {
             'http': f'http://{ip}',
-            'https': f'http://{ip}'
+            'https': f'https://{ip}'
         }
 
         success_count = 0

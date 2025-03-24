@@ -2,8 +2,8 @@ import threading
 import time
 import logging
 from django.conf import settings
-from .services.crawler import run_spider
-from .services.scorer import score_ips
+from .services.crawler import start_crawl
+from .services.scorer import start_score
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class IPPoolScheduler(threading.Thread):
                 current_time = time.time()
                 if current_time - self.last_crawl_time >= self.crawler_interval:  # 1小时间隔
                     logger.info("开始执行爬虫任务...")
-                    if run_spider():
+                    if start_crawl():
                         self.last_crawl_time = current_time
                         logger.info("爬虫任务完成")
                     else:
@@ -34,7 +34,7 @@ class IPPoolScheduler(threading.Thread):
                 
                 # 执行评分任务
                 logger.info("开始执行评分任务...")
-                if score_ips():
+                if start_score():
                     logger.info("评分任务完成")
                 else:
                     logger.error("评分任务失败")

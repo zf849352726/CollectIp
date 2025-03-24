@@ -6,69 +6,93 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import pymysql
+import logging
+from django.conf import settings
+from django.utils import timezone
 
-# 在 Scrapy 项目的 pipelines.py 中添加：
-from index.models import IpData  # 替换为你的 Django 应用和模型
-from scrapy.exceptions import DropItem
-from asgiref.sync import sync_to_async
-from decimal import Decimal
-
+logger = logging.getLogger(__name__)
 
 class SaveIpPipeline:
+    def __init__(self):
+        # 从Django settings获取数据库配置
+        self.db_settings = settings.DATABASES['default']
+        self.establish_connection()
+        
+    def establish_connection(self):
+        """建立数据库连接"""
+        try:
+            self.connection = pymysql.connect(
+                host=self.db_settings['HOST'],
+                user=self.db_settings['USER'],
+                password=self.db_settings['PASSWORD'],
+                database=self.db_settings['NAME'],
+                port=int(self.db_settings['PORT']),
+                charset='utf8mb4'
+            )
+            self.cursor = self.connection.cursor()
+            logger.info("数据库连接成功")
+        except Exception as e:
+            logger.error(f"数据库连接失败: {str(e)}")
+            raise
 
-    async def process_item(self, item, spider):
-        # item有字段： server、ping......
-        # 检查并替换值为‘？’的字段
-        for field in item:
-            if item[field] == '?':
-                item[field] = ''
-
-        # 检查并设置默认值
-        if not item.get('speed') or item['speed'] == '':
-            item['speed'] = '0.0'  # 设置默认值为 0.0
-
-        # 确保将字段值转换为 Decimal
-        item['speed'] = Decimal(item['speed'])   # 检查并设置默认值
-
-        # 检查并设置默认值
-        if not item.get('ping') or item['ping'] == '':
-            item['ping'] = '0.0'  # 设置默认值为 0.0
-
-        # 确保将字段值转换为 Decimal
-        item['ping'] = Decimal(item['ping'])   # 检查并设置默认值
-
-        await sync_to_async(self.save_or_update_ip)(item)
+    def process_item(self, item, spider):
+        try:
+            adapter = ItemAdapter(item)
+            
+            # 直接获取server字段
+            server = adapter.get('server', '')
+            
+            # 准备SQL语句，包含所有必需的字段，并用反引号括起关键字
+            sql = """
+                INSERT INTO index_ipdata (
+                    `server`, `ping`, `speed`, `uptime1`, `uptime2`, `type_data`, `country`, 
+                    `ssl`, `conn`, `post`, `last_work_time`, `score`, `created_at`, `updated_at`
+                ) VALUES (
+                    %s, %s, %s, %s, %s, %s, %s, 
+                    %s, %s, %s, %s, %s, NOW(), NOW()
+                )
+                ON DUPLICATE KEY UPDATE
+                `country` = VALUES(`country`),
+                `type_data` = VALUES(`type_data`),
+                `conn` = VALUES(`conn`),
+                `ssl` = VALUES(`ssl`),
+                `post` = VALUES(`post`),
+                `updated_at` = NOW()
+            """
+            
+            # 执行SQL
+            self.cursor.execute(sql, (
+                server,
+                adapter.get('ping', None),  # 延迟，可能为空
+                adapter.get('speed', None),  # 速度，可能为空
+                adapter.get('uptime1', 'N/A'),  # 上传时间1
+                adapter.get('uptime2', 'N/A'),  # 上传时间2
+                adapter.get('type_data', 'Unknown'),
+                adapter.get('country', 'Unknown'),  # 国家
+                adapter.get('ssl', 'N/A'),  # SSL支持
+                adapter.get('conn', 'N/A'),  # 连接类型
+                adapter.get('post', 'N/A'),  # POST支持
+                adapter.get('last_work_time', 'N/A'),  # 最近工作时间
+                100  # 默认分数
+            ))
+            
+            self.connection.commit()
+            spider.logger.info(f"保存IP记录: {server}")
+            
+        except Exception as e:
+            spider.logger.error(f"保存IP数据失败: {str(e)}")
+            spider.logger.error(f"错误详情: {item}")
+            self.connection.rollback()
+            
         return item
 
-    def save_or_update_ip(self, item):
-        # 检查数据库中是否已经存在相同的 server 条目
-        try:
-            ip = IpData.objects.get(server=item.get('server'))
-            # 更新现有条目
-            ip.ping = item.get('ping')
-            ip.speed = item.get('speed')
-            ip.uptime1 = item.get('uptime1')
-            ip.uptime2 = item.get('uptime2')
-            ip.type_data = item.get('type_data')
-            ip.country = item.get('country')
-            ip.ssl = item.get('ssl')
-            ip.conn = item.get('conn')
-            ip.post = item.get('post')
-            ip.last_work_time = item.get('last_work_time')
-            ip.save()
-        except IpData.DoesNotExist:
-            # 如果条目不存在，则创建新条目
-            ip = IpData(
-                server=item.get('server'),
-                ping=item.get('ping'),
-                speed=item.get('speed'),
-                uptime1=item.get('uptime1'),
-                uptime2=item.get('uptime2'),
-                type_data=item.get('type_data'),
-                country=item.get('country'),
-                ssl=item.get('ssl'),
-                conn=item.get('conn'),
-                post=item.get('post'),
-                last_work_time=item.get('last_work_time'),
-            )
-            ip.save()
+    def close_spider(self, spider):
+        """关闭数据库连接"""
+        self.cursor.close()
+        self.connection.close()
+
+# 添加兼容旧配置的类名
+class CrawlIpPipeline(SaveIpPipeline):
+    """兼容旧配置的管道类"""
+    pass

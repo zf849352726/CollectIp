@@ -64,8 +64,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # "crawl_ip.pipelines.CrawlIpPipeline": 300,
-    'crawl_ip.pipelines.SaveIpPipeline': 300,
+   'crawl_ip.pipelines.SaveIpPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -109,7 +108,8 @@ django.setup()
 PROXY_ENABLED = True
 
 # 数据库配置
-MYSQL_HOST = 'localhost'
-MYSQL_USER = 'your_username'
-MYSQL_PASSWORD = 'your_password'
-MYSQL_DATABASE = 'your_database'
+MYSQL_HOST = '127.0.0.1'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = '123456'
+MYSQL_DATABASE = 'collectipdb'
+PORT = '3306',

@@ -6,7 +6,7 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-def score_ips():
+def start_score():
     """评分服务"""
     try:
         with transaction.atomic():

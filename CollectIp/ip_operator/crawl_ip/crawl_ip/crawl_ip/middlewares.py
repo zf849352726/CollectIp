@@ -12,6 +12,13 @@ import random
 import pymysql
 from scrapy.exceptions import NotConfigured
 import time
+import sys
+import os
+from pathlib import Path
+
+# 添加ip_operator到系统路径
+sys.path.append(str(Path(__file__).parent.parent.parent.parent))
+from ip_operator.ip_scorer import IPScorer  # 导入IPScorer类
 
 
 class CrawlIpSpiderMiddleware:
@@ -117,9 +124,11 @@ class ProxyMiddleware:
         self.db_name = db_name
         self.proxy_list = []
         self.current_proxy = None
-        self.blacklist = set()  # 用于记录失败的代理
-        self.update_interval = 300  # 5分钟更新一次代理列表
+        self.blacklist = set()
+        self.update_interval = 300
         self.last_update_time = 0
+        # 创建IPScorer实例
+        self.scorer = IPScorer()
         
     @classmethod
     def from_crawler(cls, crawler):
@@ -156,12 +165,8 @@ class ProxyMiddleware:
             with conn.cursor() as cursor:
                 sql = """
                     SELECT server 
-                    FROM ip_data 
-                    WHERE score >= 60  -- 只选择评分大于等于60的代理
-                    AND ping < 200  -- ping值小于200ms
-                    AND speed < 2  -- 速度小于2秒
-                    AND uptime1 > '90%'  -- 上传时间1大于90%
-                    AND type_data != 'Unknown'  -- 类型已知
+                    FROM index_ipdata 
+                    WHERE score >= 80  -- 只选择评分大于等于80的代理
                     AND server NOT IN (
                         SELECT server 
                         FROM ip_data 
@@ -189,7 +194,7 @@ class ProxyMiddleware:
                 if not self.proxy_list:
                     backup_sql = """
                         SELECT server 
-                        FROM ip_data 
+                        FROM index_ipdata 
                         WHERE score >= 50 
                         AND server NOT IN (
                             SELECT server FROM ip_data 
@@ -214,25 +219,21 @@ class ProxyMiddleware:
     def update_proxy_score(self, proxy, success=True):
         """更新代理评分"""
         try:
+            if success:
+                # 使用IPScorer进行评分
+                score = self.scorer.test_single_ip(proxy)
+            else:
+                score = 0
+
             conn = self.get_connection()
             with conn.cursor() as cursor:
-                if success:
-                    # 成功使用，增加分数
-                    sql = """
-                        UPDATE ip_data 
-                        SET score = LEAST(score + 5, 100),
-                            updated_at = NOW()
-                        WHERE server = %s
-                    """
-                else:
-                    # 使用失败，减少分数
-                    sql = """
-                        UPDATE ip_data 
-                        SET score = GREATEST(score - 10, 0),
-                            updated_at = NOW()
-                        WHERE server = %s
-                    """
-                cursor.execute(sql, (proxy,))
+                sql = """
+                    UPDATE index_ipdata 
+                    SET score = %s,
+                        updated_at = NOW()
+                    WHERE server = %s
+                """
+                cursor.execute(sql, (score, proxy))
                 conn.commit()
         except Exception as e:
             print(f"更新代理分数出错: {e}")

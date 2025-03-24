@@ -1,263 +1,165 @@
+{% extends 'index.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_title|default:"IP池管理" }}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ip_poolstyle.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
-    <!-- 顶部标题栏 -->
-    <nav class="top-nav">
-        <div class="nav-logo">
-            <h1>凡眼工作台</h1>
-        </div>
-        <div class="nav-links">
-            <a href="/" class="nav-item">首页</a>
-            <a href="{% url 'ip_pool' %}" class="nav-item active">IP池</a>
-            <a href="javascript:void(0)" class="nav-item" onclick="openSettingsModal()">
-                <i class="fas fa-cog"></i> 设置
+
+{# 在head中添加ip_pool专用的样式 #}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ip_poolstyle.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <!-- 左侧工作台 -->
+    <div class="sidebar">
+        <h2>工作台</h2>
+        <div class="menu-list">
+            <a href="{% url 'ip_pool' %}" class="menu-item {% if active_menu == 'ip_pool_overview' %}active{% endif %}">
+                <span>IP池概览</span>
             </a>
-            <a href="#" class="nav-item">帮助</a>
-        </div>
-    </nav>
-
-    <!-- 主要内容区域 -->
-    <div class="main-content">
-        <!-- 左侧工作台 -->
-        <div class="sidebar">
-            <h2>工作台</h2>
-            <div class="menu-list">
-                <a href="{% url 'ip_pool' %}" class="menu-item {% if active_menu == 'ip_pool_overview' %}active{% endif %}">
-                    <span>IP池概览</span>
-                </a>
-                <a href="{% url 'ip_manage' %}" class="menu-item {% if active_menu == 'ip_manage' %}active{% endif %}">
-                    <span>IP管理</span>
-                </a>
-                <a href="{% url 'proxy_settings' %}" class="menu-item {% if active_menu == 'proxy_settings' %}active{% endif %}">
-                    <span>代理设置</span>
-                </a>
-                <a href="{% url 'monitoring' %}" class="menu-item {% if active_menu == 'monitoring' %}active{% endif %}">
-                    <span>监控统计</span>
-                </a>
-                <a href="{% url 'operation_log' %}" class="menu-item {% if active_menu == 'operation_log' %}active{% endif %}">
-                    <span>操作日志</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- 右侧内容区域 -->
-        <div class="content-area">
-            <div class="content-header">
-                <h2>{{ page_title|default:"IP池概览" }}</h2>
-            </div>
-            <div class="content-body">
-                {% if active_menu == 'ip_pool_overview' %}
-                    <!-- IP池概览内容 -->
-                    <div class="stats-cards">
-                        <div class="stat-card">
-                            <h3>总IP数量</h3>
-                            <p class="stat-number">{{ ip_stats.total }}</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>活跃IP</h3>
-                            <p class="stat-number">{{ ip_stats.active }}</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>不活跃IP</h3>
-                            <p class="stat-number">{{ ip_stats.inactive }}</p>
-                        </div>
-                    </div>
-                {% elif active_menu == 'ip_manage' %}
-                    <!-- IP管理表格 -->
-                    <div class="table-container">
-                        <div class="table-actions">
-                            <button class="btn btn-primary">添加IP</button>
-                            <button class="btn btn-secondary">批量导入</button>
-                            <div class="search-box">
-                                <input type="text" placeholder="搜索IP...">
-                            </div>
-                        </div>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>服务器</th>
-                                    <th>延迟ms</th>
-                                    <th>速度</th>
-                                    <th>上传时间1</th>
-                                    <th>上传时间2</th>
-                                    <th>类型</th>
-                                    <th>国家</th>
-                                    <th>SSL</th>
-                                    <th>CONN.</th>
-                                    <th>最近工作时间</th>
-                                    <th>分数</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for ip in ip_list %}
-                                <tr>
-                                    <td>{{ ip.server }}</td>
-                                    <td>{{ ip.delay }}</td>
-                                    <td>{{ ip.speed }}</td>
-                                    <td>{{ ip.upload_time1 }}</td>
-                                    <td>{{ ip.upload_time2 }}</td>
-                                    <td>{{ ip.type }}</td>
-                                    <td>{{ ip.country }}</td>
-                                    <td>{{ ip.ssl }}</td>
-                                    <td>{{ ip.conn }}</td>
-                                    <td>{{ ip.last_work_time }}</td>
-                                    <td>{{ ip.score }}</td>
-                                    <td>
-                                        <button class="btn-icon" title="编辑">✏️</button>
-                                        <button class="btn-icon" title="删除">🗑️</button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            {% if ip_list.has_previous %}
-                                <a href="?page=1" class="page-link first-page">首页</a>
-                                <a href="?page={{ ip_list.previous_page_number }}" class="page-link">上一页</a>
-                            {% endif %}
-
-                            <div class="current-page">
-                                第 {{ ip_list.number }} 页 / 共 {{ ip_list.paginator.num_pages }} 页
-                            </div>
-
-                            {% if ip_list.has_next %}
-                                <a href="?page={{ ip_list.next_page_number }}" class="page-link">下一页</a>
-                                <a href="?page={{ ip_list.paginator.num_pages }}" class="page-link last-page">末页</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
+            <a href="{% url 'ip_manage' %}" class="menu-item {% if active_menu == 'ip_manage' %}active{% endif %}">
+                <span>IP管理</span>
+            </a>
+            <a href="{% url 'proxy_settings' %}" class="menu-item {% if active_menu == 'proxy_settings' %}active{% endif %}">
+                <span>代理设置</span>
+            </a>
+            <a href="{% url 'monitoring' %}" class="menu-item {% if active_menu == 'monitoring' %}active{% endif %}">
+                <span>监控统计</span>
+            </a>
+            <a href="{% url 'operation_log' %}" class="menu-item {% if active_menu == 'operation_log' %}active{% endif %}">
+                <span>操作日志</span>
+            </a>
         </div>
     </div>
 
-    <!-- 在页面底部添加模态框 -->
-    <div id="settingsModal" class="modal">
+    <!-- 右侧内容区域 -->
+    <div class="content-area">
+        <div class="content-header">
+            <h2>{{ page_title|default:"IP池概览" }}</h2>
+        </div>
+        <div class="content-body">
+            {% if active_menu == 'ip_pool_overview' %}
+                <!-- IP池概览内容 -->
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3>总IP数量</h3>
+                        <p class="stat-number">{{ ip_stats.total }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>活跃IP</h3>
+                        <p class="stat-number">{{ ip_stats.active }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>不活跃IP</h3>
+                        <p class="stat-number">{{ ip_stats.inactive }}</p>
+                    </div>
+                </div>
+            {% elif active_menu == 'ip_manage' %}
+                <!-- IP管理表格 -->
+                <div class="table-container">
+                    <div class="table-actions">
+                        <button class="btn btn-primary" onclick="runOneCrawl()">立即采集一次</button>
+                        <button class="btn btn-primary" onclick="runOneScore()">立即打分一次</button>
+                        <button class="btn btn-primary" onclick="openSettingsModal()">设置</button>
+                        {% csrf_token %}
+                        <div class="search-box">
+                            <input type="text" placeholder="搜索IP...">
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>服务器</th>
+                                <th>延迟ms</th>
+                                <th>速度</th>
+                                <th>上传时间1</th>
+                                <th>上传时间2</th>
+                                <th>类型</th>
+                                <th>国家</th>
+                                <th>SSL</th>
+                                <th>CONN.</th>
+                                <th>最近工作时间</th>
+                                <th>分数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ip in ip_list %}
+                            <tr>
+                                <td>{{ ip.server }}</td>
+                                <td>{{ ip.delay }}</td>
+                                <td>{{ ip.speed }}</td>
+                                <td>{{ ip.upload_time1 }}</td>
+                                <td>{{ ip.upload_time2 }}</td>
+                                <td>{{ ip.type }}</td>
+                                <td>{{ ip.country }}</td>
+                                <td>{{ ip.ssl }}</td>
+                                <td>{{ ip.conn }}</td>
+                                <td>{{ ip.last_work_time }}</td>
+                                <td>{{ ip.score }}</td>
+                                <td>
+                                    <button class="btn-icon" title="编辑">✏️</button>
+                                    <button class="btn-icon" title="删除">🗑️</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        {% if ip_list.has_previous %}
+                            <a href="?page=1" class="page-link first-page">首页</a>
+                            <a href="?page={{ ip_list.previous_page_number }}" class="page-link">上一页</a>
+                        {% endif %}
+
+                        <div class="current-page">
+                            第 {{ ip_list.number }} 页 / 共 {{ ip_list.paginator.num_pages }} 页
+                        </div>
+
+                        {% if ip_list.has_next %}
+                            <a href="?page={{ ip_list.next_page_number }}" class="page-link">下一页</a>
+                            <a href="?page={{ ip_list.paginator.num_pages }}" class="page-link last-page">末页</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- 添加设置模态框 -->
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>IP池配置</h3>
-                <span class="close" onclick="closeSettingsModal()">&times;</span>
+                <h5 class="modal-title" id="settingsModalLabel">代理设置</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="settingsForm" class="settings-form">
+                <form id="settingsForm">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <label for="crawler_interval">爬虫采集间隔（秒）</label>
-                        <div class="input-with-unit">
-                            <input type="number" 
-                                   id="crawler_interval" 
-                                   name="crawler_interval" 
-                                   value="{{ proxy_settings.crawler_interval }}"
-                                   min="60"
-                                   required>
-                            <span class="unit">秒</span>
-                        </div>
-                        <small class="form-text">爬虫多久运行一次（最小60秒）</small>
+                    <div class="mb-3">
+                        <label for="crawler_interval" class="form-label">爬虫间隔（秒）</label>
+                        <input type="number" class="form-control" id="crawler_interval" name="crawler_interval" min="60">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="score_interval">IP评分间隔（秒）</label>
-                        <div class="input-with-unit">
-                            <input type="number" 
-                                   id="score_interval" 
-                                   name="score_interval" 
-                                   value="{{ proxy_settings.score_interval }}"
-                                   min="60"
-                                   required>
-                            <span class="unit">秒</span>
-                        </div>
-                        <small class="form-text">IP池中的代理多久评分一次（最小60秒）</small>
+                    <div class="mb-3">
+                        <label for="score_interval" class="form-label">评分间隔（秒）</label>
+                        <input type="number" class="form-control" id="score_interval" name="score_interval" min="60">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="min_score">最低分数阈值</label>
-                        <div class="input-with-unit">
-                            <input type="number" 
-                                   id="min_score" 
-                                   name="min_score" 
-                                   value="{{ proxy_settings.min_score }}"
-                                   min="0"
-                                   max="100"
-                                   required>
-                            <span class="unit">分</span>
-                        </div>
-                        <small class="form-text">低于此分数的IP将被删除（0-100）</small>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">保存设置</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeSettingsModal()">取消</button>
+                    <div class="mb-3">
+                        <label for="min_score" class="form-label">最低分数（0-100）</label>
+                        <input type="number" class="form-control" id="min_score" name="min_score" min="0" max="100">
                     </div>
                 </form>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">保存设置</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- 在页面底部添加脚本引用 -->
-    {% block scripts %}
-    <script src="{% static 'js/ip_pool.js' %}"></script>
-    <script>
-    // 确保DOM加载完成后再绑定事件
-    document.addEventListener('DOMContentLoaded', function() {
-        // 模态框控制
-        window.openSettingsModal = function() {
-            document.getElementById('settingsModal').style.display = 'block';
-            fetchCurrentSettings();
-        };
+{% endblock %}
 
-        window.closeSettingsModal = function() {
-            document.getElementById('settingsModal').style.display = 'none';
-        };
-
-        // 点击模态框外部关闭
-        window.onclick = function(event) {
-            const modal = document.getElementById('settingsModal');
-            if (event.target == modal) {
-                closeSettingsModal();
-            }
-        };
-
-        // 表单提交处理
-        const settingsForm = document.getElementById('settingsForm');
-        if (settingsForm) {
-            settingsForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const formData = new FormData(this);
-                
-                try {
-                    const response = await fetch('/proxy/settings/', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                        }
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        alert('设置已更新');
-                        closeSettingsModal();
-                    } else {
-                        alert(result.error || '更新失败');
-                    }
-                } catch (error) {
-                    alert('保存设置时发生错误');
-                }
-            });
-        }
-    });
-    </script>
-    {% endblock %}
-</body>
-</html>
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/ip_pool.js' %}"></script>
+{% endblock %}

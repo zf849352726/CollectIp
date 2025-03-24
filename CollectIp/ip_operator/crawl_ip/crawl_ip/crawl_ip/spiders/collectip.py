@@ -2,6 +2,7 @@ import scrapy
 import time
 import json
 import os
+import logging
 from selenium.webdriver import Chrome
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -12,6 +13,9 @@ from ..items import IpItem
 from ddddocr import DdddOcr
 import base64
 
+# 定义logger
+logger = logging.getLogger(__name__)
+
 class CollectipSpider(scrapy.Spider):
     name = "collectip"
     allowed_domains = ["freeproxylist.org"]
@@ -19,7 +23,7 @@ class CollectipSpider(scrapy.Spider):
 
     def parse(self, response):
         options = Options()
-
+        # print("this run..............................")
         # 设置请求头
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
@@ -86,7 +90,7 @@ class CollectipSpider(scrapy.Spider):
 
         # 替换手动输入验证码的部分
         code = self.get_captcha_text(driver)
-        print(code)
+        # print(code)
         # 找到验证码文本框
         code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
         code_input.send_keys(code)
@@ -97,10 +101,13 @@ class CollectipSpider(scrapy.Spider):
         # 检查验证码是否有效
         first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
         first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
-        print(first_server)
+        # print(first_server)
         
         # 如果server中包含*号,说明验证码无效,需要重新获取
+        retry_count = 0
         while '*' in first_server:
+            retry_count += 1
+            logger.info(f"验证码识别失败,第{retry_count}次重试...")
             # 重新获取验证码
             code = self.get_captcha_text(driver)
             # 清空验证码输入框
@@ -114,8 +121,10 @@ class CollectipSpider(scrapy.Spider):
             # 重新检查第一行数据
             first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
             first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
-
-        ip_data = {}
+            # 每10次重试暂停1秒,避免请求过于频繁
+            if retry_count % 10 == 0:
+                time.sleep(1)
+        logger.info(f"验证码识别成功,共重试{retry_count}次")
 
         pages = driver.find_element(By.XPATH, '(//*[@id="container"]/table/tbody/tr[4]/td/div/div/a)[last()]').text
 

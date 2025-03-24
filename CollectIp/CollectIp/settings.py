@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -123,7 +125,7 @@ STATIC_URL = '/static/'
 
 # 静态文件目录列表
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'templates', 'static'),
+    os.path.join(BASE_DIR, 'static'),  # 修改这里，直接使用static目录
 ]
 
 # 生产环境收集静态文件的目录

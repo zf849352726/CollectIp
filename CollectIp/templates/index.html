@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>凡眼工作台</title>
+    <title>IP池管理系统</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/indexstyle.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <nav class="top-nav">
@@ -14,20 +16,53 @@
         </div>
         <div class="nav-links">
             <a href="/ip_pool" class="nav-item active">IP池</a>
-            <a href="#" class="nav-item">设置</a>
+            <a href="javascript:void(0)" class="nav-item" onclick="openSystemSettings()">设置</a>
             <a href="#" class="nav-item">帮助</a>
         </div>
-        <button type="button" class="settings-btn" onclick="openSettingsModal()">
-            <i class="fas fa-cog"></i> 设置
-        </button>
     </nav>
 
+    <!-- 系统设置模态框 -->
+    <div class="modal fade" id="systemSettingsModal" tabindex="-1" aria-labelledby="systemSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="systemSettingsModalLabel">系统设置</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="systemSettingsForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="theme" class="form-label">系统主题</label>
+                            <select class="form-control" id="theme" name="theme">
+                                <option value="light">浅色</option>
+                                <option value="dark">深色</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="language" class="form-label">系统语言</label>
+                            <select class="form-control" id="language" name="language">
+                                <option value="zh">中文</option>
+                                <option value="en">English</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSystemSettings()">保存设置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
     <div class="main-content">
         <div class="button-grid">
             <div class="grid-item">
                 <h3>IP池管理</h3>
                 <p>管理和监控IP资源池</p>
-                <a href="/ip_pool/">
+                <a href="{% url 'ip_pool' %}">
                     <button type="button">进入</button>
                 </a>
             </div>
@@ -60,14 +95,14 @@
                 <p>使用指南与帮助</p>
                 <button>进入</button>
             </div>
-            <div class="grid-item">
-                <h3>豆瓣数据</h3>
-                <p>豆瓣影视数据分析</p>
-                <a href="{% url 'douban' %}">
-                    <button type="button">进入</button>
-                </a>
-            </div>
         </div>
     </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/system.js' %}"></script>
+    {% endblock %}
 </body>
 </html> 

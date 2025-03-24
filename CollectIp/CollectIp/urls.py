@@ -22,7 +22,9 @@ from index.views import (
     wechat_view, wechat_overview, article_manage,
     media_library, data_analysis, wechat_settings,
     douban_view, douban_overview, movie_list,
-    tv_list, data_trend, douban_settings
+    tv_list, data_trend, douban_settings,
+    crawl_once_view,
+    score_once_view
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -37,7 +39,7 @@ urlpatterns = [
     path('', login_required(views.index), name='home'),  # 根路径
     path('ip_pool/', ip_pool_view, name='ip_pool'),
     path('ip_pool/manage/', ip_manage_view, name='ip_manage'),
-    path('proxy/settings/', proxy_settings_view, name='proxy_settings'),
+    path('proxy_settings/', proxy_settings_view, name='proxy_settings'),
     path('ip_pool/monitoring/', monitoring_view, name='monitoring'),
     path('ip_pool/logs/', operation_log_view, name='operation_log'),
     path('wechat/', wechat_view, name='wechat'),
@@ -52,6 +54,8 @@ urlpatterns = [
     path('douban/tv/', tv_list, name='tv_list'),
     path('douban/trend/', data_trend, name='data_trend'),
     path('douban/settings/', douban_settings, name='douban_settings'),
+    path('crawl_once/', crawl_once_view, name='crawl_once'),
+    path('score_once/', score_once_view, name='score_once'),
 ]
 
 if settings.DEBUG:

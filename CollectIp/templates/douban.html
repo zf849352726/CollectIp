@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title|default:"豆瓣数据分析" }}</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
 </head>
 <body>
@@ -16,7 +17,7 @@
         <div class="nav-links">
             <a href="/" class="nav-item">首页</a>
             <a href="{% url 'douban' %}" class="nav-item active">豆瓣数据</a>
-            <a href="#" class="nav-item">设置</a>
+            <a href="javascript:void(0)" class="nav-item" onclick="openDoubanSettings()">设置</a>
             <a href="#" class="nav-item">帮助</a>
         </div>
     </nav>
@@ -106,5 +107,44 @@
             </div>
         </div>
     </div>
+
+    <!-- 豆瓣设置模态框 -->
+    <div class="modal fade" id="doubanSettingsModal" tabindex="-1" aria-labelledby="doubanSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doubanSettingsModalLabel">豆瓣采集设置</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="doubanSettingsForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="crawl_interval" class="form-label">采集间隔（分钟）</label>
+                            <input type="number" class="form-control" id="crawl_interval" name="crawl_interval" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="movie_count" class="form-label">电影采集数量</label>
+                            <input type="number" class="form-control" id="movie_count" name="movie_count" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tv_count" class="form-label">电视剧采集数量</label>
+                            <input type="number" class="form-control" id="tv_count" name="tv_count" min="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDoubanSettings()">保存设置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block scripts %}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/douban.js' %}"></script>
+    {% endblock %}
 </body>
 </html> 

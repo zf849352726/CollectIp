@@ -218,111 +218,16 @@ body {
     }
 }
 
-/* 右侧内容区域样式重新定义 */
+/* 右侧内容区域样式 */
 .content-area {
     flex: 1;
     padding: 20px;
     background-color: #f8f9fa;
-    margin-left: 240px; /* 确保不被侧边栏遮挡 */
     min-height: calc(100vh - 60px);
+    margin-left: 0; /* 移除margin-left，因为已经使用了flex布局 */
 }
 
-/* 确保内容区域正确显示 */
-.content-body {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-}
-
-/* 修复合集网格布局 */
-.collection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 20px;
-    width: 100%;
-    max-width: 1400px; /* 限制最大宽度 */
-    margin: 0 auto; /* 居中显示 */
-}
-
-/* 确保卡片样式正确应用 */
-.collection-card {
-    width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 修复图片显示问题 */
-.collection-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block; /* 防止图片底部间隙 */
-}
-
-/* 确保遮罩层正确显示 */
-.collection-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7));
-    z-index: 1; /* 确保遮罩层在正确的层级 */
-}
-
-/* 修复统计信息显示 */
-.collection-stats {
-    display: flex;
-    gap: 16px;
-    padding: 12px 16px;
-    border-top: 1px solid #eee;
-    margin-top: auto; /* 确保统计信息在底部 */
-}
-
-/* 添加必要的浏览器前缀 */
-.collection-card {
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-
-.collection-overlay {
-    background: -webkit-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.7));
-    background: -moz-linear-gradient(top, transparent 50%, rgba(0, 0, 0, 0.7));
-    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7));
-}
-
-/* 确保响应式布局正确 */
-@media screen and (max-width: 768px) {
-    .content-area {
-        margin-left: 0;
-        padding: 10px;
-    }
-    
-    .collection-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 10px;
-    }
-    
-    .collection-card {
-        margin-bottom: 16px;
-    }
-}
-
-/* 添加清除浮动 */
-.clearfix::after {
-    content: '';
-    display: table;
-    clear: both;
-}
-
-/* 内容区域基础样式 */
+/* 内容头部样式 */
 .content-header {
     margin-bottom: 24px;
     padding-bottom: 16px;
@@ -335,25 +240,42 @@ body {
     font-weight: 600;
 }
 
-/* 合集网格布局优化 */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* 内容主体样式 */
+.content-body {
+    width: 100%;
+    height: 100%;
 }
 
-/* 合集卡片样式优化 */
+/* 合集网格布局 */
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* 合集卡片样式 */
+.collection-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .collection-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* 合集封面样式优化 */
+/* 合集封面样式 */
 .collection-cover {
     position: relative;
     height: 220px;
@@ -365,13 +287,14 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: block;
 }
 
 .collection-card:hover .collection-cover img {
     transform: scale(1.08);
 }
 
-/* 合集封面遮罩层优化 */
+/* 合集封面遮罩层 */
 .collection-overlay {
     position: absolute;
     top: 0;
@@ -386,13 +309,16 @@ body {
     display: flex;
     align-items: flex-end;
     padding: 20px;
+    z-index: 1;
 }
 
+/* 文章计数样式 */
 .article-count {
     color: #fff;
     font-size: 13px;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     padding: 6px 12px;
     border-radius: 20px;
     display: flex;
@@ -405,9 +331,12 @@ body {
     font-size: 14px;
 }
 
-/* 合集信息样式优化 */
+/* 合集信息样式 */
 .collection-info {
     padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .collection-info h3 {
@@ -423,14 +352,10 @@ body {
     font-size: 14px;
     color: #666;
     line-height: 1.6;
-    height: 44px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    flex: 1;
 }
 
-/* 合集统计信息优化 */
+/* 合集统计信息 */
 .collection-stats {
     display: flex;
     gap: 20px;
@@ -438,6 +363,7 @@ body {
     color: #666;
     padding-top: 12px;
     border-top: 1px solid #f0f0f0;
+    margin-top: auto;
 }
 
 .collection-stats span {
@@ -454,19 +380,35 @@ body {
     content: "⭐";
 }
 
-/* 响应式优化 */
+/* 响应式布局 */
 @media (max-width: 768px) {
+    .content-area {
+        padding: 10px;
+    }
+    
     .collection-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 15px;
+        gap: 16px;
+        padding: 10px;
     }
-
+    
     .collection-cover {
         height: 180px;
     }
-
+    
     .collection-info h3 {
         font-size: 18px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 } 

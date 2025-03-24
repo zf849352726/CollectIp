@@ -9,6 +9,9 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import logging
+from ip_operator.services.crawler import start_crawl
+from ip_operator.services.scorer import start_score
+import threading
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +130,6 @@ def ip_manage_view(request):
 @require_http_methods(["GET", "POST"])
 def proxy_settings_view(request):
     """处理代理设置的API端点"""
-    logger.info(f"Received {request.method} request for proxy settings")
     try:
         settings, created = ProxySettings.objects.get_or_create(
             id=1,
@@ -139,7 +141,6 @@ def proxy_settings_view(request):
         )
         
         if request.method == 'GET':
-            logger.info("Returning current settings")
             return JsonResponse({
                 'success': True,
                 'data': {
@@ -180,12 +181,7 @@ def proxy_settings_view(request):
                 
                 return JsonResponse({
                     'success': True,
-                    'message': '设置已更新',
-                    'data': {
-                        'crawler_interval': crawler_interval,
-                        'score_interval': score_interval,
-                        'min_score': min_score
-                    }
+                    'message': '设置已更新'
                 })
                 
             except ValueError:
@@ -193,12 +189,7 @@ def proxy_settings_view(request):
                     'success': False,
                     'error': "请输入有效的数字"
                 })
-            except Exception as e:
-                return JsonResponse({
-                    'success': False,
-                    'error': str(e)
-                })
-    
+            
     except Exception as e:
         return JsonResponse({
             'success': False,
@@ -299,6 +290,46 @@ def data_trend(request):
 @login_required
 def douban_settings(request):
     return render(request, 'douban.html', {'active_menu': 'douban_settings'})
+
+@login_required
+@require_http_methods(["POST"])
+def crawl_once_view(request):
+    """执行一次IP采集"""
+    try:
+        # 在新线程中启动爬虫
+        thread = threading.Thread(target=start_crawl)
+        thread.start()
+        
+        return JsonResponse({
+            'success': True,
+            'message': '已开始执行IP采集'
+        })
+    except Exception as e:
+        logger.error(f"启动爬虫失败: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        })
+
+@login_required
+@require_http_methods(["POST"])
+def score_once_view(request):
+    """执行一次IP评分"""
+    try:
+        # 在新线程中启动评分
+        thread = threading.Thread(target=start_score)
+        thread.start()
+        
+        return JsonResponse({
+            'success': True,
+            'message': '已开始执行IP评分'
+        })
+    except Exception as e:
+        logger.error(f"启动评分失败: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        })
 
 
 
