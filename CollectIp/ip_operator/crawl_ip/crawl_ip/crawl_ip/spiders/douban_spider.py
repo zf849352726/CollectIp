@@ -1,4 +1,10 @@
+import os
+import sys
+import logging
+import time
+import random
 import scrapy
+import traceback
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -7,13 +13,41 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from scrapy.crawler import CrawlerProcess
-import time
-import random
 import urllib.parse
-from ..items import MovieItem
-import logging
 
-logger = logging.getLogger(__name__)
+# 获取项目根目录
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..'))
+if PROJECT_DIR not in sys.path:
+    sys.path.insert(0, PROJECT_DIR)
+
+# 引入自定义日志设置
+try:
+    from ip_operator.services.crawler import setup_logging
+    logger = setup_logging("douban_spider")
+except ImportError:
+    # 如果无法导入，使用基本日志设置
+    logger = logging.getLogger("douban_spider")
+    logger.setLevel(logging.INFO)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.info("使用基本日志设置，无法导入自定义日志函数")
+
+# 导入Django设置和模型
+try:
+    import django
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+    django.setup()
+except Exception as e:
+    logger.error(f"Django设置失败: {e}")
+
+# 导入项目项
+try:
+    from crawl_ip.items import MovieItem
+except ImportError:
+    logger.error("无法导入MovieItem，尝试绝对导入")
+    from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import MovieItem
 
 class DoubanSpider(scrapy.Spider):
     name = 'douban'

@@ -181,27 +181,54 @@ LOGGING = {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
             'style': '{',
         },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
     },
     'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django.log'),
+            'maxBytes': 10 * 1024 * 1024,  # 10MB
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'delay': True,  # 延迟打开文件直到第一条日志记录
+            'encoding': 'utf-8',
+        },
         'ip_operator': {
             'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',  # 使用时间轮转处理器
-            'filename': os.path.join(BASE_DIR, 'logs', 'ip_operator.log'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/ip_operator.log'),
+            'maxBytes': 10 * 1024 * 1024,  # 10MB
+            'backupCount': 10,
             'formatter': 'verbose',
-            'when': 'midnight',  # 每天午夜进行轮转
-            'interval': 1,       # 每1天轮转一次
-            'backupCount': 3,    # 保留3个备份文件
-            'encoding': 'utf-8', # 使用utf-8编码
+            'delay': True,  # 延迟打开文件直到第一条日志记录
+            'encoding': 'utf-8',
         },
     },
     'loggers': {
-        'ip_operator': {
-            'handlers': ['ip_operator'],
+        'django': {
+            'handlers': ['file'],
             'level': 'INFO',
             'propagate': True,
         },
+        'ip_operator': {
+            'handlers': ['ip_operator'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     },
 }
+
+# 确保日志目录存在
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOG_DIR):
+    try:
+        os.makedirs(LOG_DIR)
+    except Exception as e:
+        print(f"创建日志目录失败: {e}")
 
 # 在开发环境中启用debug工具栏
 if DEBUG:

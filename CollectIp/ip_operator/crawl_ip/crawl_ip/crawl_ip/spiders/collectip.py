@@ -14,9 +14,42 @@ from selenium.webdriver.common.by import By
 from ..items import IpItem
 from ddddocr import DdddOcr
 import base64
+import sys
+from datetime import datetime
 
-# 定义logger
-logger = logging.getLogger(__name__)
+# 获取项目根目录
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..'))
+if PROJECT_DIR not in sys.path:
+    sys.path.insert(0, PROJECT_DIR)
+
+# 引入自定义日志设置
+try:
+    from ip_operator.services.crawler import setup_logging
+    logger = setup_logging("collectip_spider")
+except ImportError:
+    # 如果无法导入，使用基本日志设置
+    logger = logging.getLogger("collectip_spider")
+    logger.setLevel(logging.INFO)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.info("使用基本日志设置，无法导入自定义日志函数")
+
+# 导入Django设置和模型
+try:
+    import django
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+    django.setup()
+except Exception as e:
+    logger.error(f"Django设置失败: {e}")
+
+# 导入自定义项目
+try:
+    from crawl_ip.items import IndexIpItem, IpItem
+except ImportError:
+    logger.error("无法导入Items，尝试绝对导入")
+    from ip_operator.crawl_ip.crawl_ip.crawl_ip.items import IndexIpItem, IpItem
 
 class CollectipSpider(scrapy.Spider):
     name = "collectip"
