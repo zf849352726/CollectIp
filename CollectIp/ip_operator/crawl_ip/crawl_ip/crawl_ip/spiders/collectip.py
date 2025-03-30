@@ -25,16 +25,57 @@ if PROJECT_DIR not in sys.path:
 # 引入自定义日志设置
 try:
     from ip_operator.services.crawler import setup_logging
-    logger = setup_logging("collectip_spider")
+    # 使用INFO级别以显示调试信息
+    logger = setup_logging("collectip_spider", logging.INFO)
 except ImportError:
     # 如果无法导入，使用基本日志设置
     logger = logging.getLogger("collectip_spider")
-    logger.setLevel(logging.INFO)
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)  # 确保日志级别为INFO以显示调试信息
+    
+    # 检查是否已经有处理器，如果有则移除
+    if logger.handlers:
+        for handler in logger.handlers[:]:
+            logger.removeHandler(handler)
+            
+    # 创建日志目录
+    log_dir = os.path.join(PROJECT_DIR, 'logs')
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+        
+    # 创建文件处理器
+    log_file = os.path.join(log_dir, 'collectip_spider.log')
+    file_handler = logging.FileHandler(log_file, encoding='utf-8')
+    file_handler.setLevel(logging.INFO)
+    
+    # 创建控制台处理器
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    
+    # 创建格式化器
+    formatter = logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+    
+    # 添加处理器
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    
     logger.info("使用基本日志设置，无法导入自定义日志函数")
+
+# 设置Selenium的日志级别
+selenium_logger = logging.getLogger('selenium')
+selenium_logger.setLevel(logging.ERROR)  # 仅记录错误
+selenium_logger.propagate = False  # 防止日志传播到父级记录器
+
+# 设置urllib3的日志级别
+urllib3_logger = logging.getLogger('urllib3')
+urllib3_logger.setLevel(logging.ERROR)  # 仅记录错误
+urllib3_logger.propagate = False  # 防止日志传播到父级记录器
+
+# 设置Scrapy的日志级别
+scrapy_logger = logging.getLogger('scrapy')
+scrapy_logger.setLevel(logging.INFO)  # 设置为INFO以显示更多信息
+scrapy_logger.propagate = False  # 防止日志传播到父级记录器
 
 # 导入Django设置和模型
 try:
@@ -55,6 +96,17 @@ class CollectipSpider(scrapy.Spider):
     name = "collectip"
     allowed_domains = ["freeproxylist.org"]
     start_urls = ["https://freeproxylist.org/en/free-proxy-list.htm"]
+    
+    # 自定义设置，确保与douban_spider一致
+    custom_settings = {
+        'LOG_LEVEL': 'INFO',
+        'PROXY_DEBUG': True,  # 明确启用代理调试
+        'UA_DEBUG': True,     # 明确启用UA调试
+    }
+    
+    def __init__(self, *args, **kwargs):
+        super(CollectipSpider, self).__init__(*args, **kwargs)
+        print("【调试】CollectIP爬虫初始化，将使用代理中间件和UA中间件")
 
     def parse(self, response):
         options = Options()
@@ -119,8 +171,7 @@ class CollectipSpider(scrapy.Spider):
             
             # 如果server中包含*号,说明验证码无效,需要重新获取
             retry_count = 0
-            max_retries = 20  # 设置最大重试次数
-            while '*' in first_server and retry_count < max_retries:
+            while '*' in first_server:
                 retry_count += 1
                 logger.info(f"验证码识别失败,第{retry_count}次重试...")
                 # 重新获取验证码
@@ -139,11 +190,6 @@ class CollectipSpider(scrapy.Spider):
                 # 每10次重试暂停1秒,避免请求过于频繁
                 if retry_count % 10 == 0:
                     time.sleep(1)
-            
-            # 如果达到最大重试次数仍然失败，记录错误并返回
-            if retry_count >= max_retries and '*' in first_server:
-                logger.error(f"验证码识别失败达到最大重试次数({max_retries})，放弃本次爬取")
-                return
                 
             logger.info(f"验证码识别成功,共重试{retry_count}次")
 

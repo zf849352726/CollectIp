@@ -116,6 +116,7 @@ def run_spider_process(spider_name, project_root, movie_name):
             
         # 切换工作目录
         os.chdir(crawler_dir)
+        logger.warning(f"当前工作目录: {os.getcwd()}")
         
         # 导入必要的Spider组件
         from scrapy.crawler import CrawlerProcess
@@ -145,8 +146,10 @@ def run_spider_process(spider_name, project_root, movie_name):
         for module_path in module_paths:
             try:
                 spider_module = import_module(module_path)
+                logger.warning(f"成功导入爬虫模块: {module_path}")
                 break
-            except ImportError:
+            except ImportError as e:
+                logger.warning(f"尝试导入 {module_path} 失败: {str(e)}")
                 continue
                 
         if spider_module is None:
@@ -174,6 +177,8 @@ def run_spider_process(spider_name, project_root, movie_name):
         
     except Exception as e:
         logger.error(f"运行爬虫时出错: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
         return 1  # 错误退出码
     
     finally:
@@ -197,35 +202,52 @@ def start_douban_crawl(movie_name):
         # 使用Process创建子进程
         spider_process = Process(
             target=run_spider_process,
-            args=('douban', PROJECT_ROOT, movie_name)
+            args=('douban_spider', str(PROJECT_ROOT), movie_name)  # 修改爬虫名为'douban_spider'
         )
         
         # 启动子进程
         spider_process.start()
+        logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
+        
+        # 等待子进程完成
         spider_process.join()
         
-        # 检查子进程退出码
-        if spider_process.exitcode != 0:
-            logger.error(f"爬虫进程异常退出，退出码: {spider_process.exitcode}")
+        # 检查子进程的退出码
+        if spider_process.exitcode == 0:
+            logger.warning("爬虫任务完成")
+            return True
+        else:
+            logger.error(f"爬虫任务失败，退出码: {spider_process.exitcode}")
             return False
             
-        logger.warning(f"电影 {movie_name} 爬取完成")
-        return True
-        
     except Exception as e:
-        logger.error(f"启动爬虫失败: {str(e)}")
+        logger.error(f"启动爬虫时出错: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
         return False
-    
-    finally:
-        # 清理环境变量
-        if 'MOVIE_NAME' in os.environ:
-            del os.environ['MOVIE_NAME']
-            
+
 def start_crawl(spider_name='collectip', crawl_type='qq'):
     """开始爬虫，适用于IP爬虫等"""
     logger = setup_logging("ip_crawler", logging.WARNING)
     
+    # 爬虫锁文件路径
+    lock_file = os.path.join(PROJECT_ROOT, f'crawler_{spider_name}.lock')
+    
+    # 检查锁文件
+    if os.path.exists(lock_file):
+        # 检查锁文件是否过期（超过1小时）
+        if os.path.getmtime(lock_file) < (time.time() - 3600):
+            logger.warning(f"爬虫锁文件已过期，删除锁文件: {lock_file}")
+            os.remove(lock_file)
+        else:
+            logger.warning(f"爬虫正在运行中，跳过本次任务: {spider_name}")
+            return False
+    
     try:
+        # 创建锁文件
+        with open(lock_file, 'w') as f:
+            f.write(f"{os.getpid()},{time.time()}")
+            
         # 添加项目根目录到Python路径
         if str(PROJECT_ROOT) not in sys.path:
             sys.path.insert(0, str(PROJECT_ROOT))
@@ -242,25 +264,48 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
         
         # 启动子进程
         spider_process.start()
-        spider_process.join()
+        logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
         
-        # 检查子进程退出码
-        if spider_process.exitcode != 0:
-            logger.error(f"爬虫进程异常退出，退出码: {spider_process.exitcode}")
+        # 等待子进程完成
+        spider_process.join(timeout=3600)  # 最多等待1小时
+        
+        # 检查进程是否还在运行
+        if spider_process.is_alive():
+            logger.error(f"爬虫进程超时，强制终止: {spider_process.pid}")
+            spider_process.terminate()
+            time.sleep(5)  # 等待进程终止
+            if spider_process.is_alive():
+                logger.error("无法终止爬虫进程，尝试更强力的终止")
+                import signal
+                os.kill(spider_process.pid, signal.SIGKILL)
             return False
             
-        logger.warning(f"IP爬取完成，类型: {crawl_type}")
-        return True
-        
+        # 检查退出码
+        if spider_process.exitcode == 0:
+            logger.warning("爬虫任务完成")
+            return True
+        else:
+            logger.error(f"爬虫任务失败，退出码: {spider_process.exitcode}")
+            return False
+            
     except Exception as e:
-        logger.error(f"启动爬虫失败: {str(e)}")
+        logger.error(f"启动爬虫时出错: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
         return False
-    
+        
     finally:
         # 清理环境变量
         if 'CRAWL_TYPE' in os.environ:
             del os.environ['CRAWL_TYPE']
+            
+        # 清理锁文件
+        if os.path.exists(lock_file):
+            try:
+                os.remove(lock_file)
+            except Exception as e:
+                logger.error(f"删除爬虫锁文件时出错: {e}")
 
 if __name__ == '__main__':
     # start_crawl()
-    start_douban_crawl('肖申克的救赎')
+    start_douban_crawl('出走的决心')

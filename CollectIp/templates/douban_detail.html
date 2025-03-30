@@ -1,0 +1,292 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - 电影详情</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/douban_detail.css' %}">
+    {% csrf_token %}
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <nav class="top-nav">
+        <div class="nav-logo">
+            <h1><a href="/" style="text-decoration: none; color: inherit;">凡眼工作台</a></h1>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-item">首页</a>
+            <a href="{% url 'douban' %}" class="nav-item active">豆瓣数据</a>
+            <a href="javascript:void(0)" class="nav-item" onclick="openDoubanSettings()">设置</a>
+            <a href="#" class="nav-item">帮助</a>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <!-- 左侧工作台 -->
+        <div class="sidebar">
+            <h2>工作台</h2>
+            <div class="menu-list">
+                <a href="{% url 'douban_overview' %}" class="menu-item">
+                    <span>数据概览</span>
+                </a>
+                <a href="{% url 'movie_list' %}" class="menu-item active">
+                    <span>电影列表</span>
+                </a>
+                <a href="{% url 'tv_list' %}" class="menu-item">
+                    <span>电视剧列表</span>
+                </a>
+                <a href="{% url 'data_trend' %}" class="menu-item">
+                    <span>数据趋势</span>
+                </a>
+                <a href="{% url 'douban_settings' %}" class="menu-item">
+                    <span>采集设置</span>
+                </a>
+            </div>
+        </div>
+            
+        <!-- 右侧内容区域 -->
+        <div class="content-area">
+            {% csrf_token %}
+            <div class="content-header">
+                <h2>{{ movie.title }} - 电影详情</h2>
+            </div>
+                
+            <!-- 详情页内容 -->
+            <div class="content-body">
+                <!-- 返回按钮 -->
+                <div class="back-link mb-4">
+                    <a href="/douban/movies/" class="btn btn-outline-secondary">
+                        <span>← 返回电影列表</span>
+                    </a>
+                </div>
+                    
+                <!-- 电影基本信息 -->
+                <div class="movie-header mb-4">
+                    <h1 class="movie-title">{{ movie.title }} <span class="movie-year">({{ movie.year }})</span></h1>
+                    <div class="movie-rating">
+                        <span class="rating-score">{{ movie.rating }}</span>
+                        <div class="rating-stars">
+                            {% with stars=movie.rating|floatformat:"0"|add:"0" %}
+                                {% for i in "12345678910"|slice:":10" %}
+                                    {% if forloop.counter <= stars|add:"0" %}
+                                        <span class="star">★</span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                        <span class="rating-count">({{ movie.rating_count }}人评分)</span>
+                    </div>
+                </div>
+                
+                <!-- 电影详细信息卡片 -->
+                <div class="movie-details-card mb-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="movie-poster">
+                                <img src="{{ movie.poster_url|default:'https://via.placeholder.com/300x450?text=暂无海报' }}" alt="{{ movie.title }}海报" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="movie-info">
+                                <div class="info-item">
+                                    <span class="info-label">导演:</span>
+                                    <span class="info-value">{{ movie.director }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">主演:</span>
+                                    <span class="info-value">{{ movie.actors }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">类型:</span>
+                                    <span class="info-value">{{ movie.genre }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">国家/地区:</span>
+                                    <span class="info-value">{{ movie.region }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">片长:</span>
+                                    <span class="info-value">{{ movie.duration }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">数据更新时间:</span>
+                                    <span class="info-value">{{ movie.updated_at|date:"Y-m-d H:i" }}</span>
+                                </div>
+                                <div class="info-item mt-3">
+                                    <span class="info-label">简介:</span>
+                                    <div class="info-value movie-summary">
+                                        {{ movie.summary|default:"暂无简介"|linebreaks }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据可视化区域 -->
+                <div class="data-visualization">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>评分变化趋势</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="rating-chart" style="height: 300px; width: 100%;">
+                                {% if rating_trends %}
+                                <!-- 有评分数据时显示图表 -->
+                                <div id="rating-chart-container" style="height: 300px; width: 100%; min-height: 300px;"></div>
+                                {% else %}
+                                <!-- 无评分数据时显示提示 -->
+                                <div class="placeholder-notice">
+                                    <p>评分数据趋势图将在此显示</p>
+                                    <p>暂无历史评分数据</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>评论词云</h5>
+                                    <small class="text-muted">基于所有评论生成</small>
+                                </div>
+                                <div class="card-body">
+                                    {% if comment_keywords and comment_keywords|length > 0 %}
+                                    <div id="wordcloud" style="width:100%; height:300px;"></div>
+                                    {% else %}
+                                    <div class="alert alert-info">暂无评论数据，无法生成词云</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>策略词云对比</h5>
+                                    <select id="strategySelector" class="form-select form-select-sm mt-2">
+                                        <option value="sequential">顺序采集策略词云</option>
+                                        <option value="random_pages">随机页码策略词云</option>
+                                        <option value="random_interval">随机间隔策略词云</option>
+                                        <option value="random_block">随机区块策略词云</option>
+                                    </select>
+                                </div>
+                                <div class="card-body">
+                                    <div id="strategyWordcloud" style="width:100%; height:300px;"></div>
+                                    <div class="strategy-info mt-2">
+                                        <div id="sequentialInfo" class="strategy-detail">
+                                            <small>顺序策略：从评论第一页开始连续抓取，通常获取最新评论</small>
+                                        </div>
+                                        <div id="randomPagesInfo" class="strategy-detail" style="display:none;">
+                                            <small>随机页码策略：在所有页面中随机选取页码，更全面覆盖不同时期评论</small>
+                                        </div>
+                                        <div id="randomIntervalInfo" class="strategy-detail" style="display:none;">
+                                            <small>随机间隔策略：以不规则间隔采样，减少连续性偏差</small>
+                                        </div>
+                                        <div id="randomBlockInfo" class="strategy-detail" style="display:none;">
+                                            <small>随机区块策略：随机选择一个连续区块，捕捉特定时期的评论趋势</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 豆瓣设置模态框 -->
+    <div class="modal fade" id="doubanSettingsModal" tabindex="-1" aria-labelledby="doubanSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="doubanSettingsModalLabel">豆瓣采集设置</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="doubanSettingsForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="crawl_interval" class="form-label">采集间隔（分钟）</label>
+                            <input type="number" class="form-control" id="crawl_interval" name="crawl_interval" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="movie_count" class="form-label">电影采集数量</label>
+                            <input type="number" class="form-control" id="movie_count" name="movie_count" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tv_count" class="form-label">电视剧采集数量</label>
+                            <input type="number" class="form-control" id="tv_count" name="tv_count" min="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDoubanSettings()">保存设置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block scripts %}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- 数据传递到JavaScript -->
+    <script type="text/javascript">
+        // 将Django模板变量转换为JavaScript变量
+        window.commentKeywords = [];
+        window.ratingTrends = [];
+        window.strategyWordcloudData = {};
+        
+        {% if comment_keywords %}
+            window.commentKeywords = [
+                {% for item in comment_keywords %}
+                    {
+                        name: "{{ item.name|escapejs }}",
+                        value: {{ item.value|default:"1" }}
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            console.log("词云数据加载成功，共 " + window.commentKeywords.length + " 个关键词");
+        {% endif %}
+        
+        {% if rating_trends %}
+            window.ratingTrends = [
+                {% for item in rating_trends %}
+                    {
+                        date: "{{ item.date|escapejs }}",
+                        rating: {{ item.rating|default:"0"|stringformat:"%.1f" }},
+                        count: {{ item.count|default:"0" }}
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ];
+            console.log("评分趋势数据加载成功，共 " + window.ratingTrends.length + " 个数据点");
+        {% endif %}
+
+        // 策略词云数据初始化
+        window.strategyWordcloudData = {
+            sequential: {{ sequential_wordcloud|default:"[]"|safe }},
+            random_pages: {{ random_pages_wordcloud|default:"[]"|safe }},
+            random_interval: {{ random_interval_wordcloud|default:"[]"|safe }},
+            random_block: {{ random_block_wordcloud|default:"[]"|safe }}
+        };
+        
+        // 主词云数据
+        window.wordcloudData = {{ comment_keywords|default:"[]"|safe }};
+    </script>
+    
+    <!-- 引入自定义JS -->
+    <script src="{% static 'js/douban_detail.js' %}"></script>
+    {% endblock %}
+</body>
+</html> 

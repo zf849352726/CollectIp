@@ -1,0 +1,486 @@
+2025-03-24 21:19:04,123 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:19:04,125 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:19:04,126 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:19:04,782 - ip_crawler - INFO - 爬虫进程已完成
+2025-03-24 21:26:06,124 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:26:06,125 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:26:06,126 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:26:06,766 - ip_crawler - INFO - 爬虫进程已完成
+2025-03-24 21:28:01,629 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:28:01,630 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:28:01,631 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:28:02,404 - ip_crawler - INFO - 爬虫进程已完成
+2025-03-24 21:34:22,645 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:34:22,646 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:22,646 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:24,069 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:24,070 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:24,070 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:25,516 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:25,528 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:25,529 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:26,956 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:26,958 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:26,958 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:28,504 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:28,505 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:28,506 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:30,159 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:30,160 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:30,161 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:31,832 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:31,833 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:31,834 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:33,498 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:33,499 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:33,499 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:35,195 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:35,196 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:35,197 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:36,798 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:36,813 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:36,813 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:38,549 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:38,550 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:38,562 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:40,474 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:40,475 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:40,476 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:42,318 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:42,319 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:42,320 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:44,040 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:44,045 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:44,046 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:45,879 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:45,880 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:45,880 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:47,802 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:47,803 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:47,803 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:49,740 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:49,740 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:49,741 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:51,579 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:51,580 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:51,581 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:53,358 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:53,358 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:53,358 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:55,182 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:55,183 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:55,183 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:57,053 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:57,054 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:57,054 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:34:58,898 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:34:58,899 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:34:58,900 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:00,835 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:00,836 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:00,836 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:02,812 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:02,813 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:02,814 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:04,812 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:04,813 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:04,813 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:06,846 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:06,847 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:06,847 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:08,824 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:08,826 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:08,831 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:11,036 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:11,037 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:11,037 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:13,279 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:13,280 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:13,281 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:15,636 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:15,637 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:15,638 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:18,389 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:18,389 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:18,390 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:20,663 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:20,664 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:20,665 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:22,968 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:22,969 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:22,969 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:25,272 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:25,273 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:25,273 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:27,525 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:27,526 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:27,527 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:29,933 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:29,934 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:29,935 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:32,202 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:32,202 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:32,203 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:36,868 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:36,869 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:36,869 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:45,132 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:35:45,133 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:45,134 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:46,506 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:46,507 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:46,508 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:47,909 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:47,909 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:47,910 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:49,392 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:49,393 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:49,394 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:50,828 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:50,828 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:50,829 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:52,249 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:52,250 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:52,250 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:53,759 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:53,760 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:53,760 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:55,256 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:55,257 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:55,257 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:56,793 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:56,793 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:56,794 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:35:58,400 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:35:58,401 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:35:58,401 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:00,038 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:00,039 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:00,039 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:01,657 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:01,657 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:01,658 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:03,272 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:03,272 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:03,273 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:04,903 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:04,906 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:04,907 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:06,596 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:06,597 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:06,597 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:08,298 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:08,299 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:08,299 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:10,071 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:10,071 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:10,071 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:11,850 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:11,851 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:11,852 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:13,601 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:36:13,602 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:36:13,602 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:36:14,287 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 21:36:18,128 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,257 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,378 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,509 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,661 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,815 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:18,947 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,077 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,201 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,329 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,456 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,591 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,716 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,838 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:19,960 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:20,097 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:36:20,248 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:38:08,222 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp
+2025-03-24 21:38:08,223 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:08,224 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:09,440 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:09,440 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:09,441 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:10,738 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:10,739 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:10,739 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:12,052 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:12,053 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:12,054 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:13,626 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:13,627 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:13,628 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:15,370 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:15,371 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:15,372 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:16,944 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:16,946 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:16,946 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:18,662 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:18,664 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:18,665 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:20,502 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:20,503 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:20,503 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:22,288 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:22,288 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:22,290 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:24,399 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:24,399 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:24,400 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:26,197 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:26,198 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:26,199 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:27,977 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:27,978 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:27,979 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:29,984 - ip_crawler - INFO - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-03-24 21:38:29,985 - ip_crawler - INFO - 设置要爬取的类型: qq
+2025-03-24 21:38:29,985 - ip_crawler - INFO - 启动爬虫子进程: collectip
+2025-03-24 21:38:31,289 - ip_crawler - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 21:38:53,478 - ip_crawler - INFO - 爬虫进程已完成
+2025-03-24 21:48:29,785 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:31,108 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:32,334 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:33,564 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:34,872 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:36,313 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:37,726 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:39,284 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:40,786 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:42,334 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:44,298 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:46,205 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:47,955 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:50,002 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:51,844 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:53,791 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:56,528 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:48:59,943 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:02,383 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:05,523 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:07,816 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:10,625 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:13,468 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:17,620 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:21,350 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:24,691 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:27,541 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:31,298 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:35,810 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:39,471 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:42,254 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:44,876 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:47,293 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 21:49:47,776 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:52,101 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:55,435 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:49:58,657 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:01,531 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:04,268 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:09,191 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:13,157 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:16,650 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 21:50:17,711 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:34,336 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:35,610 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:36,848 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:38,193 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:39,510 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:40,815 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:42,209 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:43,536 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:44,996 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:46,485 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:47,953 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:49,459 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:51,029 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:52,570 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:04:53,358 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:04:55,519 - WARNING - IP爬取完成，类型: qq
+2025-03-24 22:04:55,678 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:55,838 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:55,986 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:56,198 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:56,355 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:56,524 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:56,685 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:56,853 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:57,052 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:04:57,227 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:08:35,928 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:37,365 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:38,659 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:39,966 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:41,383 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:42,958 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:44,696 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:46,440 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:48,085 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:49,737 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:51,366 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:53,276 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:55,287 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:08:56,177 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:08:56,458 - ERROR - 爬虫进程异常退出，退出码: 1
+2025-03-24 22:23:03,492 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:04,772 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:06,126 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:07,408 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:08,740 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:10,185 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:11,650 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:13,592 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:15,308 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:17,180 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:18,999 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:20,853 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:22,598 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:24,410 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:26,555 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:28,850 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:31,391 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:33,925 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:35,991 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:38,329 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:40,400 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:42,598 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:44,712 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:47,736 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:23:48,365 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,393 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,578 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,669 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,712 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,774 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,867 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,929 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:48,967 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:49,034 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:23:49,166 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-24 22:26:59,402 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:28:29,215 - WARNING - IP爬取完成，类型: qq
+2025-03-24 22:33:40,314 - WARNING - 开始爬取IP，类型: qq
+2025-03-24 22:35:09,492 - WARNING - IP爬取完成，类型: qq
+2025-03-25 19:06:13,302 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:15,059 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:16,734 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:18,648 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:21,366 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:24,568 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:27,440 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:30,751 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:34,754 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:38,266 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:41,953 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:45,192 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:48,810 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:52,823 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:06:56,961 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:01,244 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:05,223 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:09,160 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:13,776 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:18,081 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:21,335 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:24,812 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:28,637 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:33,046 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:07:35,132 - WARNING - IP爬取完成，类型: qq
+2025-03-25 19:13:29,038 - WARNING - IP爬取完成，类型: qq
+2025-03-25 19:13:48,928 - WARNING - IP爬取完成，类型: qq
+2025-03-25 19:14:07,268 - WARNING - IP爬取完成，类型: qq
+2025-03-25 19:18:44,148 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:18:49,101 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:18:53,418 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:18:58,526 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:03,962 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:10,219 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:16,373 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:23,809 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:29,653 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:35,812 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:41,655 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:19:41,826 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-25 19:21:32,932 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:21:36,816 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:21:41,059 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:21:45,922 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:21:50,723 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:21:56,927 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:05,327 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:13,262 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:18,967 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:24,502 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:31,036 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:38,175 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:45,059 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:53,331 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:22:59,545 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:06,009 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:12,421 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:18,261 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:23,679 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:31,256 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:38,057 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:44,638 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:50,982 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:56,552 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:23:58,292 - ERROR - 爬虫进程异常退出，退出码: 3221225786
+2025-03-25 19:32:21,448 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:25,390 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:29,557 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:34,940 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:41,040 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:47,786 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:53,200 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:32:58,611 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:33:04,429 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:33:11,418 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:33:21,222 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:33:28,309 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:41:23,936 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 19:42:14,082 - WARNING - IP爬取完成，类型: qq
+2025-03-25 22:13:44,727 - WARNING - 开始爬取IP，类型: qq
+2025-03-25 22:13:44,735 - WARNING - 爬虫进程已启动，PID: 18592
+2025-03-25 22:14:17,338 - WARNING - 爬虫任务完成
+2025-03-26 19:52:43,687 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 19:52:43,707 - WARNING - 爬虫进程已启动，PID: 55284
+2025-03-26 19:53:26,348 - WARNING - 爬虫任务完成
+2025-03-26 20:35:06,695 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 20:35:06,894 - WARNING - 爬虫进程已启动，PID: 27060
+2025-03-26 20:35:41,362 - WARNING - 爬虫任务完成
+2025-03-26 20:44:31,485 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 20:44:31,496 - WARNING - 爬虫进程已启动，PID: 38380
+2025-03-26 20:45:12,540 - WARNING - 爬虫任务完成
+2025-03-26 20:46:06,214 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 20:46:06,357 - WARNING - 爬虫进程已启动，PID: 22988
+2025-03-26 20:47:11,403 - WARNING - 爬虫任务完成
+2025-03-26 20:55:43,741 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 20:55:43,755 - WARNING - 爬虫进程已启动，PID: 42160
+2025-03-26 20:57:56,983 - WARNING - 爬虫任务完成
+2025-03-26 21:31:00,995 - WARNING - 开始爬取IP，类型: qq
+2025-03-26 21:31:01,164 - WARNING - 爬虫进程已启动，PID: 21372
+2025-03-26 21:33:01,084 - WARNING - 爬虫任务完成
+2025-03-27 09:10:53,063 - WARNING - 开始爬取IP，类型: qq
+2025-03-27 09:10:53,074 - WARNING - 爬虫进程已启动，PID: 27068
+2025-03-27 09:12:34,777 - WARNING - 爬虫任务完成
+2025-03-27 09:23:34,642 - WARNING - 开始爬取IP，类型: qq
+2025-03-27 09:23:34,659 - WARNING - 爬虫进程已启动，PID: 13684
+2025-03-27 09:25:06,858 - WARNING - 爬虫任务完成
+2025-03-27 10:17:52,646 - WARNING - 开始爬取IP，类型: qq
+2025-03-27 10:17:52,664 - WARNING - 爬虫进程已启动，PID: 28900
+2025-03-27 10:20:01,927 - WARNING - 爬虫任务完成
+2025-03-28 15:11:09,737 - WARNING - 开始爬取IP，类型: qq
+2025-03-28 15:11:09,774 - WARNING - 爬虫进程已启动，PID: 25900
+2025-03-28 15:11:55,476 - WARNING - 爬虫任务完成
+2025-03-28 15:12:46,804 - WARNING - 开始爬取IP，类型: qq
+2025-03-28 15:12:46,808 - WARNING - 爬虫进程已启动，PID: 27792
+2025-03-28 15:13:20,550 - WARNING - 爬虫任务完成
+2025-03-29 12:47:57,858 - WARNING - 开始爬取IP，类型: qq
+2025-03-29 12:47:57,866 - WARNING - 爬虫进程已启动，PID: 3192
+2025-03-29 12:48:26,604 - WARNING - 爬虫任务完成

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 """
-Chrome进程监控和清理脚本
-特别针对WebDriver启动的Chrome进程进行监控和清理
+Chrome进程监控和清理工具
+- 监控并清理WebDriver启动的Chrome进程
+- 支持一次性清理和持续监控模式
+- 可处理锁文件目录管理
 """
 
 import os
@@ -17,6 +19,7 @@ from pathlib import Path
 # 设置路径
 BASE_DIR = Path(__file__).resolve().parent
 LOG_DIR = BASE_DIR / 'logs'
+LOCKS_DIR = BASE_DIR / 'locks'
 LOG_DIR.mkdir(exist_ok=True)
 LOG_FILE = LOG_DIR / 'chrome_monitor.log'
 
@@ -91,10 +94,12 @@ def kill_process(proc, force=False):
             'pid': proc.pid,
             'name': proc.name(),
             'cmdline': ' '.join(proc.cmdline()) if hasattr(proc, 'cmdline') else '',
-            'age': f"{get_process_age(proc):.1f} 分钟"
+            'age': f"{get_process_age(proc):.1f} 分钟",
+            'memory': f"{proc.memory_info().rss / (1024 * 1024):.2f} MB"
         }
         
-        logger.info(f"终止进程: PID={proc_info['pid']}, 名称={proc_info['name']}, 运行时间={proc_info['age']}")
+        logger.info(f"终止进程: PID={proc_info['pid']}, 名称={proc_info['name']}, "
+                    f"运行时间={proc_info['age']}, 内存={proc_info['memory']}")
         
         if force:
             if platform.system() == 'Windows':
@@ -165,12 +170,40 @@ def monitor_chrome_processes(interval=300, max_age=30, max_count=5):
             logger.error(f"监控过程中出错: {e}")
             time.sleep(interval)
 
+def manage_locks_directory():
+    """管理爬虫锁文件目录，创建目录并清理过期锁文件"""
+    try:
+        # 创建locks目录
+        LOCKS_DIR.mkdir(exist_ok=True)
+        logger.info(f"锁文件目录已确保存在: {LOCKS_DIR}")
+        
+        # 清理过期的锁文件
+        current_time = datetime.now()
+        expired_count = 0
+        
+        for lock_file in LOCKS_DIR.glob("*.lock"):
+            file_time = datetime.fromtimestamp(lock_file.stat().st_mtime)
+            
+            # 如果锁文件超过1小时，删除它
+            if (current_time - file_time).total_seconds() > 3600:
+                lock_file.unlink()
+                expired_count += 1
+                
+        if expired_count > 0:
+            logger.info(f"已删除 {expired_count} 个过期锁文件")
+            
+        return True
+    except Exception as e:
+        logger.error(f"管理锁文件目录失败: {e}")
+        return False
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Chrome进程监控和清理工具')
     
     # 命令行参数
     parser.add_argument('--clean', action='store_true', help='清理超时的Chrome进程')
     parser.add_argument('--monitor', action='store_true', help='持续监控Chrome进程')
+    parser.add_argument('--locks', action='store_true', help='只管理锁文件目录')
     parser.add_argument('--max-age', type=int, default=30, help='进程最大运行时间(分钟)')
     parser.add_argument('--max-count', type=int, default=5, help='最大允许的Chrome进程数量')
     parser.add_argument('--interval', type=int, default=300, help='监控间隔(秒)')
@@ -180,8 +213,13 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    # 管理锁文件目录
+    manage_locks_directory()
+    
     # 执行操作
-    if args.clean:
+    if args.locks:
+        logger.info("已完成锁文件目录管理")
+    elif args.clean:
         clean_chrome_processes(
             max_age=args.max_age, 
             force=args.force, 

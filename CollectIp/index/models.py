@@ -53,6 +53,8 @@ class Movie(models.Model):
     genre = models.CharField(max_length=100, verbose_name='类型')
     region = models.CharField(max_length=100, verbose_name='国家/地区')
     duration = models.CharField(max_length=50, verbose_name='片长')
+    poster_url = models.URLField(max_length=500, null=True, blank=True, verbose_name='海报URL')
+    summary = models.TextField(null=True, blank=True, verbose_name='剧情简介')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
@@ -68,6 +70,21 @@ class ProxySettings(models.Model):
     crawler_interval = models.IntegerField(default=3600)  # 爬虫间隔（秒）
     score_interval = models.IntegerField(default=1800)   # 评分间隔（秒）
     min_score = models.IntegerField(default=10)         # 最低分数
+    auto_crawler = models.BooleanField(default=False)   # 是否启用自动爬虫
+    auto_score = models.BooleanField(default=False)     # 是否启用自动评分
 
     class Meta:
         db_table = 'proxy_settings'
+
+class DoubanSettings(models.Model):
+    """豆瓣数据采集设置"""
+    crawl_interval = models.IntegerField(default=60, help_text="采集间隔（分钟）")
+    movie_count = models.IntegerField(default=10, help_text="电影采集数量")
+    tv_count = models.IntegerField(default=5, help_text="电视剧采集数量")
+    
+    class Meta:
+        verbose_name = "豆瓣设置"
+        verbose_name_plural = "豆瓣设置"
+        
+    def __str__(self):
+        return "豆瓣采集设置"

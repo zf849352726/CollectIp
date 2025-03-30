@@ -56,8 +56,12 @@
                 <!-- IP管理表格 -->
                 <div class="table-container">
                     <div class="table-actions">
-                        <button class="btn btn-primary" onclick="runOneCrawl()">立即采集一次</button>
-                        <button class="btn btn-primary" onclick="runOneScore()">立即打分一次</button>
+                        <button class="btn btn-primary" id="runCrawlBtn" onclick="runOneCrawl()">
+                            立即采集一次
+                        </button>
+                        <button class="btn btn-primary" id="scoreBtn" onclick="runOneScore()">
+                            立即打分一次
+                        </button>
                         <button class="btn btn-primary" onclick="openSettingsModal()">设置</button>
                         {% csrf_token %}
                         <div class="search-box">
@@ -139,9 +143,17 @@
                         <label for="crawler_interval" class="form-label">爬虫间隔（秒）</label>
                         <input type="number" class="form-control" id="crawler_interval" name="crawler_interval" min="60">
                     </div>
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="auto_crawler" name="auto_crawler">
+                        <label class="form-check-label" for="auto_crawler">启用自动爬虫</label>
+                    </div>
                     <div class="mb-3">
                         <label for="score_interval" class="form-label">评分间隔（秒）</label>
                         <input type="number" class="form-control" id="score_interval" name="score_interval" min="60">
+                    </div>
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="auto_score" name="auto_score">
+                        <label class="form-check-label" for="auto_score">启用自动评分</label>
                     </div>
                     <div class="mb-3">
                         <label for="min_score" class="form-label">最低分数（0-100）</label>
@@ -162,4 +174,24 @@
 {% block scripts %}
 {{ block.super }}
 <script src="{% static 'js/ip_pool.js' %}"></script>
+<script>
+// 确保DOM加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('IP池页面加载完成，检查按钮元素');
+    
+    // 调试信息
+    const crawlBtn = document.getElementById('runCrawlBtn');
+    if (crawlBtn) {
+        console.log('采集按钮已找到', crawlBtn);
+        const spinner = crawlBtn.querySelector('.spinner-border');
+        if (spinner) {
+            console.log('加载动画元素已找到', spinner);
+        } else {
+            console.warn('未找到加载动画元素');
+        }
+    } else {
+        console.warn('未找到采集按钮');
+    }
+});
+</script>
 {% endblock %}

@@ -1,12 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title|default:"豆瓣数据分析" }}</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
+    {% csrf_token %}
 </head>
 <body>
     <!-- 顶部标题栏 -->
@@ -53,18 +54,212 @@
                 <h2>{{ page_title|default:"豆瓣数据" }}</h2>
             </div>
             <div class="content-body">
-                {% if active_menu == 'movie_list' %}
-                    <!-- 电影列表内容 -->
+                {% if error %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                {% if active_menu == 'douban_overview' %}
+                    <!-- 数据概览内容 -->
+                    <div class="movie-collect-area">
+                        <h5>快速采集电影数据</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="commentStrategy" class="form-label">评论采集策略</label>
+                                <select class="form-select" id="commentStrategy">
+                                    <option value="sequential" selected>顺序采集策略 - 从第一页开始连续采集</option>
+                                    <option value="random_pages">随机页码策略 - 随机选择若干页</option>
+                                    <option value="random_interval">随机间隔策略 - 以随机间隔跳页采集</option>
+                                    <option value="random_block">随机区块策略 - 随机选择起始页并连续采集</option>
+                                    <option value="random">随机选择策略 - 系统随机使用以上策略</option>
+                                </select>
+                                <div class="form-text">选择不同的采集策略可以帮助避免反爬措施</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 参数配置区域 -->
+                        <div class="row mb-3" id="strategyParams">
+                            <div class="col-md-6 sequential-param">
+                                <label for="maxPages" class="form-label">最大页数</label>
+                                <input type="number" class="form-control" id="maxPages" min="1" max="20" value="5">
+                                <div class="form-text">设置最多采集多少页评论</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_pages-param" style="display:none;">
+                                <label for="sampleSize" class="form-label">采样页数</label>
+                                <input type="number" class="form-control" id="sampleSize" min="1" max="20" value="5">
+                                <div class="form-text">设置随机采集多少页评论</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_interval-param" style="display:none;">
+                                <label for="maxInterval" class="form-label">最大间隔</label>
+                                <input type="number" class="form-control" id="maxInterval" min="1" max="10" value="3">
+                                <div class="form-text">设置页面跳转的最大间隔</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_block-param" style="display:none;">
+                                <label for="blockSize" class="form-label">区块大小</label>
+                                <input type="number" class="form-control" id="blockSize" min="1" max="10" value="3">
+                                <div class="form-text">设置连续采集的页面数量</div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group mt-2">
+                            {% csrf_token %}
+                            <input type="text" id="movieName" class="form-control" placeholder="输入电影名称...">
+                            <button class="btn btn-primary" type="button" onclick="crawlMovieWithStrategy()">立即采集</button>
+                        </div>
+                        <small class="text-muted mt-1 d-block">输入电影名称，系统将自动从豆瓣获取电影信息</small>
+                        
+                        <!-- 添加状态显示区域 -->
+                        <div id="crawlStatus" class="mt-3"></div>
+                    </div>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <h3>总电影数量</h3>
+                            <div class="stat-number">{{ total_movies|default:"0" }}</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>本月采集</h3>
+                            <div class="stat-number">{{ monthly_movies|default:"0" }}</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>本周采集</h3>
+                            <div class="stat-number">{{ weekly_movies|default:"0" }}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 排名数据 -->
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">评分最高的电影</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        {% for movie in top_rated_movies %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                {{ movie.title }}
+                                                <span class="badge bg-primary rounded-pill">{{ movie.rating }}</span>
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item">暂无数据</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">最受欢迎的电影</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        {% for movie in most_popular_movies %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                {{ movie.title }}
+                                                <span class="badge bg-info rounded-pill">{{ movie.rating_count }}</span>
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item">暂无数据</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">最新更新的电影</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        {% for movie in latest_movies %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                {{ movie.title }}
+                                                <small class="text-muted">{{ movie.updated_at|date:"m-d H:i" }}</small>
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item">暂无数据</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% elif active_menu == 'movie_list' %}
+                    <!-- 电影采集区域 -->
+                    <div class="movie-collect-area">
+                        <h5>采集新电影数据</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="commentStrategy" class="form-label">评论采集策略</label>
+                                <select class="form-select" id="commentStrategy">
+                                    <option value="sequential" selected>顺序采集策略 - 从第一页开始连续采集</option>
+                                    <option value="random_pages">随机页码策略 - 随机选择若干页</option>
+                                    <option value="random_interval">随机间隔策略 - 以随机间隔跳页采集</option>
+                                    <option value="random_block">随机区块策略 - 随机选择起始页并连续采集</option>
+                                    <option value="random">随机选择策略 - 系统随机使用以上策略</option>
+                                </select>
+                                <div class="form-text">选择不同的采集策略可以帮助避免反爬措施</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 参数配置区域 -->
+                        <div class="row mb-3" id="strategyParams">
+                            <div class="col-md-6 sequential-param">
+                                <label for="maxPages" class="form-label">最大页数</label>
+                                <input type="number" class="form-control" id="maxPages" min="1" max="20" value="5">
+                                <div class="form-text">设置最多采集多少页评论</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_pages-param" style="display:none;">
+                                <label for="sampleSize" class="form-label">采样页数</label>
+                                <input type="number" class="form-control" id="sampleSize" min="1" max="20" value="5">
+                                <div class="form-text">设置随机采集多少页评论</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_interval-param" style="display:none;">
+                                <label for="maxInterval" class="form-label">最大间隔</label>
+                                <input type="number" class="form-control" id="maxInterval" min="1" max="10" value="3">
+                                <div class="form-text">设置页面跳转的最大间隔</div>
+                            </div>
+                            
+                            <div class="col-md-6 random_block-param" style="display:none;">
+                                <label for="blockSize" class="form-label">区块大小</label>
+                                <input type="number" class="form-control" id="blockSize" min="1" max="10" value="3">
+                                <div class="form-text">设置连续采集的页面数量</div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group mt-2">
+                            {% csrf_token %}
+                            <input type="text" id="movieName" class="form-control" placeholder="输入电影名称...">
+                            <button class="btn btn-primary" type="button" onclick="crawlMovieWithStrategy()">立即采集</button>
+                        </div>
+                        <small class="text-muted mt-1 d-block">输入电影名称，系统将自动从豆瓣获取电影信息</small>
+                        
+                        <!-- 添加状态显示区域 -->
+                        <div id="crawlStatus" class="mt-3"></div>
+                    </div>
+                    
+                    {% if not movies %}
+                    <div class="alert alert-warning">
+                        <strong>提示:</strong> 暂无电影数据。请通过上方输入框采集电影数据。
+                    </div>
+                    {% else %}
+                    <!-- 电影列表表格 -->
                     <div class="table-container">
                         <div class="table-actions">
-                            <div class="input-group">
-                                <input type="text" id="movieName" class="form-control" placeholder="输入电影名称...">
-                                <button class="btn btn-primary" onclick="crawlMovie()">采集数据</button>
-                            </div>
                             <div class="search-box">
                                 <input type="text" placeholder="搜索电影...">
                             </div>
                         </div>
+                        
                         <table class="data-table">
                             <thead>
                                 <tr>
@@ -93,9 +288,9 @@
                                     <td>{{ movie.genre }}</td>
                                     <td>{{ movie.region }}</td>
                                     <td>{{ movie.duration }}</td>
-                                    <td>{{ movie.update_time }}</td>
+                                    <td>{{ movie.updated_at|date:"Y-m-d H:i" }}</td>
                                     <td>
-                                        <button class="btn-icon" title="详情">📋</button>
+                                        <a href="/douban/movies/{{ movie.id }}/" class="btn-icon" title="详情">📋</a>
                                         <button class="btn-icon" title="更新">🔄</button>
                                         <button class="btn-icon" title="删除">🗑️</button>
                                     </td>
@@ -166,6 +361,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -208,6 +404,136 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/douban.js' %}"></script>
+    <script>
+    // 根据选择的策略显示或隐藏相应的参数输入框
+    document.getElementById('commentStrategy').addEventListener('change', function() {
+        // 隐藏所有参数区域
+        var paramAreas = document.querySelectorAll('[class$="-param"]');
+        paramAreas.forEach(function(area) {
+            area.style.display = 'none';
+        });
+        
+        // 显示当前选择的策略参数区域
+        var strategy = this.value;
+        if (strategy === 'random') {
+            // 随机策略不需要额外参数
+            return;
+        }
+        
+        var strategyParams = document.getElementsByClassName(strategy + '-param');
+        for (var i = 0; i < strategyParams.length; i++) {
+            strategyParams[i].style.display = 'block';
+        }
+    });
+
+    // 带策略参数的电影采集函数
+    function crawlMovieWithStrategy() {
+        // 尝试从不同的输入框获取电影名称，兼容不同页面
+        var movieNameElement = document.getElementById('movieName');
+        var homeMovieNameElement = document.getElementById('homeMovieName');
+        
+        var movieName = '';
+        if (movieNameElement && movieNameElement.value.trim()) {
+            movieName = movieNameElement.value.trim();
+        } else if (homeMovieNameElement && homeMovieNameElement.value.trim()) {
+            movieName = homeMovieNameElement.value.trim();
+        }
+        
+        if (!movieName) {
+            alert('请输入电影名称');
+            return;
+        }
+        
+        // 获取选择的策略和参数
+        var strategy = document.getElementById('commentStrategy').value;
+        var params = {};
+        
+        // 根据不同策略获取参数
+        if (strategy === 'sequential') {
+            params.max_pages = document.getElementById('maxPages').value;
+        } else if (strategy === 'random_pages') {
+            params.sample_size = document.getElementById('sampleSize').value;
+        } else if (strategy === 'random_interval') {
+            params.max_interval = document.getElementById('maxInterval').value;
+            params.max_pages = document.getElementById('maxPages').value;
+        } else if (strategy === 'random_block') {
+            params.block_size = document.getElementById('blockSize').value;
+        }
+        
+        // 获取状态元素并确保其存在
+        var statusElement = document.getElementById('crawlStatus');
+        if (statusElement) {
+            statusElement.innerHTML = '<div class="alert alert-info">正在采集电影 <strong>' + 
+                movieName + '</strong> 的信息，请稍候...</div>';
+        } else {
+            console.warn('找不到crawlStatus元素，无法显示状态更新');
+        }
+        
+        // 发送采集请求，包含策略参数
+        fetch('/crawl_movie/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                movie_name: movieName,
+                comment_strategy: strategy,
+                strategy_params: params
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success' || data.success === true) {
+                if (statusElement) {
+                    // 处理成功响应
+                    var successMessage = data.message || '采集已开始，请稍后查看结果';
+                    var movieId = data.movie_id;
+                    
+                    if (movieId) {
+                        statusElement.innerHTML = '<div class="alert alert-success">采集完成！<a href="/douban/movies/' + 
+                            movieId + '/">查看电影详情</a></div>';
+                    } else {
+                        statusElement.innerHTML = '<div class="alert alert-success">' + successMessage + '</div>';
+                    }
+                } else {
+                    alert('采集请求已发送');
+                }
+            } else {
+                if (statusElement) {
+                    // 处理错误响应
+                    var errorMessage = data.message || data.error || '未知错误';
+                    statusElement.innerHTML = '<div class="alert alert-warning">提示：' + errorMessage + '</div>';
+                } else {
+                    alert('采集请求出现问题：' + (data.message || data.error || '未知错误'));
+                }
+            }
+        })
+        .catch(error => {
+            if (statusElement) {
+                statusElement.innerHTML = '<div class="alert alert-danger">请求出错：' + error.message + '</div>';
+            } else {
+                alert('请求出错：' + error.message);
+            }
+        });
+    }
+
+    // 获取CSRF Token的辅助函数
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
     {% endblock %}
 </body>
 </html> 

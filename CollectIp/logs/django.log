@@ -1,0 +1,1607 @@
+INFO 2025-03-25 19:32:21,482 autoreload 39296 32184 Watching for file changes with StatReloader
+INFO 2025-03-25 19:48:18,025 autoreload 20324 22924 Watching for file changes with StatReloader
+INFO 2025-03-25 19:48:34,826 autoreload 11680 35296 Watching for file changes with StatReloader
+WARNING 2025-03-25 19:49:29,519 log 11680 36528 Not Found: /favicon.ico
+WARNING 2025-03-25 19:49:29,521 basehttp 11680 36528 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-25 19:49:31,275 basehttp 11680 36528 "GET / HTTP/1.1" 200 17654
+INFO 2025-03-25 19:49:32,817 basehttp 11680 36528 "GET /ip_pool/ HTTP/1.1" 200 19883
+INFO 2025-03-25 19:49:37,960 basehttp 11680 39916 "GET /ip_pool/manage/ HTTP/1.1" 200 30704
+INFO 2025-03-25 19:49:43,281 basehttp 11680 39916 "GET /proxy_settings/ HTTP/1.1" 200 94
+INFO 2025-03-25 19:49:46,033 basehttp 11680 39916 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 19:49:48,569 basehttp 11680 39916 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 19:49:54,789 basehttp 11680 39916 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 19:49:57,089 basehttp 11680 39916 "GET /ip_pool/ HTTP/1.1" 200 19883
+INFO 2025-03-25 19:50:00,358 basehttp 11680 39916 "GET /ip_pool/manage/ HTTP/1.1" 200 30704
+INFO 2025-03-25 19:50:01,572 basehttp 11680 39916 "GET /ip_pool/manage/?page=40 HTTP/1.1" 200 29792
+INFO 2025-03-25 19:50:11,416 basehttp 11680 39916 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 30711
+INFO 2025-03-25 19:50:13,463 basehttp 11680 39916 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 30911
+INFO 2025-03-25 19:50:14,565 basehttp 11680 39916 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 30903
+INFO 2025-03-25 19:50:15,392 basehttp 11680 39916 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 30887
+INFO 2025-03-25 19:50:18,384 basehttp 11680 39916 "GET /ip_pool/manage/?page=40 HTTP/1.1" 200 29792
+INFO 2025-03-25 19:50:19,959 basehttp 11680 39916 "GET /ip_pool/manage/?page=39 HTTP/1.1" 200 30943
+INFO 2025-03-25 19:50:21,213 basehttp 11680 39916 "GET /ip_pool/manage/?page=38 HTTP/1.1" 200 30939
+INFO 2025-03-25 19:50:22,062 basehttp 11680 39916 "GET /ip_pool/manage/?page=37 HTTP/1.1" 200 30865
+INFO 2025-03-25 19:50:22,811 basehttp 11680 39916 "GET /ip_pool/manage/?page=36 HTTP/1.1" 200 30946
+INFO 2025-03-25 19:50:24,258 basehttp 11680 39916 "GET /ip_pool/manage/?page=37 HTTP/1.1" 200 30865
+INFO 2025-03-25 19:50:25,114 basehttp 11680 39916 "GET /ip_pool/manage/?page=38 HTTP/1.1" 200 30939
+INFO 2025-03-25 19:50:26,516 basehttp 11680 39916 "GET /ip_pool/manage/?page=37 HTTP/1.1" 200 30865
+INFO 2025-03-25 19:50:27,614 basehttp 11680 39916 "GET /ip_pool/manage/?page=38 HTTP/1.1" 200 30939
+INFO 2025-03-25 19:50:53,883 basehttp 11680 39916 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 19:50:55,616 basehttp 11680 39916 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 19:51:49,339 basehttp 11680 39916 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-25 19:51:50,180 basehttp 11680 39916 "GET /__debug__/history_sidebar/?store_id=597d34c02f224fd4a517dc323f0aa682 HTTP/1.1" 200 9827
+INFO 2025-03-25 19:52:00,209 basehttp 11680 39916 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 19:52:04,540 basehttp 11680 39916 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 19:52:24,170 basehttp 11680 39916 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 19:52:25,503 basehttp 11680 39916 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 19:52:26,187 basehttp 11680 39916 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 19:52:27,952 basehttp 11680 39916 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 19:52:28,806 basehttp 11680 39916 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 19:52:30,668 basehttp 11680 39916 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 19:59:21,835 basehttp 11680 33848 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 19:59:22,725 basehttp 11680 33848 "GET /ip_pool/ HTTP/1.1" 200 19883
+INFO 2025-03-25 19:59:24,860 basehttp 11680 33848 "GET /ip_pool/manage/ HTTP/1.1" 200 30704
+INFO 2025-03-25 19:59:27,163 basehttp 11680 33848 "GET /proxy_settings/ HTTP/1.1" 200 94
+INFO 2025-03-25 19:59:27,392 basehttp 11680 33848 "GET /__debug__/history_sidebar/?store_id=5d22765fed5048019f5b06b6368c1f2f HTTP/1.1" 200 9830
+INFO 2025-03-25 20:00:22,315 basehttp 11680 33848 "GET /proxy_settings/ HTTP/1.1" 200 94
+INFO 2025-03-25 20:00:22,545 basehttp 11680 33848 "GET /__debug__/history_sidebar/?store_id=add794b5a24d4e5abe17e872e188c788 HTTP/1.1" 200 9830
+INFO 2025-03-25 20:01:16,949 basehttp 11680 33848 "GET /ip_pool/manage/ HTTP/1.1" 200 31302
+INFO 2025-03-25 20:01:18,480 basehttp 11680 33848 "GET /proxy_settings/ HTTP/1.1" 200 94
+INFO 2025-03-25 20:01:18,693 basehttp 11680 33848 "GET /__debug__/history_sidebar/?store_id=b29e569717b04ae18aa3c2eeaf9d7400 HTTP/1.1" 200 9830
+INFO 2025-03-25 20:05:56,533 autoreload 11680 35296 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:05:57,523 autoreload 26200 9292 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:16,468 autoreload 26200 9292 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:17,436 autoreload 38328 26968 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:21,802 autoreload 38328 26968 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:22,489 autoreload 23712 20616 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:25,600 autoreload 23712 20616 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:26,483 autoreload 38728 39052 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:29,930 autoreload 38728 39052 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:30,938 autoreload 38968 15684 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:45,770 autoreload 38968 15684 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:46,653 autoreload 39900 5712 Watching for file changes with StatReloader
+INFO 2025-03-25 20:06:55,480 autoreload 39900 5712 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:06:56,410 autoreload 2184 34960 Watching for file changes with StatReloader
+INFO 2025-03-25 20:07:01,589 autoreload 2184 34960 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:07:02,625 autoreload 10116 30984 Watching for file changes with StatReloader
+INFO 2025-03-25 20:07:05,090 autoreload 10116 30984 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:07:05,760 autoreload 32888 24732 Watching for file changes with StatReloader
+INFO 2025-03-25 20:07:44,025 basehttp 32888 25768 "GET /ip_pool/manage/ HTTP/1.1" 200 31303
+INFO 2025-03-25 20:07:45,065 basehttp 32888 25768 "GET /proxy_settings/ HTTP/1.1" 200 85
+INFO 2025-03-25 20:07:48,632 basehttp 32888 25768 "GET /__debug__/history_sidebar/?store_id=50057e764d7a453e8b0eb673f24374f2 HTTP/1.1" 200 9830
+INFO 2025-03-25 20:07:49,164 basehttp 32888 25768 "GET /proxy_settings/ HTTP/1.1" 200 85
+INFO 2025-03-25 20:07:52,137 basehttp 32888 25768 "GET /__debug__/history_sidebar/?store_id=fd11e302f1eb4877863e1f2b3d311b26 HTTP/1.1" 200 9830
+INFO 2025-03-25 20:08:51,653 basehttp 32888 25768 "GET /proxy_settings/ HTTP/1.1" 200 85
+INFO 2025-03-25 20:10:18,187 autoreload 32888 24732 D:\python_learn\CollectIp\CollectIp\index\models.py changed, reloading.
+INFO 2025-03-25 20:10:19,258 autoreload 39296 32392 Watching for file changes with StatReloader
+INFO 2025-03-25 20:12:54,436 basehttp 39296 38256 "GET /__debug__/history_sidebar/?store_id=cadfd240deff4f7192639d484487bd17 HTTP/1.1" 200 2
+INFO 2025-03-25 20:15:09,667 basehttp 39296 38256 "GET /proxy_settings/ HTTP/1.1" 200 138
+INFO 2025-03-25 20:15:09,890 basehttp 39296 38256 "GET /__debug__/history_sidebar/?store_id=e93b10646808476b9def62c1b337662b HTTP/1.1" 200 9832
+INFO 2025-03-25 20:20:49,495 basehttp 39296 17048 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:21:07,408 basehttp 39296 17048 "GET /wechat/ HTTP/1.1" 200 17748
+INFO 2025-03-25 20:21:07,433 basehttp 39296 17048 "GET /static/css/wechatstyle.css HTTP/1.1" 304 0
+INFO 2025-03-25 20:21:11,523 basehttp 39296 17048 "GET /wechat/overview/ HTTP/1.1" 200 15043
+INFO 2025-03-25 20:21:17,501 autoreload 39296 32392 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 20:21:19,969 autoreload 32752 38388 Watching for file changes with StatReloader
+INFO 2025-03-25 20:21:21,116 basehttp 32752 33172 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 20:23:31,275 autoreload 32752 38388 D:\python_learn\CollectIp\CollectIp\ip_operator\scheduler.py changed, reloading.
+INFO 2025-03-25 20:23:32,196 autoreload 39376 33916 Watching for file changes with StatReloader
+INFO 2025-03-25 20:24:56,428 basehttp 39376 39388 "GET / HTTP/1.1" 200 17654
+INFO 2025-03-25 20:24:58,357 basehttp 39376 39388 "GET /wechat/ HTTP/1.1" 200 17748
+INFO 2025-03-25 20:24:59,781 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 15043
+INFO 2025-03-25 20:28:30,298 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:28:30,316 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 200 4266
+INFO 2025-03-25 20:28:32,720 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:28:33,435 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:28:36,039 basehttp 39376 39388 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:29:19,845 basehttp 39376 39388 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 20:29:28,889 basehttp 39376 39388 "GET /wechat/ HTTP/1.1" 200 22309
+INFO 2025-03-25 20:29:28,940 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:29:30,460 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:29:31,617 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:29:33,528 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:29:35,130 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:29:35,949 basehttp 39376 39388 "GET /wechat/media/ HTTP/1.1" 200 19758
+INFO 2025-03-25 20:29:36,615 basehttp 39376 39388 "GET /wechat/analysis/ HTTP/1.1" 200 19761
+INFO 2025-03-25 20:29:38,026 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:29:38,061 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:29:39,116 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:29:39,778 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:31:02,407 basehttp 39376 23344 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:31:02,453 basehttp 39376 23344 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:02,456 basehttp 39376 36684 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:02,458 basehttp 39376 12340 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:02,459 basehttp 39376 19968 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:02,486 basehttp 39376 36684 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:03,177 basehttp 39376 12340 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:03,781 basehttp 39376 23344 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 20:31:03,815 basehttp 39376 19968 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:03,816 basehttp 39376 36684 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:31:08,751 basehttp 39376 23344 "GET /wechat/ HTTP/1.1" 200 22309
+INFO 2025-03-25 20:31:08,792 basehttp 39376 12340 "GET /static/css/wechatstyle.css HTTP/1.1" 200 7068
+INFO 2025-03-25 20:31:08,814 basehttp 39376 12340 "GET /static/js/wechat.js HTTP/1.1" 200 4266
+INFO 2025-03-25 20:31:09,911 basehttp 39376 23344 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:31:10,708 basehttp 39376 23344 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:31:13,930 basehttp 39376 23344 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:31:14,488 basehttp 39376 23344 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:31:14,903 basehttp 39376 23344 "GET /wechat/media/ HTTP/1.1" 200 19758
+INFO 2025-03-25 20:31:15,400 basehttp 39376 23344 "GET /wechat/analysis/ HTTP/1.1" 200 19761
+INFO 2025-03-25 20:31:16,120 basehttp 39376 23344 "GET /wechat/analysis/ HTTP/1.1" 200 19761
+INFO 2025-03-25 20:31:16,472 basehttp 39376 23344 "GET /wechat/media/ HTTP/1.1" 200 19758
+INFO 2025-03-25 20:31:16,793 basehttp 39376 23344 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:31:17,119 basehttp 39376 23344 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:31:17,440 basehttp 39376 23344 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:31:17,768 basehttp 39376 23344 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:31:19,233 basehttp 39376 23344 "GET /wechat/articles/ HTTP/1.1" 200 20045
+INFO 2025-03-25 20:31:19,600 basehttp 39376 23344 "GET /wechat/media/ HTTP/1.1" 200 19758
+INFO 2025-03-25 20:31:19,897 basehttp 39376 23344 "GET /wechat/analysis/ HTTP/1.1" 200 19761
+INFO 2025-03-25 20:31:20,654 basehttp 39376 23344 "GET /wechat/overview/ HTTP/1.1" 200 19763
+INFO 2025-03-25 20:32:51,147 basehttp 39376 39388 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:32:52,413 basehttp 39376 39388 "GET /ip_pool/ HTTP/1.1" 200 20481
+INFO 2025-03-25 20:32:54,263 basehttp 39376 39388 "GET /ip_pool/manage/ HTTP/1.1" 200 31303
+INFO 2025-03-25 20:32:56,296 basehttp 39376 39388 "GET /proxy_settings/ HTTP/1.1" 200 138
+INFO 2025-03-25 20:32:56,514 basehttp 39376 39388 "GET /__debug__/history_sidebar/?store_id=b73221fc24f24990a9670d72390f3f6d HTTP/1.1" 200 9830
+INFO 2025-03-25 20:34:56,505 basehttp 39376 39388 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:34:57,840 basehttp 39376 39388 "GET /wechat/ HTTP/1.1" 200 22593
+INFO 2025-03-25 20:34:57,909 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 200 4393
+INFO 2025-03-25 20:34:59,548 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:35:00,914 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:35:01,417 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:35:01,723 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:35:02,075 basehttp 39376 39388 "GET /wechat/media/ HTTP/1.1" 200 19929
+INFO 2025-03-25 20:35:02,650 basehttp 39376 39388 "GET /wechat/analysis/ HTTP/1.1" 200 19932
+INFO 2025-03-25 20:35:02,684 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:35:04,043 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:35:23,269 basehttp 39376 39388 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:35:23,297 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:35:26,649 basehttp 39376 39388 "GET /wechat/media/ HTTP/1.1" 200 19929
+INFO 2025-03-25 20:35:29,682 basehttp 39376 39388 "GET /wechat/analysis/ HTTP/1.1" 200 19932
+INFO 2025-03-25 20:35:38,544 basehttp 39376 39388 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:35:38,575 basehttp 39376 39388 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:35:44,336 basehttp 39376 39388 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:35:46,169 basehttp 39376 39388 "GET /ip_pool/ HTTP/1.1" 200 20481
+INFO 2025-03-25 20:35:49,751 basehttp 39376 39388 "GET /ip_pool/manage/ HTTP/1.1" 200 31302
+INFO 2025-03-25 20:35:55,401 basehttp 39376 39388 "GET /ip_pool/monitoring/ HTTP/1.1" 200 19866
+INFO 2025-03-25 20:35:56,140 basehttp 39376 39388 "GET /ip_pool/logs/ HTTP/1.1" 200 19863
+INFO 2025-03-25 20:35:57,215 basehttp 39376 39388 "GET /ip_pool/monitoring/ HTTP/1.1" 200 19866
+INFO 2025-03-25 20:35:57,537 basehttp 39376 39388 "GET /proxy_settings/ HTTP/1.1" 200 138
+INFO 2025-03-25 20:36:04,066 basehttp 39376 39388 "GET /ip_pool/manage/ HTTP/1.1" 200 31302
+INFO 2025-03-25 20:36:06,810 basehttp 39376 39388 "GET /proxy_settings/ HTTP/1.1" 200 138
+INFO 2025-03-25 20:36:07,031 basehttp 39376 39388 "GET /__debug__/history_sidebar/?store_id=c1ca92b3593e41709f7f5429a53083f5 HTTP/1.1" 200 9830
+INFO 2025-03-25 20:36:10,208 basehttp 39376 39388 "POST /proxy_settings/ HTTP/1.1" 200 62
+INFO 2025-03-25 20:36:11,728 basehttp 39376 39388 "GET /__debug__/history_sidebar/?store_id=0e3ec1ad8e8c45f3b65989ae1ba8542c HTTP/1.1" 200 9831
+WARNING 2025-03-25 20:38:04,909 log 39376 34472 Not Found: /favicon.ico
+WARNING 2025-03-25 20:38:04,910 basehttp 39376 34472 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-25 20:38:07,857 basehttp 39376 2072 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:38:09,747 basehttp 39376 27772 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 20:38:12,137 basehttp 39376 27772 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 20:38:12,615 basehttp 39376 27772 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 20:38:13,043 basehttp 39376 27772 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 20:38:13,528 basehttp 39376 27772 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 20:38:13,886 basehttp 39376 27772 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 20:38:14,140 basehttp 39376 27772 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 20:38:18,679 basehttp 39376 27772 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:38:19,998 basehttp 39376 27772 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 20:41:17,281 basehttp 39376 36904 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:41:21,774 basehttp 39376 36904 "GET /wechat/ HTTP/1.1" 200 22593
+INFO 2025-03-25 20:41:21,803 basehttp 39376 36904 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:41:22,907 basehttp 39376 36904 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:41:23,393 basehttp 39376 36904 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:41:23,825 basehttp 39376 36904 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:41:24,121 basehttp 39376 36904 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:41:24,679 basehttp 39376 36904 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:41:28,035 basehttp 39376 36904 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:41:28,761 basehttp 39376 36904 "GET /wechat/media/ HTTP/1.1" 200 19929
+INFO 2025-03-25 20:41:29,340 basehttp 39376 36904 "GET /wechat/articles/ HTTP/1.1" 200 20329
+INFO 2025-03-25 20:41:29,678 basehttp 39376 36904 "GET /wechat/overview/ HTTP/1.1" 200 20216
+INFO 2025-03-25 20:51:37,355 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:51:37,372 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:51:55,237 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:52:02,163 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:52:03,415 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:52:05,882 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:52:23,762 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:52:24,320 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:52:25,750 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:52:26,286 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:52:26,683 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:52:26,961 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:52:27,190 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:55:56,359 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:55:56,376 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 200 7934
+INFO 2025-03-25 20:56:11,368 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:56:11,389 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:56:13,089 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:56:13,125 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:56:13,834 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:56:14,090 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:56:14,553 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:56:14,950 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:56:15,489 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:56:15,507 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:56:21,438 basehttp 39376 11472 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:56:22,845 basehttp 39376 11472 "GET /wechat/ HTTP/1.1" 200 23221
+INFO 2025-03-25 20:56:22,875 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:56:24,378 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:56:30,398 basehttp 39376 22156 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 20:56:32,175 basehttp 39376 22156 "GET /wechat/ HTTP/1.1" 200 23221
+INFO 2025-03-25 20:56:32,206 basehttp 39376 22156 "GET /static/js/wechat.js HTTP/1.1" 200 7934
+INFO 2025-03-25 20:56:33,192 basehttp 39376 22156 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:56:34,213 basehttp 39376 22156 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:59:08,296 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:59:08,314 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 20:59:09,491 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:59:10,037 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:59:10,525 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:59:12,994 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:59:24,724 basehttp 39376 11472 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 20:59:25,858 basehttp 39376 11472 "GET /wechat/media/ HTTP/1.1" 200 20770
+INFO 2025-03-25 20:59:26,472 basehttp 39376 11472 "GET /wechat/analysis/ HTTP/1.1" 200 20076
+INFO 2025-03-25 20:59:27,777 basehttp 39376 11472 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 20:59:27,821 basehttp 39376 11472 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 21:06:39,847 basehttp 39376 34760 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 21:06:39,909 basehttp 39376 34760 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 21:06:44,026 basehttp 39376 34760 "GET /wechat/articles/ HTTP/1.1" 200 21798
+INFO 2025-03-25 21:06:44,916 basehttp 39376 34760 "GET /wechat/overview/ HTTP/1.1" 200 21914
+INFO 2025-03-25 22:08:39,487 autoreload 41656 9812 Watching for file changes with StatReloader
+INFO 2025-03-25 22:08:44,478 basehttp 41656 28888 "GET /wechat/overview/ HTTP/1.1" 200 25400
+INFO 2025-03-25 22:08:44,499 basehttp 41656 28888 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-25 22:08:49,710 basehttp 41656 28888 "GET /wechat/articles/ HTTP/1.1" 200 25283
+INFO 2025-03-25 22:08:55,829 basehttp 41656 28888 "GET /wechat/media/ HTTP/1.1" 200 24255
+INFO 2025-03-25 22:08:56,945 basehttp 41656 28888 "GET /wechat/analysis/ HTTP/1.1" 200 23561
+INFO 2025-03-25 22:08:59,246 basehttp 41656 28888 "GET /wechat/overview/ HTTP/1.1" 200 25399
+INFO 2025-03-25 22:09:27,386 basehttp 41656 28888 "GET /wechat/overview/ HTTP/1.1" 200 25399
+INFO 2025-03-25 22:09:32,883 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:09:34,269 basehttp 41656 28888 "GET /wechat/ HTTP/1.1" 200 26706
+INFO 2025-03-25 22:09:44,405 basehttp 41656 28888 "GET /wechat/overview/ HTTP/1.1" 200 25399
+INFO 2025-03-25 22:09:45,205 basehttp 41656 28888 "GET /wechat/articles/ HTTP/1.1" 200 25283
+INFO 2025-03-25 22:09:48,156 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:09:49,905 basehttp 41656 28888 "GET /douban/ HTTP/1.1" 200 20575
+INFO 2025-03-25 22:09:49,920 basehttp 41656 28888 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-25 22:09:49,922 basehttp 41656 28888 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-25 22:09:53,890 basehttp 41656 28888 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:09:54,397 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:09:56,682 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:09:58,783 basehttp 41656 28888 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 22:10:09,489 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:10:10,275 basehttp 41656 28888 "GET /ip_pool/ HTTP/1.1" 200 20481
+INFO 2025-03-25 22:10:10,303 basehttp 41656 28888 "GET /static/js/ip_pool.js HTTP/1.1" 200 4019
+INFO 2025-03-25 22:10:11,620 basehttp 41656 28888 "GET /ip_pool/manage/ HTTP/1.1" 200 31302
+INFO 2025-03-25 22:10:43,826 basehttp 41656 28888 "POST /score_once/ HTTP/1.1" 200 76
+INFO 2025-03-25 22:10:45,066 basehttp 41656 28888 "GET /__debug__/history_sidebar/?store_id=7b3ef6595f7f4b088b94af033e43524d HTTP/1.1" 200 9822
+INFO 2025-03-25 22:11:07,216 basehttp 41656 28888 "GET /ip_pool/manage/?page=40 HTTP/1.1" 200 30390
+INFO 2025-03-25 22:11:11,113 basehttp 41656 28888 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 31309
+INFO 2025-03-25 22:11:17,619 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:11:19,204 basehttp 41656 28888 "GET /douban/ HTTP/1.1" 200 20574
+INFO 2025-03-25 22:13:38,202 basehttp 41656 28888 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-25 22:13:38,678 basehttp 41656 28888 "GET /__debug__/history_sidebar/?store_id=18aaf65389c544f38000aef5f660fc31 HTTP/1.1" 200 9827
+INFO 2025-03-25 22:13:43,295 basehttp 41656 28888 "GET /douban/ HTTP/1.1" 200 21639
+INFO 2025-03-25 22:13:47,104 basehttp 41656 28888 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:13:47,627 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:13:48,664 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:13:49,117 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:13:49,462 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:13:49,980 basehttp 41656 28888 "GET /douban/trend/ HTTP/1.1" 200 17665
+INFO 2025-03-25 22:13:50,381 basehttp 41656 28888 "GET /douban/settings/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:13:50,705 basehttp 41656 28888 "GET /douban/trend/ HTTP/1.1" 200 17665
+INFO 2025-03-25 22:13:50,961 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:13:51,279 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:13:53,010 basehttp 41656 28888 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:13:54,044 basehttp 41656 28888 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-25 22:14:11,923 basehttp 41656 28888 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:14:12,346 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:55,338 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:14:55,776 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:56,494 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:14:56,805 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:57,330 basehttp 41656 28888 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:14:57,752 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:58,058 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:14:58,670 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:59,055 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:14:59,373 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:14:59,675 basehttp 41656 28888 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-25 22:15:00,124 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:15:00,425 basehttp 41656 28888 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:15:00,684 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:15:08,936 basehttp 41656 28888 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:17:53,094 basehttp 41656 6716 "GET /douban/movies/ HTTP/1.1" 200 21753
+INFO 2025-03-25 22:18:06,894 basehttp 41656 20024 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:20:08,262 basehttp 41656 27560 "GET /douban/overview/ HTTP/1.1" 200 17675
+INFO 2025-03-25 22:20:09,094 basehttp 41656 27560 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:23:20,865 basehttp 41656 39840 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:23:21,397 basehttp 41656 39840 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:23:23,269 basehttp 41656 39840 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:23:24,501 basehttp 41656 39840 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:25:10,519 basehttp 41656 1220 "GET /douban/ HTTP/1.1" 200 21636
+INFO 2025-03-25 22:25:15,058 basehttp 41656 1220 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:25:15,574 basehttp 41656 1220 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:26:51,004 autoreload 41656 9812 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 22:26:52,328 autoreload 35460 35220 Watching for file changes with StatReloader
+INFO 2025-03-25 22:30:29,851 basehttp 35460 5716 "GET /douban/movies/ HTTP/1.1" 200 19428
+INFO 2025-03-25 22:30:31,760 basehttp 35460 5716 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:30:32,331 basehttp 35460 5716 "GET /douban/movies/ HTTP/1.1" 200 19427
+INFO 2025-03-25 22:31:01,151 autoreload 35460 35220 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-25 22:31:02,053 autoreload 28684 40804 Watching for file changes with StatReloader
+INFO 2025-03-25 22:31:04,442 basehttp 28684 29908 "GET /douban/movies/ HTTP/1.1" 200 19434
+INFO 2025-03-25 22:31:07,021 basehttp 28684 29908 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-25 22:31:08,333 basehttp 28684 29908 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-25 22:31:11,977 basehttp 28684 29908 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:31:13,176 basehttp 28684 29908 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:31:14,103 basehttp 28684 29908 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:31:14,618 basehttp 28684 29908 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-25 22:31:15,089 basehttp 28684 29908 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-25 22:31:15,483 basehttp 28684 29908 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:47:35,136 autoreload 3856 37540 Watching for file changes with StatReloader
+INFO 2025-03-26 19:48:06,259 basehttp 3856 30312 "GET / HTTP/1.1" 200 17655
+INFO 2025-03-26 19:48:06,298 basehttp 3856 30312 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:06,301 basehttp 3856 21828 "GET /static/js/system.js HTTP/1.1" 200 3418
+INFO 2025-03-26 19:48:06,302 basehttp 3856 22960 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:06,302 basehttp 3856 53848 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:07,468 basehttp 3856 53848 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:07,484 basehttp 3856 53848 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:07,663 basehttp 3856 53848 "GET /ip_pool/ HTTP/1.1" 200 20480
+INFO 2025-03-26 19:48:07,699 basehttp 3856 53848 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:07,701 basehttp 3856 22960 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+WARNING 2025-03-26 19:48:08,652 log 3856 22960 Not Found: /favicon.ico
+WARNING 2025-03-26 19:48:08,653 basehttp 3856 22960 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-26 19:48:10,882 basehttp 3856 22960 "GET /ip_pool/manage/ HTTP/1.1" 200 31318
+INFO 2025-03-26 19:48:19,074 basehttp 3856 22960 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 19:48:21,144 basehttp 3856 22960 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 19:48:23,408 basehttp 3856 22960 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 19:48:28,825 basehttp 3856 22960 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 19:48:32,832 basehttp 3856 22960 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 19:48:35,551 basehttp 3856 22960 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 19:48:36,884 basehttp 3856 22960 "GET /wechat/ HTTP/1.1" 200 26706
+INFO 2025-03-26 19:48:36,912 basehttp 3856 53848 "GET /static/js/wechat.js HTTP/1.1" 304 0
+INFO 2025-03-26 19:48:36,912 basehttp 3856 22960 "GET /static/css/wechatstyle.css HTTP/1.1" 200 10503
+INFO 2025-03-26 19:48:39,018 basehttp 3856 22960 "GET /wechat/overview/ HTTP/1.1" 200 25399
+INFO 2025-03-26 19:48:48,815 basehttp 3856 22960 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 19:48:49,960 basehttp 3856 22960 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 19:48:49,994 basehttp 3856 22960 "GET /static/css/doubanstyle.css HTTP/1.1" 200 3635
+INFO 2025-03-26 19:48:49,995 basehttp 3856 53848 "GET /static/js/douban.js HTTP/1.1" 200 8768
+INFO 2025-03-26 19:48:52,138 basehttp 3856 53848 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 19:48:52,761 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:48:54,205 basehttp 3856 53848 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 19:48:54,731 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:48:56,749 basehttp 3856 53848 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 19:48:57,587 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:51:26,590 basehttp 3856 53848 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 19:51:27,222 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:51:29,786 basehttp 3856 53848 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 19:51:31,014 basehttp 3856 53848 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 19:51:38,477 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:51:44,209 basehttp 3856 53848 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 19:51:44,737 basehttp 3856 53848 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 19:54:06,376 basehttp 3856 53848 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 19:54:07,292 basehttp 3856 53848 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 19:54:13,014 basehttp 3856 53848 "GET /ip_pool/manage/ HTTP/1.1" 200 31337
+INFO 2025-03-26 19:54:16,197 basehttp 3856 53848 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 19:54:16,405 basehttp 3856 53848 "GET /__debug__/history_sidebar/?store_id=00c5c9c60ee740d380e5feaf5fb40b4c HTTP/1.1" 200 9830
+INFO 2025-03-26 19:58:27,006 autoreload 3856 37540 D:\python_learn\CollectIp\CollectIp\ip_operator\scheduler.py changed, reloading.
+INFO 2025-03-26 19:58:27,755 autoreload 2748 28248 Watching for file changes with StatReloader
+INFO 2025-03-26 20:01:01,752 basehttp 2748 55556 "GET / HTTP/1.1" 200 17654
+INFO 2025-03-26 20:01:03,314 basehttp 2748 55556 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 20:24:11,607 basehttp 2748 6252 "GET /ip_pool/manage/ HTTP/1.1" 200 31337
+INFO 2025-03-26 20:24:16,699 basehttp 2748 6252 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 31519
+INFO 2025-03-26 20:24:18,320 basehttp 2748 6252 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 31527
+INFO 2025-03-26 20:24:22,626 basehttp 2748 6252 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 31508
+INFO 2025-03-26 20:24:24,500 basehttp 2748 6252 "GET /ip_pool/manage/?page=5 HTTP/1.1" 200 31507
+INFO 2025-03-26 20:24:27,109 basehttp 2748 6252 "GET /ip_pool/manage/?page=6 HTTP/1.1" 200 23889
+INFO 2025-03-26 20:24:32,485 basehttp 2748 6252 "GET /ip_pool/manage/?page=5 HTTP/1.1" 200 31507
+INFO 2025-03-26 20:24:34,942 basehttp 2748 6252 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 31508
+INFO 2025-03-26 20:24:36,413 basehttp 2748 6252 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 31527
+INFO 2025-03-26 20:24:40,526 basehttp 2748 6252 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 31519
+INFO 2025-03-26 20:24:42,990 basehttp 2748 6252 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 31344
+INFO 2025-03-26 20:30:30,641 basehttp 2748 33048 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 33759
+INFO 2025-03-26 20:31:53,083 basehttp 2748 24660 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 33759
+INFO 2025-03-26 20:31:54,801 basehttp 2748 24660 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:31:56,199 basehttp 2748 24660 "GET /ip_pool/ HTTP/1.1" 200 22684
+INFO 2025-03-26 20:31:57,440 basehttp 2748 24660 "GET /ip_pool/manage/ HTTP/1.1" 200 33752
+INFO 2025-03-26 20:32:21,354 basehttp 2748 52608 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:32:21,399 basehttp 2748 52608 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:21,400 basehttp 2748 10876 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:21,401 basehttp 2748 5028 "GET /static/js/system.js HTTP/1.1" 200 3418
+INFO 2025-03-26 20:32:21,401 basehttp 2748 48496 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:21,423 basehttp 2748 5028 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:22,295 basehttp 2748 5028 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:22,472 basehttp 2748 52608 "GET /ip_pool/ HTTP/1.1" 200 22684
+INFO 2025-03-26 20:32:22,528 basehttp 2748 5028 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 20:32:22,544 basehttp 2748 5028 "GET /static/js/ip_pool.js HTTP/1.1" 200 10093
+INFO 2025-03-26 20:32:23,526 basehttp 2748 52608 "GET /ip_pool/manage/ HTTP/1.1" 200 33752
+INFO 2025-03-26 20:34:59,891 basehttp 2748 24612 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:35:01,332 basehttp 2748 24612 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 20:35:02,394 basehttp 2748 24612 "GET /ip_pool/manage/ HTTP/1.1" 200 31547
+INFO 2025-03-26 20:35:06,743 basehttp 2748 24612 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 20:35:07,946 basehttp 2748 24612 "GET /__debug__/history_sidebar/?store_id=c56224edbda84dfc8ecdff9067b7a021 HTTP/1.1" 200 9822
+INFO 2025-03-26 20:41:30,366 basehttp 2748 19320 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 20:41:30,582 basehttp 2748 19320 "GET /__debug__/history_sidebar/?store_id=c59123b243d44245a3efd8869d3100fc HTTP/1.1" 200 9830
+INFO 2025-03-26 20:41:35,223 basehttp 2748 19320 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 20:41:35,716 basehttp 2748 19320 "GET /ip_pool/manage/ HTTP/1.1" 200 31547
+INFO 2025-03-26 20:41:36,429 basehttp 2748 19320 "GET /ip_pool/ HTTP/1.1" 200 20479
+INFO 2025-03-26 20:41:44,796 basehttp 2748 19320 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:41:46,223 basehttp 2748 19320 "GET /wechat/ HTTP/1.1" 200 26707
+INFO 2025-03-26 20:41:50,540 basehttp 2748 19320 "GET /douban/ HTTP/1.1" 200 21636
+INFO 2025-03-26 20:41:53,431 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:41:54,455 basehttp 2748 19320 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 20:41:56,209 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:41:56,642 basehttp 2748 19320 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 20:41:59,424 basehttp 2748 19320 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:42:02,249 basehttp 2748 19320 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 20:42:17,268 basehttp 2748 19320 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:42:18,178 basehttp 2748 19320 "GET /ip_pool/ HTTP/1.1" 200 21649
+INFO 2025-03-26 20:42:22,465 basehttp 2748 19320 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 20:42:27,619 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:42:28,696 basehttp 2748 19320 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 20:42:29,158 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:42:32,707 basehttp 2748 19320 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 20:42:35,052 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:42:35,884 basehttp 2748 19320 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 20:42:36,338 basehttp 2748 19320 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 20:43:32,648 basehttp 2748 19320 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 20:43:33,937 basehttp 2748 19320 "GET /ip_pool/ HTTP/1.1" 200 21649
+INFO 2025-03-26 20:43:36,074 basehttp 2748 19320 "GET /ip_pool/manage/ HTTP/1.1" 200 32958
+INFO 2025-03-26 20:44:31,527 basehttp 2748 19320 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 20:44:33,149 basehttp 2748 19320 "GET /__debug__/history_sidebar/?store_id=2e90b7d8deaa4394a6c0086fbdcc2b64 HTTP/1.1" 200 9822
+INFO 2025-03-26 20:46:06,357 basehttp 2748 19320 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 20:47:44,027 basehttp 2748 19320 "GET /__debug__/history_sidebar/?store_id=4293bf62ac60479082c4a41305cd5d05 HTTP/1.1" 200 9823
+INFO 2025-03-26 20:48:56,304 basehttp 2748 19320 "POST /score_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 20:48:57,468 basehttp 2748 19320 "GET /__debug__/history_sidebar/?store_id=3fb0f5bacc024136966453522803bc2d HTTP/1.1" 200 9822
+INFO 2025-03-26 20:55:43,762 basehttp 2748 20044 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 20:55:44,976 basehttp 2748 20044 "GET /__debug__/history_sidebar/?store_id=ad236872404f432bac526420e6aebf73 HTTP/1.1" 200 9822
+INFO 2025-03-26 20:58:05,129 basehttp 2748 20044 "GET /ip_pool/manage/ HTTP/1.1" 200 32166
+INFO 2025-03-26 20:58:10,298 basehttp 2748 20044 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 32386
+INFO 2025-03-26 20:58:11,644 basehttp 2748 20044 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 32173
+INFO 2025-03-26 21:26:08,946 autoreload 15516 15660 Watching for file changes with StatReloader
+INFO 2025-03-26 21:26:21,271 basehttp 15516 17288 "GET / HTTP/1.1" 200 17655
+WARNING 2025-03-26 21:26:22,299 log 15516 17288 Not Found: /favicon.ico
+WARNING 2025-03-26 21:26:22,299 basehttp 15516 17288 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-26 21:26:23,322 basehttp 15516 17288 "GET /ip_pool/ HTTP/1.1" 200 21130
+INFO 2025-03-26 21:26:25,091 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32166
+INFO 2025-03-26 21:26:27,172 basehttp 15516 17288 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-26 21:26:27,677 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32166
+INFO 2025-03-26 21:31:01,010 basehttp 15516 17288 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 21:31:02,032 basehttp 15516 17288 "GET /__debug__/history_sidebar/?store_id=e792a1c6139f4e4fad635402b464edc1 HTTP/1.1" 200 9822
+INFO 2025-03-26 21:33:24,116 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32179
+INFO 2025-03-26 21:33:24,894 basehttp 15516 17288 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-26 21:33:26,120 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32179
+INFO 2025-03-26 21:33:51,562 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32179
+INFO 2025-03-26 21:34:23,730 basehttp 15516 17288 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:34:26,146 basehttp 15516 17288 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-26 21:34:30,723 basehttp 15516 17288 "GET /ip_pool/manage/ HTTP/1.1" 200 32179
+INFO 2025-03-26 21:34:47,591 basehttp 15516 15308 "GET / HTTP/1.1" 200 17653
+WARNING 2025-03-26 21:34:48,629 log 15516 15308 Not Found: /favicon.ico
+WARNING 2025-03-26 21:34:48,629 basehttp 15516 15308 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-26 21:34:48,964 basehttp 15516 15308 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-26 21:34:50,334 basehttp 15516 15308 "GET /ip_pool/manage/ HTTP/1.1" 200 32180
+INFO 2025-03-26 21:39:10,502 basehttp 15516 8580 "POST /score_once/ HTTP/1.1" 200 76
+INFO 2025-03-26 21:39:12,154 basehttp 15516 8580 "GET /__debug__/history_sidebar/?store_id=9e2b2da6318d4219a066067cf4095abb HTTP/1.1" 200 9822
+INFO 2025-03-26 21:41:43,172 basehttp 15516 8580 "GET /ip_pool/manage/ HTTP/1.1" 200 32179
+INFO 2025-03-26 21:41:47,211 basehttp 15516 8580 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-26 21:41:50,079 basehttp 15516 8580 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:41:51,673 basehttp 15516 8580 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 21:41:53,361 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:41:53,745 basehttp 15516 8580 "GET /douban/tv/ HTTP/1.1" 200 17659
+INFO 2025-03-26 21:41:54,227 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:41:54,689 basehttp 15516 8580 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:41:55,393 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:41:55,834 basehttp 15516 8580 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:41:56,643 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:41:57,038 basehttp 15516 8580 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:41:58,357 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:41:58,691 basehttp 15516 8580 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:42:01,376 basehttp 15516 8580 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:42:01,739 basehttp 15516 8580 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:46:24,333 basehttp 15516 5516 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:46:25,593 basehttp 15516 5516 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 21:46:27,325 basehttp 15516 5516 "GET /ip_pool/manage/ HTTP/1.1" 200 32174
+INFO 2025-03-26 21:46:35,849 basehttp 15516 5516 "GET /ip_pool/manage/?page=8 HTTP/1.1" 200 24743
+INFO 2025-03-26 21:46:37,608 basehttp 15516 5516 "GET /ip_pool/manage/?page=7 HTTP/1.1" 200 32363
+INFO 2025-03-26 21:46:42,551 basehttp 15516 5516 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 32181
+INFO 2025-03-26 21:46:46,398 basehttp 15516 5516 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:46:46,654 basehttp 15516 5516 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:46:47,459 basehttp 15516 5516 "GET /douban/ HTTP/1.1" 200 21635
+INFO 2025-03-26 21:48:39,712 autoreload 15516 15660 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 21:48:40,681 autoreload 21736 19556 Watching for file changes with StatReloader
+INFO 2025-03-26 21:51:29,414 autoreload 21736 19556 D:\python_learn\CollectIp\CollectIp\CollectIp\urls.py changed, reloading.
+INFO 2025-03-26 21:51:30,118 autoreload 23848 9648 Watching for file changes with StatReloader
+INFO 2025-03-26 21:52:10,182 autoreload 23848 9648 D:\python_learn\CollectIp\CollectIp\CollectIp\urls.py changed, reloading.
+INFO 2025-03-26 21:52:10,893 autoreload 22212 3692 Watching for file changes with StatReloader
+INFO 2025-03-26 21:54:51,660 autoreload 22212 3692 D:\python_learn\CollectIp\CollectIp\CollectIp\urls.py changed, reloading.
+INFO 2025-03-26 21:54:52,840 autoreload 17316 20048 Watching for file changes with StatReloader
+INFO 2025-03-26 21:56:01,174 basehttp 17316 3144 "GET / HTTP/1.1" 200 17654
+INFO 2025-03-26 21:56:12,784 basehttp 17316 3144 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 21:56:12,838 basehttp 17316 3144 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:56:15,084 basehttp 17316 3144 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:56:16,197 basehttp 17316 3144 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:56:16,712 basehttp 17316 3144 "GET /douban/movies/ HTTP/1.1" 200 19433
+INFO 2025-03-26 21:56:17,580 basehttp 17316 3144 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:56:20,715 basehttp 17316 3144 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:56:22,576 basehttp 17316 3144 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 21:56:22,634 basehttp 17316 3144 "GET /douban/overview/ HTTP/1.1" 200 17673
+INFO 2025-03-26 21:57:48,844 basehttp 17316 3144 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:57:49,911 basehttp 17316 3144 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 21:57:52,381 basehttp 17316 3144 "GET /ip_pool/manage/ HTTP/1.1" 200 32175
+INFO 2025-03-26 21:57:53,605 basehttp 17316 3144 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 21:58:33,676 basehttp 17316 3144 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:58:35,398 basehttp 17316 3144 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 21:58:38,170 basehttp 17316 3144 "GET /wechat/ HTTP/1.1" 200 26706
+INFO 2025-03-26 21:58:40,096 basehttp 17316 3144 "GET /ip_pool/ HTTP/1.1" 200 21128
+WARNING 2025-03-26 21:59:40,940 log 17316 14716 Not Found: /favicon.ico
+WARNING 2025-03-26 21:59:40,941 basehttp 17316 14716 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-26 21:59:43,731 basehttp 17316 10136 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 21:59:45,028 basehttp 17316 10136 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:02:04,506 autoreload 17316 20048 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:02:06,290 autoreload 1480 13172 Watching for file changes with StatReloader
+INFO 2025-03-26 22:02:35,957 autoreload 1480 13172 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:02:36,826 autoreload 7948 11800 Watching for file changes with StatReloader
+INFO 2025-03-26 22:02:40,277 autoreload 7948 11800 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:02:41,048 autoreload 4352 14464 Watching for file changes with StatReloader
+INFO 2025-03-26 22:03:16,897 autoreload 4352 14464 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:03:17,813 autoreload 24376 11508 Watching for file changes with StatReloader
+INFO 2025-03-26 22:03:25,202 basehttp 24376 8464 "GET / HTTP/1.1" 200 17654
+INFO 2025-03-26 22:03:26,850 basehttp 24376 8464 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:03:26,927 basehttp 24376 8464 "GET /douban/overview/ HTTP/1.1" 200 22708
+INFO 2025-03-26 22:03:26,943 basehttp 24376 8464 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:03:26,943 basehttp 24376 7144 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:03:51,295 basehttp 24376 7144 "GET /douban/movies/ HTTP/1.1" 200 21782
+INFO 2025-03-26 22:03:54,167 basehttp 24376 7144 "GET /douban/overview/ HTTP/1.1" 200 22710
+INFO 2025-03-26 22:03:54,831 basehttp 24376 7144 "GET /douban/movies/ HTTP/1.1" 200 21782
+INFO 2025-03-26 22:03:55,673 basehttp 24376 7144 "GET /douban/overview/ HTTP/1.1" 200 22708
+INFO 2025-03-26 22:06:57,795 autoreload 24376 11508 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:06:58,661 autoreload 10408 24732 Watching for file changes with StatReloader
+INFO 2025-03-26 22:09:10,145 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23613
+INFO 2025-03-26 22:09:18,601 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:20,128 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:20,599 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22397
+INFO 2025-03-26 22:09:24,566 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:25,067 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:25,799 basehttp 10408 9048 "GET /douban/tv/ HTTP/1.1" 200 17822
+INFO 2025-03-26 22:09:26,642 basehttp 10408 9048 "GET /douban/trend/ HTTP/1.1" 200 17828
+INFO 2025-03-26 22:09:27,098 basehttp 10408 9048 "GET /douban/settings/ HTTP/1.1" 200 17836
+INFO 2025-03-26 22:09:27,408 basehttp 10408 9048 "GET /douban/trend/ HTTP/1.1" 200 17828
+INFO 2025-03-26 22:09:27,689 basehttp 10408 9048 "GET /douban/tv/ HTTP/1.1" 200 17822
+INFO 2025-03-26 22:09:28,041 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:28,948 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:30,504 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:30,976 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:32,722 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:33,275 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:33,699 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:09:35,385 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:09:35,886 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:10:05,323 basehttp 10408 18640 "GET / HTTP/1.1" 302 0
+INFO 2025-03-26 22:10:13,866 basehttp 10408 9048 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:10:13,893 basehttp 10408 9048 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:10:15,413 basehttp 10408 9048 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:10:16,635 basehttp 10408 9048 "GET /ip_pool/manage/ HTTP/1.1" 200 32174
+INFO 2025-03-26 22:10:17,693 basehttp 10408 9048 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 22:10:19,790 basehttp 10408 9048 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:10:21,635 basehttp 10408 9048 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:10:22,372 basehttp 10408 9048 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:10:22,436 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:10:24,336 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:10:25,444 basehttp 10408 9048 "GET /douban/tv/ HTTP/1.1" 200 17822
+INFO 2025-03-26 22:10:25,886 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:10:26,355 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:10:45,956 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:10:47,792 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:10:49,207 basehttp 10408 9048 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:10:49,908 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:11:19,111 basehttp 10408 7212 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:11:19,131 basehttp 10408 7212 "GET /static/css/indexstyle.css HTTP/1.1" 200 2085
+INFO 2025-03-26 22:11:19,132 basehttp 10408 19384 "GET /static/js/system.js HTTP/1.1" 200 3418
+INFO 2025-03-26 22:11:19,134 basehttp 10408 10824 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 21683
+INFO 2025-03-26 22:11:19,134 basehttp 10408 24964 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14819
+INFO 2025-03-26 22:11:20,224 basehttp 10408 5680 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-03-26 22:11:20,225 basehttp 10408 3556 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4692
+WARNING 2025-03-26 22:11:20,368 log 10408 3556 Not Found: /favicon.ico
+WARNING 2025-03-26 22:11:20,369 basehttp 10408 3556 "GET /favicon.ico HTTP/1.1" 404 20014
+INFO 2025-03-26 22:11:25,475 basehttp 10408 10924 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:11:25,482 basehttp 10408 21080 "GET /static/js/ip_pool.js HTTP/1.1" 200 11907
+INFO 2025-03-26 22:11:25,482 basehttp 10408 10924 "GET /static/css/ip_poolstyle.css HTTP/1.1" 200 11398
+INFO 2025-03-26 22:11:26,601 basehttp 10408 10924 "GET /ip_pool/manage/ HTTP/1.1" 200 32174
+INFO 2025-03-26 22:11:32,352 basehttp 10408 10924 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-26 22:11:34,353 basehttp 10408 10924 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:11:36,097 basehttp 10408 10924 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:11:36,157 basehttp 10408 10924 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:11:36,165 basehttp 10408 21080 "GET /static/js/douban.js HTTP/1.1" 200 8982
+INFO 2025-03-26 22:11:36,165 basehttp 10408 10924 "GET /static/css/doubanstyle.css HTTP/1.1" 200 10170
+INFO 2025-03-26 22:12:27,045 basehttp 10408 21080 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:12:27,051 basehttp 10408 21080 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:12:27,051 basehttp 10408 10924 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:12:42,731 basehttp 10408 10924 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:12:43,617 basehttp 10408 10924 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:12:44,238 basehttp 10408 10924 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:12:48,427 basehttp 10408 9048 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:13:03,740 basehttp 10408 10924 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:13:03,746 basehttp 10408 10924 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:13:03,746 basehttp 10408 21080 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:13:04,628 basehttp 10408 21080 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:13:05,512 basehttp 10408 21080 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:13:07,437 basehttp 10408 21080 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:14:07,920 basehttp 10408 21080 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:14:08,670 basehttp 10408 21080 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:14:08,701 basehttp 10408 21080 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:14:08,710 basehttp 10408 21080 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:14:08,710 basehttp 10408 10924 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:14:15,222 basehttp 10408 10924 "GET /douban/settings/ HTTP/1.1" 200 17836
+INFO 2025-03-26 22:14:17,834 basehttp 10408 10924 "GET /douban/overview/ HTTP/1.1" 200 23610
+WARNING 2025-03-26 22:14:21,423 log 10408 10924 Not Found: /douban_settings/
+WARNING 2025-03-26 22:14:21,423 basehttp 10408 10924 "GET /douban_settings/ HTTP/1.1" 404 20034
+INFO 2025-03-26 22:14:22,911 basehttp 10408 10924 "GET /__debug__/history_sidebar/?store_id=364467709ff34ad6bddc76c8c187569f HTTP/1.1" 200 9829
+WARNING 2025-03-26 22:14:23,827 log 10408 10924 Not Found: /douban_settings/
+WARNING 2025-03-26 22:14:23,828 basehttp 10408 10924 "GET /douban_settings/ HTTP/1.1" 404 20034
+INFO 2025-03-26 22:14:24,750 basehttp 10408 10924 "GET /__debug__/history_sidebar/?store_id=c16b5149440e4247a5afdc4f476163aa HTTP/1.1" 200 9829
+WARNING 2025-03-26 22:14:25,544 log 10408 10924 Not Found: /douban_settings/
+WARNING 2025-03-26 22:14:25,544 basehttp 10408 10924 "GET /douban_settings/ HTTP/1.1" 404 20034
+INFO 2025-03-26 22:14:26,638 basehttp 10408 10924 "GET /__debug__/history_sidebar/?store_id=11e87a434db74663bc8a4048e42c3e5b HTTP/1.1" 200 9829
+WARNING 2025-03-26 22:14:27,431 log 10408 10924 Not Found: /douban_settings/
+WARNING 2025-03-26 22:14:27,432 basehttp 10408 10924 "GET /douban_settings/ HTTP/1.1" 404 20034
+INFO 2025-03-26 22:14:28,256 basehttp 10408 10924 "GET /__debug__/history_sidebar/?store_id=ddbef7ccac964b0ca2416966730e842e HTTP/1.1" 200 9829
+INFO 2025-03-26 22:14:48,239 autoreload 10408 24732 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:14:49,019 autoreload 1488 6896 Watching for file changes with StatReloader
+INFO 2025-03-26 22:15:08,648 basehttp 1488 17584 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+WARNING 2025-03-26 22:15:18,958 log 1488 17584 Not Found: /douban_settings/
+WARNING 2025-03-26 22:15:18,959 basehttp 1488 17584 "GET /douban_settings/ HTTP/1.1" 404 20034
+INFO 2025-03-26 22:15:20,552 basehttp 1488 17584 "GET /__debug__/history_sidebar/?store_id=84f532d63e834030b81a8a58acfdb23d HTTP/1.1" 200 9829
+INFO 2025-03-26 22:17:07,575 autoreload 1488 6896 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:17:08,366 autoreload 6404 18564 Watching for file changes with StatReloader
+INFO 2025-03-26 22:17:23,756 autoreload 6404 18564 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:17:24,453 autoreload 5660 3212 Watching for file changes with StatReloader
+INFO 2025-03-26 22:17:27,937 autoreload 5660 3212 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:17:28,529 autoreload 12356 4752 Watching for file changes with StatReloader
+INFO 2025-03-26 22:17:42,615 autoreload 12356 4752 D:\python_learn\CollectIp\CollectIp\index\models.py changed, reloading.
+INFO 2025-03-26 22:17:43,242 autoreload 292 18836 Watching for file changes with StatReloader
+INFO 2025-03-26 22:20:36,690 autoreload 292 18836 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:20:37,436 autoreload 19528 21768 Watching for file changes with StatReloader
+INFO 2025-03-26 22:22:01,874 basehttp 19528 11968 "GET /douban/overview/ HTTP/1.1" 200 23612
+INFO 2025-03-26 22:22:01,883 basehttp 19528 11968 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:22:01,884 basehttp 19528 15660 "GET /static/js/douban.js HTTP/1.1" 200 9482
+INFO 2025-03-26 22:22:04,588 basehttp 19528 15660 "GET /douban/settings/ HTTP/1.1" 200 83
+INFO 2025-03-26 22:22:04,794 basehttp 19528 15660 "GET /__debug__/history_sidebar/?store_id=97f67efeb31b45cb9660b1b514dc2e01 HTTP/1.1" 200 9827
+INFO 2025-03-26 22:22:08,777 basehttp 19528 15660 "GET /douban/settings/ HTTP/1.1" 200 83
+INFO 2025-03-26 22:22:08,985 basehttp 19528 15660 "GET /__debug__/history_sidebar/?store_id=2afc284cd1084186a1f642bc06f5ae5f HTTP/1.1" 200 9827
+INFO 2025-03-26 22:22:24,693 basehttp 19528 15660 "GET /douban/movies/ HTTP/1.1" 200 22395
+INFO 2025-03-26 22:22:24,710 basehttp 19528 15660 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:26:07,127 autoreload 19528 21768 D:\python_learn\CollectIp\CollectIp\index\models.py changed, reloading.
+INFO 2025-03-26 22:26:08,111 autoreload 23548 10780 Watching for file changes with StatReloader
+INFO 2025-03-26 22:26:22,212 autoreload 23548 10780 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:26:23,158 autoreload 24112 2800 Watching for file changes with StatReloader
+INFO 2025-03-26 22:26:57,034 autoreload 24112 2800 D:\python_learn\CollectIp\CollectIp\CollectIp\urls.py changed, reloading.
+INFO 2025-03-26 22:26:58,139 autoreload 19356 11908 Watching for file changes with StatReloader
+INFO 2025-03-26 22:28:46,382 autoreload 19356 11908 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-26 22:28:47,445 autoreload 25316 3592 Watching for file changes with StatReloader
+INFO 2025-03-26 22:30:18,264 basehttp 25316 8616 "GET /douban/movies/ HTTP/1.1" 200 22426
+INFO 2025-03-26 22:30:18,274 basehttp 25316 11200 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:30:18,274 basehttp 25316 8616 "GET /static/css/doubanstyle.css HTTP/1.1" 200 12308
+INFO 2025-03-26 22:30:26,113 basehttp 25316 8616 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:30:27,286 basehttp 25316 8616 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:30:27,377 basehttp 25316 8616 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:30:28,926 basehttp 25316 8616 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:30:32,909 basehttp 25316 8616 "GET /douban/movies/1/ HTTP/1.1" 200 22515
+WARNING 2025-03-26 22:30:32,923 basehttp 25316 8616 "GET /static/img/logo.png HTTP/1.1" 404 1963
+INFO 2025-03-26 22:31:16,874 basehttp 25316 11200 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:31:16,912 basehttp 25316 11200 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:31:16,918 basehttp 25316 11200 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:31:16,918 basehttp 25316 3248 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:31:22,000 basehttp 25316 3248 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:31:26,880 basehttp 25316 3248 "GET /douban/movies/2/ HTTP/1.1" 200 22361
+WARNING 2025-03-26 22:31:26,890 basehttp 25316 3248 "GET /static/img/logo.png HTTP/1.1" 404 1963
+WARNING 2025-03-26 22:31:47,388 log 25316 11200 Not Found: /logout/
+WARNING 2025-03-26 22:31:47,389 basehttp 25316 11200 "GET /logout/ HTTP/1.1" 404 20197
+INFO 2025-03-26 22:32:36,523 basehttp 25316 11200 "GET /douban/movies/1/ HTTP/1.1" 200 22515
+INFO 2025-03-26 22:32:36,542 basehttp 25316 11200 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+WARNING 2025-03-26 22:32:36,544 basehttp 25316 6184 "GET /static/img/logo.png HTTP/1.1" 404 1963
+INFO 2025-03-26 22:32:36,546 basehttp 25316 3276 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:35:57,659 basehttp 25316 3276 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-26 22:35:57,666 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 200 12880
+INFO 2025-03-26 22:35:57,671 basehttp 25316 3276 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:36:09,405 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:36:09,412 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:36:13,823 basehttp 25316 3276 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-26 22:36:49,983 basehttp 25316 3276 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-26 22:36:49,994 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:36:52,012 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:36:53,885 basehttp 25316 3276 "GET /douban/movies/2/ HTTP/1.1" 200 24799
+INFO 2025-03-26 22:37:06,847 basehttp 25316 3276 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:37:06,855 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:37:07,660 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:37:08,216 basehttp 25316 3276 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:37:08,589 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:37:19,507 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:37:19,513 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 200 12880
+INFO 2025-03-26 22:37:20,187 basehttp 25316 3276 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-26 22:37:20,199 basehttp 25316 3276 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:37:20,658 basehttp 25316 3276 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:37:26,264 basehttp 25316 3276 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:37:27,282 basehttp 25316 3276 "GET /ip_pool/ HTTP/1.1" 200 21128
+INFO 2025-03-26 22:37:27,288 basehttp 25316 3276 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:37:27,289 basehttp 25316 11200 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:37:28,934 basehttp 25316 11200 "GET /ip_pool/manage/ HTTP/1.1" 200 32174
+INFO 2025-03-26 22:43:12,172 basehttp 25316 9008 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-26 22:43:13,126 basehttp 25316 9008 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-26 22:43:13,264 basehttp 25316 9008 "GET /douban/overview/ HTTP/1.1" 200 23612
+INFO 2025-03-26 22:43:13,273 basehttp 25316 9008 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:43:13,274 basehttp 25316 25092 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-26 22:43:15,294 basehttp 25316 25092 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:43:16,626 basehttp 25316 25092 "GET /douban/tv/ HTTP/1.1" 200 17822
+INFO 2025-03-26 22:43:17,269 basehttp 25316 25092 "GET /douban/overview/ HTTP/1.1" 200 23611
+INFO 2025-03-26 22:43:18,203 basehttp 25316 25092 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:43:19,020 basehttp 25316 25092 "GET /douban/tv/ HTTP/1.1" 200 17822
+INFO 2025-03-26 22:43:19,577 basehttp 25316 25092 "GET /douban/trend/ HTTP/1.1" 200 17828
+INFO 2025-03-26 22:43:19,969 basehttp 25316 25092 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:48:11,884 basehttp 25316 25092 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-26 22:48:12,104 basehttp 25316 25092 "GET /__debug__/history_sidebar/?store_id=e398d17e0ed04ba384e1b84dfedbb352 HTTP/1.1" 200 9828
+INFO 2025-03-26 22:48:22,248 basehttp 25316 25092 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-26 22:48:22,265 basehttp 25316 25092 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-26 22:48:22,270 basehttp 25316 25092 "GET /static/js/douban.js HTTP/1.1" 304 0
+WARNING 2025-03-26 22:49:48,495 log 25316 24108 Not Found: /favicon.ico
+WARNING 2025-03-26 22:49:48,496 basehttp 25316 24108 "GET /favicon.ico HTTP/1.1" 404 20213
+INFO 2025-03-27 09:05:45,664 autoreload 16104 28776 Watching for file changes with StatReloader
+INFO 2025-03-27 09:06:01,328 basehttp 16104 14252 "GET / HTTP/1.1" 200 17656
+INFO 2025-03-27 09:06:01,362 basehttp 16104 16776 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 09:06:01,364 basehttp 16104 15612 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 09:06:01,365 basehttp 16104 29252 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-27 09:06:01,365 basehttp 16104 13176 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 09:06:02,146 basehttp 16104 13176 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 09:06:02,148 basehttp 16104 29252 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+WARNING 2025-03-27 09:06:02,264 log 16104 29252 Not Found: /favicon.ico
+WARNING 2025-03-27 09:06:02,265 basehttp 16104 29252 "GET /favicon.ico HTTP/1.1" 404 20213
+INFO 2025-03-27 09:06:02,851 basehttp 16104 29252 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-27 09:06:02,894 basehttp 16104 29252 "GET /static/css/ip_poolstyle.css HTTP/1.1" 200 11398
+INFO 2025-03-27 09:06:02,894 basehttp 16104 13176 "GET /static/js/ip_pool.js HTTP/1.1" 200 11907
+INFO 2025-03-27 09:06:04,197 basehttp 16104 13176 "GET /ip_pool/manage/ HTTP/1.1" 200 32176
+INFO 2025-03-27 09:06:11,013 basehttp 16104 13176 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 09:06:12,232 basehttp 16104 13176 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 09:06:12,426 basehttp 16104 13176 "GET /douban/overview/ HTTP/1.1" 200 23612
+INFO 2025-03-27 09:06:12,471 basehttp 16104 13176 "GET /static/css/doubanstyle.css HTTP/1.1" 200 12880
+INFO 2025-03-27 09:06:12,481 basehttp 16104 13176 "GET /static/js/douban.js HTTP/1.1" 200 9482
+INFO 2025-03-27 09:06:31,614 basehttp 16104 13176 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-27 09:06:33,964 basehttp 16104 13176 "GET /douban/movies/2/ HTTP/1.1" 200 24799
+INFO 2025-03-27 09:06:40,153 basehttp 16104 13176 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-27 09:06:49,560 basehttp 16104 13176 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-27 09:23:24,210 basehttp 16104 30172 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 09:23:25,037 basehttp 16104 30172 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-27 09:23:28,719 basehttp 16104 30172 "GET /ip_pool/manage/ HTTP/1.1" 200 32071
+INFO 2025-03-27 09:23:34,695 basehttp 16104 30172 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-27 09:23:34,908 basehttp 16104 30172 "GET /__debug__/history_sidebar/?store_id=9c9d3215a7e64a4e97395c3ae1ef0aeb HTTP/1.1" 200 9822
+INFO 2025-03-27 09:23:45,237 basehttp 16104 30172 "GET /ip_pool/manage/ HTTP/1.1" 200 32071
+INFO 2025-03-27 09:25:35,450 basehttp 16104 30172 "POST /score_once/ HTTP/1.1" 200 76
+INFO 2025-03-27 09:25:35,667 basehttp 16104 30172 "GET /__debug__/history_sidebar/?store_id=75a718ec8cc6498d938158363486e9b8 HTTP/1.1" 200 9822
+INFO 2025-03-27 09:25:45,529 basehttp 16104 30172 "GET /ip_pool/manage/ HTTP/1.1" 200 32115
+INFO 2025-03-27 09:25:50,009 basehttp 16104 30172 "GET /ip_pool/ HTTP/1.1" 200 21130
+INFO 2025-03-27 09:25:51,727 basehttp 16104 30172 "GET /ip_pool/manage/ HTTP/1.1" 200 32115
+INFO 2025-03-27 09:25:52,354 basehttp 16104 30172 "GET /ip_pool/ HTTP/1.1" 200 21130
+INFO 2025-03-27 09:25:53,189 basehttp 16104 30172 "GET /ip_pool/manage/ HTTP/1.1" 200 32115
+INFO 2025-03-27 09:32:08,318 basehttp 16104 12968 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 09:32:10,245 basehttp 16104 12968 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 09:32:10,317 basehttp 16104 12968 "GET /douban/overview/ HTTP/1.1" 200 23611
+INFO 2025-03-27 09:32:35,352 basehttp 16104 12968 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-27 09:34:52,864 basehttp 16104 12968 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-27 09:45:00,984 basehttp 16104 21664 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-27 09:45:08,776 basehttp 16104 21664 "GET /douban/overview/ HTTP/1.1" 200 23610
+INFO 2025-03-27 09:45:09,602 basehttp 16104 21664 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-27 09:45:10,976 basehttp 16104 21664 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 09:45:12,132 basehttp 16104 21664 "GET /ip_pool/ HTTP/1.1" 200 21127
+INFO 2025-03-27 09:45:13,744 basehttp 16104 21664 "GET /ip_pool/manage/ HTTP/1.1" 200 32107
+INFO 2025-03-27 09:45:14,795 basehttp 16104 21664 "GET /ip_pool/ HTTP/1.1" 200 21127
+INFO 2025-03-27 09:45:15,461 basehttp 16104 21664 "GET /ip_pool/manage/ HTTP/1.1" 200 32107
+INFO 2025-03-27 09:45:20,303 basehttp 16104 21664 "GET /ip_pool/ HTTP/1.1" 200 21127
+INFO 2025-03-27 09:45:21,421 basehttp 16104 21664 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 10:20:28,095 basehttp 16104 20952 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 10:20:29,619 basehttp 16104 20952 "GET /ip_pool/ HTTP/1.1" 200 21129
+INFO 2025-03-27 10:20:29,660 basehttp 16104 20952 "GET /static/css/ip_poolstyle.css HTTP/1.1" 200 12291
+INFO 2025-03-27 10:20:29,661 basehttp 16104 7468 "GET /static/js/ip_pool.js HTTP/1.1" 200 12014
+INFO 2025-03-27 10:20:32,824 basehttp 16104 7468 "GET /ip_pool/manage/ HTTP/1.1" 200 32094
+INFO 2025-03-27 10:20:36,126 basehttp 16104 7468 "GET /proxy_settings/ HTTP/1.1" 200 136
+INFO 2025-03-27 10:20:36,348 basehttp 16104 7468 "GET /__debug__/history_sidebar/?store_id=67997d0fb93e4784b112c28ddbd70e95 HTTP/1.1" 200 9830
+INFO 2025-03-27 10:20:45,467 basehttp 16104 7468 "POST /proxy_settings/ HTTP/1.1" 200 62
+INFO 2025-03-27 10:20:46,380 basehttp 16104 7468 "GET /__debug__/history_sidebar/?store_id=285f5c03ae854492a4577e806f7c651d HTTP/1.1" 200 9831
+INFO 2025-03-27 11:28:41,478 basehttp 16104 2308 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 11:28:42,691 basehttp 16104 2308 "GET /ip_pool/ HTTP/1.1" 200 21127
+INFO 2025-03-27 11:28:42,717 basehttp 16104 2308 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 11:28:42,719 basehttp 16104 17952 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-27 11:28:44,865 basehttp 16104 17952 "GET /ip_pool/manage/ HTTP/1.1" 200 32101
+INFO 2025-03-27 11:28:47,405 basehttp 16104 17952 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 32288
+INFO 2025-03-27 11:28:49,137 basehttp 16104 17952 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 32296
+INFO 2025-03-27 11:28:50,555 basehttp 16104 17952 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 24677
+INFO 2025-03-27 11:28:52,997 basehttp 16104 17952 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 32109
+INFO 2025-03-27 11:28:58,779 basehttp 16104 17952 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 11:30:13,928 basehttp 16104 17952 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 11:30:13,986 basehttp 16104 17952 "GET /douban/overview/ HTTP/1.1" 200 23611
+INFO 2025-03-27 11:30:14,018 basehttp 16104 17952 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 11:30:14,018 basehttp 16104 2308 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-27 11:30:16,210 basehttp 16104 2308 "GET /douban/movies/ HTTP/1.1" 200 22425
+INFO 2025-03-27 11:30:18,402 basehttp 16104 2308 "GET /douban/movies/1/ HTTP/1.1" 200 24984
+INFO 2025-03-27 11:30:29,695 basehttp 16104 2308 "GET /douban/movies/2/ HTTP/1.1" 200 24799
+INFO 2025-03-27 14:19:18,750 basehttp 16104 35576 "GET /douban/movies/2/ HTTP/1.1" 200 24799
+INFO 2025-03-27 14:19:18,771 basehttp 16104 35576 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 14:19:18,802 basehttp 16104 35576 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-27 14:19:22,961 basehttp 16104 35576 "GET / HTTP/1.1" 200 17653
+INFO 2025-03-27 14:19:22,991 basehttp 16104 35576 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-27 14:48:09,429 autoreload 16104 28776 D:\python_learn\CollectIp\CollectIp\index\models.py changed, reloading.
+INFO 2025-03-27 14:48:11,387 autoreload 35672 36844 Watching for file changes with StatReloader
+INFO 2025-03-27 14:48:37,803 autoreload 35672 36844 D:\python_learn\CollectIp\CollectIp\index\admin.py changed, reloading.
+INFO 2025-03-27 14:48:38,596 autoreload 29012 34508 Watching for file changes with StatReloader
+INFO 2025-03-27 14:49:04,716 autoreload 29012 34508 D:\python_learn\CollectIp\CollectIp\index\admin.py changed, reloading.
+INFO 2025-03-27 14:49:05,483 autoreload 13260 36460 Watching for file changes with StatReloader
+INFO 2025-03-27 14:51:42,517 autoreload 13260 36460 D:\Anaconda\envs\djangoLearn\Lib\site-packages\sqlparse\engine\__init__.py changed, reloading.
+INFO 2025-03-27 19:18:12,549 autoreload 11896 26872 Watching for file changes with StatReloader
+INFO 2025-03-27 19:19:08,071 autoreload 27036 26208 Watching for file changes with StatReloader
+INFO 2025-03-27 19:19:55,142 autoreload 11156 19180 Watching for file changes with StatReloader
+ERROR 2025-03-27 19:20:07,632 log 11156 28404 Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\middleware.py", line 119, in __call__
+    panel.enable_instrumentation()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\panels\cache.py", line 196, in enable_instrumentation
+    for cache in caches.all(initialized_only=True):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CacheHandler.all() got an unexpected keyword argument 'initialized_only'
+ERROR 2025-03-27 19:20:07,640 basehttp 11156 28404 "GET / HTTP/1.1" 500 74485
+ERROR 2025-03-27 19:20:07,819 log 11156 28404 Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\middleware.py", line 119, in __call__
+    panel.enable_instrumentation()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\panels\cache.py", line 196, in enable_instrumentation
+    for cache in caches.all(initialized_only=True):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CacheHandler.all() got an unexpected keyword argument 'initialized_only'
+ERROR 2025-03-27 19:20:07,821 basehttp 11156 28404 "GET /favicon.ico HTTP/1.1" 500 74092
+ERROR 2025-03-27 19:21:28,461 log 11156 27576 Internal Server Error: /
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\middleware.py", line 119, in __call__
+    panel.enable_instrumentation()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\panels\cache.py", line 196, in enable_instrumentation
+    for cache in caches.all(initialized_only=True):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CacheHandler.all() got an unexpected keyword argument 'initialized_only'
+ERROR 2025-03-27 19:21:28,462 basehttp 11156 27576 "GET / HTTP/1.1" 500 74237
+ERROR 2025-03-27 19:21:28,655 log 11156 27576 Internal Server Error: /favicon.ico
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\middleware.py", line 119, in __call__
+    panel.enable_instrumentation()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\debug_toolbar\panels\cache.py", line 196, in enable_instrumentation
+    for cache in caches.all(initialized_only=True):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: CacheHandler.all() got an unexpected keyword argument 'initialized_only'
+ERROR 2025-03-27 19:21:28,656 basehttp 11156 27576 "GET /favicon.ico HTTP/1.1" 500 74140
+INFO 2025-03-27 19:23:42,497 autoreload 11156 19180 D:\Anaconda\envs\djangoLearn\Lib\site-packages\sqlparse\filters\reindent.py changed, reloading.
+INFO 2025-03-27 19:26:17,392 autoreload 8864 24928 Watching for file changes with StatReloader
+INFO 2025-03-27 19:26:28,828 basehttp 8864 15024 "GET / HTTP/1.1" 200 14116
+INFO 2025-03-27 19:26:28,866 basehttp 8864 15024 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:29,282 basehttp 8864 11872 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 11479
+INFO 2025-03-27 19:26:29,443 basehttp 8864 28336 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 11275
+INFO 2025-03-27 19:26:30,846 basehttp 8864 28336 "GET /ip_pool/ HTTP/1.1" 200 17590
+INFO 2025-03-27 19:26:30,884 basehttp 8864 28336 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:30,885 basehttp 8864 11872 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:31,529 basehttp 8864 11872 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-03-27 19:26:31,530 basehttp 8864 28336 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 3531
+WARNING 2025-03-27 19:26:31,639 log 8864 28336 Not Found: /favicon.ico
+WARNING 2025-03-27 19:26:31,640 basehttp 8864 28336 "GET /favicon.ico HTTP/1.1" 404 15234
+INFO 2025-03-27 19:26:32,573 basehttp 8864 28336 "GET /ip_pool/manage/ HTTP/1.1" 200 28563
+INFO 2025-03-27 19:26:37,561 basehttp 8864 28336 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 28750
+INFO 2025-03-27 19:26:37,594 basehttp 8864 28336 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:37,595 basehttp 8864 11872 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:38,193 basehttp 8864 11872 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:38,193 basehttp 8864 28336 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:39,160 basehttp 8864 28336 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 28757
+INFO 2025-03-27 19:26:40,627 basehttp 8864 28336 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 21138
+INFO 2025-03-27 19:26:42,872 basehttp 8864 28336 "GET /ip_pool/ HTTP/1.1" 200 17589
+INFO 2025-03-27 19:26:45,670 basehttp 8864 28336 "GET / HTTP/1.1" 200 14115
+INFO 2025-03-27 19:26:45,689 basehttp 8864 11872 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:45,690 basehttp 8864 28336 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:48,026 basehttp 8864 28336 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 19:26:48,861 basehttp 8864 28336 "GET /douban/overview/ HTTP/1.1" 200 20073
+INFO 2025-03-27 19:26:48,876 basehttp 8864 28336 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:48,876 basehttp 8864 11872 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:49,535 basehttp 8864 11872 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:49,536 basehttp 8864 28336 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:52,749 basehttp 8864 28336 "GET /douban/movies/ HTTP/1.1" 200 18887
+INFO 2025-03-27 19:26:56,049 basehttp 8864 28336 "GET /douban/movies/1/ HTTP/1.1" 200 21446
+INFO 2025-03-27 19:26:56,073 basehttp 8864 28336 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:26:56,082 basehttp 8864 28336 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:27:24,228 basehttp 8864 28336 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:27:24,228 basehttp 8864 11872 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:31:03,679 basehttp 8864 11872 "GET /douban/movies/ HTTP/1.1" 200 18887
+INFO 2025-03-27 19:31:03,704 basehttp 8864 11872 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:31:03,705 basehttp 8864 28336 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:31:04,345 basehttp 8864 28336 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:31:04,345 basehttp 8864 11872 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:31:05,725 basehttp 8864 11872 "GET /douban/movies/2/ HTTP/1.1" 200 21261
+INFO 2025-03-27 19:31:51,426 autoreload 8864 24928 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 19:31:53,295 autoreload 17432 16784 Watching for file changes with StatReloader
+INFO 2025-03-27 19:32:11,202 autoreload 17432 16784 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 19:32:13,207 autoreload 11392 2996 Watching for file changes with StatReloader
+INFO 2025-03-27 19:35:03,695 autoreload 11392 2996 D:\python_learn\CollectIp\CollectIp\CollectIp\settings.py changed, reloading.
+INFO 2025-03-27 19:35:05,739 autoreload 15880 26572 Watching for file changes with StatReloader
+INFO 2025-03-27 19:35:20,559 autoreload 15880 26572 D:\python_learn\CollectIp\CollectIp\CollectIp\settings.py changed, reloading.
+INFO 2025-03-27 19:35:22,315 autoreload 24916 18212 Watching for file changes with StatReloader
+INFO 2025-03-27 19:35:32,579 basehttp 24916 7396 "GET / HTTP/1.1" 200 12715
+INFO 2025-03-27 19:35:32,597 basehttp 24916 7396 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:35:32,597 basehttp 24916 11740 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:35:33,230 basehttp 24916 11740 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:35:33,230 basehttp 24916 7396 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:35:34,248 basehttp 24916 7396 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 19:35:35,154 basehttp 24916 7396 "GET /douban/overview/ HTTP/1.1" 200 18655
+INFO 2025-03-27 19:35:43,723 basehttp 24916 7396 "GET /__debug__/render_panel/?store_id=e1d23cae05394a7a8b40e863060736ab&panel_id=TemplatesPanel HTTP/1.1" 200 4312
+INFO 2025-03-27 19:35:47,024 basehttp 24916 7396 "GET /__debug__/render_panel/?store_id=e1d23cae05394a7a8b40e863060736ab&panel_id=SettingsPanel HTTP/1.1" 200 30042
+INFO 2025-03-27 19:35:53,913 basehttp 24916 7396 "GET /__debug__/render_panel/?store_id=e1d23cae05394a7a8b40e863060736ab&panel_id=VersionsPanel HTTP/1.1" 200 622
+INFO 2025-03-27 19:38:27,825 basehttp 24916 7396 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 19:38:27,850 basehttp 24916 11740 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:38:27,851 basehttp 24916 7396 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:38:28,478 basehttp 24916 7396 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 19:38:28,478 basehttp 24916 11740 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 19:38:28,986 basehttp 24916 11740 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 19:38:29,637 basehttp 24916 11740 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 19:38:32,037 basehttp 24916 11740 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 19:38:34,175 basehttp 24916 11740 "GET /douban/movies/1/ HTTP/1.1" 200 20029
+INFO 2025-03-27 20:03:19,746 autoreload 24916 18212 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 20:03:21,717 autoreload 5480 13344 Watching for file changes with StatReloader
+INFO 2025-03-27 20:05:10,204 basehttp 5480 15976 "GET /douban/overview/ HTTP/1.1" 200 18657
+INFO 2025-03-27 20:05:10,235 basehttp 5480 15976 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:05:10,235 basehttp 5480 10716 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:05:10,986 basehttp 5480 10716 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:05:10,988 basehttp 5480 15976 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:05:13,708 basehttp 5480 15976 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:05:20,694 basehttp 5480 15976 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-27 20:05:31,025 basehttp 5480 15976 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:07:41,197 autoreload 27540 1080 Watching for file changes with StatReloader
+INFO 2025-03-27 20:07:49,965 basehttp 27540 17848 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-27 20:08:20,854 basehttp 27540 17848 "GET /douban/movies/2/ HTTP/1.1" 200 22350
+INFO 2025-03-27 20:08:36,532 basehttp 27540 17848 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 20:08:42,249 basehttp 27540 17848 "GET /douban/movies/2/ HTTP/1.1" 200 22350
+INFO 2025-03-27 20:13:38,823 basehttp 27540 4836 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 20:13:38,852 basehttp 27540 30528 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:13:38,852 basehttp 27540 4836 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:13:39,486 basehttp 27540 4836 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:13:39,488 basehttp 27540 30528 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:13:41,240 basehttp 27540 30528 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 20:13:41,956 basehttp 27540 30528 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 20:13:44,876 basehttp 27540 30528 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:13:48,845 basehttp 27540 30528 "GET /douban/movies/2/ HTTP/1.1" 200 22350
+INFO 2025-03-27 20:19:45,217 basehttp 27540 22844 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 20:19:45,239 basehttp 27540 22844 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:19:45,239 basehttp 27540 12524 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:19:46,159 basehttp 27540 22844 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:19:46,161 basehttp 27540 12524 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:19:46,708 basehttp 27540 12524 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 20:19:47,378 basehttp 27540 12524 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 20:19:49,356 basehttp 27540 12524 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:19:52,223 basehttp 27540 12524 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 20:20:05,812 basehttp 27540 12524 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-27 20:20:16,372 basehttp 27540 12524 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:21:43,612 autoreload 27540 1080 D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py changed, reloading.
+INFO 2025-03-27 20:21:45,333 autoreload 10692 1436 Watching for file changes with StatReloader
+INFO 2025-03-27 20:29:42,783 basehttp 10692 22796 "GET /douban/movies/2/ HTTP/1.1" 200 23435
+INFO 2025-03-27 20:29:42,806 basehttp 10692 22796 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:29:42,823 basehttp 10692 22796 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:29:43,548 basehttp 10692 22796 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:29:43,549 basehttp 10692 28012 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:36:02,573 basehttp 10692 19472 "GET /douban/movies/2/ HTTP/1.1" 200 23435
+INFO 2025-03-27 20:47:40,811 basehttp 10692 26980 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 20:47:40,840 basehttp 10692 29800 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:47:40,841 basehttp 10692 26980 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:47:41,438 basehttp 10692 26980 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:47:42,290 basehttp 10692 26980 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 20:47:42,291 basehttp 10692 29800 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 20:47:45,915 basehttp 10692 29800 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 20:47:50,729 basehttp 10692 29800 "GET /douban/movies/2/ HTTP/1.1" 200 23447
+INFO 2025-03-27 20:49:22,136 basehttp 10692 29800 "GET /douban/overview/ HTTP/1.1" 200 18655
+INFO 2025-03-27 20:49:22,714 basehttp 10692 29800 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 21:10:41,763 basehttp 10692 24736 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 21:10:41,786 basehttp 10692 24736 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:10:41,811 basehttp 10692 24736 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:10:42,586 basehttp 10692 24736 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:10:42,588 basehttp 10692 10272 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:10:50,288 basehttp 10692 10272 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 21:10:52,263 basehttp 10692 10272 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 21:10:53,991 basehttp 10692 10272 "GET /douban/movies/2/ HTTP/1.1" 200 23447
+INFO 2025-03-27 21:10:57,425 basehttp 10692 10272 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 21:13:11,288 basehttp 10692 10272 "GET /douban/overview/ HTTP/1.1" 200 18655
+INFO 2025-03-27 21:13:11,876 basehttp 10692 10272 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 21:13:14,180 basehttp 10692 10272 "GET /douban/movies/2/ HTTP/1.1" 200 23441
+INFO 2025-03-27 21:16:39,527 autoreload 10692 1436 D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py changed, reloading.
+INFO 2025-03-27 21:16:49,993 autoreload 4892 26732 Watching for file changes with StatReloader
+INFO 2025-03-27 21:17:09,933 basehttp 4892 14664 "GET /douban/overview/ HTTP/1.1" 200 18657
+INFO 2025-03-27 21:17:12,674 basehttp 4892 14664 "GET /douban/movies/ HTTP/1.1" 200 17472
+INFO 2025-03-27 21:17:14,561 basehttp 4892 14664 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 21:17:21,548 basehttp 4892 14664 "GET /douban/overview/ HTTP/1.1" 200 18656
+INFO 2025-03-27 21:17:24,645 basehttp 4892 14664 "GET /douban/trend/ HTTP/1.1" 200 12876
+INFO 2025-03-27 21:17:25,919 basehttp 4892 14664 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 21:17:50,467 basehttp 4892 14664 "GET /douban/movies/3/ HTTP/1.1" 200 22988
+INFO 2025-03-27 21:24:36,858 basehttp 4892 29112 "GET /douban/overview/ HTTP/1.1" 200 19791
+INFO 2025-03-27 21:24:36,885 basehttp 4892 7456 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:24:36,886 basehttp 4892 29112 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:24:37,604 basehttp 4892 29112 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:24:37,605 basehttp 4892 7456 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:24:38,521 basehttp 4892 7456 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 21:24:41,181 basehttp 4892 7456 "GET /douban/movies/1/ HTTP/1.1" 200 22535
+INFO 2025-03-27 21:24:44,779 basehttp 4892 7456 "GET /douban/movies/2/ HTTP/1.1" 200 23447
+INFO 2025-03-27 21:27:25,084 basehttp 4892 7456 "GET /douban/movies/3/ HTTP/1.1" 200 22982
+INFO 2025-03-27 21:33:39,157 autoreload 4892 26732 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 21:33:42,062 autoreload 19664 24580 Watching for file changes with StatReloader
+INFO 2025-03-27 21:34:09,619 basehttp 19664 29424 "GET /douban/movies/1/ HTTP/1.1" 200 27127
+INFO 2025-03-27 21:34:09,649 basehttp 19664 29424 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:34:09,687 basehttp 19664 29424 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:34:15,168 basehttp 19664 29424 "GET /douban/movies/2/ HTTP/1.1" 200 28038
+INFO 2025-03-27 21:34:21,530 autoreload 19664 24580 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 21:34:23,535 autoreload 30160 10780 Watching for file changes with StatReloader
+INFO 2025-03-27 21:36:12,573 autoreload 30160 10780 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 21:36:14,276 autoreload 29096 21688 Watching for file changes with StatReloader
+INFO 2025-03-27 21:38:35,572 basehttp 29096 16832 "GET /douban/movies/2/ HTTP/1.1" 200 26350
+INFO 2025-03-27 21:38:35,591 basehttp 29096 16832 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:38:35,629 basehttp 29096 16832 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:39:11,946 basehttp 29096 16832 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 21:39:11,949 basehttp 29096 29348 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 21:42:32,604 basehttp 29096 29348 "GET /douban/movies/2/ HTTP/1.1" 200 26361
+INFO 2025-03-27 21:47:04,392 autoreload 29096 21688 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 21:47:06,049 autoreload 18756 16724 Watching for file changes with StatReloader
+INFO 2025-03-27 21:47:18,071 autoreload 18756 16724 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 21:47:19,638 autoreload 29652 18640 Watching for file changes with StatReloader
+INFO 2025-03-27 21:48:18,021 basehttp 29652 30656 "GET /douban/movies/2/ HTTP/1.1" 200 26861
+INFO 2025-03-27 21:49:06,110 basehttp 29652 30656 "GET /douban/movies/2/ HTTP/1.1" 200 26879
+WARNING 2025-03-27 21:49:24,356 log 29652 2160 Not Found: /favicon.ico
+WARNING 2025-03-27 21:49:24,357 basehttp 29652 2160 "GET /favicon.ico HTTP/1.1" 404 13822
+INFO 2025-03-27 21:49:29,010 basehttp 29652 2160 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 21:49:29,346 basehttp 29652 2160 "GET /static/css/indexstyle.css HTTP/1.1" 200 2085
+INFO 2025-03-27 21:49:29,455 basehttp 29652 8852 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 11479
+INFO 2025-03-27 21:49:29,555 basehttp 29652 12636 "GET /static/js/system.js HTTP/1.1" 200 3418
+INFO 2025-03-27 21:49:29,726 basehttp 29652 3040 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 11275
+INFO 2025-03-27 21:49:30,331 basehttp 29652 3040 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-03-27 21:49:30,332 basehttp 29652 12636 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 3531
+INFO 2025-03-27 21:49:31,227 basehttp 29652 12636 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 21:49:31,952 basehttp 29652 12636 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 21:49:31,959 basehttp 29652 3040 "GET /static/js/douban.js HTTP/1.1" 200 9482
+INFO 2025-03-27 21:49:31,962 basehttp 29652 12636 "GET /static/css/doubanstyle.css HTTP/1.1" 200 12880
+INFO 2025-03-27 21:49:33,847 basehttp 29652 12636 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 21:49:36,908 basehttp 29652 12636 "GET /douban/movies/1/ HTTP/1.1" 200 25960
+INFO 2025-03-27 21:49:40,825 basehttp 29652 12636 "GET /douban/movies/2/ HTTP/1.1" 200 26879
+INFO 2025-03-27 21:50:25,226 autoreload 29652 18640 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 21:50:27,230 autoreload 13812 10448 Watching for file changes with StatReloader
+INFO 2025-03-27 22:05:36,932 autoreload 13812 10448 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:05:38,582 autoreload 23820 21532 Watching for file changes with StatReloader
+INFO 2025-03-27 22:05:45,682 autoreload 23820 21532 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:05:47,011 autoreload 18084 30656 Watching for file changes with StatReloader
+INFO 2025-03-27 22:05:50,709 autoreload 18084 30656 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:05:51,491 autoreload 3636 22764 Watching for file changes with StatReloader
+INFO 2025-03-27 22:05:54,961 autoreload 3636 22764 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:05:55,825 autoreload 4892 4584 Watching for file changes with StatReloader
+INFO 2025-03-27 22:06:01,547 autoreload 4892 4584 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:06:02,601 autoreload 19808 14588 Watching for file changes with StatReloader
+INFO 2025-03-27 22:06:08,973 autoreload 19808 14588 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:06:10,158 autoreload 7188 25760 Watching for file changes with StatReloader
+INFO 2025-03-27 22:06:37,810 autoreload 7188 25760 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:06:39,042 autoreload 7164 26188 Watching for file changes with StatReloader
+INFO 2025-03-27 22:07:57,118 autoreload 7164 26188 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:07:57,981 autoreload 28232 8152 Watching for file changes with StatReloader
+INFO 2025-03-27 22:08:32,147 autoreload 28232 8152 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:08:33,599 autoreload 30228 4316 Watching for file changes with StatReloader
+INFO 2025-03-27 22:08:53,911 autoreload 30228 4316 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:08:55,343 autoreload 28800 28940 Watching for file changes with StatReloader
+INFO 2025-03-27 22:09:13,905 autoreload 28800 28940 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:09:15,400 autoreload 28696 17496 Watching for file changes with StatReloader
+INFO 2025-03-27 22:09:45,639 autoreload 28696 17496 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:09:47,159 autoreload 940 16764 Watching for file changes with StatReloader
+INFO 2025-03-27 22:11:22,255 autoreload 940 16764 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:11:23,792 autoreload 18564 23648 Watching for file changes with StatReloader
+INFO 2025-03-27 22:11:43,634 autoreload 18564 23648 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:11:45,189 autoreload 3116 25448 Watching for file changes with StatReloader
+INFO 2025-03-27 22:13:32,361 autoreload 3116 25448 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:13:33,657 autoreload 3112 29716 Watching for file changes with StatReloader
+INFO 2025-03-27 22:13:49,949 autoreload 3112 29716 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-27 22:13:51,434 autoreload 28420 19816 Watching for file changes with StatReloader
+INFO 2025-03-27 22:22:48,324 basehttp 28420 28624 "GET /douban/movies/2/ HTTP/1.1" 200 21038
+INFO 2025-03-27 22:22:48,357 basehttp 28420 28624 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:22:48,407 basehttp 28420 23448 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:22:48,801 basehttp 28420 28624 "GET /static/js/douban_detail.js HTTP/1.1" 200 6973
+INFO 2025-03-27 22:22:49,224 basehttp 28420 28624 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:22:49,226 basehttp 28420 23448 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:23:10,937 basehttp 28420 23448 "GET /douban/movies/2/ HTTP/1.1" 200 21037
+INFO 2025-03-27 22:23:11,023 basehttp 28420 23448 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:26:20,745 autoreload 28420 19816 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 22:26:23,015 autoreload 27812 504 Watching for file changes with StatReloader
+INFO 2025-03-27 22:26:50,012 basehttp 27812 23120 "GET /douban/movies/2/ HTTP/1.1" 200 22429
+INFO 2025-03-27 22:26:50,486 basehttp 27812 23120 "GET /static/js/douban_detail.js HTTP/1.1" 200 10562
+INFO 2025-03-27 22:28:02,825 autoreload 27812 504 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-27 22:28:05,075 autoreload 28476 10496 Watching for file changes with StatReloader
+INFO 2025-03-27 22:32:21,081 basehttp 28476 7252 "GET /douban/movies/2/ HTTP/1.1" 200 22493
+INFO 2025-03-27 22:32:21,565 basehttp 28476 7252 "GET /static/js/douban_detail.js HTTP/1.1" 200 11517
+INFO 2025-03-27 22:34:41,001 basehttp 28476 7252 "GET /douban/overview/ HTTP/1.1" 200 19790
+INFO 2025-03-27 22:34:42,678 basehttp 28476 7252 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:34:45,407 basehttp 28476 7252 "GET /douban/movies/3/ HTTP/1.1" 200 22030
+INFO 2025-03-27 22:34:45,456 basehttp 28476 7252 "GET /static/js/douban_detail.js HTTP/1.1" 200 11169
+INFO 2025-03-27 22:35:08,800 basehttp 28476 7252 "GET /douban/overview/ HTTP/1.1" 200 19790
+INFO 2025-03-27 22:35:11,122 basehttp 28476 7252 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:35:12,977 basehttp 28476 7252 "GET /douban/movies/1/ HTTP/1.1" 200 20544
+INFO 2025-03-27 22:35:13,014 basehttp 28476 7252 "GET /static/js/douban_detail.js HTTP/1.1" 200 11169
+INFO 2025-03-27 22:38:37,461 basehttp 28476 7252 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 22:38:37,495 basehttp 28476 7252 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:38:38,930 basehttp 28476 7252 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 22:38:39,612 basehttp 28476 7252 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:38:41,215 basehttp 28476 7252 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:38:43,216 basehttp 28476 7252 "GET /douban/movies/2/ HTTP/1.1" 200 22489
+INFO 2025-03-27 22:38:43,259 basehttp 28476 7252 "GET /static/js/douban_detail.js HTTP/1.1" 200 14801
+INFO 2025-03-27 22:43:41,765 basehttp 28476 7252 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 22:43:41,813 basehttp 28476 7252 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:43:41,814 basehttp 28476 18016 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:43:42,681 basehttp 28476 18016 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:43:42,681 basehttp 28476 7252 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:43:43,355 basehttp 28476 7252 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 22:43:43,961 basehttp 28476 7252 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:43:46,906 basehttp 28476 7252 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:43:50,460 basehttp 28476 7252 "GET /douban/movies/3/ HTTP/1.1" 200 22030
+INFO 2025-03-27 22:43:50,524 basehttp 28476 7252 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:54:22,512 basehttp 28476 11280 "GET /douban/overview/ HTTP/1.1" 200 19791
+INFO 2025-03-27 22:54:23,141 basehttp 28476 11280 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 22:54:27,659 basehttp 28476 11280 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 22:54:28,259 basehttp 28476 11280 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:54:30,084 basehttp 28476 11280 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:54:47,055 basehttp 28476 11280 "GET /douban/movies/3/ HTTP/1.1" 200 22030
+INFO 2025-03-27 22:54:47,089 basehttp 28476 11280 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:55:00,080 basehttp 28476 11280 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 22:55:02,317 basehttp 28476 11280 "GET /ip_pool/ HTTP/1.1" 200 16181
+INFO 2025-03-27 22:55:02,339 basehttp 28476 11280 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-27 22:55:02,341 basehttp 28476 29928 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-27 22:55:03,811 basehttp 28476 29928 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-27 22:55:05,701 basehttp 28476 29928 "GET /ip_pool/ HTTP/1.1" 200 16181
+INFO 2025-03-27 22:55:07,725 basehttp 28476 29928 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-27 22:55:10,014 basehttp 28476 29928 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-27 22:55:12,278 basehttp 28476 29928 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-27 22:55:12,834 basehttp 28476 29928 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:55:27,622 basehttp 28476 29928 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 22:55:31,253 basehttp 28476 29928 "GET /douban/movies/3/ HTTP/1.1" 200 22026
+INFO 2025-03-27 22:58:55,998 basehttp 28476 29928 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:59:47,777 basehttp 28476 29928 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-27 22:59:58,232 basehttp 28476 29928 "GET /douban/overview/ HTTP/1.1" 200 19789
+INFO 2025-03-27 22:59:59,827 basehttp 28476 29928 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 23:00:03,985 basehttp 28476 29928 "GET /douban/movies/2/ HTTP/1.1" 200 22483
+INFO 2025-03-27 23:00:04,034 basehttp 28476 29928 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-27 23:03:15,828 basehttp 28476 29928 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-27 23:03:35,397 basehttp 28476 29928 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-27 23:03:57,645 basehttp 28476 29928 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-27 23:05:35,590 basehttp 28476 29928 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-27 23:05:46,514 basehttp 28476 29928 "GET /douban/movies/ HTTP/1.1" 200 18547
+INFO 2025-03-27 23:05:46,574 basehttp 28476 29928 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-27 23:05:46,596 basehttp 28476 29928 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-27 23:05:47,163 basehttp 28476 26988 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-27 23:05:47,164 basehttp 28476 29928 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-27 23:05:55,414 basehttp 28476 29928 "GET /douban/movies/1/ HTTP/1.1" 200 23060
+INFO 2025-03-27 23:05:55,459 basehttp 28476 29928 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-27 23:07:31,721 basehttp 28476 29928 "GET /douban/tv/ HTTP/1.1" 200 12873
+INFO 2025-03-27 23:07:33,355 basehttp 28476 29928 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-27 23:07:34,372 basehttp 28476 29928 "GET /douban/overview/ HTTP/1.1" 200 19791
+INFO 2025-03-27 23:07:44,255 basehttp 28476 29928 "GET /douban/settings/ HTTP/1.1" 200 12876
+INFO 2025-03-27 23:08:29,443 basehttp 28476 29928 "GET /douban/overview/ HTTP/1.1" 200 19790
+INFO 2025-03-27 23:08:30,575 basehttp 28476 29928 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-28 11:34:19,149 autoreload 33868 20376 Watching for file changes with StatReloader
+INFO 2025-03-28 11:34:33,514 basehttp 33868 10044 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 11:34:33,541 basehttp 33868 10044 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:33,543 basehttp 33868 19488 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:33,543 basehttp 33868 34116 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:34,214 basehttp 33868 34116 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:34,214 basehttp 33868 19488 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+WARNING 2025-03-28 11:34:34,334 log 33868 19488 Not Found: /favicon.ico
+WARNING 2025-03-28 11:34:34,334 basehttp 33868 19488 "GET /favicon.ico HTTP/1.1" 404 13822
+INFO 2025-03-28 11:34:35,697 basehttp 33868 19488 "GET /ip_pool/ HTTP/1.1" 200 16180
+INFO 2025-03-28 11:34:35,716 basehttp 33868 19488 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:35,716 basehttp 33868 34116 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:37,746 basehttp 33868 34116 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-28 11:34:41,670 basehttp 33868 6048 "GET /ip_pool/ HTTP/1.1" 200 16180
+INFO 2025-03-28 11:34:54,538 basehttp 33868 6048 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 11:34:55,715 basehttp 33868 6048 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 11:34:56,121 basehttp 33868 6048 "GET /douban/overview/ HTTP/1.1" 200 19790
+INFO 2025-03-28 11:34:56,141 basehttp 33868 15004 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-28 11:34:56,260 basehttp 33868 6048 "GET /static/css/doubanstyle.css HTTP/1.1" 200 14391
+INFO 2025-03-28 11:34:59,228 basehttp 33868 6048 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-28 11:35:01,403 basehttp 33868 6048 "GET /douban/movies/1/ HTTP/1.1" 200 23058
+INFO 2025-03-28 11:35:01,445 basehttp 33868 6048 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-28 11:35:22,044 basehttp 33868 6048 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-28 11:35:23,972 basehttp 33868 6048 "GET /douban/movies/2/ HTTP/1.1" 200 22483
+INFO 2025-03-28 14:59:47,942 basehttp 33868 18212 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 14:59:48,016 basehttp 33868 18212 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:48,016 basehttp 33868 25480 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:48,017 basehttp 33868 35276 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:49,010 basehttp 33868 25480 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:49,011 basehttp 33868 35276 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:49,666 basehttp 33868 35276 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 14:59:50,234 basehttp 33868 35276 "GET /douban/overview/ HTTP/1.1" 200 19790
+INFO 2025-03-28 14:59:50,258 basehttp 33868 35276 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 14:59:54,003 basehttp 33868 35276 "GET /douban/movies/ HTTP/1.1" 200 18546
+INFO 2025-03-28 15:02:43,105 autoreload 33868 20376 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-28 15:02:47,680 autoreload 19756 29688 Watching for file changes with StatReloader
+INFO 2025-03-28 15:03:04,428 basehttp 19756 27704 "GET /douban/movies/ HTTP/1.1" 200 25578
+INFO 2025-03-28 15:05:00,818 basehttp 19756 32640 "GET /douban/movies/1/ HTTP/1.1" 200 23060
+INFO 2025-03-28 15:05:00,854 basehttp 19756 32640 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-28 15:07:17,012 autoreload 19756 29688 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-28 15:07:18,915 autoreload 31012 38660 Watching for file changes with StatReloader
+INFO 2025-03-28 15:07:38,099 autoreload 31012 38660 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-28 15:07:39,295 autoreload 15964 11244 Watching for file changes with StatReloader
+INFO 2025-03-28 15:07:43,596 basehttp 15964 21512 "GET /douban/movies/1/ HTTP/1.1" 200 31609
+INFO 2025-03-28 15:08:19,039 basehttp 15964 2988 "GET /douban/movies/ HTTP/1.1" 200 25577
+INFO 2025-03-28 15:08:21,097 basehttp 15964 2988 "GET /douban/movies/2/ HTTP/1.1" 200 31052
+INFO 2025-03-28 15:09:43,131 basehttp 15964 2988 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 15:09:44,703 basehttp 15964 2988 "GET /douban/movies/3/ HTTP/1.1" 200 30581
+INFO 2025-03-28 15:11:02,188 basehttp 15964 2988 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 15:11:03,730 basehttp 15964 2988 "GET /ip_pool/ HTTP/1.1" 200 16180
+INFO 2025-03-28 15:11:03,758 basehttp 15964 2988 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 15:11:03,758 basehttp 15964 18972 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-28 15:11:06,906 basehttp 15964 18972 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-28 15:11:09,776 basehttp 15964 18972 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-28 15:11:19,930 basehttp 15964 18972 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-28 15:12:46,823 basehttp 15964 18972 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-28 15:12:57,003 basehttp 15964 18972 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-28 15:22:06,044 basehttp 15964 4972 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 15:22:07,315 basehttp 15964 4972 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 15:22:07,843 basehttp 15964 4972 "GET /douban/overview/ HTTP/1.1" 200 26820
+INFO 2025-03-28 15:22:07,865 basehttp 15964 4972 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-28 15:22:09,674 basehttp 15964 4972 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 15:22:11,265 basehttp 15964 4972 "GET /douban/movies/3/ HTTP/1.1" 200 30581
+INFO 2025-03-28 15:22:59,257 basehttp 15964 36968 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 15:22:59,632 basehttp 15964 19932 "GET /static/css/indexstyle.css HTTP/1.1" 200 2085
+INFO 2025-03-28 15:22:59,684 basehttp 15964 36284 "GET /static/js/system.js HTTP/1.1" 200 3418
+INFO 2025-03-28 15:22:59,834 basehttp 15964 30268 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 11275
+INFO 2025-03-28 15:22:59,901 basehttp 15964 13776 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 11479
+INFO 2025-03-28 15:23:00,439 basehttp 15964 13776 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-03-28 15:23:00,439 basehttp 15964 30268 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 3531
+WARNING 2025-03-28 15:23:00,556 log 15964 30268 Not Found: /favicon.ico
+WARNING 2025-03-28 15:23:00,557 basehttp 15964 30268 "GET /favicon.ico HTTP/1.1" 404 13822
+INFO 2025-03-28 15:23:01,130 basehttp 15964 30268 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 15:23:01,626 basehttp 15964 30268 "GET /douban/overview/ HTTP/1.1" 200 26820
+INFO 2025-03-28 15:23:01,636 basehttp 15964 13948 "GET /static/css/doubanstyle.css HTTP/1.1" 200 14391
+INFO 2025-03-28 15:23:01,636 basehttp 15964 14184 "GET /static/js/douban.js HTTP/1.1" 200 9482
+INFO 2025-03-28 15:23:03,886 basehttp 15964 14184 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 15:23:05,462 basehttp 15964 32316 "GET /douban/movies/2/ HTTP/1.1" 200 31040
+INFO 2025-03-28 15:23:05,478 basehttp 15964 17560 "GET /static/js/douban_detail.js HTTP/1.1" 200 14801
+INFO 2025-03-28 15:49:43,827 basehttp 15964 22756 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 15:49:48,367 basehttp 15964 22756 "GET /douban/movies/2/ HTTP/1.1" 200 31046
+INFO 2025-03-28 16:59:55,310 basehttp 15964 40304 "GET / HTTP/1.1" 302 0
+INFO 2025-03-28 16:59:55,333 basehttp 15964 40304 "GET /login/?next=/ HTTP/1.1" 200 9624
+INFO 2025-03-28 16:59:55,359 basehttp 15964 40304 "GET /static/css/loginstyle.css HTTP/1.1" 200 2045
+INFO 2025-03-28 16:59:55,360 basehttp 15964 1968 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 11479
+INFO 2025-03-28 16:59:55,361 basehttp 15964 40612 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 11275
+INFO 2025-03-28 16:59:55,364 basehttp 15964 1968 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+INFO 2025-03-28 16:59:55,368 basehttp 15964 1968 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 3531
+INFO 2025-03-28 17:20:16,199 autoreload 15964 11244 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-28 17:20:19,524 autoreload 48596 44140 Watching for file changes with StatReloader
+INFO 2025-03-28 17:20:32,365 autoreload 48596 44140 D:\python_learn\CollectIp\CollectIp\index\mongodb_utils.py changed, reloading.
+INFO 2025-03-28 17:20:33,435 autoreload 34536 37872 Watching for file changes with StatReloader
+INFO 2025-03-28 22:54:42,273 basehttp 34536 53408 "GET /douban/movies/3/ HTTP/1.1" 200 31673
+INFO 2025-03-28 22:54:42,290 basehttp 34536 30244 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 22:54:42,292 basehttp 34536 54300 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-28 22:54:42,306 basehttp 34536 54300 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-28 22:54:42,307 basehttp 34536 30244 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-28 22:54:42,581 basehttp 34536 53408 "GET /static/css/douban_detail.css HTTP/1.1" 200 5722
+INFO 2025-03-28 22:54:43,283 basehttp 34536 53408 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-28 22:54:43,285 basehttp 34536 30244 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-28 22:59:46,894 basehttp 34536 53128 "GET /douban/overview/ HTTP/1.1" 200 26821
+INFO 2025-03-28 22:59:46,944 basehttp 34536 53128 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:00:36,517 basehttp 34536 53128 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:00:38,053 basehttp 34536 53128 "GET /douban/movies/1/ HTTP/1.1" 200 32693
+INFO 2025-03-28 23:00:38,074 basehttp 34536 53128 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:05:50,939 basehttp 34536 40508 "GET /douban/movies/1/ HTTP/1.1" 200 32693
+INFO 2025-03-28 23:05:51,015 basehttp 34536 40508 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:05:55,925 basehttp 34536 40508 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:05:58,738 basehttp 34536 40508 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:06:00,754 basehttp 34536 40508 "GET /douban/movies/3/ HTTP/1.1" 200 31665
+INFO 2025-03-28 23:10:40,694 basehttp 34536 40508 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:12:01,181 basehttp 34536 41080 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:12:03,934 basehttp 34536 41080 "GET /douban/movies/1/ HTTP/1.1" 200 26281
+INFO 2025-03-28 23:12:03,964 basehttp 34536 41080 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:16,131 basehttp 34536 12132 "GET /douban/overview/ HTTP/1.1" 200 26820
+INFO 2025-03-28 23:12:16,145 basehttp 34536 12132 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:16,146 basehttp 34536 50480 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:16,150 basehttp 34536 36232 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:16,150 basehttp 34536 50512 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:17,207 basehttp 34536 50512 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:17,207 basehttp 34536 36232 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:18,115 basehttp 34536 36232 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:12:19,729 basehttp 34536 36232 "GET /douban/movies/1/ HTTP/1.1" 200 26281
+INFO 2025-03-28 23:12:19,737 basehttp 34536 36232 "GET /static/css/douban_detail.css HTTP/1.1" 200 5722
+INFO 2025-03-28 23:12:19,741 basehttp 34536 36232 "GET /static/js/douban_detail.js HTTP/1.1" 200 11628
+INFO 2025-03-28 23:12:30,278 basehttp 34536 41080 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 23:12:30,310 basehttp 34536 41080 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:12:31,764 basehttp 34536 41080 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 23:12:32,265 basehttp 34536 41080 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:12:34,001 basehttp 34536 41080 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:12:35,789 basehttp 34536 41080 "GET /douban/movies/3/ HTTP/1.1" 200 25241
+INFO 2025-03-28 23:12:51,573 basehttp 34536 36232 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:16:04,106 basehttp 34536 11552 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 23:16:07,081 basehttp 34536 11552 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 23:16:07,601 basehttp 34536 11552 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:26:41,754 basehttp 34536 55040 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 23:26:43,332 basehttp 34536 55040 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 23:26:43,580 basehttp 34536 55040 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:26:45,760 basehttp 34536 55040 "GET /douban/movies/ HTTP/1.1" 200 25580
+INFO 2025-03-28 23:27:00,937 basehttp 34536 55040 "GET /douban/overview/ HTTP/1.1" 200 26819
+INFO 2025-03-28 23:27:06,356 basehttp 34536 55040 "GET /douban/movies/ HTTP/1.1" 200 25580
+INFO 2025-03-28 23:32:21,874 basehttp 34536 3616 "GET /douban/movies/ HTTP/1.1" 200 25576
+INFO 2025-03-28 23:40:52,110 basehttp 34536 34400 "GET /douban/movies/1/ HTTP/1.1" 200 26277
+INFO 2025-03-28 23:40:52,142 basehttp 34536 34400 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-28 23:42:02,792 basehttp 34536 34400 "GET /douban/overview/ HTTP/1.1" 200 28009
+INFO 2025-03-28 23:42:06,084 basehttp 34536 34400 "GET /douban/movies/ HTTP/1.1" 200 26769
+INFO 2025-03-28 23:42:13,926 basehttp 34536 34400 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-28 23:42:53,112 autoreload 41468 54636 Watching for file changes with StatReloader
+INFO 2025-03-28 23:43:09,000 basehttp 41468 37172 "GET /douban/movies/ HTTP/1.1" 200 26769
+INFO 2025-03-28 23:43:22,947 basehttp 41468 37172 "POST /crawl_movie/ HTTP/1.1" 200 181
+WARNING 2025-03-28 23:44:10,695 log 41468 46092 Not Found: /favicon.ico
+WARNING 2025-03-28 23:44:10,696 basehttp 41468 46092 "GET /favicon.ico HTTP/1.1" 404 13822
+INFO 2025-03-28 23:44:16,237 basehttp 41468 46092 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-28 23:44:16,257 basehttp 41468 46092 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-28 23:44:17,927 basehttp 41468 46092 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-28 23:44:18,606 basehttp 41468 46092 "GET /douban/overview/ HTTP/1.1" 200 28009
+INFO 2025-03-28 23:44:20,534 basehttp 41468 46092 "GET /douban/movies/ HTTP/1.1" 200 26769
+INFO 2025-03-28 23:44:28,312 basehttp 41468 46092 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-29 12:21:23,844 autoreload 27432 27468 Watching for file changes with StatReloader
+INFO 2025-03-29 12:22:40,048 basehttp 27432 11732 "GET /douban/overview/ HTTP/1.1" 200 28011
+INFO 2025-03-29 12:22:40,075 basehttp 27432 11732 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:40,076 basehttp 27432 21776 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:40,077 basehttp 27432 3392 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:40,078 basehttp 27432 16500 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:41,571 basehttp 27432 16500 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:41,571 basehttp 27432 3392 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+WARNING 2025-03-29 12:22:41,695 log 27432 3392 Not Found: /favicon.ico
+WARNING 2025-03-29 12:22:41,697 basehttp 27432 3392 "GET /favicon.ico HTTP/1.1" 404 13822
+INFO 2025-03-29 12:22:42,963 basehttp 27432 3392 "GET /douban/movies/ HTTP/1.1" 200 26769
+INFO 2025-03-29 12:22:45,044 basehttp 27432 3392 "GET /douban/movies/3/ HTTP/1.1" 200 25249
+INFO 2025-03-29 12:22:45,070 basehttp 27432 23632 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:22:45,416 basehttp 27432 23632 "GET /static/js/douban_detail.js HTTP/1.1" 200 11628
+INFO 2025-03-29 12:22:49,488 basehttp 27432 23632 "GET /douban/overview/ HTTP/1.1" 200 28009
+INFO 2025-03-29 12:22:59,934 basehttp 27432 14436 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-29 12:28:20,912 basehttp 27432 27520 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-29 12:28:28,851 basehttp 27432 27520 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-29 12:30:40,496 basehttp 27432 27520 "GET /douban/overview/ HTTP/1.1" 200 28554
+INFO 2025-03-29 12:30:45,611 basehttp 27432 27520 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-29 12:47:51,550 basehttp 27432 16548 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 12:47:51,593 basehttp 27432 27292 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-29 12:47:51,593 basehttp 27432 16548 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:47:52,752 basehttp 27432 16548 "GET /ip_pool/ HTTP/1.1" 200 16180
+INFO 2025-03-29 12:47:52,770 basehttp 27432 16548 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-29 12:47:52,770 basehttp 27432 27292 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-29 12:47:54,169 basehttp 27432 27292 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-29 12:47:57,881 basehttp 27432 27292 "POST /crawl_once/ HTTP/1.1" 200 76
+INFO 2025-03-29 12:48:08,373 basehttp 27432 27292 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-29 13:36:41,337 basehttp 27432 25196 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 13:36:45,786 basehttp 27432 25196 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 13:36:46,330 basehttp 27432 25196 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-29 13:47:04,264 basehttp 27432 3960 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-29 13:55:00,525 basehttp 27432 8172 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-29 13:56:49,781 autoreload 14232 3416 Watching for file changes with StatReloader
+INFO 2025-03-29 13:57:07,342 basehttp 14232 6836 "POST /crawl_movie/ HTTP/1.1" 200 181
+INFO 2025-03-29 13:59:03,934 basehttp 14232 6836 "GET /douban/movies/ HTTP/1.1" 200 31481
+INFO 2025-03-29 13:59:33,007 basehttp 14232 6836 "GET /douban/movies/3/ HTTP/1.1" 200 25253
+INFO 2025-03-29 13:59:33,035 basehttp 14232 6836 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-29 13:59:33,056 basehttp 14232 6836 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-29 13:59:45,777 basehttp 14232 6836 "GET /douban/movies/2/ HTTP/1.1" 200 25742
+INFO 2025-03-29 14:00:04,098 basehttp 14232 6836 "GET /douban/movies/1/ HTTP/1.1" 200 26281
+INFO 2025-03-29 15:19:10,295 basehttp 14232 13412 "GET /douban/movies/4/ HTTP/1.1" 200 22996
+INFO 2025-03-29 15:19:18,026 basehttp 14232 13412 "GET /douban/movies/7/ HTTP/1.1" 200 23216
+INFO 2025-03-29 15:19:24,515 basehttp 14232 13412 "GET /douban/movies/1/ HTTP/1.1" 200 26277
+INFO 2025-03-29 15:21:15,723 basehttp 14232 27600 "GET /douban/movies/ HTTP/1.1" 200 22709
+INFO 2025-03-29 15:23:45,065 basehttp 14232 11352 "GET /douban/movies/ HTTP/1.1" 200 25149
+INFO 2025-03-29 15:23:51,994 basehttp 14232 11352 "GET /douban/movies/1/ HTTP/1.1" 200 26285
+INFO 2025-03-29 15:24:56,131 basehttp 14232 11352 "GET / HTTP/1.1" 200 12714
+WARNING 2025-03-29 15:25:03,143 log 14232 11352 Not Found: /addmin
+WARNING 2025-03-29 15:25:03,145 basehttp 14232 11352 "GET /addmin HTTP/1.1" 404 13807
+INFO 2025-03-29 15:25:06,947 basehttp 14232 11352 "GET /admin HTTP/1.1" 301 0
+INFO 2025-03-29 15:25:07,151 basehttp 14232 11352 "GET /admin/ HTTP/1.1" 200 15089
+INFO 2025-03-29 15:25:07,379 basehttp 14232 11352 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-03-29 15:25:10,705 basehttp 14232 11352 "GET /admin/index/movie/ HTTP/1.1" 200 16691
+INFO 2025-03-29 15:25:10,849 basehttp 14232 11352 "GET /admin/jsi18n/ HTTP/1.1" 200 7710
+INFO 2025-03-29 15:25:10,860 basehttp 14232 11352 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-03-29 15:25:18,878 basehttp 14232 11352 "GET /admin/index/movie/1/change/ HTTP/1.1" 200 20813
+INFO 2025-03-29 15:25:18,907 basehttp 14232 11352 "GET /static/admin/css/forms.css HTTP/1.1" 200 8423
+INFO 2025-03-29 15:25:18,908 basehttp 14232 25432 "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 492
+INFO 2025-03-29 15:25:18,922 basehttp 14232 25432 "GET /static/admin/css/widgets.css HTTP/1.1" 200 10592
+INFO 2025-03-29 15:25:18,925 basehttp 14232 25432 "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-03-29 15:25:19,031 basehttp 14232 3032 "GET /admin/jsi18n/ HTTP/1.1" 200 7710
+INFO 2025-03-29 15:25:32,561 basehttp 14232 3032 "GET /admin/index/movie/1/delete/ HTTP/1.1" 200 13444
+INFO 2025-03-29 15:25:32,571 basehttp 14232 3032 "GET /static/admin/js/cancel.js HTTP/1.1" 200 857
+INFO 2025-03-29 15:25:34,383 basehttp 14232 3032 "POST /admin/index/movie/1/delete/ HTTP/1.1" 302 0
+INFO 2025-03-29 15:25:34,816 basehttp 14232 3032 "GET /admin/index/movie/ HTTP/1.1" 200 14369
+INFO 2025-03-29 15:25:34,933 basehttp 14232 3032 "GET /admin/jsi18n/ HTTP/1.1" 200 7710
+INFO 2025-03-29 15:25:34,942 basehttp 14232 3032 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+ERROR 2025-03-29 15:26:36,256 log 14232 3032 Internal Server Error: /douban/movies/1/
+Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\index\views.py", line 591, in movie_detail
+    movie = Movie.objects.get(id=movie_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\db\models\query.py", line 429, in get
+    raise self.model.DoesNotExist(
+index.models.Movie.DoesNotExist: Movie matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_learn\CollectIp\CollectIp\index\views.py", line 666, in movie_detail
+    return render(request, 'error.html', {'error_message': '电影不存在'})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: error.html
+ERROR 2025-03-29 15:26:36,292 basehttp 14232 3032 "GET /douban/movies/1/ HTTP/1.1" 500 116560
+INFO 2025-03-29 15:26:42,205 basehttp 14232 3032 "GET /douban HTTP/1.1" 301 0
+INFO 2025-03-29 15:26:42,329 basehttp 14232 3032 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 15:26:42,747 basehttp 14232 3032 "GET /douban/overview/ HTTP/1.1" 200 25468
+INFO 2025-03-29 15:26:45,263 basehttp 14232 3032 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 15:26:46,859 basehttp 14232 3032 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 15:26:47,168 basehttp 14232 3032 "GET /douban/overview/ HTTP/1.1" 200 25468
+INFO 2025-03-29 15:26:49,153 basehttp 14232 3032 "GET /ip_pool/ HTTP/1.1" 200 16180
+INFO 2025-03-29 15:26:51,077 basehttp 14232 3032 "GET /ip_pool/manage/ HTTP/1.1" 200 27058
+INFO 2025-03-29 15:27:04,301 basehttp 14232 3032 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 15:29:02,434 basehttp 14232 3032 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 15:29:02,725 basehttp 14232 3032 "GET /douban/overview/ HTTP/1.1" 200 25468
+INFO 2025-03-29 15:42:03,615 autoreload 14232 3416 D:\Anaconda\envs\djangoLearn\Lib\site-packages\sqlparse\sql.py changed, reloading.
+INFO 2025-03-29 15:47:16,680 autoreload 8024 11952 Watching for file changes with StatReloader
+INFO 2025-03-29 15:48:32,077 basehttp 8024 18892 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-29 15:53:32,268 basehttp 8024 22756 "GET /douban/overview/ HTTP/1.1" 200 26296
+INFO 2025-03-29 15:53:35,377 basehttp 8024 22756 "GET /douban/movies/ HTTP/1.1" 200 25149
+INFO 2025-03-29 15:53:42,584 basehttp 8024 22756 "GET /douban/movies/2/ HTTP/1.1" 200 26323
+INFO 2025-03-29 15:53:42,665 basehttp 8024 22756 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-29 15:53:42,697 basehttp 8024 22756 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-29 15:55:43,592 basehttp 8024 22756 "POST /crawl_movie/ HTTP/1.1" 200 100
+INFO 2025-03-29 15:59:15,462 autoreload 8024 11952 D:\python_learn\CollectIp\CollectIp\CollectIp\settings.py changed, reloading.
+INFO 2025-03-29 15:59:17,788 autoreload 27064 27112 Watching for file changes with StatReloader
+INFO 2025-03-29 15:59:28,574 autoreload 27064 27112 D:\python_learn\CollectIp\CollectIp\CollectIp\urls.py changed, reloading.
+INFO 2025-03-29 15:59:30,793 autoreload 21604 13052 Watching for file changes with StatReloader
+INFO 2025-03-29 16:04:28,531 autoreload 13560 14528 Watching for file changes with StatReloader
+INFO 2025-03-29 16:08:33,098 autoreload 13560 14528 D:\python_learn\CollectIp\CollectIp\CollectIp\settings.py changed, reloading.
+INFO 2025-03-29 16:08:34,444 autoreload 6668 16984 Watching for file changes with StatReloader
+INFO 2025-03-29 16:10:34,464 autoreload 6668 16984 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-29 16:10:35,509 autoreload 21180 19560 Watching for file changes with StatReloader
+INFO 2025-03-29 16:11:03,180 basehttp 21180 8360 "GET /douban/movies/ HTTP/1.1" 200 26241
+INFO 2025-03-29 16:11:03,204 basehttp 21180 8360 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-29 16:11:10,373 basehttp 21180 8360 "GET /admin/ HTTP/1.1" 200 17376
+INFO 2025-03-29 16:11:10,715 basehttp 21180 8360 "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-03-29 16:11:19,784 basehttp 21180 8360 "GET /admin/index/ipdata/ HTTP/1.1" 200 34679
+INFO 2025-03-29 16:11:19,962 basehttp 21180 8360 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 16:11:21,665 basehttp 21180 8360 "GET /admin/ HTTP/1.1" 200 17376
+INFO 2025-03-29 16:11:23,085 basehttp 21180 8360 "GET /admin/index/movie/ HTTP/1.1" 200 19852
+INFO 2025-03-29 16:11:23,271 basehttp 21180 8360 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 16:11:27,260 basehttp 21180 8360 "GET /admin/index/movie/3/change/ HTTP/1.1" 200 24375
+INFO 2025-03-29 16:11:27,499 basehttp 21180 8360 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 16:13:30,529 autoreload 21180 19560 D:\python_learn\CollectIp\CollectIp\index\views.py changed, reloading.
+INFO 2025-03-29 16:13:32,055 autoreload 11472 26004 Watching for file changes with StatReloader
+INFO 2025-03-29 16:31:47,839 basehttp 11472 3128 "GET /admin/index/movie/3/change/ HTTP/1.1" 200 24376
+INFO 2025-03-29 16:31:47,876 basehttp 11472 27344 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-29 16:31:47,877 basehttp 11472 8828 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-29 16:31:47,896 basehttp 11472 8828 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-29 16:31:48,177 basehttp 11472 3128 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 16:31:48,191 basehttp 11472 3128 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-29 16:31:48,203 basehttp 11472 3128 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-29 16:34:49,134 basehttp 11472 3128 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 16:34:50,558 basehttp 11472 3128 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 16:34:51,081 basehttp 11472 3128 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-29 16:38:00,512 basehttp 11472 3128 "POST /crawl_movie/ HTTP/1.1" 200 112
+INFO 2025-03-29 17:04:02,338 basehttp 11472 30824 "GET / HTTP/1.1" 302 0
+INFO 2025-03-29 17:06:07,695 basehttp 11472 16460 "GET /douban/overview/ HTTP/1.1" 200 30994
+INFO 2025-03-29 17:06:14,528 basehttp 11472 16460 "GET /douban/movies/ HTTP/1.1" 200 29427
+INFO 2025-03-29 17:06:28,505 basehttp 11472 16460 "GET /douban/movies/5/ HTTP/1.1" 200 23216
+INFO 2025-03-29 17:06:32,741 basehttp 11472 16460 "GET /douban/movies/2/ HTTP/1.1" 200 26323
+INFO 2025-03-29 17:06:41,893 basehttp 11472 16460 "GET /douban/movies/4/ HTTP/1.1" 200 23401
+INFO 2025-03-29 20:22:46,943 basehttp 11472 13740 "GET /admin/ HTTP/1.1" 200 17377
+INFO 2025-03-29 20:25:28,842 basehttp 11472 36764 "GET /admin/ HTTP/1.1" 200 17376
+INFO 2025-03-29 20:25:28,891 basehttp 11472 36764 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-29 20:25:29,186 basehttp 11472 36764 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-03-29 20:25:31,861 basehttp 11472 36764 "GET /admin/index/movie/ HTTP/1.1" 200 21268
+INFO 2025-03-29 20:25:32,083 basehttp 11472 36764 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 20:25:32,097 basehttp 11472 36764 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-03-29 20:25:43,479 basehttp 11472 36764 "POST /admin/index/movie/ HTTP/1.1" 200 16187
+INFO 2025-03-29 20:25:43,499 basehttp 11472 36764 "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+INFO 2025-03-29 20:25:45,730 basehttp 11472 36764 "POST /admin/index/movie/ HTTP/1.1" 302 0
+INFO 2025-03-29 20:25:46,329 basehttp 11472 36764 "GET /admin/index/movie/ HTTP/1.1" 200 20493
+INFO 2025-03-29 20:25:46,701 basehttp 11472 36764 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-29 20:25:46,721 basehttp 11472 36764 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-03-29 20:25:51,721 basehttp 11472 36764 "GET /admin/index/movie/ HTTP/1.1" 200 20359
+INFO 2025-03-29 20:25:55,332 basehttp 11472 36764 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-29 20:25:57,319 basehttp 11472 36764 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-29 20:25:58,043 basehttp 11472 36764 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-29 20:25:58,073 basehttp 11472 36764 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-29 20:25:58,074 basehttp 11472 36760 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-29 22:42:38,162 autoreload 13700 32040 Watching for file changes with StatReloader
+INFO 2025-03-29 22:42:49,931 basehttp 13700 32388 "GET /douban/movies/ HTTP/1.1" 200 27317
+INFO 2025-03-29 22:42:49,985 basehttp 13700 32388 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-29 22:42:49,987 basehttp 13700 19108 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-29 22:42:50,792 basehttp 13700 19108 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-29 22:42:50,792 basehttp 13700 32388 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+WARNING 2025-03-29 22:42:50,916 log 13700 32388 Not Found: /favicon.ico
+WARNING 2025-03-29 22:42:50,916 basehttp 13700 32388 "GET /favicon.ico HTTP/1.1" 404 13960
+INFO 2025-03-29 22:42:53,647 basehttp 13700 32388 "GET /douban/movies/2/ HTTP/1.1" 200 26323
+INFO 2025-03-29 22:42:53,664 basehttp 13700 32388 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-29 22:42:53,698 basehttp 13700 32388 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-29 22:43:38,792 basehttp 13700 32388 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-30 11:32:10,372 autoreload 22952 29036 Watching for file changes with StatReloader
+INFO 2025-03-30 11:32:15,807 basehttp 22952 10040 "GET /admin/ HTTP/1.1" 200 17431
+INFO 2025-03-30 11:32:15,833 basehttp 22952 2372 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:15,833 basehttp 22952 10040 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:15,859 basehttp 22952 10040 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:15,866 basehttp 22952 10040 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:15,873 basehttp 22952 10040 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:15,911 basehttp 22952 10040 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+WARNING 2025-03-30 11:32:16,024 log 22952 10040 Not Found: /favicon.ico
+WARNING 2025-03-30 11:32:16,025 basehttp 22952 10040 "GET /favicon.ico HTTP/1.1" 404 13960
+INFO 2025-03-30 11:32:21,323 basehttp 22952 10040 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-30 11:32:21,355 basehttp 22952 10040 "GET /static/css/indexstyle.css HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:21,356 basehttp 22952 2372 "GET /static/js/system.js HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:22,692 basehttp 22952 2372 "GET /ip_pool/ HTTP/1.1" 200 16183
+INFO 2025-03-30 11:32:22,728 basehttp 22952 2372 "GET /static/css/ip_poolstyle.css HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:22,728 basehttp 22952 10040 "GET /static/js/ip_pool.js HTTP/1.1" 304 0
+INFO 2025-03-30 11:32:24,258 basehttp 22952 10040 "GET /ip_pool/manage/ HTTP/1.1" 200 27070
+INFO 2025-03-30 11:32:29,346 basehttp 22952 10040 "POST /score_once/ HTTP/1.1" 200 76
+INFO 2025-03-30 11:32:39,721 basehttp 22952 10040 "GET /ip_pool/manage/ HTTP/1.1" 200 27070
+INFO 2025-03-30 11:34:08,085 basehttp 22952 10040 "GET /ip_pool/manage/ HTTP/1.1" 200 27070
+INFO 2025-03-30 11:34:11,247 basehttp 22952 10040 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 27346
+INFO 2025-03-30 11:34:13,162 basehttp 22952 10040 "GET /ip_pool/manage/?page=18 HTTP/1.1" 200 26221
+INFO 2025-03-30 11:34:14,939 basehttp 22952 10040 "GET /ip_pool/manage/?page=17 HTTP/1.1" 200 27334
+INFO 2025-03-30 11:34:16,102 basehttp 22952 10040 "GET /ip_pool/manage/?page=1 HTTP/1.1" 200 27070
+INFO 2025-03-30 11:34:18,337 basehttp 22952 10040 "GET /ip_pool/manage/?page=2 HTTP/1.1" 200 27346
+INFO 2025-03-30 11:34:20,315 basehttp 22952 10040 "GET /ip_pool/manage/?page=3 HTTP/1.1" 200 27351
+INFO 2025-03-30 11:34:21,332 basehttp 22952 10040 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 27261
+INFO 2025-03-30 13:02:28,615 basehttp 22952 7312 "GET /ip_pool/manage/?page=4 HTTP/1.1" 200 27325
+INFO 2025-03-30 13:02:37,391 basehttp 22952 7312 "GET /ip_pool/manage/?page=5 HTTP/1.1" 200 27335
+INFO 2025-03-30 13:02:38,617 basehttp 22952 7312 "GET /ip_pool/manage/?page=6 HTTP/1.1" 200 27336
+INFO 2025-03-30 13:02:39,537 basehttp 22952 7312 "GET /ip_pool/manage/?page=7 HTTP/1.1" 200 22494
+INFO 2025-03-30 13:05:06,105 basehttp 22952 7312 "GET /douban/overview/ HTTP/1.1" 200 28555
+INFO 2025-03-30 13:05:06,146 basehttp 22952 7312 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-30 13:05:06,147 basehttp 22952 21908 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:19:51,419 autoreload 51964 35120 Watching for file changes with StatReloader
+INFO 2025-03-30 22:20:04,780 basehttp 51964 50608 "GET / HTTP/1.1" 200 12715
+INFO 2025-03-30 22:20:04,817 basehttp 51964 50608 "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:04,818 basehttp 51964 51500 "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:06,953 basehttp 51964 50608 "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:06,954 basehttp 51964 51500 "GET /static/debug_toolbar/css/print.css HTTP/1.1" 304 0
+WARNING 2025-03-30 22:20:07,137 log 51964 51500 Not Found: /favicon.ico
+WARNING 2025-03-30 22:20:07,138 basehttp 51964 51500 "GET /favicon.ico HTTP/1.1" 404 13960
+INFO 2025-03-30 22:20:16,695 basehttp 51964 51500 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-30 22:20:17,266 basehttp 51964 51500 "GET /douban/overview/ HTTP/1.1" 200 29720
+INFO 2025-03-30 22:20:17,296 basehttp 51964 51500 "GET /static/css/doubanstyle.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:17,297 basehttp 51964 50608 "GET /static/js/douban.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:36,967 basehttp 51964 50608 "GET /douban/tv/ HTTP/1.1" 200 18332
+INFO 2025-03-30 22:20:37,988 basehttp 51964 50608 "GET /douban/movies/ HTTP/1.1" 200 28497
+INFO 2025-03-30 22:20:45,730 basehttp 51964 50608 "GET /douban/movies/7/ HTTP/1.1" 200 25991
+INFO 2025-03-30 22:20:45,749 basehttp 51964 50608 "GET /static/css/douban_detail.css HTTP/1.1" 304 0
+INFO 2025-03-30 22:20:45,763 basehttp 51964 50608 "GET /static/js/douban_detail.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:21:05,990 basehttp 51964 50608 "GET /admin/ HTTP/1.1" 200 17430
+INFO 2025-03-30 22:21:06,081 basehttp 51964 50608 "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-03-30 22:21:06,214 basehttp 51964 50608 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+INFO 2025-03-30 22:21:11,030 basehttp 51964 50608 - Broken pipe from ('127.0.0.1', 4613)
+INFO 2025-03-30 22:21:11,091 basehttp 51964 51500 "GET /admin/index/ipdata/ HTTP/1.1" 200 50169
+INFO 2025-03-30 22:21:11,281 basehttp 51964 51500 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-30 22:21:11,304 basehttp 51964 51500 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 304 0
+INFO 2025-03-30 22:21:17,081 basehttp 51964 51500 "GET /admin/index/movie/ HTTP/1.1" 200 20918
+INFO 2025-03-30 22:21:17,296 basehttp 51964 51500 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+INFO 2025-03-30 22:24:29,599 basehttp 51964 16768 "GET / HTTP/1.1" 200 12714
+INFO 2025-03-30 22:24:32,184 basehttp 51964 16768 "GET /douban/ HTTP/1.1" 302 0
+INFO 2025-03-30 22:24:32,779 basehttp 51964 16768 "GET /douban/overview/ HTTP/1.1" 200 29720
+INFO 2025-03-30 22:24:38,100 basehttp 51964 16768 "GET /douban/movies/ HTTP/1.1" 200 28497
+INFO 2025-03-30 22:24:41,572 basehttp 51964 16768 "GET /douban/movies/2/ HTTP/1.1" 200 26323

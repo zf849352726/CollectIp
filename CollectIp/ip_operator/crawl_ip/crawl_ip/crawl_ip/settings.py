@@ -50,6 +50,7 @@ DEFAULT_REQUEST_HEADERS = {
 DOWNLOADER_MIDDLEWARES = {
     'crawl_ip.middlewares.RandomUserAgentMiddleware': 543,
     'crawl_ip.middlewares.DoubanDownloaderMiddleware': 600,
+    'crawl_ip.middlewares.ProxyMiddleware': 750,
 }
 
 # Enable or disable extensions
@@ -61,8 +62,9 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "crawl_ip.pipelines.SaveIpPipeline": 300,
-    "crawl_ip.pipelines.MoviePipeline": 301,
+    'crawl_ip.pipelines.SaveIpPipeline': 300,
+    'crawl_ip.pipelines.MoviePipeline': 400,
+    'crawl_ip.pipelines.CommentPipeline': 500,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -91,8 +93,22 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-# 将日志级别提高到WARNING，减少输出
-LOG_LEVEL = 'WARNING'
+# 将日志级别设置为INFO，确保调试信息可见
+LOG_LEVEL = 'INFO'
+
+# 日志格式化
+LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+LOG_DATEFORMAT = '%Y-%m-%d %H:%M:%S'
+
+# 确保调试信息输出到控制台
+LOG_STDOUT = True
+
+# 启用代理中间件
+PROXY_ENABLED = True
+PROXY_DEBUG = True  # 启用代理中间件调试信息
+
+# 启用请求头中间件调试信息
+UA_DEBUG = True
 
 # 增加超时设置，防止爬虫卡住
 DOWNLOAD_TIMEOUT = 30
@@ -105,7 +121,6 @@ REDIRECT_ENABLED = False
 RETRY_TIMES = 2
 
 # 关闭辅助日志，降低输出
-LOG_STDOUT = False
 LOG_FILE_APPEND = False
 STATS_DUMP = False
 
@@ -117,9 +132,6 @@ import django
 sys.path.append('D:/python_learn/CollectIp/CollectIp')  # 替换为你的 Django 项目的路径
 os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'  # 替换为你的 Django 项目的 settings 模块
 django.setup()
-
-# 启用代理中间件
-PROXY_ENABLED = False
 
 # 数据库配置
 MYSQL_HOST = '127.0.0.1'
@@ -140,7 +152,7 @@ CONCURRENT_REQUESTS = 8
 CONCURRENT_REQUESTS_PER_DOMAIN = 4
 
 # 配置UserAgent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+# USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
 # 增加Selenium相关配置
 SELENIUM_DRIVER_NAME = 'chrome'
@@ -149,3 +161,13 @@ SELENIUM_DRIVER_ARGUMENTS = ['--disable-gpu', '--disable-blink-features=Automati
 
 # 豆瓣爬虫特定配置
 DOUBAN_USE_SELENIUM = True
+
+# MongoDB配置
+MONGODB_CONN = {
+    'host': 'localhost',
+    'port': 27017,
+    'db': 'collectip_comments',
+    'collection': 'movie_comments',
+    'username': '',  # 如果需要认证，填写用户名
+    'password': ''   # 如果需要认证，填写密码
+}
