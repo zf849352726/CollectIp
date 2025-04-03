@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from .models import IpData, Movie, ProxySettings, DoubanSettings
+from .models import IpData, Movie, ProxySettings, DoubanSettings, Collection
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -22,6 +22,11 @@ from index.text_utils import TextProcessor
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_protect
+from django.utils import timezone
+from django.core.paginator import PageNotAnInteger, EmptyPage
+from django.db.models import Q
+from django.http import HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +153,8 @@ def proxy_settings_view(request):
                 'score_interval': 1800,
                 'min_score': 10,
                 'auto_crawler': False,
-                'auto_score': False
+                'auto_score': False,
+                'captcha_retries': 5
             }
         )
         
@@ -160,7 +166,8 @@ def proxy_settings_view(request):
                     'score_interval': settings.score_interval,
                     'min_score': settings.min_score,
                     'auto_crawler': settings.auto_crawler,
-                    'auto_score': settings.auto_score
+                    'auto_score': settings.auto_score,
+                    'captcha_retries': settings.captcha_retries
                 }
             })
         elif request.method == 'POST':
@@ -170,6 +177,7 @@ def proxy_settings_view(request):
                 min_score = int(request.POST.get('min_score', 0))                
                 auto_crawler = request.POST.get('auto_crawler', 'off') == 'on'
                 auto_score = request.POST.get('auto_score', 'off') == 'on'
+                captcha_retries = int(request.POST.get('captcha_retries', 5))
                 
                 if crawler_interval < 60:
                     return JsonResponse({
@@ -188,12 +196,19 @@ def proxy_settings_view(request):
                         'success': False,
                         'error': "最低分数必须在0-100之间"
                     })
+                    
+                if not (1 <= captcha_retries <= 20):
+                    return JsonResponse({
+                        'success': False,
+                        'error': "验证码最大重试次数必须在1-20之间"
+                    })
                 
                 settings.crawler_interval = crawler_interval
                 settings.score_interval = score_interval
                 settings.min_score = min_score
                 settings.auto_crawler = auto_crawler
                 settings.auto_score = auto_score
+                settings.captcha_retries = captcha_retries
                 settings.save()
                 
                 # 更新调度器设置
@@ -265,13 +280,87 @@ def wechat_view(request):
 
 @login_required
 def wechat_overview(request):
-    return render(request, 'wechat.html', {'active_menu': 'wechat_overview'})
+    # 获取合集数据统计
+    total_collections = Collection.objects.count()
+    latest_collections = Collection.objects.filter(is_published=True).order_by('-updated_at')[:5].count()
+    movie_collections = Collection.objects.filter(collection_type='movie').count()
+    tv_collections = Collection.objects.filter(collection_type='tv').count()
+    
+    # 获取分页合集列表
+    collections = Collection.objects.all().order_by('-updated_at')
+    paginator = Paginator(collections, 6)  # 每页显示6个合集
+    
+    page = request.GET.get('page', 1)
+    try:
+        collections = paginator.page(page)
+    except:
+        collections = paginator.page(1)
+    
+    context = {
+        'active_menu': 'wechat_overview',
+        'page_title': '合集概览',
+        'collection_stats': {
+            'total': total_collections,
+            'latest': latest_collections,
+            'movie': movie_collections,
+            'tv': tv_collections
+        },
+        'collection_list': collections
+    }
+    return render(request, 'wechat.html', context)
 
-@login_required
 def article_manage(request):
-    return render(request, 'wechat.html', {'active_menu': 'article_manage'})
+    """电影合集管理视图"""
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    # 获取类型筛选参数
+    collection_type = request.GET.get('type', 'all')
+    search_query = request.GET.get('q', '')
+    page = request.GET.get('page', 1)
+    
+    # 查询合集列表
+    collections = Collection.objects.all().order_by('-updated_at')
+    
+    # 应用筛选条件
+    if collection_type and collection_type != 'all':
+        collections = collections.filter(collection_type=collection_type)
+        
+    if search_query:
+        collections = collections.filter(
+            Q(title__icontains=search_query) | 
+            Q(description__icontains=search_query)
+        )
+    
+    # 分页
+    paginator = Paginator(collections, 12)  # 每页显示12个合集
+    try:
+        collection_list = paginator.page(page)
+    except PageNotAnInteger:
+        collection_list = paginator.page(1)
+    except EmptyPage:
+        collection_list = paginator.page(paginator.num_pages)
+    
+    # 统计信息
+    collection_stats = {
+        'total': Collection.objects.count(),
+        'movie': Collection.objects.filter(collection_type='movie').count(),
+        'tv': Collection.objects.filter(collection_type='tv').count(),
+        'article': Collection.objects.filter(collection_type='article').count(),
+        'published': Collection.objects.filter(is_published=True).count(),
+    }
+    
+    context = {
+        'active_menu': 'article_manage',
+        'page_title': '合集管理',
+        'collection_list': collection_list,
+        'collection_stats': collection_stats,
+        'current_type': collection_type,
+        'search_query': search_query,
+    }
+    
+    return render(request, 'wechat.html', context)
 
-@login_required
 def media_library(request):
     return render(request, 'wechat.html', {'active_menu': 'media_library'})
 
@@ -478,9 +567,13 @@ def crawl_movie_view(request):
     lock_file = os.path.join(lock_dir, 'douban_crawler.lock')
     
     try:
-        # 从请求体获取电影名称
+        # 从请求体获取电影名称和策略参数
         data = json.loads(request.body)
         movie_name = data.get('movie_name')
+        comment_strategy = data.get('comment_strategy', 'sequential')  # 默认使用顺序采集策略
+        strategy_params = data.get('strategy_params', {})  # 获取策略相关参数
+        
+        logger.info(f"收到电影采集请求: {movie_name}, 策略: {comment_strategy}, 参数: {strategy_params}")
         
         if not movie_name:
             return JsonResponse({
@@ -507,18 +600,38 @@ def crawl_movie_view(request):
         
         # 创建新的锁文件
         with open(lock_file, 'w') as f:
-            f.write(f"Douban crawler started at {datetime.now()} for movie: {movie_name}")
+            f.write(f"Douban crawler started at {datetime.now()} for movie: {movie_name}, strategy: {comment_strategy}")
             
         # 记录日志
-        logger.info(f"接收到电影采集请求: {movie_name}")
+        logger.info(f"准备启动爬虫: {movie_name}, 策略: {comment_strategy}")
         
-        # 使用我们的新方法启动爬虫
-        result = start_douban_crawl(movie_name)
+        # 处理策略参数
+        crawl_config = {
+            'strategy': comment_strategy
+        }
+        
+        # 根据不同策略添加对应参数
+        if comment_strategy == 'sequential':
+            crawl_config['max_pages'] = int(strategy_params.get('max_pages', 5))
+        elif comment_strategy == 'random_pages':
+            crawl_config['sample_size'] = int(strategy_params.get('sample_size', 5))
+        elif comment_strategy == 'random_interval':
+            crawl_config['max_interval'] = int(strategy_params.get('max_interval', 3))
+            crawl_config['max_pages'] = int(strategy_params.get('max_pages', 5))
+        elif comment_strategy == 'random_block':
+            crawl_config['block_size'] = int(strategy_params.get('block_size', 3))
+        elif comment_strategy == 'random':
+            crawl_config['use_random_strategy'] = True
+            
+        logger.info(f"爬虫配置: {crawl_config}")
+        
+        # 使用我们的新方法启动爬虫，传入配置参数
+        result = start_douban_crawl(movie_name, crawl_config)
         
         if result:
             return JsonResponse({
                 'success': True,
-                'message': f'已开始采集电影: {movie_name}'
+                'message': f'已开始采集电影: {movie_name}, 使用策略: {comment_strategy}'
             })
         else:
             # 如果启动失败，删除锁文件以允许重试
@@ -548,19 +661,33 @@ def crawl_movie_view(request):
 def crawl_once_view(request):
     """执行一次IP采集"""
     try:
+        # 记录启动时间
+        start_time = timezone.now()
+        timestamp = start_time.strftime('%Y-%m-%d %H:%M:%S')
+        
         # 在新线程中启动爬虫
         thread = threading.Thread(target=start_crawl)
         thread.start()
         
+        # 获取当前IP总数，用于后续对比
+        current_ip_count = IpData.objects.count()
+        
+        # 记录执行信息到日志
+        logger.info(f"IP采集任务已启动 - 时间: {timestamp}, 当前IP数: {current_ip_count}")
+        
         return JsonResponse({
             'success': True,
-            'message': '已开始执行IP采集'
+            'message': '已开始执行IP采集',
+            'timestamp': timestamp,
+            'details': f'采集操作启动于 {timestamp}，当前IP池中有 {current_ip_count} 个IP。系统将自动爬取新的IP，完成后会显示在IP列表中。'
         })
     except Exception as e:
         logger.error(f"启动爬虫失败: {str(e)}")
         return JsonResponse({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'details': f'启动爬虫时发生错误: {str(e)}。请检查系统日志获取更多信息。'
         })
 
 @login_required
@@ -568,19 +695,34 @@ def crawl_once_view(request):
 def score_once_view(request):
     """执行一次IP评分"""
     try:
+        # 记录启动时间
+        start_time = timezone.now()
+        timestamp = start_time.strftime('%Y-%m-%d %H:%M:%S')
+        
+        # 获取评分前的IP统计
+        total_ips = IpData.objects.count()
+        active_ips = IpData.objects.filter(score__gt=60).count()
+        
         # 在新线程中启动评分
         thread = threading.Thread(target=start_score)
         thread.start()
         
+        # 记录执行信息到日志
+        logger.info(f"IP评分任务已启动 - 时间: {timestamp}, 当前IP数: {total_ips}, 活跃IP数: {active_ips}")
+        
         return JsonResponse({
             'success': True,
-            'message': '已开始执行IP评分'
+            'message': '已开始执行IP评分',
+            'timestamp': timestamp,
+            'details': f'评分操作启动于 {timestamp}，当前IP池中有 {total_ips} 个IP，其中 {active_ips} 个活跃IP(分数>60)。系统将评估所有IP的质量并更新评分。'
         })
     except Exception as e:
         logger.error(f"启动评分失败: {str(e)}")
         return JsonResponse({
             'success': False,
-            'error': str(e)
+            'error': str(e),
+            'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'details': f'启动评分时发生错误: {str(e)}。请检查系统日志获取更多信息。'
         })
 
 @login_required
@@ -593,79 +735,182 @@ def movie_detail(request, movie_id):
         # 准备上下文数据
         context = {
             'movie': movie,
-            'comment_keywords': [],
-            'rating_trends': [],
-            'sequential_wordcloud': [],
-            'random_pages_wordcloud': [],
-            'random_interval_wordcloud': [],
-            'random_block_wordcloud': []
+            'comment_keywords': '[]',  # 默认为空JSON数组字符串
+            'rating_trends': '[]',     # 默认为空JSON数组字符串
+            'sequential_wordcloud': '[]',
+            'random_pages_wordcloud': '[]',
+            'random_interval_wordcloud': '[]',
+            'random_block_wordcloud': '[]'
         }
         
         # 尝试获取MongoDB数据
         try:
-            # 导入MongoDB客户端
-            from index.mongodb_utils import MongoDBClient
-            import json
+            logger.info(f"开始获取电影 {movie_id} 的MongoDB数据")
             
-            # 获取MongoDB客户端实例
+            # 导入MongoDB客户端
             mongo_client = MongoDBClient.get_instance()
+            if not mongo_client:
+                logger.error("无法获取MongoDB客户端实例")
+                raise Exception("MongoDB连接失败")
+                
+            logger.info("MongoDB客户端连接成功")
             
             # 获取电影评论关键词（用于词云展示）
+            logger.info(f"尝试获取电影 {movie_id} 的评论关键词")
+            
+            # 调试MongoDB集合中评论的结构
+            try:
+                sample_comments = list(mongo_client.comments_collection.find({"movie_id": int(movie_id)}).limit(3))
+                if sample_comments:
+                    logger.info(f"电影 {movie_id} 评论样本: {sample_comments}")
+                    logger.info(f"评论中关键词: {[c.get('keywords', []) for c in sample_comments]}")
+                else:
+                    logger.warning(f"电影 {movie_id} 没有评论数据")
+            except Exception as e:
+                logger.error(f"获取评论样本失败: {str(e)}")
+            
             comment_keywords = mongo_client.get_comment_keywords(movie_id)
+            
+            if comment_keywords:
+                logger.info(f"从MongoDB获取到评论关键词数据: {len(comment_keywords)} 个")
+                # 记录数据样本帮助调试
+                if len(comment_keywords) > 0:
+                    logger.info(f"关键词数据样本: {comment_keywords[0]}")
+            else:
+                logger.warning(f"没有找到电影 {movie_id} 的评论关键词数据")
             
             # 如果没有评论关键词数据，尝试生成词云数据
             if not comment_keywords:
-                comment_keywords = mongo_client.get_wordcloud_data(movie_id)
-                
+                logger.info(f"尝试获取电影 {movie_id} 的词云数据")
+                wordcloud_data = mongo_client.get_wordcloud_data(movie_id)
+                if wordcloud_data:
+                    comment_keywords = wordcloud_data
+                    logger.info(f"成功获取词云数据，共 {len(wordcloud_data)} 个关键词")
+                    # 记录数据样本帮助调试
+                    if len(wordcloud_data) > 0:
+                        logger.info(f"词云数据样本: {wordcloud_data[0]}")
+                else:
+                    logger.warning(f"没有找到电影 {movie_id} 的词云数据，将使用示例数据")
+                    # 添加生成示例词云数据的逻辑
+                    comment_keywords = mongo_client.generate_strategy_wordcloud(movie_id, movie.title)
+                    logger.info(f"已生成示例词云数据，共 {len(comment_keywords)} 个关键词")
+            
             # 根据采集策略获取相应的词云数据
-            sequential_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'sequential')
-            random_pages_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_pages')
-            random_interval_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_interval')
-            random_block_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_block')
+            logger.info(f"尝试获取电影 {movie_id} 的各种策略词云数据")
+            sequential_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'sequential') or []
+            random_pages_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_pages') or []
+            random_interval_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_interval') or []
+            random_block_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_block') or []
+            
+            logger.info(f"策略词云数据获取结果: 顺序={len(sequential_wordcloud)}项, 随机页码={len(random_pages_wordcloud)}项, " +
+                       f"随机间隔={len(random_interval_wordcloud)}项, 随机区块={len(random_block_wordcloud)}项")
             
             # 获取评分趋势数据
             rating_trends = []
             try:
                 # 从MongoDB获取评论趋势数据
+                logger.info(f"尝试获取电影 {movie_id} 的评分趋势数据")
                 trends_data = mongo_client.get_comment_trends(movie_id, days=60)
                 
                 # 处理趋势数据
                 if trends_data:
                     for item in trends_data:
-                        trend_item = {
-                            'date': item.get('_id', ''),
-                            'rating': round(float(item.get('avg_rating', 0)), 1),
-                            'count': item.get('count', 0)
-                        }
-                        rating_trends.append(trend_item)
+                        try:
+                            trend_item = {
+                                'date': item.get('_id', ''),
+                                'rating': round(float(item.get('avg_rating', 0)), 1),
+                                'count': item.get('count', 0)
+                            }
+                            rating_trends.append(trend_item)
+                        except (ValueError, TypeError) as e:
+                            logger.warning(f"处理趋势数据时出错: {e}")
                 
                 # 记录获取到的趋势数据
                 logger.info(f"获取到电影 {movie_id} 的评分趋势数据: {len(rating_trends)} 条")
                 
             except Exception as e:
                 logger.error(f"获取评分趋势数据失败: {str(e)}")
+                import traceback
+                logger.error(traceback.format_exc())
+            
+            # 将数据转换为JSON字符串，确保可以安全传递到模板
+            import json
             
             # 添加到上下文
-            context['comment_keywords'] = comment_keywords
-            context['sequential_wordcloud'] = sequential_wordcloud
-            context['random_pages_wordcloud'] = random_pages_wordcloud
-            context['random_interval_wordcloud'] = random_interval_wordcloud
-            context['random_block_wordcloud'] = random_block_wordcloud
-            context['rating_trends'] = rating_trends
+            if comment_keywords:
+                # 确保数据类型正确
+                if not isinstance(comment_keywords, list):
+                    logger.warning(f"评论关键词数据类型不是列表，而是 {type(comment_keywords)}")
+                    if isinstance(comment_keywords, dict) and 'keywords' in comment_keywords and isinstance(comment_keywords['keywords'], list):
+                        comment_keywords = comment_keywords['keywords']
+                        logger.info("已从字典中提取关键词列表")
+                
+                # 记录数据样本以便调试
+                if comment_keywords and len(comment_keywords) > 0:
+                    sample = comment_keywords[0] if len(comment_keywords) > 0 else None
+                    logger.info(f"关键词数据样本: {sample}")
+                
+                try:
+                    context['comment_keywords'] = json.dumps(comment_keywords)
+                    logger.info(f"成功添加词云数据到上下文: {len(comment_keywords)} 个关键词")
+                except (TypeError, ValueError) as e:
+                    logger.error(f"序列化词云数据失败: {e}")
+                    # 尝试修复数据
+                    fixed_keywords = []
+                    for item in comment_keywords:
+                        if isinstance(item, dict) and ('name' in item or 'word' in item) and ('value' in item or 'weight' in item):
+                            name = item.get('name', item.get('word', ''))
+                            value = item.get('value', item.get('weight', 1))
+                            fixed_keywords.append({'name': str(name), 'value': float(value) if isinstance(value, (int, float)) else 1})
+                    
+                    context['comment_keywords'] = json.dumps(fixed_keywords)
+                    logger.info(f"修复后的词云数据: {len(fixed_keywords)} 个关键词")
+            
+            # 添加策略词云数据到上下文
+            try:
+                context['sequential_wordcloud'] = json.dumps(sequential_wordcloud)
+                context['random_pages_wordcloud'] = json.dumps(random_pages_wordcloud)
+                context['random_interval_wordcloud'] = json.dumps(random_interval_wordcloud)
+                context['random_block_wordcloud'] = json.dumps(random_block_wordcloud)
+                logger.info("成功添加策略词云数据到上下文")
+            except (TypeError, ValueError) as e:
+                logger.error(f"序列化策略词云数据失败: {e}")
+            
+            # 添加评分趋势数据到上下文
+            if rating_trends:
+                try:
+                    context['rating_trends'] = json.dumps(rating_trends)
+                    logger.info(f"成功添加评分趋势数据到上下文: {len(rating_trends)} 个数据点")
+                except (TypeError, ValueError) as e:
+                    logger.error(f"序列化评分趋势数据失败: {e}")
             
             # 记录获取到的数据
-            logger.info(f"获取到电影 {movie_id} 的词云数据: {len(comment_keywords)} 个关键词")
+            logger.info(f"已完成电影 {movie_id} 的数据获取和处理")
+            
+            # 如果没有任何词云数据，触发异步处理以生成数据
+            if not any([comment_keywords, sequential_wordcloud, random_pages_wordcloud, 
+                         random_interval_wordcloud, random_block_wordcloud]):
+                logger.warning(f"电影 {movie_id} 没有任何词云数据，触发异步处理")
+                threading.Thread(
+                    target=process_comment_analysis_async,
+                    args=(movie_id,)
+                ).start()
             
         except Exception as e:
             logger.error(f"获取MongoDB数据失败: {str(e)}")
+            import traceback
+            logger.error(traceback.format_exc())
         
         # 返回详情页面，包含电影信息和词云数据
         return render(request, 'douban_detail.html', context)
         
     except Movie.DoesNotExist:
+        logger.error(f"电影 {movie_id} 不存在")
         return render(request, 'error.html', {'error_message': '电影不存在'})
     except Exception as e:
         logger.error(f"电影详情页加载失败: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
         return render(request, 'error.html', {'error_message': '加载详情页失败'})
 
 def process_comment_analysis_async(movie_id):
@@ -768,36 +1013,519 @@ def trigger_comment_processing(request):
         return JsonResponse({'status': 'error', 'message': '未提供电影ID'})
     return JsonResponse({'status': 'error', 'message': '请求方法错误'})
 
-@require_POST
-@csrf_exempt
-def crawl_movie(request):
+
+@csrf_protect
+@require_http_methods(["POST"])
+def update_movie_wordcloud(request, movie_id):
+    """
+    更新电影评论词云数据
+    """
     try:
-        # 解析JSON请求
+        # 记录开始时间
+        start_time = time.time()
+        logger.info(f"开始更新电影 {movie_id} 的评论词云")
+
+        # 连接MongoDB
+        mongo_client = MongoDBClient()
+
+        # 查找电影信息
+        movie = Movie.objects.filter(douban_id=movie_id).first()
+        if not movie:
+            logger.error(f"未找到电影 {movie_id}")
+            return JsonResponse({
+                'success': False,
+                'message': f"未找到ID为 {movie_id} 的电影"
+            })
+
+        # 重新生成词云数据
+        wordcloud_data = mongo_client.generate_wordcloud_data(movie_id)
+        if not wordcloud_data:
+            # 如果无法生成新的词云数据，尝试获取已有的数据
+            wordcloud_data = mongo_client.get_comment_keywords(movie_id)
+
+        # 生成各种策略的词云数据
+        strategy_data = {
+            'sequential': mongo_client.generate_strategy_wordcloud(movie_id, 'sequential'),
+            'random_pages': mongo_client.generate_strategy_wordcloud(movie_id, 'random_pages'),
+            'random_interval': mongo_client.generate_strategy_wordcloud(movie_id, 'random_interval'),
+            'random_block': mongo_client.generate_strategy_wordcloud(movie_id, 'random_block'),
+            'random': mongo_client.generate_strategy_wordcloud(movie_id, 'random')
+        }
+
+        # 如果所有数据都为空，返回示例数据
+        if not wordcloud_data:
+            # 创建示例数据
+            wordcloud_data = generate_sample_wordcloud_data(movie.title)
+            logger.warning(f"无法生成真实词云数据，使用示例数据")
+
+        # 记录完成时间
+        elapsed_time = time.time() - start_time
+        logger.info(f"更新电影 {movie_id} 的评论词云完成，耗时 {elapsed_time:.2f} 秒")
+
+        return JsonResponse({
+            'success': True,
+            'wordcloud_data': wordcloud_data,
+            'strategy_data': strategy_data,
+            'elapsed_time': f"{elapsed_time:.2f}"
+        })
+
+    except Exception as e:
+        logger.exception(f"更新电影 {movie_id} 的评论词云时出错: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'message': f"更新词云时出错: {str(e)}"
+        })
+
+@csrf_protect
+@require_http_methods(["POST"])
+def toggle_movie_published(request):
+    """
+    切换电影的已发表状态
+    """
+    try:
+        # 添加详细的请求信息日志
+        logger.info("===== 收到切换电影发表状态请求 =====")
+        logger.info(f"请求方法: {request.method}")
+        logger.info(f"请求头: {dict(request.headers)}")
+        logger.info(f"表单数据: {dict(request.POST)}")
+        logger.info(f"COOKIES: {request.COOKIES}")
+        logger.info("================================")
+        
+        # 获取电影ID
+        movie_id = request.POST.get('movie_id')
+        logger.info(f"提取的电影ID: {movie_id}")
+        
+        if not movie_id:
+            logger.error("错误: 缺少电影ID参数")
+            return JsonResponse({
+                'success': False,
+                'message': '缺少电影ID参数'
+            }, status=400)
+            
+        # 查找电影
+        try:
+            logger.info(f"尝试查找电影ID: {movie_id}")
+            movie = Movie.objects.get(id=movie_id)
+            logger.info(f"找到电影: {movie.title}, 当前发表状态: {movie.is_published}")
+        except Movie.DoesNotExist:
+            logger.error(f"错误: 电影ID {movie_id} 不存在")
+            return JsonResponse({
+                'success': False,
+                'message': f'电影ID {movie_id} 不存在'
+            }, status=404)
+            
+        # 切换发表状态
+        old_state = movie.is_published
+        movie.is_published = not movie.is_published
+        logger.info(f"电影 {movie.title} 的发表状态从 {old_state} 切换为 {movie.is_published}")
+        
+        # 保存更改
+        movie.save()
+        logger.info(f"电影 {movie.title} 的状态已更新并保存到数据库")
+        
+        # 返回成功响应
+        response_data = {
+            'success': True,
+            'is_published': movie.is_published,
+            'message': f'电影 "{movie.title}" 已{"发表" if movie.is_published else "取消发表"}'
+        }
+        logger.info(f"返回响应: {response_data}")
+        
+        return JsonResponse(response_data)
+        
+    except Exception as e:
+        import traceback
+        logger.error(f"处理请求时出现异常: {str(e)}")
+        logger.error(traceback.format_exc())
+        
+        return JsonResponse({
+            'success': False,
+            'message': f'操作失败: {str(e)}'
+        }, status=500)
+
+@login_required
+@require_http_methods(["GET"])
+def get_last_crawl_status(request):
+    """获取最近一次IP爬取的状态信息"""
+    try:
+        # 检查是否有运行中的爬虫任务
+        lock_file = os.path.join(settings.BASE_DIR, "crawler.lock")
+        is_running = os.path.exists(lock_file)
+        
+        if is_running:
+            # 如果爬虫正在运行，返回进行中状态
+            return JsonResponse({
+                'success': True,
+                'status': 'running',
+                'message': 'IP采集任务正在进行中',
+                'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'details': '系统正在爬取新的代理IP，请稍后查看结果。'
+            })
+        
+        # 获取最近添加的IP信息
+        last_ip = IpData.objects.order_by('-created_at').first()
+        
+        if last_ip:
+            # 计算距离现在的时间差
+            time_diff = timezone.now() - last_ip.created_at
+            hours = time_diff.total_seconds() // 3600
+            minutes = (time_diff.total_seconds() % 3600) // 60
+            
+            # 格式化时间差
+            time_diff_str = ""
+            if hours > 0:
+                time_diff_str += f"{int(hours)}小时"
+            if minutes > 0 or hours == 0:
+                time_diff_str += f"{int(minutes)}分钟"
+            if hours == 0 and minutes == 0:
+                time_diff_str = "刚刚"
+            
+            return JsonResponse({
+                'success': True,
+                'status': 'completed',
+                'message': f'最近添加的IP: {last_ip.server}，位于{last_ip.country}',
+                'timestamp': last_ip.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'time_ago': time_diff_str,
+                'details': f'最近一次IP添加于{time_diff_str}前，服务器地址: {last_ip.server}，国家: {last_ip.country}，类型: {last_ip.type_data}，分数: {last_ip.score}'
+            })
+        else:
+            # 如果没有IP记录
+            return JsonResponse({
+                'success': True,
+                'status': 'unknown',
+                'message': '未找到任何IP记录',
+                'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'details': 'IP池中没有任何记录，请运行采集任务添加IP。'
+            })
+    except Exception as e:
+        logger.error(f"获取爬取状态失败: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'status': 'error',
+            'error': str(e),
+            'timestamp': timezone.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'details': f'获取爬取状态时发生错误: {str(e)}'
+        })
+
+@login_required
+@require_http_methods(["POST"])
+def create_collection(request):
+    """创建新合集"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': '仅支持POST请求'}, status=405)
+    
+    try:
         data = json.loads(request.body)
-        movie_name = data.get('movie_name')
-        comment_strategy = data.get('comment_strategy', 'sequential')
-        strategy_params = data.get('strategy_params', {})
+        title = data.get('title')
+        collection_type = data.get('collection_type')
+        description = data.get('description', '')
+        cover_image = data.get('cover_image', '')
+        is_published = data.get('is_published', False)
+        movie_ids = data.get('movie_ids', [])
         
-        if not movie_name:
-            return JsonResponse({'status': 'error', 'message': '电影名称不能为空'})
+        # 验证必填字段
+        if not title or not collection_type:
+            return JsonResponse({'status': 'error', 'message': '标题和类型不能为空'}, status=400)
         
-        # 构造爬虫参数
-        spider_params = {
-            'movie_names': movie_name,
-            'comment_strategy': comment_strategy
+        # 创建合集
+        collection = Collection.objects.create(
+            title=title,
+            collection_type=collection_type,
+            description=description,
+            cover_image=cover_image,
+            is_published=is_published
+        )
+        
+        # 添加关联电影
+        if movie_ids and len(movie_ids) > 0:
+            movies = Movie.objects.filter(id__in=movie_ids)
+            collection.movies.add(*movies)
+        
+        return JsonResponse({
+            'status': 'success', 
+            'message': '合集创建成功',
+            'data': {'id': collection.id}
+        })
+        
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
+@require_http_methods(["POST"])
+def update_collection(request, collection_id):
+    """更新合集信息"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': '仅支持POST请求'}, status=405)
+    
+    try:
+        collection = Collection.objects.get(id=collection_id)
+        data = json.loads(request.body)
+        
+        # 更新合集字段
+        if 'title' in data:
+            collection.title = data['title']
+        if 'collection_type' in data:
+            collection.collection_type = data['collection_type']
+        if 'description' in data:
+            collection.description = data['description']
+        if 'cover_image' in data:
+            collection.cover_image = data['cover_image']
+        if 'is_published' in data:
+            collection.is_published = data['is_published']
+        
+        collection.save()
+        
+        # 更新关联电影
+        if 'movie_ids' in data:
+            collection.movies.clear()
+            if data['movie_ids'] and len(data['movie_ids']) > 0:
+                movies = Movie.objects.filter(id__in=data['movie_ids'])
+                collection.movies.add(*movies)
+        
+        return JsonResponse({'status': 'success', 'message': '合集更新成功'})
+        
+    except Collection.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '合集不存在'}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
+@require_http_methods(["POST"])
+def delete_collection(request, collection_id):
+    """删除合集"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': '仅支持POST请求'}, status=405)
+    
+    try:
+        collection = Collection.objects.get(id=collection_id)
+        collection.delete()
+        return JsonResponse({'status': 'success', 'message': '合集删除成功'})
+    except Collection.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '合集不存在'}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
+def get_collection(request, collection_id):
+    """获取单个合集详情"""
+    try:
+        collection = Collection.objects.get(id=collection_id)
+        # 获取合集关联的电影
+        movie_ids = collection.movies.values_list('id', flat=True)
+        
+        response_data = {
+            'id': collection.id,
+            'title': collection.title,
+            'collection_type': collection.collection_type,
+            'description': collection.description,
+            'cover_image': collection.cover_image,
+            'is_published': collection.is_published,
+            'movie_ids': list(movie_ids),
+            'created_at': collection.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'updated_at': collection.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
         }
         
-        # 添加策略特定参数
-        for key, value in strategy_params.items():
-            spider_params[key] = value
-        
-        # 启动爬虫任务（保持原有逻辑）
-        # ...
-        
-        return JsonResponse({'status': 'success', 'movie_id': movie_id})
-    
+        return JsonResponse({'status': 'success', 'data': response_data})
+    except Collection.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '合集不存在'}, status=404)
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+@login_required
+def get_movies_for_selection(request):
+    """获取电影列表用于合集选择"""
+    try:
+        movies = Movie.objects.all().order_by('-created_at')
+        movie_list = []
+        
+        for movie in movies:
+            movie_list.append({
+                'id': movie.id,
+                'title': movie.title,
+                'year': movie.year,
+                'rating': movie.rating,
+                'cover_image': movie.cover_image
+            })
+        
+        return JsonResponse({'status': 'success', 'movies': movie_list})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+def data_analysis(request):
+    return render(request, 'wechat.html', {'active_menu': 'data_analysis'})
 
+@login_required
+def logs_view(request):
+    """日志查看页面"""
+    log_files = []
+    
+    # Django日志
+    django_log_dir = os.path.join(settings.BASE_DIR, 'logs')
+    if os.path.exists(django_log_dir):
+        for file in os.listdir(django_log_dir):
+            if file.startswith('django'):
+                log_path = os.path.join(django_log_dir, file)
+                file_stat = os.stat(log_path)
+                size_bytes = file_stat.st_size
+                size_display = format_file_size(size_bytes)
+                last_modified = datetime.fromtimestamp(file_stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                
+                # 检查是否包含错误
+                has_error = check_log_for_errors(log_path)
+                
+                log_files.append({
+                    'name': file,
+                    'path': log_path,
+                    'size': size_display,
+                    'last_modified': last_modified,
+                    'type': 'django',
+                    'has_error': has_error,
+                    'description': 'Django系统日志，记录Web应用运行状态'
+                })
+    
+    # 应用日志
+    app_log_dir = os.path.join(os.path.dirname(settings.BASE_DIR), 'logs')
+    if os.path.exists(app_log_dir):
+        for file in os.listdir(app_log_dir):
+            log_path = os.path.join(app_log_dir, file)
+            file_stat = os.stat(log_path)
+            size_bytes = file_stat.st_size
+            size_display = format_file_size(size_bytes)
+            last_modified = datetime.fromtimestamp(file_stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+            
+            # 检查是否包含错误
+            has_error = check_log_for_errors(log_path)
+            
+            # 根据文件名确定日志类型
+            if 'crawler' in file:
+                log_type = 'crawler'
+                description = 'IP爬虫日志，记录IP采集过程'
+            elif 'spider' in file:
+                log_type = 'spider'
+                description = '爬虫进程日志，记录爬虫运行状态'
+            elif 'scheduler' in file:
+                log_type = 'scheduler'
+                description = '调度器日志，记录自动任务执行'
+            elif 'douban' in file:
+                log_type = 'douban'
+                description = '豆瓣数据采集日志'
+            elif 'scorer' in file:
+                log_type = 'scorer'
+                description = 'IP评分器日志，记录IP评分过程'
+            else:
+                log_type = 'other'
+                description = '其他系统日志'
+                
+            log_files.append({
+                'name': file,
+                'path': log_path,
+                'size': size_display,
+                'last_modified': last_modified,
+                'type': log_type,
+                'has_error': has_error,
+                'description': description
+            })
+    
+    # 按最后修改时间排序，最新的在前面
+    log_files.sort(key=lambda x: x['last_modified'], reverse=True)
+    
+    context = {
+        'page_title': '日志查询',
+        'log_files': log_files
+    }
+    return render(request, 'logs.html', context)
+
+@login_required
+def get_log_content(request):
+    """获取日志内容API"""
+    log_path = request.GET.get('path', '')
+    
+    if not log_path or not os.path.exists(log_path):
+        return JsonResponse({
+            'status': 'error',
+            'message': '日志文件不存在'
+        })
+    
+    try:
+        # 判断文件大小，如果过大则只读取尾部内容
+        file_size = os.path.getsize(log_path)
+        max_size = 1024 * 1024  # 1MB
+        
+        with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+            if file_size > max_size:
+                # 文件过大，只读取尾部
+                f.seek(max_size * -1, os.SEEK_END)
+                # 丢弃第一行，因为可能是不完整的
+                f.readline()
+                content = f.read()
+                content = "... [文件过大，仅显示最后部分] ...\n\n" + content
+            else:
+                content = f.read()
+        
+        return JsonResponse({
+            'status': 'success',
+            'content': content
+        })
+    except Exception as e:
+        logger.exception(f"读取日志文件失败: {e}")
+        return JsonResponse({
+            'status': 'error',
+            'message': f'读取日志文件失败: {str(e)}'
+        })
+
+@login_required
+def download_log(request):
+    """下载日志文件"""
+    log_path = request.GET.get('path', '')
+    
+    if not log_path or not os.path.exists(log_path):
+        return JsonResponse({
+            'status': 'error',
+            'message': '日志文件不存在'
+        })
+    
+    try:
+        filename = os.path.basename(log_path)
+        with open(log_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    except Exception as e:
+        logger.exception(f"下载日志文件失败: {e}")
+        return JsonResponse({
+            'status': 'error',
+            'message': f'下载日志文件失败: {str(e)}'
+        })
+
+def format_file_size(size_bytes):
+    """格式化文件大小"""
+    if size_bytes < 1024:
+        return f"{size_bytes} B"
+    elif size_bytes < 1024 * 1024:
+        return f"{size_bytes / 1024:.1f} KB"
+    elif size_bytes < 1024 * 1024 * 1024:
+        return f"{size_bytes / (1024 * 1024):.1f} MB"
+    else:
+        return f"{size_bytes / (1024 * 1024 * 1024):.1f} GB"
+
+def check_log_for_errors(log_path):
+    """检查日志文件是否包含错误"""
+    try:
+        # 判断文件大小，如果过大则只检查尾部
+        file_size = os.path.getsize(log_path)
+        check_size = min(file_size, 50 * 1024)  # 最多检查50KB
+        
+        with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+            if file_size > check_size:
+                f.seek(-check_size, os.SEEK_END)
+                # 丢弃第一行，因为可能是不完整的
+                f.readline()
+            
+            for line in f:
+                if 'ERROR' in line or 'CRITICAL' in line or 'Exception' in line or 'Error' in line:
+                    return True
+        
+        return False
+    except Exception:
+        # 如果读取出错，默认返回False
+        return False

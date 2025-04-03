@@ -198,7 +198,7 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/django.log'),
             'maxBytes': 10 * 1024 * 1024,  # 10MB
@@ -208,7 +208,7 @@ LOGGING = {
             'encoding': 'utf-8',
         },
         'ip_operator': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/ip_operator.log'),
             'maxBytes': 10 * 1024 * 1024,  # 10MB
@@ -221,12 +221,12 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': True,
         },
         'ip_operator': {
             'handlers': ['ip_operator'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': False,
         },
     },

@@ -91,7 +91,7 @@ def setup_logging(name="ip_operator", level=logging.WARNING):
     
     return logger
 
-def run_spider_process(spider_name, project_root, movie_name):
+def run_spider_process(spider_name, project_root, movie_name, crawl_config=None):
     """在子进程中运行爬虫"""
     logger = setup_logging("spider_process", logging.WARNING)
     
@@ -125,6 +125,12 @@ def run_spider_process(spider_name, project_root, movie_name):
         
         # 设置电影名环境变量，供爬虫使用
         os.environ['MOVIE_NAME'] = movie_name
+        
+        # 将爬取配置设置为环境变量
+        if crawl_config:
+            import json
+            os.environ['CRAWL_CONFIG'] = json.dumps(crawl_config)
+            logger.warning(f"设置爬取配置: {crawl_config}")
         
         # 加载爬虫设置
         settings = get_project_settings()
@@ -169,8 +175,24 @@ def run_spider_process(spider_name, project_root, movie_name):
             logger.error(f"未找到爬虫类: {spider_name}")
             return 1
                 
+        # 准备爬虫参数
+        spider_kwargs = {'movie_name': movie_name}
+        
+        # 如果有配置参数，添加到爬虫参数中
+        if crawl_config:
+            # 添加策略参数
+            if 'strategy' in crawl_config:
+                spider_kwargs['comment_strategy'] = crawl_config['strategy']
+                
+                # 添加各种策略特定的参数
+                for param in ['max_pages', 'sample_size', 'max_interval', 'block_size', 'use_random_strategy']:
+                    if param in crawl_config:
+                        spider_kwargs[param] = crawl_config[param]
+                        
+            logger.warning(f"启动爬虫，参数: {spider_kwargs}")
+        
         # 启动爬虫
-        process.crawl(spider_class, movie_name=movie_name)
+        process.crawl(spider_class, **spider_kwargs)
         process.start()  # 这会阻塞直到所有爬虫完成
         
         return 0  # 成功退出码
@@ -185,8 +207,10 @@ def run_spider_process(spider_name, project_root, movie_name):
         # 清理环境变量
         if 'MOVIE_NAME' in os.environ:
             del os.environ['MOVIE_NAME']
+        if 'CRAWL_CONFIG' in os.environ:
+            del os.environ['CRAWL_CONFIG']
 
-def start_douban_crawl(movie_name):
+def start_douban_crawl(movie_name, crawl_config=None):
     """开始豆瓣爬虫"""
     logger = setup_logging("douban_crawler", logging.WARNING)
     
@@ -197,12 +221,18 @@ def start_douban_crawl(movie_name):
             
         # 设置要爬取的电影名
         os.environ['MOVIE_NAME'] = movie_name
-        logger.warning(f"开始爬取电影: {movie_name}")
+        
+        # 记录策略配置
+        if crawl_config:
+            strategy = crawl_config.get('strategy', 'sequential')
+            logger.warning(f"开始爬取电影: {movie_name}，使用策略: {strategy}")
+        else:
+            logger.warning(f"开始爬取电影: {movie_name}，使用默认策略")
         
         # 使用Process创建子进程
         spider_process = Process(
             target=run_spider_process,
-            args=('douban_spider', str(PROJECT_ROOT), movie_name)  # 修改爬虫名为'douban_spider'
+            args=('douban_spider', str(PROJECT_ROOT), movie_name, crawl_config)
         )
         
         # 启动子进程

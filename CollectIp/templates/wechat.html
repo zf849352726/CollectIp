@@ -218,13 +218,13 @@
         <h2>工作台</h2>
         <div class="menu-list">
             <a href="{% url 'wechat_overview' %}" class="menu-item {% if active_menu == 'wechat_overview' %}active{% endif %}">
-                <span>电影合集</span>
+                <span>数据概览</span>
             </a>
             <a href="{% url 'article_manage' %}" class="menu-item {% if active_menu == 'article_manage' %}active{% endif %}">
-                <span>剧集合集</span>
+                <span>电影合集</span>
             </a>
             <a href="{% url 'media_library' %}" class="menu-item {% if active_menu == 'media_library' %}active{% endif %}">
-                <span>素材库</span>
+                <span>剧集合集</span>
             </a>
             <a href="{% url 'data_analysis' %}" class="menu-item {% if active_menu == 'data_analysis' %}active{% endif %}">
                 <span>数据分析</span>
@@ -315,68 +315,67 @@
                 </div>
                 
             {% elif active_menu == 'article_manage' %}
-                <!-- 剧集合集管理表格 -->
+                <!-- 合集管理表格 -->
                 <div class="table-container">
                     <div class="table-actions">
-                        <button class="btn btn-primary" onclick="createArticle()">新建图文</button>
-                        <button class="btn btn-primary" onclick="batchPublish()">批量发布</button>
-                        <button class="btn btn-primary" onclick="openSettingsModal()">设置</button>
+                        <button class="btn btn-primary" onclick="openCreateCollectionModal()">创建新合集</button>
+                        <div class="filter-buttons">
+                            <a href="?type=all" class="btn {% if not current_type or current_type == 'all' %}btn-primary{% else %}btn-secondary{% endif %}">全部</a>
+                            <a href="?type=movie" class="btn {% if current_type == 'movie' %}btn-primary{% else %}btn-secondary{% endif %}">电影</a>
+                            <a href="?type=tv" class="btn {% if current_type == 'tv' %}btn-primary{% else %}btn-secondary{% endif %}">剧集</a>
+                            <a href="?type=article" class="btn {% if current_type == 'article' %}btn-primary{% else %}btn-secondary{% endif %}">文章</a>
+                            <a href="?type=mixed" class="btn {% if current_type == 'mixed' %}btn-primary{% else %}btn-secondary{% endif %}">混合</a>
+                        </div>
                         {% csrf_token %}
                         <div class="search-box">
-                            <input type="text" placeholder="搜索图文...">
+                            <input type="text" placeholder="搜索合集..." value="{{ search_query }}">
                         </div>
                     </div>
                     
-                    <!-- 文章列表 -->
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>标题</th>
-                                <th>作者</th>
-                                <th>发布日期</th>
-                                <th>阅读量</th>
-                                <th>点赞数</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for article in articles %}
-                            <tr>
-                                <td>{{ article.title }}</td>
-                                <td>{{ article.author }}</td>
-                                <td>{{ article.publish_date }}</td>
-                                <td>{{ article.read_count }}</td>
-                                <td>{{ article.like_count }}</td>
-                                <td>{{ article.status }}</td>
-                                <td>
-                                    <button class="btn-icon" title="编辑" onclick="editArticle('{{ article.id }}')">✏️</button>
-                                    <button class="btn-icon" title="删除" onclick="deleteArticle('{{ article.id }}')">🗑️</button>
-                                    <button class="btn-icon" title="预览" onclick="previewArticle('{{ article.id }}')">👁️</button>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="7" class="empty-message">暂无文章数据</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <!-- 合集网格列表 -->
+                    <div class="collection-grid">
+                        {% for collection in collection_list %}
+                        <div class="collection-card" data-id="{{ collection.id }}">
+                            <div class="collection-cover">
+                                <img src="{{ collection.cover_image|default:'https://via.placeholder.com/300x200' }}" alt="{{ collection.title }}">
+                                <div class="collection-overlay">
+                                    <span class="article-count">{{ collection.get_collection_type_display }} ({{ collection.item_count }})</span>
+                                </div>
+                            </div>
+                            <div class="collection-info">
+                                <h3>{{ collection.title }}</h3>
+                                <p>{{ collection.description|default:'暂无描述' }}</p>
+                                <div class="collection-stats">
+                                    <span>{{ collection.updated_at|date:"Y-m-d" }}</span>
+                                    <span>{{ collection.is_published|yesno:"已发布,未发布" }}</span>
+                                </div>
+                                <div class="collection-actions">
+                                    <button class="btn btn-sm btn-primary" onclick="editCollection({{ collection.id }})">编辑</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteCollection({{ collection.id }})">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="empty-state">
+                            <p>暂无符合条件的合集数据</p>
+                        </div>
+                        {% endfor %}
+                    </div>
                     
                     <!-- 分页 -->
                     <div class="pagination">
-                        {% if articles.has_previous %}
-                            <a href="?page=1" class="page-link first-page">首页</a>
-                            <a href="?page={{ articles.previous_page_number }}" class="page-link">上一页</a>
+                        {% if collection_list.has_previous %}
+                            <a href="?page=1{% if current_type and current_type != 'all' %}&type={{ current_type }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link first-page">首页</a>
+                            <a href="?page={{ collection_list.previous_page_number }}{% if current_type and current_type != 'all' %}&type={{ current_type }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link">上一页</a>
                         {% endif %}
 
                         <div class="current-page">
-                            第 {{ articles.number|default:'1' }} 页 / 共 {{ articles.paginator.num_pages|default:'1' }} 页
+                            第 {{ collection_list.number|default:'1' }} 页 / 共 {{ collection_list.paginator.num_pages|default:'1' }} 页
                         </div>
 
-                        {% if articles.has_next %}
-                            <a href="?page={{ articles.next_page_number }}" class="page-link">下一页</a>
-                            <a href="?page={{ articles.paginator.num_pages }}" class="page-link last-page">末页</a>
+                        {% if collection_list.has_next %}
+                            <a href="?page={{ collection_list.next_page_number }}{% if current_type and current_type != 'all' %}&type={{ current_type }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link">下一页</a>
+                            <a href="?page={{ collection_list.paginator.num_pages }}{% if current_type and current_type != 'all' %}&type={{ current_type }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link last-page">末页</a>
                         {% endif %}
                     </div>
                 </div>
@@ -447,6 +446,95 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" onclick="saveWechatSettings()">保存设置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 创建合集模态框 -->
+<div class="modal fade" id="collectionModal" tabindex="-1" aria-labelledby="collectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="collectionModalLabel">创建新合集</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="collectionForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="collection_id" name="collection_id">
+                    
+                    <div class="mb-3">
+                        <label for="collection_title" class="form-label">合集标题</label>
+                        <input type="text" class="form-control" id="collection_title" name="title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="collection_type" class="form-label">合集类型</label>
+                        <select class="form-select" id="collection_type" name="collection_type" required>
+                            <option value="movie">电影合集</option>
+                            <option value="tv">剧集合集</option>
+                            <option value="article">文章合集</option>
+                            <option value="mixed">混合合集</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="collection_description" class="form-label">合集描述</label>
+                        <textarea class="form-control" id="collection_description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="collection_cover" class="form-label">封面图片URL</label>
+                        <input type="url" class="form-control" id="collection_cover" name="cover_image" placeholder="https://example.com/image.jpg">
+                        <small class="form-text text-muted">推荐尺寸: 600x400px</small>
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="collection_published" name="is_published">
+                        <label class="form-check-label" for="collection_published">立即发布</label>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">选择电影</label>
+                        <div class="movie-select-container border p-3 rounded" style="max-height: 300px; overflow-y: auto;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input type="text" class="form-control form-control-sm me-2" id="movieSearchInput" placeholder="搜索电影..." style="max-width: 200px;">
+                                <button type="button" class="btn btn-sm btn-outline-primary" id="selectAllMovies">全选</button>
+                            </div>
+                            <div id="movieListContainer">
+                                <div class="text-center py-3">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                    <span class="ms-2">加载电影列表中...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="saveCollection">保存合集</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 确认删除模态框 -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">确认删除</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除合集"<span id="deleteCollectionName"></span>"吗？此操作不可撤销！</p>
+                <input type="hidden" id="deleteCollectionId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">确认删除</button>
             </div>
         </div>
     </div>

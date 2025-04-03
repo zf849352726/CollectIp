@@ -25,7 +25,12 @@ from index.views import (
     tv_list, data_trend, douban_settings,
     crawl_once_view,
     score_once_view,
-    crawl_movie_view
+    crawl_movie_view,
+    update_movie_wordcloud,
+    toggle_movie_published,
+    get_last_crawl_status,
+    create_collection, get_collection, update_collection, delete_collection,
+    logs_view, get_log_content, download_log
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -49,16 +54,25 @@ urlpatterns = [
     path('wechat/media/', media_library, name='media_library'),
     path('wechat/analysis/', data_analysis, name='data_analysis'),
     path('wechat/settings/', wechat_settings, name='wechat_settings'),
+    path('collections/create/', create_collection, name='create_collection'),
+    path('collections/<int:collection_id>/', get_collection, name='get_collection'),
+    path('collections/<int:collection_id>/update/', update_collection, name='update_collection'),
+    path('collections/<int:collection_id>/delete/', delete_collection, name='delete_collection'),
     path('douban/', douban, name='douban'),
     path('douban/overview/', douban_overview, name='douban_overview'),
     path('douban/movies/', movie_list, name='movie_list'),
     path('douban/movies/<int:movie_id>/', movie_detail, name='movie_detail'),
+    path('douban/movies/toggle_published/', toggle_movie_published, name='toggle_movie_published'),
     path('douban/tv/', tv_list, name='tv_list'),
     path('douban/trend/', data_trend, name='data_trend'),
     path('douban/settings/', douban_settings, name='douban_settings'),
     path('crawl_once/', crawl_once_view, name='crawl_once'),
     path('score_once/', score_once_view, name='score_once'),
+    path('crawl_status/', get_last_crawl_status, name='crawl_status'),
     path('crawl_movie/', crawl_movie_view, name='crawl_movie'),
+    path('logs/', logs_view, name='logs_view'),
+    path('api/logs/content/', get_log_content, name='get_log_content'),
+    path('api/logs/download/', download_log, name='download_log'),
 ]
 
 if settings.DEBUG:

@@ -1,17 +1,23 @@
-# 基础依赖
-Django>=3.2,<4.0
-scrapy>=2.5.0
-selenium>=4.0.0
-webdriver-manager>=3.8.0
-pymysql>=1.0.2
-pymongo>=4.0.0
+# 数据库连接
+pymysql==1.1.0
+SQLAlchemy==2.0.27
 
-# 文本处理相关
-jieba>=0.42.1
-snownlp>=0.12.3
-numpy>=1.21.0
+# 爬虫相关
+Scrapy==2.11.0
+requests==2.31.0
+Twisted>=22.10.0
+pyOpenSSL>=23.2.0
+service_identity>=23.1.0
+w3lib>=2.1.2
+parsel>=1.8.1
+itemadapter>=0.8.0
+cryptography>=41.0.7
 
-# 其他工具
-python-dotenv>=0.19.0
-requests>=2.26.0
-urllib3>=1.26.0 
+# 环境配置
+python-dotenv==1.0.0
+
+# 数据处理
+pandas==2.2.1
+
+# HTTP客户端
+aiohttp==3.9.3 

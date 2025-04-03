@@ -140,7 +140,7 @@ class ProxyMiddleware:
         """从settings获取数据库配置"""
         if not crawler.settings.getbool('PROXY_ENABLED'):
             raise NotConfigured
-        
+            
         middleware = cls(
             db_host=crawler.settings.get('MYSQL_HOST'),
             db_user=crawler.settings.get('MYSQL_USER'),
@@ -238,8 +238,8 @@ class ProxyMiddleware:
             conn = self.get_connection()
             with conn.cursor() as cursor:
                 sql = """
-                    UPDATE index_ipdata 
-                    SET score = %s,
+                UPDATE index_ipdata 
+                SET score = %s,
                         updated_at = NOW()
                     WHERE server = %s
                 """
@@ -424,15 +424,17 @@ class RandomUserAgentMiddleware:
             'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         ]
         
-        # 网站特定的请求头配置
-        self.site_specific_headers = {
+        # 网站特定的请求头模板
+        self.site_specific_templates = {
             'douban.com': {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                'sec-ch-ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
+                # 保持不变的浏览器参数
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+                "sec-ch-ua": '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"',
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": '"Windows"',
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                "accept-encoding": "gzip, deflate, br, zstd",
+                "accept-language": "zh-CN,zh;q=0.9",
             },
             'zhihu.com': {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
@@ -565,7 +567,7 @@ class RandomUserAgentMiddleware:
             ]
             return random.choice(search_engines) + domain
         return None
-    
+
     def process_request(self, request, spider):
         """处理请求，添加定制请求头"""
         # 从URL中提取域名
@@ -602,8 +604,29 @@ class RandomUserAgentMiddleware:
         
         # 检查是否存在特定网站的请求头配置
         site_specific_used = False
-        for site_domain, headers in self.site_specific_headers.items():
+        for site_domain, headers_template in self.site_specific_templates.items():
             if site_domain in domain:
+                # 克隆模板以避免修改原始模板
+                headers = headers_template.copy()
+                
+                # 如果是豆瓣，添加动态参数
+                if site_domain == 'douban.com':
+                    # 从URL中提取路径
+                    from urllib.parse import urlparse
+                    parsed_url = urlparse(request.url)
+                    request_path = parsed_url.path
+                    
+                    # 添加与请求相关的动态参数
+                    headers.update({
+                        "authority": domain,
+                        "method": request.method,
+                        "path": request_path,
+                        "scheme": "https",
+                        "cookie": generate_random_cookie(),
+                        "cache-control": random.choice(["max-age=0", "no-cache"]),
+                        "priority": random.choice(["u=0, i", "u=1, i"]),
+                    })
+                
                 # 使用特定网站的请求头
                 request.headers.update(headers)
                 site_specific_used = True
@@ -747,7 +770,7 @@ class DoubanDownloaderMiddleware:
                 if not request.meta.get('use_selenium'):
                     request.meta['use_selenium'] = True
                     spider.logger.info(f"设置请求使用Selenium: {request.url}")
-                
+
         return None
         
     def process_response(self, request, response, spider):
@@ -790,3 +813,71 @@ class DoubanDownloaderMiddleware:
                 request.dont_filter = True
                 return request
         return None
+
+
+def generate_random_cookie():
+    """
+    生成随机豆瓣cookie
+    以真实豆瓣cookie为模板，生成随机但合理的cookie值
+    """
+    import time
+    import random
+    import string
+    
+    # 基础时间戳：最近30天内的随机时间
+    now = int(time.time())
+    recent_timestamps = [
+        now - random.randint(0, 30 * 24 * 60 * 60)  # 30天内的随机时间
+        for _ in range(5)  # 生成5个不同的时间戳
+    ]
+    
+    # 生成随机的bid值（豆瓣用户浏览器标识）
+    chars = string.ascii_letters + string.digits
+    bid = ''.join(random.choice(chars) for _ in range(11))
+    
+    # 随机的用户位置代码，中国常见城市代码
+    locations = ["108288", "108296", "108090", "108303", "108289", "108304", "108307"]
+    location = random.choice(locations)
+    
+    # 随机的推送消息数量
+    push_noty_num = random.randint(0, 5)
+    push_doumail_num = random.randint(0, 3)
+    
+    # 随机的utmz值以及utmcsr来源网站
+    utmcsr_sites = ["baidu.com", "bing.com", "google.com", "douban.com", "weibo.com"]
+    utmcsr = random.choice(utmcsr_sites)
+    
+    # 随机的Google Analytics ID
+    ga_id = f"GA1.2.{random.randint(1000000000, 9999999999)}.{recent_timestamps[0]}"
+    
+    # 构建完整cookie字符串，结构与真实豆瓣cookie一致
+    cookie_parts = [
+        f"bid={bid}",
+        f"_pk_id.100001.8cb4={random.randint(10000000, 99999999)}.{recent_timestamps[1]}",
+        f'll="{location}"',
+        f"push_noty_num={push_noty_num}",
+        f"push_doumail_num={push_doumail_num}",
+        f"__utmc={random.randint(10000000, 99999999)}",
+        f"_vwo_uuid_v2={bid.upper()}{random.randint(10000, 99999)}{random.choice(chars).upper()}|{bid.lower()}",
+        "douban-fav-remind=1",
+        f"__utmv={random.randint(10000000, 99999999)}.{random.randint(10000, 99999)}",
+        f"__yadk_uid={bid}{bid[:5]}",
+        "ct=y",
+        f"_ga={ga_id}",
+        f"_ga_Y4GN1R87RG=GS1.1.{recent_timestamps[2]}.1.1.{recent_timestamps[2] + random.randint(60, 600)}.0.0.0",
+        f"__utmz={random.randint(10000000, 99999999)}.{random.randint(1, 20)}.{random.randint(1, 10)}.{random.randint(1, 5)}.utmcsr={utmcsr}|utmccn=(referral)|utmcmd=referral|utmcct=/{''.join(random.choice(chars) for _ in range(8))}/",
+        f"__utma={random.randint(10000000, 99999999)}.{random.randint(1000000000, 9999999999)}.{recent_timestamps[3]}.{recent_timestamps[3] + 86400}.{recent_timestamps[4]}.{random.randint(5, 30)}",
+        f"_pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C{now}%2C%22https%3A%2F%2Fmovie.douban.com%2Fsubject%2F{random.randint(1000000, 9999999)}%2F%22%5D",
+        "_pk_ses.100001.8cb4=1",
+        f"ap_v=0,{random.randint(6, 9)}.0"
+    ]
+    
+    # 随机决定是否包含某些cookie项
+    if random.random() < 0.3:  # 30%的几率不包含某些可选cookie
+        optional_indices = [5, 6, 7, 8, 9, 10, 12, 15]  # 可选cookie的索引
+        for i in sorted(random.sample(optional_indices, random.randint(1, 3)), reverse=True):
+            if i < len(cookie_parts):
+                cookie_parts.pop(i)
+    
+    # 将所有部分组合成最终cookie字符串
+    return "; ".join(cookie_parts)

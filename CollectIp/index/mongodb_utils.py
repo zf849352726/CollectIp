@@ -1,9 +1,9 @@
+import logging
 import pymongo
 from pymongo import ASCENDING, DESCENDING
-from datetime import datetime, timedelta
-import logging
-from typing import List, Dict, Optional
 from django.conf import settings
+import datetime
+from typing import List, Dict, Any, Tuple, Optional, Union
 from bson.objectid import ObjectId
 import json
 
@@ -37,7 +37,15 @@ class MongoDBClient:
             
             # 获取数据库和集合
             self.db = self.client[mongo_settings['db']]
+            self.db_name = mongo_settings['db']  # 存储数据库名称
             self.comments_collection = self.db[mongo_settings['collection']]
+            
+            # 记录配置信息
+            logger.info(f"MongoDB配置: 数据库={mongo_settings['db']}, 集合={mongo_settings['collection']}")
+            
+            # 测试连接
+            self.client.admin.command('ping')
+            logger.info(f"MongoDB连接成功: {self.client.address}")
             
             # 创建索引
             self._create_indexes()
@@ -47,6 +55,8 @@ class MongoDBClient:
             
         except Exception as e:
             logger.error(f"MongoDB客户端初始化失败: {str(e)}")
+            import traceback
+            logger.error(traceback.format_exc())
             raise
     
     def _create_indexes(self):
@@ -84,7 +94,7 @@ class MongoDBClient:
                 comment_data['movie_id'] = int(comment_data['movie_id'])
             
             # 添加创建时间
-            comment_data['created_at'] = datetime.now()
+            comment_data['created_at'] = datetime.datetime.now()
             
             # 插入评论
             result = self.comments_collection.insert_one(comment_data)
@@ -103,7 +113,7 @@ class MongoDBClient:
             for comment in comments_data:
                 if 'movie_id' in comment and comment['movie_id'] is not None:
                     comment['movie_id'] = int(comment['movie_id'])
-                comment['created_at'] = datetime.now()
+                comment['created_at'] = datetime.datetime.now()
             
             # 批量插入
             result = self.comments_collection.insert_many(comments_data)
@@ -133,7 +143,7 @@ class MongoDBClient:
                     doc['_id'] = str(doc['_id'])
                 if 'created_at' in doc:
                     doc['created_at'] = doc['created_at'].strftime('%Y-%m-%d %H:%M:%S')
-                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime):
+                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime.datetime):
                     doc['comment_time'] = doc['comment_time'].strftime('%Y-%m-%d %H:%M:%S')
                 comments.append(doc)
                 
@@ -164,7 +174,7 @@ class MongoDBClient:
                     doc['_id'] = str(doc['_id'])
                 if 'created_at' in doc:
                     doc['created_at'] = doc['created_at'].strftime('%Y-%m-%d %H:%M:%S')
-                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime):
+                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime.datetime):
                     doc['comment_time'] = doc['comment_time'].strftime('%Y-%m-%d %H:%M:%S')
                 comments.append(doc)
                 
@@ -195,7 +205,7 @@ class MongoDBClient:
                     doc['_id'] = str(doc['_id'])
                 if 'created_at' in doc:
                     doc['created_at'] = doc['created_at'].strftime('%Y-%m-%d %H:%M:%S')
-                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime):
+                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime.datetime):
                     doc['comment_time'] = doc['comment_time'].strftime('%Y-%m-%d %H:%M:%S')
                 comments.append(doc)
                 
@@ -229,7 +239,7 @@ class MongoDBClient:
                     doc['_id'] = str(doc['_id'])
                 if 'created_at' in doc:
                     doc['created_at'] = doc['created_at'].strftime('%Y-%m-%d %H:%M:%S')
-                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime):
+                if 'comment_time' in doc and isinstance(doc['comment_time'], datetime.datetime):
                     doc['comment_time'] = doc['comment_time'].strftime('%Y-%m-%d %H:%M:%S')
                 comments.append(doc)
                 
@@ -238,10 +248,11 @@ class MongoDBClient:
             logger.error(f"搜索评论失败: {str(e)}")
             return [], 0
     
-    def get_comment_keywords(self, movie_id, limit=10):
-        """获取电影评论的热门关键词"""
+    def get_comment_keywords(self, movie_id):
+        """获取电影评论关键词，用于生成词云"""
         try:
-            # 聚合查询，展开keywords数组并计数
+            # 先从comments_collection中直接获取关键词
+            # 聚合查询，统计所有评论中的关键词
             pipeline = [
                 {"$match": {"movie_id": int(movie_id)}},
                 {"$unwind": "$keywords"},
@@ -250,16 +261,68 @@ class MongoDBClient:
                     "count": {"$sum": 1}
                 }},
                 {"$sort": {"count": -1}},
-                {"$limit": limit}
+                {"$limit": 100}  # 限制返回100个最常见的关键词
             ]
             
             result = list(self.comments_collection.aggregate(pipeline))
             
-            # 转换为前端需要的格式
-            keywords = [{"name": item["_id"], "value": item["count"]} for item in result]
-            return keywords
+            if result and len(result) > 0:
+                # 转换为符合词云格式的数据
+                keywords = []
+                for item in result:
+                    if item["_id"] and item["count"]:
+                        keywords.append({
+                            "name": str(item["_id"]),
+                            "value": int(item["count"])
+                        })
+                
+                logging.info(f"从评论集合中直接获取到 {movie_id} 的关键词: {len(keywords)} 个")
+                return keywords
+            
+            # 如果直接从评论中获取失败，尝试从其他集合获取
+            db = self.client[self.db_name]
+            collection = db['comment_keywords']
+            
+            # 获取关键词数据
+            result = collection.find_one({'movie_id': str(movie_id)})
+            
+            if result and 'keywords' in result:
+                logging.info(f"获取到电影 {movie_id} 的评论关键词: {len(result['keywords'])} 个")
+                
+                # 确保数据格式正确
+                keywords = []
+                if isinstance(result['keywords'], list):
+                    # 如果是字符串列表，转换为适合词云的格式
+                    word_count = {}
+                    for word in result['keywords']:
+                        if word in word_count:
+                            word_count[word] += 1
+                        else:
+                            word_count[word] = 1
+                    
+                    # 转换为词云需要的格式
+                    for word, count in word_count.items():
+                        keywords.append({
+                            'name': str(word),
+                            'value': count
+                        })
+                elif isinstance(result['keywords'], dict):
+                    # 如果已经是词频统计字典
+                    for word, count in result['keywords'].items():
+                        keywords.append({
+                            'name': str(word),
+                            'value': count
+                        })
+                
+                logging.info(f"格式化后的关键词: {len(keywords)} 个")
+                return keywords
+            else:
+                logging.warning(f"电影 {movie_id} 的评论关键词数据不存在或格式不正确")
+                # 尝试从其他集合中获取数据
+                return self.get_wordcloud_data(movie_id)
+                
         except Exception as e:
-            logger.error(f"获取评论关键词失败: {str(e)}")
+            logging.error(f"获取电影评论关键词失败: {str(e)}", exc_info=True)
             return []
     
     def get_sentiment_stats(self, movie_id):
@@ -352,27 +415,202 @@ class MongoDBClient:
                 "total": 0, "avg": 0
             }
     
-    def get_wordcloud_data(self, movie_id, limit=100):
-        """生成词云数据"""
+    def get_wordcloud_data_by_strategy(self, movie_id, strategy):
+        """获取指定采集策略的词云数据"""
         try:
-            # 先获取评论内容
-            comments, _ = self.get_comments_by_movie_id(movie_id, limit=300)
+            # 构建策略查询条件
+            strategy_mapping = {
+                'sequential': ["顺序采集", "sequential", "顺序策略"],
+                'random_pages': ["随机页码采集", "random_pages", "随机页码策略"],
+                'random_interval': ["随机间隔采集", "random_interval", "随机间隔策略"],
+                'random_block': ["随机区块采集", "random_block", "随机区块策略"]
+            }
             
-            if not comments:
-                return []
+            # 获取策略对应的所有可能值
+            strategy_values = strategy_mapping.get(strategy, [strategy])
+            
+            # 构建查询条件 - 支持部分匹配
+            query_conditions = []
+            for value in strategy_values:
+                query_conditions.append({"comment_strategy": {"$regex": value, "$options": "i"}})
+            
+            # 聚合查询，按指定策略查找评论关键词
+            pipeline = [
+                {"$match": {
+                    "movie_id": int(movie_id),
+                    "$or": query_conditions
+                }},
+                {"$unwind": "$keywords"},
+                {"$group": {
+                    "_id": "$keywords",
+                    "count": {"$sum": 1}
+                }},
+                {"$sort": {"count": -1}},
+                {"$limit": 100}  # 限制返回100个最常见的关键词
+            ]
+            
+            result = list(self.comments_collection.aggregate(pipeline))
+            
+            if result and len(result) > 0:
+                # 转换为符合词云格式的数据
+                formatted_data = []
+                for item in result:
+                    if item["_id"] and item["count"]:
+                        formatted_data.append({
+                            "name": str(item["_id"]),
+                            "value": int(item["count"])
+                        })
                 
-            # 导入TextProcessor
-            from index.text_utils import TextProcessor
+                logging.info(f"获取到策略 '{strategy}' 的词云数据: {len(formatted_data)} 个关键词")
+                return formatted_data
             
-            # 提取评论内容
-            comment_texts = [comment.get('content', '') for comment in comments if comment.get('content')]
+            # 如果从评论集合中获取失败，尝试从专门的策略词云集合获取
+            db = self.client[self.db_name]
+            collection = db['strategy_wordcloud']
             
-            # 生成词云数据
-            word_cloud_data = TextProcessor.generate_wordcloud_data(comment_texts, top_n=limit)
+            # 查询对应策略的数据
+            result = collection.find_one({
+                'movie_id': str(movie_id),
+                'strategy': strategy
+            })
             
-            return word_cloud_data
+            if result and 'wordcloud' in result and result['wordcloud']:
+                data = result['wordcloud']
+                logging.info(f"从策略词云集合找到电影 {movie_id} 的 {strategy} 策略词云数据: {len(data)} 项")
+                
+                # 标准化数据格式
+                formatted_data = []
+                for item in data:
+                    if isinstance(item, dict):
+                        word = item.get('word', item.get('name', item.get('keyword', '')))
+                        weight = item.get('weight', item.get('value', item.get('count', 1)))
+                        
+                        if word:
+                            formatted_data.append({
+                                'name': str(word),
+                                'value': float(weight) if isinstance(weight, (int, float)) else 1
+                            })
+                    elif isinstance(item, list) and len(item) >= 2:
+                        formatted_data.append({
+                            'name': str(item[0]),
+                            'value': float(item[1]) if isinstance(item[1], (int, float)) else 1
+                        })
+                
+                # 过滤和排序
+                formatted_data = [item for item in formatted_data if item['name'] and item['name'].strip()]
+                formatted_data.sort(key=lambda x: x['value'], reverse=True)
+                
+                # 限制返回数量
+                max_items = 100
+                if len(formatted_data) > max_items:
+                    formatted_data = formatted_data[:max_items]
+                    
+                return formatted_data
+            
+            # 如果找不到特定策略的数据，尝试从评论中生成
+            return self.generate_strategy_wordcloud(movie_id, strategy)
+            
         except Exception as e:
-            logger.error(f"生成词云数据失败: {str(e)}")
+            logging.error(f"获取策略词云数据失败 ({strategy}): {str(e)}", exc_info=True)
+            return []
+    
+    def generate_strategy_wordcloud(self, movie_id, strategy, limit=100):
+        """
+        如果数据库中不存在，则根据评论采集策略生成词云数据
+        
+        Args:
+            movie_id: 电影ID
+            strategy: 采集策略名称 ('sequential', 'random_pages', 'random_interval', 'random_block')
+            limit: 返回的关键词数量上限
+        
+        Returns:
+            适用于ECharts词云图的数据列表
+        """
+        try:
+            logging.info(f"尝试为电影 {movie_id} 的 {strategy} 策略生成词云数据")
+            
+            # 构建策略查询条件
+            strategy_mapping = {
+                'sequential': ["顺序采集", "sequential", "顺序策略"],
+                'random_pages': ["随机页码采集", "random_pages", "随机页码策略"],
+                'random_interval': ["随机间隔采集", "random_interval", "随机间隔策略"],
+                'random_block': ["随机区块采集", "random_block", "随机区块策略"]
+            }
+            
+            # 获取策略对应的所有可能值
+            strategy_values = strategy_mapping.get(strategy, [strategy])
+            
+            # 构建查询条件 - 支持部分匹配
+            query_conditions = []
+            for value in strategy_values:
+                query_conditions.append({"comment_strategy": {"$regex": value, "$options": "i"}})
+            
+            # 查询符合策略的评论
+            comments = list(self.comments_collection.find({
+                "movie_id": int(movie_id),
+                "$or": query_conditions
+            }))
+            
+            logging.info(f"找到策略 '{strategy}' 下的评论: {len(comments)} 条")
+            
+            # 如果没有找到评论，返回空列表
+            if not comments or len(comments) == 0:
+                logging.warning(f"电影 {movie_id} 的 {strategy} 策略没有评论数据")
+                return []
+            
+            # 提取所有关键词
+            all_keywords = []
+            for comment in comments:
+                if 'keywords' in comment and isinstance(comment['keywords'], list):
+                    all_keywords.extend(comment['keywords'])
+            
+            if not all_keywords:
+                logging.warning(f"电影 {movie_id} 的 {strategy} 策略评论没有关键词")
+                return []
+            
+            # 统计关键词频率
+            keyword_count = {}
+            for keyword in all_keywords:
+                if keyword in keyword_count:
+                    keyword_count[keyword] += 1
+                else:
+                    keyword_count[keyword] = 1
+            
+            # 转换为词云数据格式
+            wordcloud_data = []
+            for keyword, count in keyword_count.items():
+                if keyword and keyword.strip():
+                    wordcloud_data.append({
+                        "name": str(keyword),
+                        "value": count
+                    })
+            
+            # 排序并限制数量
+            wordcloud_data.sort(key=lambda x: x["value"], reverse=True)
+            if len(wordcloud_data) > limit:
+                wordcloud_data = wordcloud_data[:limit]
+            
+            logging.info(f"成功生成词云数据，共 {len(wordcloud_data)} 个关键词")
+            
+            # 保存生成的词云数据到数据库
+            try:
+                strategy_collection = self.db['strategy_wordcloud']
+                strategy_collection.update_one(
+                    {"movie_id": str(movie_id), "strategy": strategy},
+                    {"$set": {
+                        "wordcloud": wordcloud_data,
+                        "generated_at": datetime.datetime.now()
+                    }},
+                    upsert=True
+                )
+                logging.info(f"已将词云数据保存到数据库")
+            except Exception as e:
+                logging.error(f"保存词云数据失败: {str(e)}")
+            
+            return wordcloud_data
+            
+        except Exception as e:
+            logging.error(f"生成策略词云数据失败: {str(e)}", exc_info=True)
             return []
     
     def delete_comments_by_movie_id(self, movie_id):
@@ -396,7 +634,7 @@ class MongoDBClient:
         """归档旧评论"""
         try:
             # 计算归档时间点
-            archive_date = datetime.now() - timedelta(days=days)
+            archive_date = datetime.datetime.now() - datetime.timedelta(days=days)
             
             # 创建归档集合
             archive_collection = self.db[f"{self.comments_collection.name}_archive"]
@@ -455,7 +693,7 @@ class MongoDBClient:
     def get_comment_trends(self, movie_id: int, days: int = 30) -> List[Dict]:
         """获取评论趋势数据"""
         try:
-            start_date = datetime.now() - timedelta(days=days)
+            start_date = datetime.datetime.now() - datetime.timedelta(days=days)
             
             pipeline = [
                 {"$match": {
@@ -480,97 +718,6 @@ class MongoDBClient:
             
         except Exception as e:
             logger.error(f"获取评论趋势失败: {str(e)}")
-            return []
-    
-    def get_wordcloud_data_by_strategy(self, movie_id, strategy, limit=100):
-        """
-        根据评论采集策略获取词云数据
-        
-        Args:
-            movie_id: 电影ID
-            strategy: 采集策略名称 ('sequential', 'random_pages', 'random_interval', 'random_block')
-            limit: 返回的关键词数量上限
-            
-        Returns:
-            适用于ECharts词云图的数据列表
-        """
-        try:
-            # 连接到MongoDB
-            collection = self.comments_collection
-            
-            # 尝试将movie_id转换为整数（如果可能）
-            try:
-                movie_id_int = int(movie_id)
-            except (ValueError, TypeError):
-                movie_id_int = None
-                
-            # 构建查询条件
-            match_condition = {"$or": []}
-            
-            # 添加电影ID条件（支持字符串和整数两种格式）
-            if movie_id_int is not None:
-                match_condition["$or"].append({"movie_id": movie_id_int})
-            match_condition["$or"].append({"movie_id": str(movie_id)})
-            
-            # 构建策略匹配条件
-            if strategy == 'sequential':
-                # 顺序策略可能存储为顺序策略、顺序采集或空值/缺失
-                strategy_condition = {"$or": [
-                    {"comment_strategy": "顺序策略"},
-                    {"comment_strategy": "sequential"},
-                    {"comment_strategy": "顺序采集"},
-                    {"comment_strategy": {"$exists": False}},
-                    {"comment_strategy": None}
-                ]}
-            else:
-                strategy_name_mappings = {
-                    'random_pages': ["随机页码策略", "random_pages"],
-                    'random_interval': ["随机间隔策略", "random_interval"],
-                    'random_block': ["随机区块策略", "random_block"]
-                }
-                
-                strategy_names = strategy_name_mappings.get(strategy, [strategy])
-                strategy_condition = {"comment_strategy": {"$in": strategy_names}}
-            
-            # 合并查询条件
-            query = {"$and": [match_condition, strategy_condition]}
-            
-            # 记录查询条件
-            self.logger.info(f"策略词云查询条件: {query}")
-            
-            # 查询评论数据
-            cursor = collection.find(query, {"content": 1})
-            comments = list(cursor)
-            
-            # 记录找到的评论数量
-            self.logger.info(f"找到策略 '{strategy}' 下的评论: {len(comments)} 条")
-            
-            # 如果没有找到评论数据，返回空列表
-            if not comments:
-                return []
-            
-            # 合并所有评论内容
-            all_text = " ".join([comment.get("content", "") for comment in comments if comment.get("content")])
-            
-            # 使用文本处理工具提取关键词
-            from index.text_utils import TextProcessor
-            text_processor = TextProcessor()
-            keywords = text_processor.extract_keywords(all_text, top_k=limit)
-            
-            # 构造词云数据
-            wordcloud_data = []
-            for word, weight in keywords:
-                wordcloud_data.append({
-                    "name": word,
-                    "value": weight * 1000  # 放大权重值以便在词云中更好地显示
-                })
-            
-            return wordcloud_data
-            
-        except Exception as e:
-            logger.error(f"获取策略词云数据失败: {str(e)}")
-            import traceback
-            logger.error(traceback.format_exc())
             return []
 
 if __name__ == "__main__":
@@ -617,7 +764,7 @@ if __name__ == "__main__":
         print(f"测试获取电影ID {test_movie_id} 的词云数据...")
     
     # 获取词云数据
-    wordcloud_data = client.get_wordcloud_data(test_movie_id)
+    wordcloud_data = client.get_comment_keywords(test_movie_id)
     
     if wordcloud_data:
         print(f"成功获取词云数据，共 {len(wordcloud_data)} 个关键词")
@@ -638,3 +785,19 @@ if __name__ == "__main__":
         print(f"前5个关键词: {keywords[:5]}")
     else:
         print("未获取到评论关键词")
+
+    # 测试获取不同策略的词云数据
+    print("\n测试获取不同策略的词云数据...")
+    strategies = ['sequential', 'random_pages', 'random_interval', 'random_block']
+
+    for strategy in strategies:
+        print(f"\n测试获取 '{strategy}' 策略的词云数据...")
+        strategy_wordcloud = client.get_wordcloud_data_by_strategy(test_movie_id, strategy)
+
+        if strategy_wordcloud:
+            print(f"成功获取 '{strategy}' 策略词云数据，共 {len(strategy_wordcloud)} 个关键词")
+            # 打印前3个关键词
+            for i, item in enumerate(strategy_wordcloud[:3]):
+                print(f"关键词 {i+1}: {item['name']} (权重: {item['value']})")
+        else:
+            print(f"未获取到 '{strategy}' 策略的词云数据")

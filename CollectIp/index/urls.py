@@ -1,11 +1,17 @@
-# 豆瓣数据相关路由
-path('douban/', views.douban, name='douban'),  # 豆瓣首页，会重定向到概览
-path('douban/overview/', views.douban_overview, name='douban_overview'),
-path('douban/movies/', views.movie_list, name='movie_list'),
-path('douban/tv/', views.tv_list, name='tv_list'),
-path('douban/trends/', views.data_trend, name='data_trend'),
-path('douban/settings/', views.douban_settings, name='douban_settings'),
-# 电影采集API
-path('crawl_movie/', views.crawl_movie_view, name='crawl_movie'),
-path('douban/movie/<int:movie_id>/comments/', movie_comment_analysis, name='movie_comment_analysis'),
-path('api/trigger-comment-processing/', trigger_comment_processing, name='trigger_comment_processing'), 
+# 微信管理相关路由
+path('wechat/overview/', views.wechat_overview, name='wechat_overview'),
+path('wechat/article_manage/', views.article_manage, name='article_manage'),
+path('wechat/media_library/', views.media_library, name='media_library'),
+path('wechat/data_analysis/', views.data_analysis, name='data_analysis'),
+
+# 合集管理相关API
+path('api/collections/create/', views.create_collection, name='create_collection'),
+path('api/collections/<int:collection_id>/', views.get_collection, name='get_collection'),
+path('api/collections/<int:collection_id>/update/', views.update_collection, name='update_collection'),
+path('api/collections/<int:collection_id>/delete/', views.delete_collection, name='delete_collection'),
+path('api/movies/selection/', views.get_movies_for_selection, name='get_movies_for_selection'),
+
+# 日志管理相关路由
+path('logs/', views.logs_view, name='logs_view'),
+path('api/logs/content/', views.get_log_content, name='get_log_content'),
+path('api/logs/download/', views.download_log, name='download_log'), 

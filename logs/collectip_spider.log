@@ -7386,3 +7386,853 @@ Stacktrace:
 2025-03-30 12:43:54,987 - INFO - 关闭Chrome浏览器
 2025-03-30 12:43:56,098 - WARNING - 爬虫正在关闭: finished
 2025-03-30 12:43:58,728 - WARNING - 爬虫关闭完成
+2025-03-30 22:59:40,962 - INFO - 验证码识别失败,第1次重试...
+2025-03-30 22:59:41,914 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D52321]
+	(No symbol) [0x00D51400]
+	(No symbol) [0x00D47B12]
+	(No symbol) [0x00D45F1A]
+	(No symbol) [0x00D4935A]
+	(No symbol) [0x00D493D7]
+	(No symbol) [0x00D883C1]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00D7E5A1]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00D7E114]
+	(No symbol) [0x00DADA34]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 22:59:41,923 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 189, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D52321]
+	(No symbol) [0x00D51400]
+	(No symbol) [0x00D47B12]
+	(No symbol) [0x00D45F1A]
+	(No symbol) [0x00D4935A]
+	(No symbol) [0x00D493D7]
+	(No symbol) [0x00D883C1]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00D7E5A1]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00D7E114]
+	(No symbol) [0x00DADA34]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+
+2025-03-30 22:59:41,925 - INFO - 关闭Chrome浏览器
+2025-03-30 22:59:43,090 - WARNING - 爬虫正在关闭: finished
+2025-03-30 22:59:43,912 - WARNING - 爬虫关闭完成
+2025-03-30 23:00:29,455 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D52321]
+	(No symbol) [0x00D51400]
+	(No symbol) [0x00D47B12]
+	(No symbol) [0x00D45F1A]
+	(No symbol) [0x00D4935A]
+	(No symbol) [0x00D493D7]
+	(No symbol) [0x00D8383E]
+	(No symbol) [0x00DAD7BC]
+	(No symbol) [0x00D7E114]
+	(No symbol) [0x00DADA34]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:00:29,460 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 109, in text
+    return self._execute(Command.GET_ELEMENT_TEXT)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D52321]
+	(No symbol) [0x00D51400]
+	(No symbol) [0x00D47B12]
+	(No symbol) [0x00D45F1A]
+	(No symbol) [0x00D4935A]
+	(No symbol) [0x00D493D7]
+	(No symbol) [0x00D8383E]
+	(No symbol) [0x00DAD7BC]
+	(No symbol) [0x00D7E114]
+	(No symbol) [0x00DADA34]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+
+2025-03-30 23:00:29,462 - INFO - 关闭Chrome浏览器
+2025-03-30 23:00:30,592 - WARNING - 爬虫正在关闭: finished
+2025-03-30 23:00:31,376 - WARNING - 爬虫关闭完成
+2025-03-30 23:01:13,498 - INFO - 验证码识别失败,第1次重试...
+2025-03-30 23:01:14,610 - INFO - 验证码识别失败,第2次重试...
+2025-03-30 23:01:15,684 - INFO - 验证码识别失败,第3次重试...
+2025-03-30 23:01:28,864 - INFO - 验证码识别失败,第4次重试...
+2025-03-30 23:01:30,270 - ERROR - 爬取过程中出错: list index out of range
+2025-03-30 23:01:30,277 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 189, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+2025-03-30 23:01:30,282 - INFO - 关闭Chrome浏览器
+2025-03-30 23:01:31,424 - WARNING - 爬虫正在关闭: finished
+2025-03-30 23:01:33,005 - WARNING - 爬虫关闭完成
+2025-03-30 23:34:55,098 - INFO - 验证码识别失败,第1次重试...
+2025-03-30 23:34:56,327 - INFO - 验证码识别失败,第2次重试...
+2025-03-30 23:34:57,432 - INFO - 验证码识别失败,第3次重试...
+2025-03-30 23:35:10,397 - INFO - 验证码识别失败,第4次重试...
+2025-03-30 23:35:11,295 - INFO - 验证码识别失败,第5次重试...
+2025-03-30 23:35:12,247 - INFO - 验证码识别失败,第6次重试...
+2025-03-30 23:35:13,231 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00232321]
+	(No symbol) [0x00231400]
+	(No symbol) [0x00227B12]
+	(No symbol) [0x00225F1A]
+	(No symbol) [0x0022935A]
+	(No symbol) [0x002293D7]
+	(No symbol) [0x002683C1]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x0025E5A1]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x0025E114]
+	(No symbol) [0x0028DA34]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:35:13,234 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 189, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00232321]
+	(No symbol) [0x00231400]
+	(No symbol) [0x00227B12]
+	(No symbol) [0x00225F1A]
+	(No symbol) [0x0022935A]
+	(No symbol) [0x002293D7]
+	(No symbol) [0x002683C1]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x0025E5A1]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x0025E114]
+	(No symbol) [0x0028DA34]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+
+2025-03-30 23:35:13,237 - INFO - 关闭Chrome浏览器
+2025-03-30 23:35:14,359 - WARNING - 爬虫正在关闭: finished
+2025-03-30 23:35:15,251 - WARNING - 爬虫关闭完成
+2025-03-30 23:40:14,140 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00232321]
+	(No symbol) [0x00231400]
+	(No symbol) [0x00227B12]
+	(No symbol) [0x00225F1A]
+	(No symbol) [0x0022935A]
+	(No symbol) [0x002293D7]
+	(No symbol) [0x002683C1]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x0025E5A1]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x0025E114]
+	(No symbol) [0x0028DA34]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:40:14,144 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00232321]
+	(No symbol) [0x00231400]
+	(No symbol) [0x00227B12]
+	(No symbol) [0x00225F1A]
+	(No symbol) [0x0022935A]
+	(No symbol) [0x002293D7]
+	(No symbol) [0x002683C1]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x0025E5A1]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x0025E114]
+	(No symbol) [0x0028DA34]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+
+2025-03-30 23:40:14,145 - INFO - 关闭Chrome浏览器
+2025-03-30 23:40:15,299 - WARNING - 爬虫正在关闭: finished
+2025-03-30 23:40:16,651 - WARNING - 爬虫关闭完成
+2025-03-31 16:38:18,363 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x0090C7F3+24435]
+	(No symbol) [0x00892074]
+	(No symbol) [0x007606E3]
+	(No symbol) [0x00772321]
+	(No symbol) [0x00771400]
+	(No symbol) [0x00767B12]
+	(No symbol) [0x00765F1A]
+	(No symbol) [0x0076935A]
+	(No symbol) [0x007693D7]
+	(No symbol) [0x007A83C1]
+	(No symbol) [0x007A8E8B]
+	(No symbol) [0x0079E5A1]
+	(No symbol) [0x007CD804]
+	(No symbol) [0x0079E114]
+	(No symbol) [0x007CDA34]
+	(No symbol) [0x007EF20A]
+	(No symbol) [0x007CD5B6]
+	(No symbol) [0x0079C54F]
+	(No symbol) [0x0079D894]
+	GetHandleVerifier [0x00C170A3+3213347]
+	GetHandleVerifier [0x00C2B0C9+3295305]
+	GetHandleVerifier [0x00C2558C+3271948]
+	GetHandleVerifier [0x009A7360+658144]
+	(No symbol) [0x0089B27D]
+	(No symbol) [0x00898208]
+	(No symbol) [0x008983A9]
+	(No symbol) [0x0088AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:38:18,371 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x0090C7F3+24435]
+	(No symbol) [0x00892074]
+	(No symbol) [0x007606E3]
+	(No symbol) [0x00772321]
+	(No symbol) [0x00771400]
+	(No symbol) [0x00767B12]
+	(No symbol) [0x00765F1A]
+	(No symbol) [0x0076935A]
+	(No symbol) [0x007693D7]
+	(No symbol) [0x007A83C1]
+	(No symbol) [0x007A8E8B]
+	(No symbol) [0x0079E5A1]
+	(No symbol) [0x007CD804]
+	(No symbol) [0x0079E114]
+	(No symbol) [0x007CDA34]
+	(No symbol) [0x007EF20A]
+	(No symbol) [0x007CD5B6]
+	(No symbol) [0x0079C54F]
+	(No symbol) [0x0079D894]
+	GetHandleVerifier [0x00C170A3+3213347]
+	GetHandleVerifier [0x00C2B0C9+3295305]
+	GetHandleVerifier [0x00C2558C+3271948]
+	GetHandleVerifier [0x009A7360+658144]
+	(No symbol) [0x0089B27D]
+	(No symbol) [0x00898208]
+	(No symbol) [0x008983A9]
+	(No symbol) [0x0088AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+
+2025-03-31 16:38:18,373 - INFO - 关闭Chrome浏览器
+2025-03-31 16:38:19,491 - WARNING - 爬虫正在关闭: finished
+2025-03-31 16:38:23,161 - WARNING - 爬虫关闭完成
+2025-03-31 16:42:06,981 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x0095C7F3+24435]
+	(No symbol) [0x008E2074]
+	(No symbol) [0x007B06E3]
+	(No symbol) [0x007C2321]
+	(No symbol) [0x007C1400]
+	(No symbol) [0x007B7B12]
+	(No symbol) [0x007B5F1A]
+	(No symbol) [0x007B935A]
+	(No symbol) [0x007B93D7]
+	(No symbol) [0x007F83C1]
+	(No symbol) [0x007F8E8B]
+	(No symbol) [0x007EE5A1]
+	(No symbol) [0x0081D804]
+	(No symbol) [0x007EE114]
+	(No symbol) [0x0081DA34]
+	(No symbol) [0x0083F20A]
+	(No symbol) [0x0081D5B6]
+	(No symbol) [0x007EC54F]
+	(No symbol) [0x007ED894]
+	GetHandleVerifier [0x00C670A3+3213347]
+	GetHandleVerifier [0x00C7B0C9+3295305]
+	GetHandleVerifier [0x00C7558C+3271948]
+	GetHandleVerifier [0x009F7360+658144]
+	(No symbol) [0x008EB27D]
+	(No symbol) [0x008E8208]
+	(No symbol) [0x008E83A9]
+	(No symbol) [0x008DAAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:42:06,989 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x0095C7F3+24435]
+	(No symbol) [0x008E2074]
+	(No symbol) [0x007B06E3]
+	(No symbol) [0x007C2321]
+	(No symbol) [0x007C1400]
+	(No symbol) [0x007B7B12]
+	(No symbol) [0x007B5F1A]
+	(No symbol) [0x007B935A]
+	(No symbol) [0x007B93D7]
+	(No symbol) [0x007F83C1]
+	(No symbol) [0x007F8E8B]
+	(No symbol) [0x007EE5A1]
+	(No symbol) [0x0081D804]
+	(No symbol) [0x007EE114]
+	(No symbol) [0x0081DA34]
+	(No symbol) [0x0083F20A]
+	(No symbol) [0x0081D5B6]
+	(No symbol) [0x007EC54F]
+	(No symbol) [0x007ED894]
+	GetHandleVerifier [0x00C670A3+3213347]
+	GetHandleVerifier [0x00C7B0C9+3295305]
+	GetHandleVerifier [0x00C7558C+3271948]
+	GetHandleVerifier [0x009F7360+658144]
+	(No symbol) [0x008EB27D]
+	(No symbol) [0x008E8208]
+	(No symbol) [0x008E83A9]
+	(No symbol) [0x008DAAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+
+2025-03-31 16:42:06,992 - INFO - 关闭Chrome浏览器
+2025-03-31 16:42:08,106 - WARNING - 爬虫正在关闭: finished
+2025-03-31 16:42:09,637 - WARNING - 爬虫关闭完成
+2025-03-31 16:46:54,064 - INFO - 验证码识别成功,共重试0次
+2025-03-31 16:48:03,276 - INFO - 关闭Chrome浏览器
+2025-03-31 16:48:04,393 - WARNING - 爬虫正在关闭: finished
+2025-03-31 16:48:07,279 - WARNING - 爬虫关闭完成
+2025-03-31 22:51:29,025 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x007CC7F3+24435]
+	(No symbol) [0x00752074]
+	(No symbol) [0x006206E3]
+	(No symbol) [0x00632321]
+	(No symbol) [0x00631400]
+	(No symbol) [0x00627B12]
+	(No symbol) [0x00625F1A]
+	(No symbol) [0x0062935A]
+	(No symbol) [0x006293D7]
+	(No symbol) [0x006683C1]
+	(No symbol) [0x00668E8B]
+	(No symbol) [0x0065E5A1]
+	(No symbol) [0x0068D804]
+	(No symbol) [0x0065E114]
+	(No symbol) [0x0068DA34]
+	(No symbol) [0x006AF20A]
+	(No symbol) [0x0068D5B6]
+	(No symbol) [0x0065C54F]
+	(No symbol) [0x0065D894]
+	GetHandleVerifier [0x00AD70A3+3213347]
+	GetHandleVerifier [0x00AEB0C9+3295305]
+	GetHandleVerifier [0x00AE558C+3271948]
+	GetHandleVerifier [0x00867360+658144]
+	(No symbol) [0x0075B27D]
+	(No symbol) [0x00758208]
+	(No symbol) [0x007583A9]
+	(No symbol) [0x0074AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 22:51:29,033 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 630, in find_elements
+    return self._execute(Command.FIND_CHILD_ELEMENTS, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x007CC7F3+24435]
+	(No symbol) [0x00752074]
+	(No symbol) [0x006206E3]
+	(No symbol) [0x00632321]
+	(No symbol) [0x00631400]
+	(No symbol) [0x00627B12]
+	(No symbol) [0x00625F1A]
+	(No symbol) [0x0062935A]
+	(No symbol) [0x006293D7]
+	(No symbol) [0x006683C1]
+	(No symbol) [0x00668E8B]
+	(No symbol) [0x0065E5A1]
+	(No symbol) [0x0068D804]
+	(No symbol) [0x0065E114]
+	(No symbol) [0x0068DA34]
+	(No symbol) [0x006AF20A]
+	(No symbol) [0x0068D5B6]
+	(No symbol) [0x0065C54F]
+	(No symbol) [0x0065D894]
+	GetHandleVerifier [0x00AD70A3+3213347]
+	GetHandleVerifier [0x00AEB0C9+3295305]
+	GetHandleVerifier [0x00AE558C+3271948]
+	GetHandleVerifier [0x00867360+658144]
+	(No symbol) [0x0075B27D]
+	(No symbol) [0x00758208]
+	(No symbol) [0x007583A9]
+	(No symbol) [0x0074AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+
+2025-03-31 22:51:29,035 - INFO - 关闭Chrome浏览器
+2025-03-31 22:51:30,196 - WARNING - 爬虫正在关闭: finished
+2025-03-31 22:51:33,056 - WARNING - 爬虫关闭完成
+2025-03-31 22:52:38,799 - INFO - 验证码识别失败,第1次重试...
+2025-03-31 22:52:39,761 - INFO - 验证码识别成功,共重试1次
+2025-03-31 22:53:58,684 - INFO - 关闭Chrome浏览器
+2025-03-31 22:53:59,828 - WARNING - 爬虫正在关闭: finished
+2025-03-31 22:54:02,762 - WARNING - 爬虫关闭完成
+2025-04-03 16:53:31,655 - ERROR - 爬取过程中出错: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x008FC7F3+24435]
+	(No symbol) [0x00882074]
+	(No symbol) [0x007506E3]
+	(No symbol) [0x00762321]
+	(No symbol) [0x00761400]
+	(No symbol) [0x00757B12]
+	(No symbol) [0x00755F1A]
+	(No symbol) [0x0075935A]
+	(No symbol) [0x007593D7]
+	(No symbol) [0x0079383E]
+	(No symbol) [0x007BD7BC]
+	(No symbol) [0x0078E114]
+	(No symbol) [0x007BDA34]
+	(No symbol) [0x007DF20A]
+	(No symbol) [0x007BD5B6]
+	(No symbol) [0x0078C54F]
+	(No symbol) [0x0078D894]
+	GetHandleVerifier [0x00C070A3+3213347]
+	GetHandleVerifier [0x00C1B0C9+3295305]
+	GetHandleVerifier [0x00C1558C+3271948]
+	GetHandleVerifier [0x00997360+658144]
+	(No symbol) [0x0088B27D]
+	(No symbol) [0x00888208]
+	(No symbol) [0x008883A9]
+	(No symbol) [0x0087AAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:53:31,661 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\collectip.py", line 170, in parse
+    first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 109, in text
+    return self._execute(Command.GET_ELEMENT_TEXT)["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webelement.py", line 572, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 429, in execute
+    self.error_handler.check_response(response)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.StaleElementReferenceException: Message: stale element reference: stale element not found
+  (Session info: chrome=134.0.6998.178); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+	GetHandleVerifier [0x008FC7F3+24435]
+	(No symbol) [0x00882074]
+	(No symbol) [0x007506E3]
+	(No symbol) [0x00762321]
+	(No symbol) [0x00761400]
+	(No symbol) [0x00757B12]
+	(No symbol) [0x00755F1A]
+	(No symbol) [0x0075935A]
+	(No symbol) [0x007593D7]
+	(No symbol) [0x0079383E]
+	(No symbol) [0x007BD7BC]
+	(No symbol) [0x0078E114]
+	(No symbol) [0x007BDA34]
+	(No symbol) [0x007DF20A]
+	(No symbol) [0x007BD5B6]
+	(No symbol) [0x0078C54F]
+	(No symbol) [0x0078D894]
+	GetHandleVerifier [0x00C070A3+3213347]
+	GetHandleVerifier [0x00C1B0C9+3295305]
+	GetHandleVerifier [0x00C1558C+3271948]
+	GetHandleVerifier [0x00997360+658144]
+	(No symbol) [0x0088B27D]
+	(No symbol) [0x00888208]
+	(No symbol) [0x008883A9]
+	(No symbol) [0x0087AAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+
+2025-04-03 16:53:31,663 - INFO - 关闭Chrome浏览器
+2025-04-03 16:53:32,759 - WARNING - 爬虫正在关闭: finished
+2025-04-03 16:53:33,526 - WARNING - 爬虫关闭完成
+2025-04-03 18:43:13,882 - INFO - 等待下拉框加载完成...
+2025-04-03 18:43:13,943 - INFO - 已选择 'free proxy servers' 选项
+2025-04-03 18:43:15,944 - INFO - 开始验证码处理...
+2025-04-03 18:43:17,220 - INFO - 验证码识别结果: baa
+2025-04-03 18:43:17,251 - INFO - 识别的验证码: baa
+2025-04-03 18:43:20,392 - WARNING - 验证码未通过，第 1 次尝试
+2025-04-03 18:43:36,175 - INFO - 验证码识别结果: tk7q4
+2025-04-03 18:43:36,195 - INFO - 识别的验证码: tk7q4
+2025-04-03 18:43:39,689 - WARNING - 验证码未通过，第 2 次尝试
+2025-04-03 18:43:54,791 - INFO - 验证码识别结果: 7bal9
+2025-04-03 18:43:54,797 - INFO - 识别的验证码: 7bal9
+2025-04-03 18:43:57,946 - WARNING - 验证码未通过，第 3 次尝试
+2025-04-03 18:44:13,052 - INFO - 验证码识别结果: 43iz
+2025-04-03 18:44:13,057 - INFO - 识别的验证码: 43iz
+2025-04-03 18:44:16,677 - WARNING - 验证码未通过，第 4 次尝试
+2025-04-03 18:44:31,801 - INFO - 验证码识别结果: a7m
+2025-04-03 18:44:31,806 - INFO - 识别的验证码: a7m
+2025-04-03 18:44:35,515 - WARNING - 验证码未通过，第 5 次尝试
+2025-04-03 18:44:35,517 - ERROR - 验证码处理失败，已达到最大重试次数
+2025-04-03 18:44:35,518 - INFO - 关闭Chrome浏览器
+2025-04-03 18:44:36,653 - WARNING - 爬虫正在关闭: finished
+2025-04-03 18:44:37,481 - WARNING - 爬虫关闭完成
+2025-04-03 18:45:24,544 - INFO - 等待下拉框加载完成...
+2025-04-03 18:45:24,592 - INFO - 已选择 'free proxy servers' 选项
+2025-04-03 18:45:26,593 - INFO - 开始验证码处理...
+2025-04-03 18:45:27,733 - INFO - 验证码识别结果: 1234
+2025-04-03 18:45:27,739 - INFO - 识别的验证码: 1234
+2025-04-03 18:45:31,391 - WARNING - 验证码未通过，第 1 次尝试
+2025-04-03 18:45:46,588 - INFO - 验证码识别结果: 49z9
+2025-04-03 18:45:46,609 - INFO - 识别的验证码: 49z9
+2025-04-03 18:45:49,761 - WARNING - 验证码未通过，第 2 次尝试
+2025-04-03 18:46:04,898 - INFO - 验证码识别结果: 3hm8d
+2025-04-03 18:46:04,920 - INFO - 识别的验证码: 3hm8d
+2025-04-03 18:46:08,044 - WARNING - 验证码未通过，第 3 次尝试
+2025-04-03 18:46:23,157 - INFO - 验证码识别结果: m7s
+2025-04-03 18:46:23,160 - INFO - 识别的验证码: m7s
+2025-04-03 18:46:26,334 - WARNING - 验证码未通过，第 4 次尝试
+2025-04-03 18:46:41,480 - INFO - 验证码识别结果: aa57
+2025-04-03 18:46:41,484 - INFO - 识别的验证码: aa57
+2025-04-03 18:46:44,647 - WARNING - 验证码未通过，第 5 次尝试
+2025-04-03 18:46:44,647 - ERROR - 验证码处理失败，已达到最大重试次数
+2025-04-03 18:46:44,648 - INFO - 关闭Chrome浏览器
+2025-04-03 18:46:45,808 - WARNING - 爬虫正在关闭: finished
+2025-04-03 18:46:46,608 - WARNING - 爬虫关闭完成
+2025-04-03 18:52:18,751 - INFO - 等待下拉框加载完成...
+2025-04-03 18:52:18,807 - INFO - 已选择 'free proxy servers' 选项
+2025-04-03 18:52:20,809 - INFO - 开始验证码处理...
+2025-04-03 18:52:20,819 - ERROR - 获取数据库设置时出错: You cannot call this from an async context - use a thread or sync_to_async.
+2025-04-03 18:52:21,997 - INFO - 验证码识别结果: 9zhs
+2025-04-03 18:52:22,012 - INFO - 识别的验证码: 9zhs
+2025-04-03 18:52:25,147 - WARNING - 验证码未通过，第 1 次尝试
+2025-04-03 18:52:40,193 - INFO - 验证码识别结果: b9mnj
+2025-04-03 18:52:40,211 - INFO - 识别的验证码: b9mnj
+2025-04-03 18:52:43,341 - WARNING - 验证码未通过，第 2 次尝试
+2025-04-03 18:52:58,463 - INFO - 验证码识别结果: e3hb
+2025-04-03 18:52:58,468 - INFO - 识别的验证码: e3hb
+2025-04-03 18:53:02,054 - WARNING - 验证码未通过，第 3 次尝试
+2025-04-03 18:53:17,182 - INFO - 验证码识别结果: 3n89a
+2025-04-03 18:53:17,186 - INFO - 识别的验证码: 3n89a
+2025-04-03 18:53:29,468 - INFO - 验证码验证成功
+2025-04-03 18:53:29,469 - INFO - 获取分页信息...
+2025-04-03 18:53:29,488 - INFO - 总页数: 5
+2025-04-03 18:53:29,490 - INFO - 处理第 1 页...
+2025-04-03 18:53:29,509 - INFO - 找到 40 行数据
+2025-04-03 18:53:51,285 - INFO - 处理第 2 页...
+2025-04-03 18:53:51,307 - INFO - 找到 40 行数据
+2025-04-03 18:54:10,532 - INFO - 处理第 3 页...
+2025-04-03 18:54:10,556 - INFO - 找到 40 行数据
+2025-04-03 18:54:31,835 - INFO - 处理第 4 页...
+2025-04-03 18:54:31,854 - INFO - 找到 20 行数据
+2025-04-03 18:54:35,059 - INFO - 关闭Chrome浏览器
+2025-04-03 18:54:36,248 - WARNING - 爬虫正在关闭: finished
+2025-04-03 18:54:39,252 - WARNING - 爬虫关闭完成
+2025-04-03 19:02:34,906 - INFO - 等待下拉框加载完成...
+2025-04-03 19:02:35,049 - INFO - 已选择 'free proxy servers' 选项
+2025-04-03 19:02:37,051 - INFO - 开始验证码处理...
+2025-04-03 19:02:38,353 - INFO - 验证码识别结果: 5l
+2025-04-03 19:02:38,377 - INFO - 识别的验证码: 5l
+2025-04-03 19:02:50,484 - WARNING - 验证码未通过，第 1 次尝试
+2025-04-03 19:02:55,016 - INFO - 验证码识别结果: 4bas
+2025-04-03 19:02:55,032 - INFO - 识别的验证码: 4bas
+2025-04-03 19:03:07,112 - WARNING - 验证码未通过，第 2 次尝试
+2025-04-03 19:03:10,886 - INFO - 验证码识别结果: 27l58
+2025-04-03 19:03:10,891 - INFO - 识别的验证码: 27l58
+2025-04-03 19:03:14,554 - WARNING - 验证码未通过，第 3 次尝试
+2025-04-03 19:03:29,670 - INFO - 验证码识别结果: l9lsn
+2025-04-03 19:03:29,675 - INFO - 识别的验证码: l9lsn
+2025-04-03 19:03:33,308 - WARNING - 验证码未通过，第 4 次尝试
+2025-04-03 19:03:48,418 - INFO - 验证码识别结果: l8b3
+2025-04-03 19:03:48,424 - INFO - 识别的验证码: l8b3
+2025-04-03 19:03:51,910 - WARNING - 验证码未通过，第 5 次尝试
+2025-04-03 19:04:06,980 - INFO - 验证码识别结果: sbh
+2025-04-03 19:04:06,993 - INFO - 识别的验证码: sbh
+2025-04-03 19:04:10,145 - WARNING - 验证码未通过，第 6 次尝试
+2025-04-03 19:04:25,307 - INFO - 验证码识别结果: 理4z4
+2025-04-03 19:04:25,311 - INFO - 识别的验证码: 理4z4
+2025-04-03 19:04:28,925 - WARNING - 验证码未通过，第 7 次尝试
+2025-04-03 19:04:44,113 - INFO - 验证码识别结果: 玛215d
+2025-04-03 19:04:44,117 - INFO - 识别的验证码: 玛215d
+2025-04-03 19:04:47,720 - WARNING - 验证码未通过，第 8 次尝试
+2025-04-03 19:05:02,801 - INFO - 验证码识别结果: 至忍县a
+2025-04-03 19:05:02,804 - INFO - 识别的验证码: 至忍县a
+2025-04-03 19:05:06,400 - WARNING - 验证码未通过，第 9 次尝试
+2025-04-03 19:05:21,480 - INFO - 验证码识别结果: 2t9n
+2025-04-03 19:05:21,504 - INFO - 识别的验证码: 2t9n
+2025-04-03 19:05:25,041 - WARNING - 验证码未通过，第 10 次尝试
+2025-04-03 19:05:40,257 - INFO - 验证码识别结果: 工44虽
+2025-04-03 19:05:40,270 - INFO - 识别的验证码: 工44虽
+2025-04-03 19:05:43,778 - WARNING - 验证码未通过，第 11 次尝试
+2025-04-03 19:05:58,883 - INFO - 验证码识别结果: as9
+2025-04-03 19:05:58,905 - INFO - 识别的验证码: as9
+2025-04-03 19:06:02,062 - WARNING - 验证码未通过，第 12 次尝试
+2025-04-03 19:06:17,229 - INFO - 验证码识别结果: 2de99
+2025-04-03 19:06:17,233 - INFO - 识别的验证码: 2de99
+2025-04-03 19:06:20,749 - WARNING - 验证码未通过，第 13 次尝试
+2025-04-03 19:06:35,890 - INFO - 验证码识别结果: snhb
+2025-04-03 19:06:35,895 - INFO - 识别的验证码: snhb
+2025-04-03 19:06:40,132 - WARNING - 验证码未通过，第 14 次尝试
+2025-04-03 19:06:55,238 - INFO - 验证码识别结果: a1dal
+2025-04-03 19:06:55,243 - INFO - 识别的验证码: a1dal
+2025-04-03 19:06:58,793 - WARNING - 验证码未通过，第 15 次尝试
+2025-04-03 19:07:13,920 - INFO - 验证码识别结果: dd7z
+2025-04-03 19:07:13,924 - INFO - 识别的验证码: dd7z
+2025-04-03 19:07:17,516 - WARNING - 验证码未通过，第 16 次尝试
+2025-04-03 19:07:32,705 - INFO - 验证码识别结果: 虽aa
+2025-04-03 19:07:32,734 - INFO - 识别的验证码: 虽aa
+2025-04-03 19:07:35,879 - WARNING - 验证码未通过，第 17 次尝试
+2025-04-03 19:07:50,993 - INFO - 验证码识别结果: ihn4nm9
+2025-04-03 19:07:51,014 - INFO - 识别的验证码: ihn4nm9
+2025-04-03 19:07:54,179 - WARNING - 验证码未通过，第 18 次尝试
+2025-04-03 19:08:09,246 - INFO - 验证码识别结果: 型l8
+2025-04-03 19:08:09,267 - INFO - 识别的验证码: 型l8
+2025-04-03 19:08:12,417 - WARNING - 验证码未通过，第 19 次尝试
+2025-04-03 19:08:27,540 - INFO - 验证码识别结果: sba
+2025-04-03 19:08:27,544 - INFO - 识别的验证码: sba
+2025-04-03 19:08:31,117 - WARNING - 验证码未通过，第 20 次尝试
+2025-04-03 19:08:31,118 - ERROR - 验证码处理失败，已达到最大重试次数
+2025-04-03 19:08:31,119 - INFO - 关闭Chrome浏览器
+2025-04-03 19:08:32,238 - WARNING - 爬虫正在关闭: finished
+2025-04-03 19:08:35,053 - WARNING - 爬虫关闭完成

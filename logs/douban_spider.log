@@ -8574,3 +8574,1216 @@ Stacktrace:
 2025-03-30 22:17:17,477 - WARNING - WebDriver已关闭
 2025-03-30 22:17:17,478 - WARNING - MySQL连接已关闭
 2025-03-30 22:17:17,478 - WARNING - 爬虫资源已清理完毕
+2025-03-30 22:56:30,887 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-03-30 22:56:30,889 - WARNING - 使用评论采集策略: 随机间隔采集(最大间隔3页)
+2025-03-30 22:56:36,575 - WARNING - MySQL数据库连接成功
+2025-03-30 22:56:39,347 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-30 22:56:40,065 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-30 22:56:40,065 - WARNING - 未找到Cookie文件，需要登录
+2025-03-30 22:56:40,066 - WARNING - 开始搜索电影: 肖申克的救赎
+2025-03-30 22:56:41,028 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E8%82%96%E7%94%B3%E5%85%8B%E7%9A%84%E6%95%91%E8%B5%8E
+2025-03-30 22:56:47,560 - WARNING - 未检测到豆瓣验证码iframe
+2025-03-30 22:56:57,224 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1292052/
+2025-03-30 22:56:57,224 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1292052/
+2025-03-30 22:57:13,469 - WARNING - 电影《肖申克的救赎 The Shawshank Redemption》不存在于数据库
+2025-03-30 22:57:14,203 - WARNING - 获取到海报URL: https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.webp
+2025-03-30 22:57:14,244 - WARNING - 获取到剧情简介: 一场谋杀案使银行家安迪（蒂姆•罗宾斯 Tim Robbins 饰）蒙冤入狱，谋杀妻子及其情人的指控将...
+2025-03-30 22:57:14,246 - WARNING - 电影数据: 肖申克的救赎 The Shawshank Redemption, 1994, 评分:9.7
+2025-03-30 22:57:14,263 - INFO - 保存IP记录: 
+2025-03-30 22:57:14,335 - INFO - 保存电影数据成功: 肖申克的救赎 The Shawshank Redemption
+2025-03-30 22:57:14,337 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1292052/comments
+2025-03-30 22:57:14,339 - INFO - 采集策略 随机间隔采集(最大间隔3页) 决定采集页码: [1, 4, 6, 7, 9, 12, 14]
+2025-03-30 22:57:14,385 - INFO - 当前页面找到 6 条评论
+2025-03-30 22:57:15,133 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-03-30 22:57:15,176 - INFO - 当前页解析完成，累计获取 5 条评论
+2025-03-30 22:57:15,177 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:57:15,178 - WARNING - 访问第4页评论: https://movie.douban.com/subject/1292052/comments?start=60&limit=20&status=P&sort=new_score
+2025-03-30 22:57:21,147 - INFO - 当前页面找到 20 条评论
+2025-03-30 22:57:23,953 - INFO - 当前页解析完成，累计获取 25 条评论
+2025-03-30 22:57:23,953 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:57:23,954 - WARNING - 访问第6页评论: https://movie.douban.com/subject/1292052/comments?start=100&limit=20&status=P&sort=new_score
+2025-03-30 22:57:40,548 - INFO - 当前页面找到 1 条评论
+2025-03-30 22:57:40,622 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-03-30 22:57:40,776 - INFO - 当前页解析完成，累计获取 26 条评论
+2025-03-30 22:57:40,777 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:57:40,778 - WARNING - 访问第7页评论: https://movie.douban.com/subject/1292052/comments?start=120&limit=20&status=P&sort=new_score
+2025-03-30 22:57:52,355 - ERROR - 访问第7页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D88B39]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00DD1AC2]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 22:57:52,362 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:57:52,363 - WARNING - 访问第9页评论: https://movie.douban.com/subject/1292052/comments?start=160&limit=20&status=P&sort=new_score
+2025-03-30 22:58:03,314 - ERROR - 访问第9页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D88B39]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00DD1AC2]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 22:58:03,320 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:58:03,322 - WARNING - 访问第12页评论: https://movie.douban.com/subject/1292052/comments?start=220&limit=20&status=P&sort=new_score
+2025-03-30 22:58:25,422 - ERROR - 访问第12页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D88B39]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00DD1AC2]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 22:58:25,427 - WARNING - 获取到电影ID: 1292052
+2025-03-30 22:58:25,428 - WARNING - 访问第14页评论: https://movie.douban.com/subject/1292052/comments?start=260&limit=20&status=P&sort=new_score
+2025-03-30 22:58:47,216 - ERROR - 访问第14页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00EEC7F3+24435]
+	(No symbol) [0x00E72074]
+	(No symbol) [0x00D406E3]
+	(No symbol) [0x00D88B39]
+	(No symbol) [0x00D88E8B]
+	(No symbol) [0x00DD1AC2]
+	(No symbol) [0x00DAD804]
+	(No symbol) [0x00DCF20A]
+	(No symbol) [0x00DAD5B6]
+	(No symbol) [0x00D7C54F]
+	(No symbol) [0x00D7D894]
+	GetHandleVerifier [0x011F70A3+3213347]
+	GetHandleVerifier [0x0120B0C9+3295305]
+	GetHandleVerifier [0x0120558C+3271948]
+	GetHandleVerifier [0x00F87360+658144]
+	(No symbol) [0x00E7B27D]
+	(No symbol) [0x00E78208]
+	(No symbol) [0x00E783A9]
+	(No symbol) [0x00E6AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 22:58:47,218 - WARNING - 共获取到26条有效评论，总评论数：26
+2025-03-30 22:58:47,232 - INFO - 保存IP记录: 
+2025-03-30 22:58:47,252 - INFO - 保存电影数据成功: 肖申克的救赎 The Shawshank Redemption
+2025-03-30 22:58:47,255 - INFO - CommentPipeline: 处理电影详细评论，电影ID: 8, 评论数: 26
+2025-03-30 22:58:48,115 - INFO - CommentPipeline: 详细评论处理完成，电影ID: 8, 处理评论数: 26
+2025-03-30 22:58:48,133 - INFO - CommentPipeline: 批量插入评论成功，数量: 26
+2025-03-30 22:58:48,135 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-03-30 22:58:48,136 - WARNING - 爬虫关闭: finished
+2025-03-30 22:58:48,423 - WARNING - WebDriver已关闭
+2025-03-30 22:58:48,424 - WARNING - MySQL连接已关闭
+2025-03-30 22:58:48,424 - WARNING - 爬虫资源已清理完毕
+2025-03-30 23:24:05,973 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-03-30 23:24:05,973 - WARNING - 使用评论采集策略: 随机页码采集(采集6页)
+2025-03-30 23:24:11,983 - WARNING - MySQL数据库连接成功
+2025-03-30 23:24:14,891 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-30 23:24:16,347 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-30 23:24:16,348 - WARNING - 未找到Cookie文件，需要登录
+2025-03-30 23:24:16,348 - WARNING - 开始搜索电影: 霸王别姬
+2025-03-30 23:24:17,716 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E9%9C%B8%E7%8E%8B%E5%88%AB%E5%A7%AC
+2025-03-30 23:24:23,882 - WARNING - 未检测到豆瓣验证码iframe
+2025-03-30 23:24:33,293 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1291546/
+2025-03-30 23:24:33,294 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1291546/
+2025-03-30 23:24:49,645 - WARNING - 电影《霸王别姬》不存在于数据库
+2025-03-30 23:24:50,082 - WARNING - 获取到海报URL: https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2561716440.webp
+2025-03-30 23:24:50,116 - WARNING - 获取到剧情简介: 段小楼（张丰毅）与程蝶衣（张国荣）是一对打小一起长大的师兄弟，两人一个演生，一个饰旦，一向配合天衣无...
+2025-03-30 23:24:50,117 - WARNING - 电影数据: 霸王别姬, 1993, 评分:9.6
+2025-03-30 23:24:50,131 - INFO - 保存IP记录: 
+2025-03-30 23:24:50,204 - INFO - 保存电影数据成功: 霸王别姬
+2025-03-30 23:24:50,205 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1291546/comments
+2025-03-30 23:24:50,206 - INFO - 采集策略 随机页码采集(采集6页) 决定采集页码: [8, 9, 15, 23, 41, 48]
+2025-03-30 23:24:50,206 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:24:50,207 - WARNING - 访问第8页评论: https://movie.douban.com/subject/1291546/comments?start=140&limit=20&status=P&sort=new_score
+2025-03-30 23:25:12,006 - ERROR - 访问第8页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:25:12,015 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:25:12,015 - WARNING - 访问第9页评论: https://movie.douban.com/subject/1291546/comments?start=160&limit=20&status=P&sort=new_score
+2025-03-30 23:25:33,868 - ERROR - 访问第9页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:25:33,875 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:25:33,878 - WARNING - 访问第15页评论: https://movie.douban.com/subject/1291546/comments?start=280&limit=20&status=P&sort=new_score
+2025-03-30 23:25:55,610 - ERROR - 访问第15页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:25:55,612 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:25:55,612 - WARNING - 访问第23页评论: https://movie.douban.com/subject/1291546/comments?start=440&limit=20&status=P&sort=new_score
+2025-03-30 23:26:17,285 - ERROR - 访问第23页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:26:17,289 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:26:17,290 - WARNING - 访问第41页评论: https://movie.douban.com/subject/1291546/comments?start=800&limit=20&status=P&sort=new_score
+2025-03-30 23:26:39,079 - ERROR - 访问第41页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:26:39,084 - WARNING - 获取到电影ID: 1291546
+2025-03-30 23:26:39,085 - WARNING - 访问第48页评论: https://movie.douban.com/subject/1291546/comments?start=940&limit=20&status=P&sort=new_score
+2025-03-30 23:27:00,908 - ERROR - 访问第48页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00B8C7F3+24435]
+	(No symbol) [0x00B12074]
+	(No symbol) [0x009E06E3]
+	(No symbol) [0x00A28B39]
+	(No symbol) [0x00A28E8B]
+	(No symbol) [0x00A71AC2]
+	(No symbol) [0x00A4D804]
+	(No symbol) [0x00A6F20A]
+	(No symbol) [0x00A4D5B6]
+	(No symbol) [0x00A1C54F]
+	(No symbol) [0x00A1D894]
+	GetHandleVerifier [0x00E970A3+3213347]
+	GetHandleVerifier [0x00EAB0C9+3295305]
+	GetHandleVerifier [0x00EA558C+3271948]
+	GetHandleVerifier [0x00C27360+658144]
+	(No symbol) [0x00B1B27D]
+	(No symbol) [0x00B18208]
+	(No symbol) [0x00B183A9]
+	(No symbol) [0x00B0AAC0]
+	BaseThreadInitThunk [0x74E07BA9+25]
+	RtlInitializeExceptionChain [0x7715C2EB+107]
+	RtlClearBits [0x7715C26F+191]
+
+2025-03-30 23:27:00,912 - WARNING - 共获取到0条有效评论，总评论数：0
+2025-03-30 23:27:00,928 - INFO - 保存IP记录: 
+2025-03-30 23:27:00,943 - INFO - 保存电影数据成功: 霸王别姬
+2025-03-30 23:27:00,945 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-03-30 23:27:00,946 - WARNING - 爬虫关闭: finished
+2025-03-30 23:27:01,194 - WARNING - WebDriver已关闭
+2025-03-30 23:27:01,194 - WARNING - MySQL连接已关闭
+2025-03-30 23:27:01,194 - WARNING - 爬虫资源已清理完毕
+2025-03-31 16:15:14,853 - WARNING - 豆瓣爬虫爬取电影: ['出走的决心']
+2025-03-31 16:15:14,855 - WARNING - 使用评论采集策略: 随机页码采集(采集6页)
+2025-03-31 16:15:29,670 - WARNING - MySQL数据库连接成功
+2025-03-31 16:15:32,287 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-31 16:15:33,141 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-31 16:15:33,142 - WARNING - 未找到Cookie文件，需要登录
+2025-03-31 16:15:33,142 - WARNING - 开始搜索电影: 出走的决心
+2025-03-31 16:15:34,202 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E5%87%BA%E8%B5%B0%E7%9A%84%E5%86%B3%E5%BF%83
+2025-03-31 16:15:41,636 - WARNING - 未检测到豆瓣验证码iframe
+2025-03-31 16:15:50,994 - WARNING - 找到电影详情页: https://movie.douban.com/subject/36587974/
+2025-03-31 16:15:50,994 - WARNING - 解析电影详情页: https://movie.douban.com/subject/36587974/
+2025-03-31 16:16:07,295 - WARNING - 电影《出走的决心》不存在于数据库
+2025-03-31 16:16:07,746 - WARNING - 获取到海报URL: https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2912830708.webp
+2025-03-31 16:16:07,778 - WARNING - 获取到剧情简介: 影片根据50岁阿姨自驾游真人故事改编。
+天真浪漫的李红（咏梅 饰）一生有过许多梦想，18岁时憧憬大学...
+2025-03-31 16:16:07,779 - WARNING - 电影数据: 出走的决心, 2024, 评分:8.8
+2025-03-31 16:16:07,797 - INFO - 保存IP记录: 
+2025-03-31 16:16:07,906 - INFO - 保存电影数据成功: 出走的决心
+2025-03-31 16:16:07,907 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/36587974/comments
+2025-03-31 16:16:07,908 - INFO - 采集策略 随机页码采集(采集6页) 决定采集页码: [2, 9, 15, 20, 34, 44]
+2025-03-31 16:16:07,909 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:16:07,954 - WARNING - 访问第2页评论: https://movie.douban.com/subject/36587974/comments?start=20&limit=20&status=P&sort=new_score
+2025-03-31 16:16:14,040 - INFO - 当前页面找到 20 条评论
+2025-03-31 16:16:15,130 - INFO - 当前页解析完成，累计获取 20 条评论
+2025-03-31 16:16:15,131 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:16:15,131 - WARNING - 访问第9页评论: https://movie.douban.com/subject/36587974/comments?start=160&limit=20&status=P&sort=new_score
+2025-03-31 16:16:37,084 - ERROR - 访问第9页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00DCC7F3+24435]
+	(No symbol) [0x00D52074]
+	(No symbol) [0x00C206E3]
+	(No symbol) [0x00C68B39]
+	(No symbol) [0x00C68E8B]
+	(No symbol) [0x00CB1AC2]
+	(No symbol) [0x00C8D804]
+	(No symbol) [0x00CAF20A]
+	(No symbol) [0x00C8D5B6]
+	(No symbol) [0x00C5C54F]
+	(No symbol) [0x00C5D894]
+	GetHandleVerifier [0x010D70A3+3213347]
+	GetHandleVerifier [0x010EB0C9+3295305]
+	GetHandleVerifier [0x010E558C+3271948]
+	GetHandleVerifier [0x00E67360+658144]
+	(No symbol) [0x00D5B27D]
+	(No symbol) [0x00D58208]
+	(No symbol) [0x00D583A9]
+	(No symbol) [0x00D4AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:16:37,089 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:16:37,090 - WARNING - 访问第15页评论: https://movie.douban.com/subject/36587974/comments?start=280&limit=20&status=P&sort=new_score
+2025-03-31 16:16:58,711 - ERROR - 访问第15页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00DCC7F3+24435]
+	(No symbol) [0x00D52074]
+	(No symbol) [0x00C206E3]
+	(No symbol) [0x00C68B39]
+	(No symbol) [0x00C68E8B]
+	(No symbol) [0x00CB1AC2]
+	(No symbol) [0x00C8D804]
+	(No symbol) [0x00CAF20A]
+	(No symbol) [0x00C8D5B6]
+	(No symbol) [0x00C5C54F]
+	(No symbol) [0x00C5D894]
+	GetHandleVerifier [0x010D70A3+3213347]
+	GetHandleVerifier [0x010EB0C9+3295305]
+	GetHandleVerifier [0x010E558C+3271948]
+	GetHandleVerifier [0x00E67360+658144]
+	(No symbol) [0x00D5B27D]
+	(No symbol) [0x00D58208]
+	(No symbol) [0x00D583A9]
+	(No symbol) [0x00D4AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:16:58,732 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:16:58,732 - WARNING - 访问第20页评论: https://movie.douban.com/subject/36587974/comments?start=380&limit=20&status=P&sort=new_score
+2025-03-31 16:17:20,908 - ERROR - 访问第20页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00DCC7F3+24435]
+	(No symbol) [0x00D52074]
+	(No symbol) [0x00C206E3]
+	(No symbol) [0x00C68B39]
+	(No symbol) [0x00C68E8B]
+	(No symbol) [0x00CB1AC2]
+	(No symbol) [0x00C8D804]
+	(No symbol) [0x00CAF20A]
+	(No symbol) [0x00C8D5B6]
+	(No symbol) [0x00C5C54F]
+	(No symbol) [0x00C5D894]
+	GetHandleVerifier [0x010D70A3+3213347]
+	GetHandleVerifier [0x010EB0C9+3295305]
+	GetHandleVerifier [0x010E558C+3271948]
+	GetHandleVerifier [0x00E67360+658144]
+	(No symbol) [0x00D5B27D]
+	(No symbol) [0x00D58208]
+	(No symbol) [0x00D583A9]
+	(No symbol) [0x00D4AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:17:20,914 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:17:20,914 - WARNING - 访问第34页评论: https://movie.douban.com/subject/36587974/comments?start=660&limit=20&status=P&sort=new_score
+2025-03-31 16:17:42,868 - ERROR - 访问第34页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00DCC7F3+24435]
+	(No symbol) [0x00D52074]
+	(No symbol) [0x00C206E3]
+	(No symbol) [0x00C68B39]
+	(No symbol) [0x00C68E8B]
+	(No symbol) [0x00CB1AC2]
+	(No symbol) [0x00C8D804]
+	(No symbol) [0x00CAF20A]
+	(No symbol) [0x00C8D5B6]
+	(No symbol) [0x00C5C54F]
+	(No symbol) [0x00C5D894]
+	GetHandleVerifier [0x010D70A3+3213347]
+	GetHandleVerifier [0x010EB0C9+3295305]
+	GetHandleVerifier [0x010E558C+3271948]
+	GetHandleVerifier [0x00E67360+658144]
+	(No symbol) [0x00D5B27D]
+	(No symbol) [0x00D58208]
+	(No symbol) [0x00D583A9]
+	(No symbol) [0x00D4AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:17:42,876 - WARNING - 获取到电影ID: 36587974
+2025-03-31 16:17:42,876 - WARNING - 访问第44页评论: https://movie.douban.com/subject/36587974/comments?start=860&limit=20&status=P&sort=new_score
+2025-03-31 16:18:02,638 - ERROR - 访问第44页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00DCC7F3+24435]
+	(No symbol) [0x00D52074]
+	(No symbol) [0x00C206E3]
+	(No symbol) [0x00C68B39]
+	(No symbol) [0x00C68E8B]
+	(No symbol) [0x00CB1AC2]
+	(No symbol) [0x00C8D804]
+	(No symbol) [0x00CAF20A]
+	(No symbol) [0x00C8D5B6]
+	(No symbol) [0x00C5C54F]
+	(No symbol) [0x00C5D894]
+	GetHandleVerifier [0x010D70A3+3213347]
+	GetHandleVerifier [0x010EB0C9+3295305]
+	GetHandleVerifier [0x010E558C+3271948]
+	GetHandleVerifier [0x00E67360+658144]
+	(No symbol) [0x00D5B27D]
+	(No symbol) [0x00D58208]
+	(No symbol) [0x00D583A9]
+	(No symbol) [0x00D4AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:18:02,663 - WARNING - 共获取到20条有效评论，总评论数：20
+2025-03-31 16:18:02,684 - INFO - 保存IP记录: 
+2025-03-31 16:18:02,698 - INFO - 保存电影数据成功: 出走的决心
+2025-03-31 16:18:02,703 - INFO - CommentPipeline: 处理电影详细评论，电影ID: 3, 评论数: 20
+2025-03-31 16:18:04,163 - INFO - CommentPipeline: 详细评论处理完成，电影ID: 3, 处理评论数: 20
+2025-03-31 16:18:04,182 - INFO - CommentPipeline: 批量插入评论成功，数量: 20
+2025-03-31 16:18:04,183 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-03-31 16:18:04,184 - WARNING - 爬虫关闭: finished
+2025-03-31 16:18:04,551 - WARNING - WebDriver已关闭
+2025-03-31 16:18:04,551 - WARNING - MySQL连接已关闭
+2025-03-31 16:18:04,552 - WARNING - 爬虫资源已清理完毕
+2025-03-31 16:21:32,560 - WARNING - 豆瓣爬虫爬取电影: ['星际穿越']
+2025-03-31 16:21:32,561 - WARNING - 使用评论采集策略: 随机页码采集(采集8页)
+2025-03-31 16:21:37,752 - WARNING - MySQL数据库连接成功
+2025-03-31 16:21:41,741 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-31 16:21:42,470 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-31 16:21:42,472 - WARNING - 未找到Cookie文件，需要登录
+2025-03-31 16:21:42,473 - WARNING - 开始搜索电影: 星际穿越
+2025-03-31 16:21:43,842 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E6%98%9F%E9%99%85%E7%A9%BF%E8%B6%8A
+2025-03-31 16:21:52,793 - WARNING - 未检测到豆瓣验证码iframe
+2025-03-31 16:22:02,083 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1889243/
+2025-03-31 16:22:02,084 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1889243/
+2025-03-31 16:22:18,433 - WARNING - 电影《星际穿越 Interstellar》不存在于数据库
+2025-03-31 16:22:18,845 - WARNING - 获取到海报URL: https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2614988097.webp
+2025-03-31 16:22:18,861 - WARNING - 获取到剧情简介: 近未来的地球黄沙遍野，小麦、秋葵等基础农作物相继因枯萎病灭绝，人类不再像从前那样仰望星空，放纵想象力...
+2025-03-31 16:22:18,862 - WARNING - 电影数据: 星际穿越 Interstellar, 2014, 评分:9.4
+2025-03-31 16:22:18,871 - INFO - 保存IP记录: 
+2025-03-31 16:22:18,954 - INFO - 保存电影数据成功: 星际穿越 Interstellar
+2025-03-31 16:22:18,955 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1889243/comments
+2025-03-31 16:22:18,956 - INFO - 采集策略 随机页码采集(采集8页) 决定采集页码: [1, 4, 15, 22, 23, 27, 37, 44]
+2025-03-31 16:22:18,968 - INFO - 当前页面找到 6 条评论
+2025-03-31 16:22:19,434 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-03-31 16:22:19,441 - INFO - 当前页解析完成，累计获取 5 条评论
+2025-03-31 16:22:19,442 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:22:19,442 - WARNING - 访问第4页评论: https://movie.douban.com/subject/1889243/comments?start=60&limit=20&status=P&sort=new_score
+2025-03-31 16:22:24,280 - INFO - 当前页面找到 20 条评论
+2025-03-31 16:22:25,947 - INFO - 当前页解析完成，累计获取 24 条评论
+2025-03-31 16:22:25,948 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:22:25,949 - WARNING - 访问第15页评论: https://movie.douban.com/subject/1889243/comments?start=280&limit=20&status=P&sort=new_score
+2025-03-31 16:22:48,370 - ERROR - 访问第15页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:22:48,382 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:22:48,383 - WARNING - 访问第22页评论: https://movie.douban.com/subject/1889243/comments?start=420&limit=20&status=P&sort=new_score
+2025-03-31 16:23:11,508 - ERROR - 访问第22页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:23:11,513 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:23:11,513 - WARNING - 访问第23页评论: https://movie.douban.com/subject/1889243/comments?start=440&limit=20&status=P&sort=new_score
+2025-03-31 16:23:34,014 - ERROR - 访问第23页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:23:34,022 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:23:34,022 - WARNING - 访问第27页评论: https://movie.douban.com/subject/1889243/comments?start=520&limit=20&status=P&sort=new_score
+2025-03-31 16:23:55,894 - ERROR - 访问第27页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:23:55,900 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:23:55,901 - WARNING - 访问第37页评论: https://movie.douban.com/subject/1889243/comments?start=720&limit=20&status=P&sort=new_score
+2025-03-31 16:24:17,838 - ERROR - 访问第37页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:24:17,842 - WARNING - 获取到电影ID: 1889243
+2025-03-31 16:24:17,843 - WARNING - 访问第44页评论: https://movie.douban.com/subject/1889243/comments?start=860&limit=20&status=P&sort=new_score
+2025-03-31 16:24:39,738 - ERROR - 访问第44页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x003CC7F3+24435]
+	(No symbol) [0x00352074]
+	(No symbol) [0x002206E3]
+	(No symbol) [0x00268B39]
+	(No symbol) [0x00268E8B]
+	(No symbol) [0x002B1AC2]
+	(No symbol) [0x0028D804]
+	(No symbol) [0x002AF20A]
+	(No symbol) [0x0028D5B6]
+	(No symbol) [0x0025C54F]
+	(No symbol) [0x0025D894]
+	GetHandleVerifier [0x006D70A3+3213347]
+	GetHandleVerifier [0x006EB0C9+3295305]
+	GetHandleVerifier [0x006E558C+3271948]
+	GetHandleVerifier [0x00467360+658144]
+	(No symbol) [0x0035B27D]
+	(No symbol) [0x00358208]
+	(No symbol) [0x003583A9]
+	(No symbol) [0x0034AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:24:39,742 - WARNING - 共获取到24条有效评论，总评论数：24
+2025-03-31 16:24:39,752 - INFO - 保存IP记录: 
+2025-03-31 16:24:39,762 - INFO - 保存电影数据成功: 星际穿越 Interstellar
+2025-03-31 16:24:39,767 - INFO - CommentPipeline: 处理电影详细评论，电影ID: 4, 评论数: 24
+2025-03-31 16:24:41,178 - INFO - CommentPipeline: 详细评论处理完成，电影ID: 4, 处理评论数: 24
+2025-03-31 16:24:41,185 - INFO - CommentPipeline: 批量插入评论成功，数量: 24
+2025-03-31 16:24:41,187 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-03-31 16:24:41,188 - WARNING - 爬虫关闭: finished
+2025-03-31 16:24:41,637 - WARNING - WebDriver已关闭
+2025-03-31 16:24:41,638 - WARNING - MySQL连接已关闭
+2025-03-31 16:24:41,639 - WARNING - 爬虫资源已清理完毕
+2025-03-31 16:34:29,980 - WARNING - 豆瓣爬虫爬取电影: ['芙蓉镇']
+2025-03-31 16:34:29,981 - WARNING - 使用评论采集策略: 顺序采集(最多5页)
+2025-03-31 16:34:34,970 - WARNING - MySQL数据库连接成功
+2025-03-31 16:34:37,647 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-31 16:34:38,994 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-31 16:34:38,996 - WARNING - 未找到Cookie文件，需要登录
+2025-03-31 16:34:38,997 - WARNING - 开始搜索电影: 芙蓉镇
+2025-03-31 16:34:40,230 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E8%8A%99%E8%93%89%E9%95%87
+2025-03-31 16:34:52,277 - WARNING - 未检测到豆瓣验证码iframe
+2025-03-31 16:35:11,877 - ERROR - 查找电影链接出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0090C7F3+24435]
+	(No symbol) [0x00892074]
+	(No symbol) [0x007606E3]
+	(No symbol) [0x007A8B39]
+	(No symbol) [0x007A8E8B]
+	(No symbol) [0x007F1AC2]
+	(No symbol) [0x007CD804]
+	(No symbol) [0x007EF20A]
+	(No symbol) [0x007CD5B6]
+	(No symbol) [0x0079C54F]
+	(No symbol) [0x0079D894]
+	GetHandleVerifier [0x00C170A3+3213347]
+	GetHandleVerifier [0x00C2B0C9+3295305]
+	GetHandleVerifier [0x00C2558C+3271948]
+	GetHandleVerifier [0x009A7360+658144]
+	(No symbol) [0x0089B27D]
+	(No symbol) [0x00898208]
+	(No symbol) [0x008983A9]
+	(No symbol) [0x0088AAC0]
+	BaseThreadInitThunk [0x766C7BA9+25]
+	RtlInitializeExceptionChain [0x77AFC2EB+107]
+	RtlClearBits [0x77AFC26F+191]
+
+2025-03-31 16:35:11,881 - ERROR - 直接搜索出错: quote_from_bytes() expected bytes
+2025-03-31 16:35:11,885 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-03-31 16:35:11,888 - WARNING - 爬虫关闭: finished
+2025-03-31 16:35:12,061 - WARNING - WebDriver已关闭
+2025-03-31 16:35:12,062 - WARNING - MySQL连接已关闭
+2025-03-31 16:35:12,063 - WARNING - 爬虫资源已清理完毕
+2025-03-31 16:48:45,286 - WARNING - 豆瓣爬虫爬取电影: ['芙蓉镇']
+2025-03-31 16:48:45,287 - WARNING - 使用评论采集策略: 顺序采集(最多4页)
+2025-03-31 16:48:49,950 - WARNING - MySQL数据库连接成功
+2025-03-31 16:48:52,635 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-31 16:48:53,270 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-31 16:48:53,271 - WARNING - 未找到Cookie文件，需要登录
+2025-03-31 16:48:53,271 - WARNING - 开始搜索电影: 芙蓉镇
+2025-03-31 16:50:53,309 - WARNING - 代理异常: 116.5.185.131:8888, 异常: User timeout caused connection failure: Getting https://search.douban.com/movie/subject_search?search_text=%E8%8A%99%E8%93%89%E9%95%87 took longer than 120.0 seconds..
+2025-03-31 16:52:53,330 - WARNING - 代理异常: 47.106.184.252:8081, 异常: User timeout caused connection failure: Getting https://search.douban.com/movie/subject_search?search_text=%E8%8A%99%E8%93%89%E9%95%87 took longer than 120.0 seconds..
+2025-03-31 16:54:53,358 - WARNING - 代理异常: 123.112.243.150:9000, 异常: User timeout caused connection failure: Getting https://search.douban.com/movie/subject_search?search_text=%E8%8A%99%E8%93%89%E9%95%87 took longer than 120.0 seconds..
+2025-03-31 23:02:54,152 - WARNING - 豆瓣爬虫爬取电影: ['芙蓉镇']
+2025-03-31 23:02:54,153 - WARNING - 使用评论采集策略: 顺序采集(最多6页)
+2025-03-31 23:02:59,265 - WARNING - MySQL数据库连接成功
+2025-03-31 23:03:02,077 - INFO - CommentPipeline: MongoDB连接成功
+2025-03-31 23:03:02,779 - WARNING - 创建新的undetected_chromedriver实例
+2025-03-31 23:03:02,779 - WARNING - 未找到Cookie文件，需要登录
+2025-03-31 23:03:02,780 - WARNING - 开始搜索电影: 芙蓉镇
+2025-04-01 20:51:29,193 - WARNING - 豆瓣爬虫爬取电影: ['芙蓉镇']
+2025-04-01 20:51:29,194 - WARNING - 使用评论采集策略: 随机间隔采集(最大间隔2页)
+2025-04-01 20:51:43,473 - WARNING - MySQL数据库连接成功
+2025-04-01 20:51:46,032 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-01 20:51:46,751 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-01 20:51:46,752 - WARNING - 未找到Cookie文件，需要登录
+2025-04-01 20:51:46,752 - WARNING - 开始搜索电影: 芙蓉镇
+2025-04-01 20:51:47,634 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E8%8A%99%E8%93%89%E9%95%87
+2025-04-01 20:51:54,083 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-01 20:52:03,490 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1297880/
+2025-04-01 20:52:03,490 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1297880/
+2025-04-01 20:52:18,925 - WARNING - 电影《芙蓉镇》不存在于数据库
+2025-04-01 20:52:19,150 - WARNING - 获取到海报URL: https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2575337180.webp
+2025-04-01 20:52:19,182 - WARNING - 获取到剧情简介: 本片分上下两集，讲述了位于湘、粤、桂三省交界处的芙蓉镇上，人称“芙蓉姐”的漂亮女人胡玉音（刘晓庆）在...
+2025-04-01 20:52:19,189 - WARNING - 电影数据: 芙蓉镇, 1987, 评分:9.3
+2025-04-01 20:52:19,214 - INFO - 保存IP记录: 
+2025-04-01 20:52:19,330 - INFO - 保存电影数据成功: 芙蓉镇
+2025-04-01 20:52:19,331 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1297880/comments
+2025-04-01 20:52:19,331 - INFO - 采集策略 随机间隔采集(最大间隔2页) 决定采集页码: [1, 2, 3, 5, 6, 7]
+2025-04-01 20:52:19,340 - INFO - 当前页面找到 6 条评论
+2025-04-01 20:52:19,813 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-04-01 20:52:19,823 - INFO - 当前页解析完成，累计获取 5 条评论
+2025-04-01 20:52:19,823 - WARNING - 获取到电影ID: 1297880
+2025-04-01 20:52:19,824 - WARNING - 访问第2页评论: https://movie.douban.com/subject/1297880/comments?start=20&limit=20&status=P&sort=new_score
+2025-04-01 20:52:23,282 - INFO - 当前页面找到 20 条评论
+2025-04-01 20:52:25,131 - INFO - 当前页解析完成，累计获取 25 条评论
+2025-04-01 20:52:25,132 - WARNING - 获取到电影ID: 1297880
+2025-04-01 20:52:25,132 - WARNING - 访问第3页评论: https://movie.douban.com/subject/1297880/comments?start=40&limit=20&status=P&sort=new_score
+2025-04-01 20:52:41,677 - INFO - 当前页面找到 20 条评论
+2025-04-01 20:52:43,627 - INFO - 当前页解析完成，累计获取 45 条评论
+2025-04-01 20:52:43,627 - WARNING - 获取到电影ID: 1297880
+2025-04-01 20:52:43,628 - WARNING - 访问第5页评论: https://movie.douban.com/subject/1297880/comments?start=80&limit=20&status=P&sort=new_score
+2025-04-01 20:53:00,541 - INFO - 当前页面找到 20 条评论
+2025-04-01 20:53:02,559 - INFO - 当前页解析完成，累计获取 65 条评论
+2025-04-01 20:53:02,560 - WARNING - 获取到电影ID: 1297880
+2025-04-01 20:53:02,562 - WARNING - 访问第6页评论: https://movie.douban.com/subject/1297880/comments?start=100&limit=20&status=P&sort=new_score
+2025-04-01 20:53:17,109 - INFO - 当前页面找到 20 条评论
+2025-04-01 20:53:18,956 - INFO - 当前页解析完成，累计获取 85 条评论
+2025-04-01 20:53:18,956 - WARNING - 获取到电影ID: 1297880
+2025-04-01 20:53:18,958 - WARNING - 访问第7页评论: https://movie.douban.com/subject/1297880/comments?start=120&limit=20&status=P&sort=new_score
+2025-04-01 20:53:40,801 - ERROR - 访问第7页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00FBC7F3+24435]
+	(No symbol) [0x00F42074]
+	(No symbol) [0x00E106E3]
+	(No symbol) [0x00E58B39]
+	(No symbol) [0x00E58E8B]
+	(No symbol) [0x00EA1AC2]
+	(No symbol) [0x00E7D804]
+	(No symbol) [0x00E9F20A]
+	(No symbol) [0x00E7D5B6]
+	(No symbol) [0x00E4C54F]
+	(No symbol) [0x00E4D894]
+	GetHandleVerifier [0x012C70A3+3213347]
+	GetHandleVerifier [0x012DB0C9+3295305]
+	GetHandleVerifier [0x012D558C+3271948]
+	GetHandleVerifier [0x01057360+658144]
+	(No symbol) [0x00F4B27D]
+	(No symbol) [0x00F48208]
+	(No symbol) [0x00F483A9]
+	(No symbol) [0x00F3AAC0]
+	BaseThreadInitThunk [0x762F7BA9+25]
+	RtlInitializeExceptionChain [0x7790C2EB+107]
+	RtlClearBits [0x7790C26F+191]
+
+2025-04-01 20:53:40,812 - WARNING - 共获取到85条有效评论，总评论数：85
+2025-04-01 20:53:40,829 - INFO - 保存IP记录: 
+2025-04-01 20:53:40,852 - INFO - 保存电影数据成功: 芙蓉镇
+2025-04-01 20:53:40,857 - INFO - CommentPipeline: 处理电影详细评论，电影ID: 5, 评论数: 85
+2025-04-01 20:53:42,446 - INFO - CommentPipeline: 批量插入评论成功，数量: 50
+2025-04-01 20:53:43,206 - INFO - CommentPipeline: 详细评论处理完成，电影ID: 5, 处理评论数: 85
+2025-04-01 20:53:43,215 - INFO - CommentPipeline: 批量插入评论成功，数量: 35
+2025-04-01 20:53:43,217 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-01 20:53:43,218 - WARNING - 爬虫关闭: finished
+2025-04-01 20:53:43,576 - WARNING - WebDriver已关闭
+2025-04-01 20:53:43,576 - WARNING - MySQL连接已关闭
+2025-04-01 20:53:43,577 - WARNING - 爬虫资源已清理完毕
+2025-04-02 22:02:37,764 - WARNING - 豆瓣爬虫爬取电影: ['活着']
+2025-04-02 22:02:37,764 - WARNING - 使用评论采集策略: 顺序采集(最多8页)
+2025-04-02 22:02:54,329 - WARNING - MySQL数据库连接成功
+2025-04-02 22:02:56,897 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-02 22:02:57,642 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-02 22:02:57,642 - WARNING - 未找到Cookie文件，需要登录
+2025-04-02 22:02:57,643 - WARNING - 开始搜索电影: 活着
+2025-04-02 22:02:59,407 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E6%B4%BB%E7%9D%80
+2025-04-02 22:03:06,711 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-02 22:03:16,139 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1292365/
+2025-04-02 22:03:16,140 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1292365/
+2025-04-02 22:03:32,876 - WARNING - 电影《活着》不存在于数据库
+2025-04-02 22:03:33,188 - WARNING - 获取到海报URL: https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2597919477.webp
+2025-04-02 22:03:33,206 - WARNING - 获取到剧情简介: 根据余华同名小说改编。
+富少福贵（葛优）嗜赌成性，妻子家珍（巩俐）屡劝无果后带着女儿凤霞离开了他，当...
+2025-04-02 22:03:33,210 - WARNING - 电影数据: 活着, 1994, 评分:9.3
+2025-04-02 22:03:33,226 - INFO - 保存IP记录: 
+2025-04-02 22:03:33,235 - INFO - 保存电影数据成功: 活着
+2025-04-02 22:03:33,374 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1292365/comments
+2025-04-02 22:03:33,374 - INFO - 采集策略 顺序采集(最多8页) 决定采集页码: [1, 2, 3, 4, 5, 6, 7, 8]
+2025-04-02 22:03:33,387 - INFO - 当前页面找到 6 条评论
+2025-04-02 22:03:34,125 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-04-02 22:03:34,138 - INFO - 当前页解析完成，累计获取 5 条评论
+2025-04-02 22:03:34,163 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:03:34,164 - WARNING - 访问第2页评论: https://movie.douban.com/subject/1292365/comments?start=20&limit=20&status=P&sort=new_score
+2025-04-02 22:03:50,153 - INFO - 当前页面找到 20 条评论
+2025-04-02 22:03:51,365 - INFO - 当前页解析完成，累计获取 25 条评论
+2025-04-02 22:03:51,365 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:03:51,366 - WARNING - 访问第3页评论: https://movie.douban.com/subject/1292365/comments?start=40&limit=20&status=P&sort=new_score
+2025-04-02 22:04:05,805 - INFO - 当前页面找到 20 条评论
+2025-04-02 22:04:07,928 - INFO - 当前页解析完成，累计获取 45 条评论
+2025-04-02 22:04:07,928 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:04:07,929 - WARNING - 访问第4页评论: https://movie.douban.com/subject/1292365/comments?start=60&limit=20&status=P&sort=new_score
+2025-04-02 22:04:24,244 - INFO - 当前页面找到 20 条评论
+2025-04-02 22:04:26,223 - INFO - 当前页解析完成，累计获取 65 条评论
+2025-04-02 22:04:26,224 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:04:26,224 - WARNING - 访问第5页评论: https://movie.douban.com/subject/1292365/comments?start=80&limit=20&status=P&sort=new_score
+2025-04-02 22:04:42,618 - INFO - 当前页面找到 20 条评论
+2025-04-02 22:04:44,581 - INFO - 当前页解析完成，累计获取 85 条评论
+2025-04-02 22:04:44,582 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:04:44,585 - WARNING - 访问第6页评论: https://movie.douban.com/subject/1292365/comments?start=100&limit=20&status=P&sort=new_score
+2025-04-02 22:05:01,868 - INFO - 当前页面找到 20 条评论
+2025-04-02 22:05:06,245 - INFO - 当前页解析完成，累计获取 105 条评论
+2025-04-02 22:05:06,246 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:05:06,247 - WARNING - 访问第7页评论: https://movie.douban.com/subject/1292365/comments?start=120&limit=20&status=P&sort=new_score
+2025-04-02 22:05:28,171 - ERROR - 访问第7页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0076C7F3+24435]
+	(No symbol) [0x006F2074]
+	(No symbol) [0x005C06E3]
+	(No symbol) [0x00608B39]
+	(No symbol) [0x00608E8B]
+	(No symbol) [0x00651AC2]
+	(No symbol) [0x0062D804]
+	(No symbol) [0x0064F20A]
+	(No symbol) [0x0062D5B6]
+	(No symbol) [0x005FC54F]
+	(No symbol) [0x005FD894]
+	GetHandleVerifier [0x00A770A3+3213347]
+	GetHandleVerifier [0x00A8B0C9+3295305]
+	GetHandleVerifier [0x00A8558C+3271948]
+	GetHandleVerifier [0x00807360+658144]
+	(No symbol) [0x006FB27D]
+	(No symbol) [0x006F8208]
+	(No symbol) [0x006F83A9]
+	(No symbol) [0x006EAAC0]
+	BaseThreadInitThunk [0x75577BA9+25]
+	RtlInitializeExceptionChain [0x7732C2EB+107]
+	RtlClearBits [0x7732C26F+191]
+
+2025-04-02 22:05:28,174 - WARNING - 获取到电影ID: 1292365
+2025-04-02 22:05:28,174 - WARNING - 访问第8页评论: https://movie.douban.com/subject/1292365/comments?start=140&limit=20&status=P&sort=new_score
+2025-04-02 22:05:50,581 - ERROR - 访问第8页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0076C7F3+24435]
+	(No symbol) [0x006F2074]
+	(No symbol) [0x005C06E3]
+	(No symbol) [0x00608B39]
+	(No symbol) [0x00608E8B]
+	(No symbol) [0x00651AC2]
+	(No symbol) [0x0062D804]
+	(No symbol) [0x0064F20A]
+	(No symbol) [0x0062D5B6]
+	(No symbol) [0x005FC54F]
+	(No symbol) [0x005FD894]
+	GetHandleVerifier [0x00A770A3+3213347]
+	GetHandleVerifier [0x00A8B0C9+3295305]
+	GetHandleVerifier [0x00A8558C+3271948]
+	GetHandleVerifier [0x00807360+658144]
+	(No symbol) [0x006FB27D]
+	(No symbol) [0x006F8208]
+	(No symbol) [0x006F83A9]
+	(No symbol) [0x006EAAC0]
+	BaseThreadInitThunk [0x75577BA9+25]
+	RtlInitializeExceptionChain [0x7732C2EB+107]
+	RtlClearBits [0x7732C26F+191]
+
+2025-04-02 22:05:50,585 - WARNING - 共获取到105条有效评论，总评论数：105
+2025-04-02 22:05:50,595 - INFO - 保存IP记录: 
+2025-04-02 22:05:50,604 - INFO - 保存电影数据成功: 活着
+2025-04-02 22:05:50,616 - INFO - CommentPipeline: 处理电影详细评论，电影ID: 6, 评论数: 105
+2025-04-02 22:05:51,677 - INFO - CommentPipeline: 批量插入评论成功，数量: 50
+2025-04-02 22:05:52,299 - INFO - CommentPipeline: 批量插入评论成功，数量: 50
+2025-04-02 22:05:52,376 - INFO - CommentPipeline: 详细评论处理完成，电影ID: 6, 处理评论数: 105
+2025-04-02 22:05:52,380 - INFO - CommentPipeline: 批量插入评论成功，数量: 5
+2025-04-02 22:05:52,382 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-02 22:05:52,383 - WARNING - 爬虫关闭: finished
+2025-04-02 22:05:52,629 - WARNING - WebDriver已关闭
+2025-04-02 22:05:52,630 - WARNING - MySQL连接已关闭
+2025-04-02 22:05:52,630 - WARNING - 爬虫资源已清理完毕
+2025-04-03 16:08:21,349 - WARNING - 豆瓣爬虫爬取电影: ['红高粱']
+2025-04-03 16:08:21,350 - WARNING - 从环境变量获取爬取配置: {'strategy': 'random_interval', 'max_interval': 3, 'max_pages': 5}
+2025-04-03 16:08:21,353 - WARNING - 使用评论采集策略: 随机间隔采集(最大间隔3页), 参数: {'max_pages': 5, 'max_interval': 3}
+2025-04-03 16:08:26,957 - WARNING - MySQL数据库连接成功
+2025-04-03 16:08:29,863 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-03 16:08:30,446 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-03 16:08:30,447 - WARNING - 未找到Cookie文件，需要登录
+2025-04-03 16:08:30,447 - WARNING - 开始搜索电影: 红高粱
+2025-04-03 16:08:31,421 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E7%BA%A2%E9%AB%98%E7%B2%B1
+2025-04-03 16:08:39,339 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-03 16:08:48,708 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1306505/
+2025-04-03 16:08:48,709 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1306505/
+2025-04-03 16:09:04,549 - WARNING - 电影《红高粱》不存在于数据库
+2025-04-03 16:09:04,779 - WARNING - 获取到海报URL: https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2585499261.webp
+2025-04-03 16:09:04,796 - WARNING - 获取到剧情简介: 该片改编自莫言1986年发表的两部中篇小说《红高粱》和《高粱酒》。因为一匹骡子，“ 我奶奶”九儿（巩...
+2025-04-03 16:09:04,796 - WARNING - 电影数据: 红高粱, 1988, 评分:8.5
+2025-04-03 16:09:04,810 - INFO - 保存IP记录: 
+2025-04-03 16:09:04,835 - ERROR - 保存电影数据失败: (1364, "Field 'is_published' doesn't have a default value")
+2025-04-03 16:09:04,836 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1306505/comments
+2025-04-03 16:09:04,836 - INFO - 采集策略 随机间隔采集(最大间隔3页) 决定采集页码: [1, 3, 4, 6, 7]
+2025-04-03 16:09:04,846 - INFO - 当前页面找到 6 条评论
+2025-04-03 16:09:05,268 - WARNING - 所有评论内容选择器都失败，尝试获取整个评论项的文本
+2025-04-03 16:09:05,276 - INFO - 当前页解析完成，累计获取 5 条评论
+2025-04-03 16:09:05,276 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:09:05,276 - WARNING - 访问第3页评论: https://movie.douban.com/subject/1306505/comments?start=40&limit=20&status=P&sort=new_score
+2025-04-03 16:09:10,651 - INFO - 当前页面找到 20 条评论
+2025-04-03 16:09:12,053 - INFO - 当前页解析完成，累计获取 25 条评论
+2025-04-03 16:09:12,054 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:09:12,054 - WARNING - 访问第4页评论: https://movie.douban.com/subject/1306505/comments?start=60&limit=20&status=P&sort=new_score
+2025-04-03 16:09:28,439 - INFO - 当前页面找到 20 条评论
+2025-04-03 16:09:29,840 - INFO - 当前页解析完成，累计获取 45 条评论
+2025-04-03 16:09:29,841 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:09:29,841 - WARNING - 访问第6页评论: https://movie.douban.com/subject/1306505/comments?start=100&limit=20&status=P&sort=new_score
+2025-04-03 16:09:47,247 - INFO - 当前页面找到 20 条评论
+2025-04-03 16:09:49,638 - INFO - 当前页解析完成，累计获取 65 条评论
+2025-04-03 16:09:49,639 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:09:49,639 - WARNING - 访问第7页评论: https://movie.douban.com/subject/1306505/comments?start=120&limit=20&status=P&sort=new_score
+2025-04-03 16:10:12,501 - ERROR - 访问第7页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0055C7F3+24435]
+	(No symbol) [0x004E2074]
+	(No symbol) [0x003B06E3]
+	(No symbol) [0x003F8B39]
+	(No symbol) [0x003F8E8B]
+	(No symbol) [0x00441AC2]
+	(No symbol) [0x0041D804]
+	(No symbol) [0x0043F20A]
+	(No symbol) [0x0041D5B6]
+	(No symbol) [0x003EC54F]
+	(No symbol) [0x003ED894]
+	GetHandleVerifier [0x008670A3+3213347]
+	GetHandleVerifier [0x0087B0C9+3295305]
+	GetHandleVerifier [0x0087558C+3271948]
+	GetHandleVerifier [0x005F7360+658144]
+	(No symbol) [0x004EB27D]
+	(No symbol) [0x004E8208]
+	(No symbol) [0x004E83A9]
+	(No symbol) [0x004DAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:10:12,509 - WARNING - 共获取到65条有效评论，总评论数：65
+2025-04-03 16:10:12,520 - INFO - 保存IP记录: 
+2025-04-03 16:10:12,523 - ERROR - 保存电影数据失败: (1364, "Field 'is_published' doesn't have a default value")
+2025-04-03 16:10:12,550 - WARNING - CommentPipeline: 未找到电影ID，跳过评论处理: 红高粱
+2025-04-03 16:10:12,554 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-03 16:10:12,556 - WARNING - 爬虫关闭: finished
+2025-04-03 16:10:12,732 - WARNING - WebDriver已关闭
+2025-04-03 16:10:12,733 - WARNING - MySQL连接已关闭
+2025-04-03 16:10:12,733 - WARNING - 爬虫资源已清理完毕
+2025-04-03 16:40:06,334 - WARNING - 豆瓣爬虫爬取电影: ['红高粱']
+2025-04-03 16:40:06,335 - WARNING - 从环境变量获取爬取配置: {'strategy': 'random_block', 'block_size': 6}
+2025-04-03 16:40:06,335 - WARNING - 使用评论采集策略: 随机区块采集(区块大小6页), 参数: {'block_size': 6}
+2025-04-03 16:40:11,875 - WARNING - MySQL数据库连接成功
+2025-04-03 16:40:14,405 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-03 16:40:15,118 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-03 16:40:15,119 - WARNING - 未找到Cookie文件，需要登录
+2025-04-03 16:40:15,119 - WARNING - 开始搜索电影: 红高粱
+2025-04-03 16:40:15,876 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E7%BA%A2%E9%AB%98%E7%B2%B1
+2025-04-03 16:40:22,367 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-03 16:40:31,812 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1306505/
+2025-04-03 16:40:31,812 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1306505/
+2025-04-03 16:40:46,968 - WARNING - 电影《红高粱》不存在于数据库
+2025-04-03 16:40:47,442 - WARNING - 获取到海报URL: https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2585499261.webp
+2025-04-03 16:40:47,473 - WARNING - 获取到剧情简介: 该片改编自莫言1986年发表的两部中篇小说《红高粱》和《高粱酒》。因为一匹骡子，“ 我奶奶”九儿（巩...
+2025-04-03 16:40:47,474 - WARNING - 电影数据: 红高粱, 1988, 评分:8.5
+2025-04-03 16:40:47,486 - INFO - 保存IP记录: 
+2025-04-03 16:40:47,508 - INFO - 保存电影数据成功: 红高粱
+2025-04-03 16:40:47,509 - WARNING - 开始获取电影评论: https://movie.douban.com/subject/1306505/comments
+2025-04-03 16:40:47,511 - INFO - 采集策略 随机区块采集(区块大小6页) 决定采集页码: [26, 27, 28, 29, 30, 31]
+2025-04-03 16:40:47,512 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:40:47,512 - WARNING - 访问第26页评论: https://movie.douban.com/subject/1306505/comments?start=500&limit=20&status=P&sort=new_score
+2025-04-03 16:41:10,349 - ERROR - 访问第26页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:41:10,353 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:41:10,353 - WARNING - 访问第27页评论: https://movie.douban.com/subject/1306505/comments?start=520&limit=20&status=P&sort=new_score
+2025-04-03 16:41:33,187 - ERROR - 访问第27页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:41:33,190 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:41:33,191 - WARNING - 访问第28页评论: https://movie.douban.com/subject/1306505/comments?start=540&limit=20&status=P&sort=new_score
+2025-04-03 16:41:56,039 - ERROR - 访问第28页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:41:56,041 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:41:56,041 - WARNING - 访问第29页评论: https://movie.douban.com/subject/1306505/comments?start=560&limit=20&status=P&sort=new_score
+2025-04-03 16:42:18,773 - ERROR - 访问第29页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:42:18,776 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:42:18,777 - WARNING - 访问第30页评论: https://movie.douban.com/subject/1306505/comments?start=580&limit=20&status=P&sort=new_score
+2025-04-03 16:42:41,610 - ERROR - 访问第30页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:42:41,616 - WARNING - 获取到电影ID: 1306505
+2025-04-03 16:42:41,616 - WARNING - 访问第31页评论: https://movie.douban.com/subject/1306505/comments?start=600&limit=20&status=P&sort=new_score
+2025-04-03 16:43:04,451 - ERROR - 访问第31页评论时出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0077C7F3+24435]
+	(No symbol) [0x00702074]
+	(No symbol) [0x005D06E3]
+	(No symbol) [0x00618B39]
+	(No symbol) [0x00618E8B]
+	(No symbol) [0x00661AC2]
+	(No symbol) [0x0063D804]
+	(No symbol) [0x0065F20A]
+	(No symbol) [0x0063D5B6]
+	(No symbol) [0x0060C54F]
+	(No symbol) [0x0060D894]
+	GetHandleVerifier [0x00A870A3+3213347]
+	GetHandleVerifier [0x00A9B0C9+3295305]
+	GetHandleVerifier [0x00A9558C+3271948]
+	GetHandleVerifier [0x00817360+658144]
+	(No symbol) [0x0070B27D]
+	(No symbol) [0x00708208]
+	(No symbol) [0x007083A9]
+	(No symbol) [0x006FAAC0]
+	BaseThreadInitThunk [0x75B57BA9+25]
+	RtlInitializeExceptionChain [0x77C0C2EB+107]
+	RtlClearBits [0x77C0C26F+191]
+
+2025-04-03 16:43:04,459 - WARNING - 共获取到0条有效评论，总评论数：0
+2025-04-03 16:43:04,469 - INFO - 保存IP记录: 
+2025-04-03 16:43:04,480 - INFO - 保存电影数据成功: 红高粱
+2025-04-03 16:43:04,483 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-03 16:43:04,485 - WARNING - 爬虫关闭: finished
+2025-04-03 16:43:04,694 - WARNING - WebDriver已关闭
+2025-04-03 16:43:04,695 - WARNING - MySQL连接已关闭
+2025-04-03 16:43:04,697 - WARNING - 爬虫资源已清理完毕

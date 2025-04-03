@@ -260,6 +260,59 @@
                             </div>
                         </div>
                         
+                        <!-- 临时测试表单
+                        <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 5px;">
+                            <h5>直接测试表单</h5>
+                            <form id="direct-test-form" method="post" action="/douban/movies/toggle_published/">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="direct-movie-id" class="form-label">电影ID</label>
+                                            <input type="text" class="form-control" id="direct-movie-id" name="movie_id" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mt-4">
+                                            <button type="submit" class="btn btn-primary">直接提交表单测试</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mt-4">
+                                            <button type="button" id="fetch-test-btn" class="btn btn-secondary">Fetch API测试</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <script>
+                                document.getElementById('fetch-test-btn').addEventListener('click', function() {
+                                    var movieId = document.getElementById('direct-movie-id').value;
+                                    if (!movieId) {
+                                        alert('请输入电影ID');
+                                        return;
+                                    }
+                                    
+                                    var formData = new FormData();
+                                    formData.append('movie_id', movieId);
+                                    
+                                    fetch('/douban/movies/toggle_published/', {
+                                        method: 'POST',
+                                        body: formData,
+                                        headers: {
+                                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        alert('响应: ' + JSON.stringify(data));
+                                    })
+                                    .catch(error => {
+                                        alert('错误: ' + error);
+                                    });
+                                });
+                            </script>
+                        </div> -->
+                        
                         <table class="data-table">
                             <thead>
                                 <tr>
@@ -291,6 +344,9 @@
                                     <td>{{ movie.updated_at|date:"Y-m-d H:i" }}</td>
                                     <td>
                                         <a href="/douban/movies/{{ movie.id }}/" class="btn-icon" title="详情">📋</a>
+                                        <button class="btn-icon toggle-published" data-id="{{ movie.id }}" data-published="{% if movie.is_published %}true{% else %}false{% endif %}" title="{% if movie.is_published %}已发表{% else %}未发表{% endif %}">
+                                            {% if movie.is_published %}✅{% else %}❌{% endif %}
+                                        </button>
                                         <button class="btn-icon" title="更新">🔄</button>
                                         <button class="btn-icon" title="删除">🗑️</button>
                                     </td>
@@ -404,136 +460,6 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/douban.js' %}"></script>
-    <script>
-    // 根据选择的策略显示或隐藏相应的参数输入框
-    document.getElementById('commentStrategy').addEventListener('change', function() {
-        // 隐藏所有参数区域
-        var paramAreas = document.querySelectorAll('[class$="-param"]');
-        paramAreas.forEach(function(area) {
-            area.style.display = 'none';
-        });
-        
-        // 显示当前选择的策略参数区域
-        var strategy = this.value;
-        if (strategy === 'random') {
-            // 随机策略不需要额外参数
-            return;
-        }
-        
-        var strategyParams = document.getElementsByClassName(strategy + '-param');
-        for (var i = 0; i < strategyParams.length; i++) {
-            strategyParams[i].style.display = 'block';
-        }
-    });
-
-    // 带策略参数的电影采集函数
-    function crawlMovieWithStrategy() {
-        // 尝试从不同的输入框获取电影名称，兼容不同页面
-        var movieNameElement = document.getElementById('movieName');
-        var homeMovieNameElement = document.getElementById('homeMovieName');
-        
-        var movieName = '';
-        if (movieNameElement && movieNameElement.value.trim()) {
-            movieName = movieNameElement.value.trim();
-        } else if (homeMovieNameElement && homeMovieNameElement.value.trim()) {
-            movieName = homeMovieNameElement.value.trim();
-        }
-        
-        if (!movieName) {
-            alert('请输入电影名称');
-            return;
-        }
-        
-        // 获取选择的策略和参数
-        var strategy = document.getElementById('commentStrategy').value;
-        var params = {};
-        
-        // 根据不同策略获取参数
-        if (strategy === 'sequential') {
-            params.max_pages = document.getElementById('maxPages').value;
-        } else if (strategy === 'random_pages') {
-            params.sample_size = document.getElementById('sampleSize').value;
-        } else if (strategy === 'random_interval') {
-            params.max_interval = document.getElementById('maxInterval').value;
-            params.max_pages = document.getElementById('maxPages').value;
-        } else if (strategy === 'random_block') {
-            params.block_size = document.getElementById('blockSize').value;
-        }
-        
-        // 获取状态元素并确保其存在
-        var statusElement = document.getElementById('crawlStatus');
-        if (statusElement) {
-            statusElement.innerHTML = '<div class="alert alert-info">正在采集电影 <strong>' + 
-                movieName + '</strong> 的信息，请稍候...</div>';
-        } else {
-            console.warn('找不到crawlStatus元素，无法显示状态更新');
-        }
-        
-        // 发送采集请求，包含策略参数
-        fetch('/crawl_movie/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({
-                movie_name: movieName,
-                comment_strategy: strategy,
-                strategy_params: params
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success' || data.success === true) {
-                if (statusElement) {
-                    // 处理成功响应
-                    var successMessage = data.message || '采集已开始，请稍后查看结果';
-                    var movieId = data.movie_id;
-                    
-                    if (movieId) {
-                        statusElement.innerHTML = '<div class="alert alert-success">采集完成！<a href="/douban/movies/' + 
-                            movieId + '/">查看电影详情</a></div>';
-                    } else {
-                        statusElement.innerHTML = '<div class="alert alert-success">' + successMessage + '</div>';
-                    }
-                } else {
-                    alert('采集请求已发送');
-                }
-            } else {
-                if (statusElement) {
-                    // 处理错误响应
-                    var errorMessage = data.message || data.error || '未知错误';
-                    statusElement.innerHTML = '<div class="alert alert-warning">提示：' + errorMessage + '</div>';
-                } else {
-                    alert('采集请求出现问题：' + (data.message || data.error || '未知错误'));
-                }
-            }
-        })
-        .catch(error => {
-            if (statusElement) {
-                statusElement.innerHTML = '<div class="alert alert-danger">请求出错：' + error.message + '</div>';
-            } else {
-                alert('请求出错：' + error.message);
-            }
-        });
-    }
-
-    // 获取CSRF Token的辅助函数
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    </script>
     {% endblock %}
 </body>
 </html> 

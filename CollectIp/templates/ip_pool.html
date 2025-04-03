@@ -55,6 +55,20 @@
             {% elif active_menu == 'ip_manage' %}
                 <!-- IP管理表格 -->
                 <div class="table-container">
+                    <!-- 添加爬取状态栏 -->
+                    <div id="crawlStatusBar" class="alert alert-info mb-3" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong id="statusTitle">爬取状态</strong>: <span id="statusMessage">暂无信息</span>
+                            </div>
+                            <div>
+                                <span id="statusTime" class="text-muted">--:--:--</span>
+                                <button type="button" class="btn-close ms-2" aria-label="关闭" onclick="hideStatusBar()"></button>
+                            </div>
+                        </div>
+                        <div id="statusDetails" class="small mt-1" style="display: none;"></div>
+                    </div>
+                    
                     <div class="table-actions">
                         <button class="btn btn-primary" id="runCrawlBtn" onclick="runOneCrawl()">
                             立即采集一次
@@ -159,6 +173,11 @@
                         <label for="min_score" class="form-label">最低分数（0-100）</label>
                         <input type="number" class="form-control" id="min_score" name="min_score" min="0" max="100">
                     </div>
+                    <div class="mb-3">
+                        <label for="captcha_retries" class="form-label">验证码最大重试次数</label>
+                        <input type="number" class="form-control" id="captcha_retries" name="captcha_retries" min="1" max="20" value="5">
+                        <div class="form-text">验证码识别失败时的最大重试次数，建议值为3-10</div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -174,24 +193,4 @@
 {% block scripts %}
 {{ block.super }}
 <script src="{% static 'js/ip_pool.js' %}"></script>
-<script>
-// 确保DOM加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('IP池页面加载完成，检查按钮元素');
-    
-    // 调试信息
-    const crawlBtn = document.getElementById('runCrawlBtn');
-    if (crawlBtn) {
-        console.log('采集按钮已找到', crawlBtn);
-        const spinner = crawlBtn.querySelector('.spinner-border');
-        if (spinner) {
-            console.log('加载动画元素已找到', spinner);
-        } else {
-            console.warn('未找到加载动画元素');
-        }
-    } else {
-        console.warn('未找到采集按钮');
-    }
-});
-</script>
 {% endblock %}

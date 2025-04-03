@@ -20,6 +20,9 @@ async function runOneCrawl() {
     button.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> 采集中...';
     button.disabled = true;
     
+    // 显示状态栏为"进行中"
+    showStatusBar('info', 'IP采集任务正在执行中...', '请稍候，系统正在抓取新的代理IP');
+    
     try {
         console.log('开始执行采集请求...');
         
@@ -38,16 +41,22 @@ async function runOneCrawl() {
         
         if (data.success) {
             showNotification('成功', 'IP采集任务已启动，请稍后刷新页面查看结果', 'success');
+            // 更新状态栏
+            showStatusBar('success', 'IP采集任务已成功启动', data.message || '系统将自动抓取新的代理IP，10秒后页面将自动刷新');
             // 10秒后自动刷新页面
             setTimeout(() => {
                 location.reload();
             }, 10000);
         } else {
             showNotification('错误', '采集请求失败: ' + (data.error || '未知错误'), 'danger');
+            // 更新状态栏
+            showStatusBar('error', '采集请求失败', data.error || '启动IP采集任务时出现错误，请稍后重试');
         }
     } catch (error) {
         console.error('采集请求出错:', error);
         showNotification('错误', '网络请求失败，请稍后重试', 'danger');
+        // 更新状态栏
+        showStatusBar('error', '网络请求失败', error.message || '与服务器通信时出现错误，请检查网络连接后重试');
     } finally {
         // 恢复按钮状态
         setTimeout(() => {
@@ -78,6 +87,9 @@ async function runOneScore() {
     button.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> 评分中...';
     button.disabled = true;
     
+    // 显示状态栏为"进行中"
+    showStatusBar('info', 'IP评分任务正在执行中...', '请稍候，系统正在评估代理IP的质量');
+    
     try {
         console.log('开始执行打分请求...');
         
@@ -96,16 +108,22 @@ async function runOneScore() {
         
         if (data.success) {
             showNotification('成功', 'IP评分任务已启动，请稍后刷新页面查看结果', 'success');
+            // 更新状态栏
+            showStatusBar('success', 'IP评分任务已成功启动', data.message || '系统将自动评估代理IP质量，10秒后页面将自动刷新');
             // 10秒后自动刷新页面
             setTimeout(() => {
                 location.reload();
             }, 10000);
         } else {
             showNotification('错误', '评分请求失败: ' + (data.error || '未知错误'), 'danger');
+            // 更新状态栏
+            showStatusBar('error', '评分请求失败', data.error || '启动IP评分任务时出现错误，请稍后重试');
         }
     } catch (error) {
         console.error('评分请求出错:', error);
         showNotification('错误', '网络请求失败，请稍后重试', 'danger');
+        // 更新状态栏
+        showStatusBar('error', '网络请求失败', error.message || '与服务器通信时出现错误，请检查网络连接后重试');
     } finally {
         // 恢复按钮状态
         setTimeout(() => {
@@ -129,6 +147,12 @@ function openSettingsModal() {
             document.getElementById('crawler_interval').value = data.data.crawler_interval;
             document.getElementById('score_interval').value = data.data.score_interval;
             document.getElementById('min_score').value = data.data.min_score;
+            document.getElementById('captcha_retries').value = data.data.captcha_retries || 5;
+            
+            // 设置复选框状态
+            document.getElementById('auto_crawler').checked = data.data.auto_crawler;
+            document.getElementById('auto_score').checked = data.data.auto_score;
+            
             const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
             settingsModal.show();
         } else {
@@ -177,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('IP池管理页面加载完成');
     initSearchBox();
     initTableActions();
+    restoreStatusBar();
 });
 
 // 初始化搜索框功能
@@ -332,4 +357,144 @@ function showNotification(title, message, type) {
         notification.classList.add('fade');
         setTimeout(() => notification.remove(), 500);
     }, 5000);
+}
+
+// 显示状态栏
+function showStatusBar(status, message, details = null) {
+    const statusBar = document.getElementById('crawlStatusBar');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusMessage = document.getElementById('statusMessage');
+    const statusTime = document.getElementById('statusTime');
+    const statusDetails = document.getElementById('statusDetails');
+    
+    if (!statusBar) return;
+    
+    // 设置状态类型和样式
+    statusBar.className = 'alert mb-3';
+    switch (status) {
+        case 'success':
+            statusBar.classList.add('alert-success');
+            statusTitle.textContent = '成功';
+            break;
+        case 'error':
+            statusBar.classList.add('alert-danger');
+            statusTitle.textContent = '错误';
+            break;
+        case 'warning':
+            statusBar.classList.add('alert-warning');
+            statusTitle.textContent = '警告';
+            break;
+        case 'info':
+        default:
+            statusBar.classList.add('alert-info');
+            statusTitle.textContent = '信息';
+            break;
+    }
+    
+    // 设置消息内容
+    statusMessage.textContent = message;
+    
+    // 设置当前时间
+    const now = new Date();
+    statusTime.textContent = now.toLocaleTimeString();
+    
+    // 设置详细信息（如果有）
+    if (details && statusDetails) {
+        statusDetails.textContent = details;
+        statusDetails.style.display = 'block';
+    } else if (statusDetails) {
+        statusDetails.style.display = 'none';
+    }
+    
+    // 显示状态栏
+    statusBar.style.display = 'block';
+    
+    // 保存到localStorage以便页面刷新后恢复
+    localStorage.setItem('ipPoolStatus', JSON.stringify({
+        status: status,
+        message: message,
+        details: details,
+        time: now.toISOString()
+    }));
+}
+
+// 隐藏状态栏
+function hideStatusBar() {
+    const statusBar = document.getElementById('crawlStatusBar');
+    if (statusBar) {
+        statusBar.style.display = 'none';
+    }
+    
+    // 清除localStorage中的状态
+    localStorage.removeItem('ipPoolStatus');
+}
+
+// 恢复状态栏（从localStorage中加载）
+function restoreStatusBar() {
+    try {
+        const savedStatus = localStorage.getItem('ipPoolStatus');
+        if (savedStatus) {
+            const statusData = JSON.parse(savedStatus);
+            
+            // 检查保存时间是否在24小时内
+            const savedTime = new Date(statusData.time);
+            const now = new Date();
+            const hoursDiff = (now - savedTime) / (1000 * 60 * 60);
+            
+            // 如果超过24小时，就不显示
+            if (hoursDiff > 24) {
+                localStorage.removeItem('ipPoolStatus');
+                return;
+            }
+            
+            // 显示状态栏
+            showStatusBar(
+                statusData.status,
+                statusData.message,
+                statusData.details
+            );
+            
+            // 更新时间显示
+            const statusTime = document.getElementById('statusTime');
+            if (statusTime) {
+                statusTime.textContent = savedTime.toLocaleTimeString();
+            }
+        }
+    } catch (e) {
+        console.error('恢复状态栏时出错:', e);
+        localStorage.removeItem('ipPoolStatus');
+    }
+    
+    // 自动加载最新的爬取状态
+    fetchLatestCrawlStatus();
+}
+
+// 获取最新的爬取状态
+async function fetchLatestCrawlStatus() {
+    try {
+        const response = await fetch('/crawl_status/');
+        const data = await response.json();
+        
+        console.log('获取到最新爬取状态:', data);
+        
+        if (data.success) {
+            // 如果有正在运行的爬虫任务，显示特别状态
+            if (data.status === 'running') {
+                showStatusBar('info', data.message, data.details);
+                
+                // 5秒后再次检查状态
+                setTimeout(fetchLatestCrawlStatus, 5000);
+            } 
+            // 如果最近有完成的任务，显示成功状态
+            else if (data.status === 'completed') {
+                showStatusBar('success', data.message, data.details);
+            }
+            // 如果没有IP记录，显示提示信息
+            else if (data.status === 'unknown') {
+                showStatusBar('warning', data.message, data.details);
+            }
+        }
+    } catch (error) {
+        console.error('获取爬取状态失败:', error);
+    }
 }

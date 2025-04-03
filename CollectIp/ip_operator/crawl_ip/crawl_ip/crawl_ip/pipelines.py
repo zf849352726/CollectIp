@@ -220,12 +220,12 @@ class MoviePipeline:
                         title, director, actors, year, rating, 
                         rating_count, genre, region, duration,
                         poster_url, summary,
-                        created_at, updated_at
+                        created_at, updated_at, is_published
                     ) VALUES (
                         %s, %s, %s, %s, %s, 
                         %s, %s, %s, %s, 
                         %s, %s,
-                        NOW(), NOW()
+                        NOW(), NOW(), FALSE
                     )
                 """
                 self.cursor.execute(sql_insert, (

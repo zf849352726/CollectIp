@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 from ..items import IpItem
 from ddddocr import DdddOcr
 import base64
@@ -107,6 +108,39 @@ class CollectipSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(CollectipSpider, self).__init__(*args, **kwargs)
         print("【调试】CollectIP爬虫初始化，将使用代理中间件和UA中间件")
+        
+        # 在爬虫初始化时获取验证码最大重试次数（避免异步上下文问题）
+        self.captcha_max_retries = 5  # 默认值
+        try:
+            # 导入Django设置
+            from django.db import models
+            from django.conf import settings
+            import django
+            import os
+            import logging
+            logger = logging.getLogger(__name__)
+            
+            os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+            django.setup()
+            
+            # 获取ProxySettings模型
+            try:
+                from index.models import ProxySettings
+                settings_obj = ProxySettings.objects.first()
+                if settings_obj and hasattr(settings_obj, 'captcha_retries'):
+                    self.captcha_max_retries = settings_obj.captcha_retries
+                    print(f"从数据库获取验证码最大重试次数: {self.captcha_max_retries}")
+                    logger.info(f"从数据库获取验证码最大重试次数: {self.captcha_max_retries}")
+                else:
+                    print("未找到验证码重试设置，使用默认值: 5")
+                    logger.warning("未找到验证码重试设置，使用默认值: 5")
+            except Exception as e:
+                print(f"获取数据库设置时出错: {e}")
+                logger.error(f"获取数据库设置时出错: {e}")
+        except Exception as e:
+            print(f"导入Django设置时出错: {e}")
+            
+        print(f"验证码识别将使用最大重试次数: {self.captcha_max_retries}")
 
     def parse(self, response):
         options = Options()
@@ -122,8 +156,10 @@ class CollectipSpider(scrapy.Spider):
         options.add_argument(f'referer={headers["Referer"]}')
         options.add_argument(f'accept-language={headers["Accept-Language"]}')
 
-        # 移除detach选项，确保浏览器随脚本关闭
-        # options.add_experimental_option('detach', True)
+        # 增加无头模式的稳定性设置
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--window-size=1920,1080')  # 设置窗口大小
         
         # 添加不显示infobars和自动化控制提示
         options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
@@ -146,110 +182,240 @@ class CollectipSpider(scrapy.Spider):
             # 创建 Chrome 对象时，传入 service 和 options 对象
             driver = Chrome(service=service, options=options)
             driver.get(url)
-
-            # 找到下拉框元素
-            select_elem_free = driver.find_element(By.ID, 'select9')
+            
+            # 设置页面加载超时
+            driver.set_page_load_timeout(30)
+            
+            # 使用显式等待来确保页面加载完成
+            wait = WebDriverWait(driver, 20)  # 增加等待时间
+            
+            # 等待下拉框加载完成
+            logger.info("等待下拉框加载完成...")
+            select_elem_free = wait.until(
+                EC.presence_of_element_located((By.ID, 'select9'))
+            )
 
             # 创建 Select 对象
             select = Select(select_elem_free)
 
             # 通过文本内容选择选项
             select.select_by_visible_text('free proxy servers')
+            logger.info("已选择 'free proxy servers' 选项")
 
-            # 替换手动输入验证码的部分
-            code = self.get_captcha_text(driver)
-            # 找到验证码文本框
-            code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
-            code_input.send_keys(code)
+            # 给页面一些时间响应选择操作
+            time.sleep(2)
 
-            # 提交筛选
-            submit_tag = driver.find_element(By.XPATH, '// *[@id="filter"]')
-            submit_tag.click()
-            # 检查验证码是否有效
-            first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
-            first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
-            
-            # 如果server中包含*号,说明验证码无效,需要重新获取
+            # 获取并处理验证码
+            logger.info("开始验证码处理...")
             retry_count = 0
-            while '*' in first_server:
+            success = False
+            
+            while retry_count < self.captcha_max_retries and not success:
                 retry_count += 1
-                logger.info(f"验证码识别失败,第{retry_count}次重试...")
-                # 重新获取验证码
-                code = self.get_captcha_text(driver)
-                # 清空验证码输入框
-                code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
-                code_input.clear()
-                # 输入新验证码
-                code_input.send_keys(code)
-                # 重新提交
-                submit_tag = driver.find_element(By.XPATH, '// *[@id="filter"]')
-                submit_tag.click()
-                # 重新检查第一行数据
-                first_tr = driver.find_element(By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]')
-                first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
-                # 每10次重试暂停1秒,避免请求过于频繁
-                if retry_count % 10 == 0:
-                    time.sleep(1)
+                try:
+                    # 等待验证码图片加载
+                    code_img_xpath = '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img'
+                    wait.until(EC.visibility_of_element_located((By.XPATH, code_img_xpath)))
+                    
+                    # 获取验证码文本
+                    code = self.get_captcha_text(driver)
+                    logger.info(f"识别的验证码: {code}")
+                    
+                    # 等待验证码输入框
+                    code_input = wait.until(
+                        EC.presence_of_element_located((By.XPATH, '//*[@id="code"]'))
+                    )
+                    code_input.clear()
+                    code_input.send_keys(code)
+                    
+                    # 查找并点击提交按钮
+                    submit_tag = wait.until(
+                        EC.element_to_be_clickable((By.XPATH, '//*[@id="filter"]'))
+                    )
+                    submit_tag.click()
+                    
+                    # 等待页面加载结果
+                    time.sleep(3)
+                    
+                    # 等待数据表格加载
+                    wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]')))
+                    
+                    # 检查验证码是否有效
+                    try:
+                        # 使用新的等待实例和查询来获取第一行数据
+                        first_tr = wait.until(
+                            EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]'))
+                        )
+                        first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                        
+                        if '*' not in first_server:
+                            logger.info("验证码验证成功")
+                            success = True
+                        else:
+                            logger.warning(f"验证码未通过，第 {retry_count} 次尝试")
+                            # 重新加载页面以重置状态
+                            if retry_count < self.captcha_max_retries:
+                                driver.refresh()
+                                time.sleep(2)
+                    except (StaleElementReferenceException, TimeoutException) as e:
+                        logger.warning(f"检查验证码结果时出错: {e}，重试...")
+                        driver.refresh()
+                        time.sleep(2)
                 
-            logger.info(f"验证码识别成功,共重试{retry_count}次")
-
-            pages = driver.find_element(By.XPATH, '(//*[@id="container"]/table/tbody/tr[4]/td/div/div/a)[last()]').text
-
-            for p in range(1, int(pages)):
-                trs = driver.find_elements(By.XPATH, '//*[@id="proxytable"]/tbody/tr')
-                for i, tr in enumerate(trs[1:]):
-                    td_list = tr.find_elements(By.XPATH, './/td')  # td合集
-                    item = IpItem()
-
-                    server = td_list[1].text
-                    ping = td_list[2].text
-                    speed = td_list[3].text
-                    uptime1 = td_list[4].text
-                    uptime2 = td_list[5].text
-                    type_data = td_list[6].text
-                    country = td_list[7].text
-                    ssl = td_list[8].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
-                    conn = td_list[9].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
-                    post = td_list[10].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0].get_attribute('title')
-                    last_work_time = td_list[11].find_elements(By.TAG_NAME, 'div')[0].get_attribute('title')
-
-                    item['server'] = server
-                    # 查数据库 如果ip不存在执行以下代码
+                except Exception as e:
+                    logger.error(f"尝试验证码识别过程中出错: {e}")
+                    if retry_count < self.captcha_max_retries:
+                        logger.info("刷新页面重试...")
+                        driver.refresh()
+                        time.sleep(2)
+            
+            if not success:
+                logger.error("验证码处理失败，已达到最大重试次数")
+                return
+                
+            # 获取总页数
+            logger.info("获取分页信息...")
+            try:
+                # 使用更可靠的等待和查询
+                pages_element = wait.until(
+                    EC.presence_of_element_located((By.XPATH, '(//*[@id="container"]/table/tbody/tr[4]/td/div/div/a)[last()]'))
+                )
+                pages = int(pages_element.text)
+                logger.info(f"总页数: {pages}")
+            except Exception as e:
+                logger.error(f"获取页数失败: {e}")
+                pages = 1  # 默认至少有一页
+                
+            # 处理每一页数据
+            for p in range(1, min(pages + 1, 5)):  # 限制最多爬取5页，避免耗时过长
+                logger.info(f"处理第 {p} 页...")
+                
+                try:
+                    # 每次刷新表格数据前等待
+                    wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]/tbody/tr')))
                     
-                    # 清洗ping数据，将非数字值转换为None
-                    if ping == '?' or not ping or not ping.replace('.', '').isdigit():
-                        item['ping'] = None
-                    else:
-                        try:
-                            item['ping'] = float(ping)
-                        except ValueError:
-                            item['ping'] = None
+                    # 获取表格行
+                    trs = driver.find_elements(By.XPATH, '//*[@id="proxytable"]/tbody/tr')
                     
-                    # 清洗speed数据，将非数字值转换为None
-                    if speed == '?' or not speed or not speed.replace('.', '').isdigit():
-                        item['speed'] = None
-                    else:
+                    if len(trs) <= 1:
+                        logger.warning(f"第 {p} 页没有找到数据行")
+                        continue
+                        
+                    logger.info(f"找到 {len(trs) - 1} 行数据")
+                    
+                    # 处理每一行数据
+                    for i, tr in enumerate(trs[1:]):
                         try:
-                            item['speed'] = float(speed)
-                        except ValueError:
-                            item['speed'] = None
+                            td_list = tr.find_elements(By.XPATH, './/td')  # td合集
                             
-                    # 其他字段正常赋值
-                    item['uptime1'] = uptime1
-                    item['uptime2'] = uptime2
-                    item['type_data'] = type_data
-                    item['country'] = country
-                    item['ssl'] = ssl
-                    item['conn'] = conn
-                    item['post'] = post
-                    item['last_work_time'] = last_work_time
-                    yield item
+                            if len(td_list) < 12:  # 确保有足够的列
+                                logger.warning(f"行 {i+1} 列数不足，跳过")
+                                continue
+                                
+                            item = IpItem()
+                            
+                            # 使用更安全的方式提取数据
+                            server = td_list[1].text if len(td_list) > 1 else ""
+                            ping = td_list[2].text if len(td_list) > 2 else ""
+                            speed = td_list[3].text if len(td_list) > 3 else ""
+                            uptime1 = td_list[4].text if len(td_list) > 4 else ""
+                            uptime2 = td_list[5].text if len(td_list) > 5 else ""
+                            type_data = td_list[6].text if len(td_list) > 6 else ""
+                            country = td_list[7].text if len(td_list) > 7 else ""
+                            
+                            # 使用 try-except 处理可能的错误
+                            try:
+                                ssl_elem = td_list[8].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0]
+                                ssl = ssl_elem.get_attribute('title')
+                            except:
+                                ssl = "N/A"
+                                
+                            try:
+                                conn_elem = td_list[9].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0]
+                                conn = conn_elem.get_attribute('title')
+                            except:
+                                conn = "N/A"
+                                
+                            try:
+                                post_elem = td_list[10].find_elements(By.TAG_NAME, 'div')[0].find_elements(By.TAG_NAME, 'img')[0]
+                                post = post_elem.get_attribute('title')
+                            except:
+                                post = "N/A"
+                                
+                            try:
+                                last_work_time = td_list[11].find_elements(By.TAG_NAME, 'div')[0].get_attribute('title')
+                            except:
+                                last_work_time = "N/A"
 
-                # 如果有多页，点击下一页
-                if p < int(pages) - 1:  # 确保不是最后一页
-                    page_number = driver.find_element(By.XPATH, f'//*[@id="container"]/table/tbody/tr[4]/td/div/div/a[{p}]')
-                    page_number.click()
-                    time.sleep(1)
+                            item['server'] = server
+                            
+                            # 清洗ping数据，将非数字值转换为None
+                            if ping == '?' or not ping or not ping.replace('.', '').isdigit():
+                                item['ping'] = None
+                            else:
+                                try:
+                                    item['ping'] = float(ping)
+                                except ValueError:
+                                    item['ping'] = None
+                            
+                            # 清洗speed数据，将非数字值转换为None
+                            if speed == '?' or not speed or not speed.replace('.', '').isdigit():
+                                item['speed'] = None
+                            else:
+                                try:
+                                    item['speed'] = float(speed)
+                                except ValueError:
+                                    item['speed'] = None
+                                    
+                            # 其他字段正常赋值
+                            item['uptime1'] = uptime1
+                            item['uptime2'] = uptime2
+                            item['type_data'] = type_data
+                            item['country'] = country
+                            item['ssl'] = ssl
+                            item['conn'] = conn
+                            item['post'] = post
+                            item['last_work_time'] = last_work_time
+                            
+                            # 产生项目
+                            yield item
+                            
+                        except StaleElementReferenceException:
+                            logger.warning(f"在处理第 {p} 页的第 {i+1} 行时遇到过时元素引用异常，重新获取")
+                            # 不重试，直接继续下一行
+                            continue
+                        except Exception as e:
+                            logger.error(f"处理第 {p} 页的第 {i+1} 行时出错: {e}")
+                            continue
+                
+                    # 如果有多页，点击下一页
+                    if p < min(pages, 4):  # 如果不是最后一页（或第4页）
+                        try:
+                            # 使用更可靠的 XPath 定位下一页按钮
+                            next_page_xpath = f'//*[@id="container"]/table/tbody/tr[4]/td/div/div/a[{p+1}]'
+                            next_page = wait.until(
+                                EC.element_to_be_clickable((By.XPATH, next_page_xpath))
+                            )
+                            next_page.click()
+                            
+                            # 等待页面加载
+                            time.sleep(3)
+                            
+                            # 确认新页面已加载
+                            wait.until(EC.staleness_of(trs[0]))
+                            wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]/tbody/tr')))
+                        except Exception as e:
+                            logger.error(f"点击下一页时出错: {e}")
+                            break
+                
+                except StaleElementReferenceException:
+                    logger.warning(f"处理第 {p} 页时遇到过时元素引用异常，尝试重新获取元素")
+                    # 等待页面刷新
+                    time.sleep(2)
+                    continue
+                except Exception as e:
+                    logger.error(f"处理第 {p} 页时出错: {e}")
+                    break
                     
         except Exception as e:
             logger.error(f"爬取过程中出错: {e}")
@@ -266,30 +432,41 @@ class CollectipSpider(scrapy.Spider):
                     logger.error(f"关闭浏览器时出错: {e}")
 
     def get_captcha_text(self, driver):
-        # 等待验证码图片元素出现
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img'))
-        )
-        # 找到验证码图片元素
-        img_element = driver.find_element(By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img')  # 请根据实际验证码图片的xpath修改
-        
-        # 获取验证码图片的base64数据
-        img_base64 = driver.execute_script("""
-            var ele = arguments[0];
-            var cnv = document.createElement('canvas');
-            cnv.width = ele.width;
-            cnv.height = ele.height;
-            cnv.getContext('2d').drawImage(ele, 0, 0);
-            return cnv.toDataURL('image/jpeg').substring(22);
-        """, img_element)
-        
-        # 将base64转换为bytes
-        img_bytes = base64.b64decode(img_base64)
-        
-        # 使用ddddocr识别验证码
-        ocr = DdddOcr(show_ad=False)
-        result = ocr.classification(img_bytes)
-        return result
+        """获取验证码文本"""
+        try:
+            # 使用显式等待确保验证码图片已加载
+            wait = WebDriverWait(driver, 10)
+            img_element = wait.until(
+                EC.visibility_of_element_located((By.XPATH, '//*[@id="tbl_filter"]/tbody/tr[2]/td/table/tbody/tr[1]/td[3]/div/img'))
+            )
+            
+            # 等待一小段时间确保图片完全加载
+            time.sleep(1)
+            
+            # 获取验证码图片的base64数据
+            img_base64 = driver.execute_script("""
+                var ele = arguments[0];
+                var cnv = document.createElement('canvas');
+                cnv.width = ele.width;
+                cnv.height = ele.height;
+                cnv.getContext('2d').drawImage(ele, 0, 0);
+                return cnv.toDataURL('image/jpeg').substring(22);
+            """, img_element)
+            
+            # 将base64转换为bytes
+            img_bytes = base64.b64decode(img_base64)
+            
+            # 使用ddddocr识别验证码
+            ocr = DdddOcr(show_ad=False)
+            result = ocr.classification(img_bytes)
+            
+            # 记录结果
+            logger.info(f"验证码识别结果: {result}")
+            
+            return result
+        except Exception as e:
+            logger.error(f"获取验证码文本时出错: {e}")
+            return ""
 
     def test_captcha_recognition(self):
         """
@@ -437,6 +614,14 @@ class CollectipSpider(scrapy.Spider):
             logger.warning("psutil不可用，无法清理残留的Chrome进程")
             
         logger.warning("爬虫关闭完成")
+
+    def parse_result(self, response):
+        """解析最终结果页面并保存IP数据"""
+        logger.info("开始解析结果页面...")
+        logger.info(f"使用验证码最大重试次数: {self.captcha_max_retries}")
+        
+        # 获取验证通过后的结果数据
+        # ... existing code ...
 
 if __name__ == "__main__":
     # 创建爬虫实例并测试验证码识别

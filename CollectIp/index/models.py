@@ -57,6 +57,7 @@ class Movie(models.Model):
     summary = models.TextField(null=True, blank=True, verbose_name='剧情简介')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+    is_published = models.BooleanField(default=False, verbose_name='是否已发表')
 
     class Meta:
         verbose_name = '电影'
@@ -72,6 +73,7 @@ class ProxySettings(models.Model):
     min_score = models.IntegerField(default=10)         # 最低分数
     auto_crawler = models.BooleanField(default=False)   # 是否启用自动爬虫
     auto_score = models.BooleanField(default=False)     # 是否启用自动评分
+    captcha_retries = models.IntegerField(default=5)    # 验证码最大重试次数
 
     class Meta:
         db_table = 'proxy_settings'
@@ -88,3 +90,44 @@ class DoubanSettings(models.Model):
         
     def __str__(self):
         return "豆瓣采集设置"
+
+class Collection(models.Model):
+    """电影合集模型"""
+    COLLECTION_TYPE_CHOICES = (
+        ('movie', '电影合集'),
+        ('tv', '剧集合集'),
+        ('article', '文章合集'),
+        ('mixed', '混合合集'),
+    )
+    
+    title = models.CharField(max_length=200, verbose_name='合集标题')
+    description = models.TextField(blank=True, null=True, verbose_name='合集描述')
+    collection_type = models.CharField(
+        max_length=20, 
+        choices=COLLECTION_TYPE_CHOICES, 
+        default='movie',
+        verbose_name='合集类型'
+    )
+    cover_image = models.URLField(blank=True, null=True, verbose_name='封面图片URL')
+    is_published = models.BooleanField(default=False, verbose_name='是否发布')
+    movies = models.ManyToManyField(Movie, related_name='collections', blank=True, verbose_name='电影列表')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
+    
+    class Meta:
+        verbose_name = '合集'
+        verbose_name_plural = '合集列表'
+        ordering = ['-updated_at']
+    
+    def __str__(self):
+        return self.title
+    
+    @property
+    def item_count(self):
+        """获取合集包含的项目数量"""
+        return self.movies.count()
+    
+    @property
+    def get_collection_type_display(self):
+        """获取合集类型的显示名称"""
+        return dict(self.COLLECTION_TYPE_CHOICES).get(self.collection_type, '未知类型')

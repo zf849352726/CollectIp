@@ -166,20 +166,43 @@ class DoubanSpider(scrapy.Spider):
         # 记录电影名
         logger.warning(f"豆瓣爬虫爬取电影: {self.movie_names}")
         
+        # 从环境变量中获取爬取配置
+        crawl_config = {}
+        try:
+            env_config = os.environ.get('CRAWL_CONFIG')
+            if env_config:
+                import json
+                crawl_config = json.loads(env_config)
+                logger.warning(f"从环境变量获取爬取配置: {crawl_config}")
+                
+                # 从配置中获取策略
+                if 'strategy' in crawl_config:
+                    comment_strategy = crawl_config.get('strategy')
+                    
+                # 从配置中更新参数
+                for param in ['max_pages', 'sample_size', 'max_interval', 'block_size', 'use_random_strategy']:
+                    if param in crawl_config:
+                        kwargs[param] = crawl_config[param]
+        except Exception as e:
+            logger.error(f"解析爬取配置时出错: {e}")
+        
         # 初始化评论采集策略
-        strategy_type = comment_strategy or 'random'
+        strategy_type = comment_strategy or 'sequential'
         strategy_params = {k: int(v) for k, v in kwargs.items() if k in [
             'max_pages', 'sample_size', 'max_interval', 'block_size'
         ] and v}
         
-        if strategy_type == 'random':
+        # 检查是否使用随机策略
+        use_random_strategy = kwargs.get('use_random_strategy', False) or crawl_config.get('use_random_strategy', False)
+        if strategy_type == 'random' or use_random_strategy:
             self.comment_strategy = get_random_strategy()
+            logger.warning("使用随机策略，系统将随机选择一种评论采集方式")
         else:
             self.comment_strategy = CommentStrategyFactory.get_strategy(
                 strategy_type, **strategy_params
             )
         
-        logger.warning(f"使用评论采集策略: {self.comment_strategy.get_name()}")
+        logger.warning(f"使用评论采集策略: {self.comment_strategy.get_name()}, 参数: {strategy_params}")
         
         # 设置ChromeDriver路径
         try:
@@ -214,9 +237,9 @@ class DoubanSpider(scrapy.Spider):
         self.options.add_argument('--disable-gpu')
         self.options.add_argument(f'user-agent={self.headers["User-Agent"]}')
         self.options.add_argument('--disable-blink-features=AutomationControlled')
-        # self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
+        self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
         # 确保不分离浏览器进程
-        self.options.add_experimental_option('detach', True)
+        # self.options.add_experimental_option('detach', True)
         
         # 初始化MySQL连接
         self.db_conn = None
@@ -267,7 +290,7 @@ class DoubanSpider(scrapy.Spider):
                 # 配置选项
                 options.add_argument('--disable-gpu')
                 options.add_argument(f'user-agent={self.headers["User-Agent"]}')
-                # options.add_argument('--headless')  # 登录时不建议使用无头模式
+                options.add_argument('--headless')  # 登录时不建议使用无头模式
                 
                 # 创建undetected_chromedriver实例
                 self.driver = uc.Chrome(
@@ -518,8 +541,8 @@ class DoubanSpider(scrapy.Spider):
         
         yield scrapy.Request(
             url=search_url,
-            headers=self.headers,
-            callback=self.parse,
+                headers=self.headers,
+                callback=self.parse,
             dont_filter=True,
             meta={'movie_names': self.movie_names}  # 传递电影名称参数
         )
@@ -910,7 +933,7 @@ class DoubanSpider(scrapy.Spider):
                     # 构建评论页URL
                     page_url = f"https://movie.douban.com/subject/{movie_id}/comments?start={(page_num-1)*20}&limit=20&status=P&sort=new_score"
                     logger.warning(f"访问第{page_num}页评论: {page_url}")
-                    
+                    time.sleep(1)
                     driver.get(page_url)
                     # # 处理验证码
                     # self.handle_verification(driver)

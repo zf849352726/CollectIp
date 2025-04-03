@@ -148,15 +148,64 @@
                             </div>
                         </div>
                     </div>
-                    
+{% block scripts %}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入 ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 引入 ECharts 词云扩展 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"></script>
+    <!-- 备用加载检查 -->
+    <script>
+        // 检查ECharts是否成功加载，如果未加载则尝试本地备份或其他CDN
+        if (typeof echarts === 'undefined') {
+            console.error('ECharts加载失败，尝试备用CDN');
+            document.write('<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"><\/script>');
+            document.write('<script src="https://cdn.bootcdn.net/ajax/libs/echarts-wordcloud/2.1.0/echarts-wordcloud.min.js"><\/script>');
+        }
+    </script>
+
+    <!-- 引入自定义JS -->
+    <script src="{% static 'js/douban_detail.js' %}"></script>
+                     <!-- 数据传递到JavaScript -->
+    <script type="text/javascript">
+        // 将Django模板变量定义为全局JSON字符串
+        var commentKeywordsJson = '{{ comment_keywords|escapejs }}';
+        var ratingTrendsJson = '{{ rating_trends|escapejs }}';
+        var sequentialWordcloudJson = '{{ sequential_wordcloud|escapejs }}';
+        var randomPagesWordcloudJson = '{{ random_pages_wordcloud|escapejs }}';
+        var randomIntervalWordcloudJson = '{{ random_interval_wordcloud|escapejs }}';
+        var randomBlockWordcloudJson = '{{ random_block_wordcloud|escapejs }}';
+        
+        // 调试输出 - 检查数据是否正确传递
+        console.log("数据接收状态:", {
+            "评论词云JSON长度": commentKeywordsJson ? commentKeywordsJson.length : 0,
+            "评分趋势JSON长度": ratingTrendsJson ? ratingTrendsJson.length : 0,
+            "顺序策略词云JSON长度": sequentialWordcloudJson ? sequentialWordcloudJson.length : 0,
+            "随机页码策略词云JSON长度": randomPagesWordcloudJson ? randomPagesWordcloudJson.length : 0,
+            "随机间隔策略词云JSON长度": randomIntervalWordcloudJson ? randomIntervalWordcloudJson.length : 0,
+            "随机区块策略词云JSON长度": randomBlockWordcloudJson ? randomBlockWordcloudJson.length : 0,
+        });
+        
+        // 电影ID (用于调试)
+        var movieId = "{{ movie.douban_id }}";
+        console.log("电影ID:", movieId);
+    </script>
+
+    {% endblock %}
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <h5>评论词云</h5>
+                                    <button id="updateWordcloud" class="btn btn-sm btn-outline-primary float-end"><i class="fas fa-sync-alt"></i> 更新</button>
                                     <small class="text-muted">基于所有评论生成</small>
                                 </div>
                                 <div class="card-body">
+                                    <!-- 电影ID隐藏字段 -->
+                                    <input type="hidden" id="movie-id" value="{{ movie.douban_id }}">
+                                    <div id="wordcloud-debug"></div>
                                     {% if comment_keywords and comment_keywords|length > 0 %}
                                     <div id="wordcloud" style="width:100%; height:300px;"></div>
                                     {% else %}
@@ -234,59 +283,5 @@
             </div>
         </div>
     </div>
-
-    {% block scripts %}
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
-    <!-- 引入 ECharts -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    
-    <!-- 数据传递到JavaScript -->
-    <script type="text/javascript">
-        // 将Django模板变量转换为JavaScript变量
-        window.commentKeywords = [];
-        window.ratingTrends = [];
-        window.strategyWordcloudData = {};
-        
-        {% if comment_keywords %}
-            window.commentKeywords = [
-                {% for item in comment_keywords %}
-                    {
-                        name: "{{ item.name|escapejs }}",
-                        value: {{ item.value|default:"1" }}
-                    }{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            ];
-            console.log("词云数据加载成功，共 " + window.commentKeywords.length + " 个关键词");
-        {% endif %}
-        
-        {% if rating_trends %}
-            window.ratingTrends = [
-                {% for item in rating_trends %}
-                    {
-                        date: "{{ item.date|escapejs }}",
-                        rating: {{ item.rating|default:"0"|stringformat:"%.1f" }},
-                        count: {{ item.count|default:"0" }}
-                    }{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            ];
-            console.log("评分趋势数据加载成功，共 " + window.ratingTrends.length + " 个数据点");
-        {% endif %}
-
-        // 策略词云数据初始化
-        window.strategyWordcloudData = {
-            sequential: {{ sequential_wordcloud|default:"[]"|safe }},
-            random_pages: {{ random_pages_wordcloud|default:"[]"|safe }},
-            random_interval: {{ random_interval_wordcloud|default:"[]"|safe }},
-            random_block: {{ random_block_wordcloud|default:"[]"|safe }}
-        };
-        
-        // 主词云数据
-        window.wordcloudData = {{ comment_keywords|default:"[]"|safe }};
-    </script>
-    
-    <!-- 引入自定义JS -->
-    <script src="{% static 'js/douban_detail.js' %}"></script>
-    {% endblock %}
 </body>
 </html> 
