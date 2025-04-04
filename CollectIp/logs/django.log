@@ -19164,3 +19164,13 @@ DEBUG 2025-04-04 13:30:22,367 utils 31680 30160 (0.000) SET SESSION TRANSACTION 
 DEBUG 2025-04-04 13:30:22,432 utils 31680 30160 (0.000) SELECT `django_session`.`session_key`, `django_session`.`session_data`, `django_session`.`expire_date` FROM `django_session` WHERE (`django_session`.`expire_date` > '2025-04-04 13:30:22.363513' AND `django_session`.`session_key` = 'whnjg770zvm721fdtckrqtt8uagsxbzl') LIMIT 21; args=('2025-04-04 13:30:22.363513', 'whnjg770zvm721fdtckrqtt8uagsxbzl'); alias=default
 DEBUG 2025-04-04 13:30:22,490 utils 31680 30160 (0.000) SELECT `auth_user`.`id`, `auth_user`.`password`, `auth_user`.`last_login`, `auth_user`.`is_superuser`, `auth_user`.`username`, `auth_user`.`first_name`, `auth_user`.`last_name`, `auth_user`.`email`, `auth_user`.`is_staff`, `auth_user`.`is_active`, `auth_user`.`date_joined` FROM `auth_user` WHERE `auth_user`.`id` = 1 LIMIT 21; args=(1,); alias=default
 INFO 2025-04-04 13:30:22,581 basehttp 31680 30160 "GET /admin/jsi18n/ HTTP/1.1" 200 8560
+DEBUG 2025-04-04 13:34:48,652 utils 31680 31388 (0.000) 
+                SELECT VERSION(),
+                       @@sql_mode,
+                       @@default_storage_engine,
+                       @@sql_auto_is_null,
+                       @@lower_case_table_names,
+                       CONVERT_TZ('2001-01-01 01:00:00', 'UTC', 'UTC') IS NOT NULL
+            ; args=None; alias=default
+DEBUG 2025-04-04 13:34:48,654 utils 31680 31388 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None; alias=default
+DEBUG 2025-04-04 13:34:48,656 utils 31680 31388 (0.000) SELECT `proxy_settings`.`id`, `proxy_settings`.`crawler_interval`, `proxy_settings`.`score_interval`, `proxy_settings`.`min_score`, `proxy_settings`.`auto_crawler`, `proxy_settings`.`auto_score`, `proxy_settings`.`captcha_retries` FROM `proxy_settings` ORDER BY `proxy_settings`.`id` ASC LIMIT 1; args=(); alias=default
