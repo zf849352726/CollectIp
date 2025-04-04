@@ -129,7 +129,7 @@ import sys
 import os
 import django
 
-sys.path.append('D:/python_learn/CollectIp/CollectIp')  # 替换为你的 Django 项目的路径
+sys.path.append('/usr/local/CollectIp/CollectIp')  # 替换为你的 Django 项目的路径
 os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'  # 替换为你的 Django 项目的 settings 模块
 django.setup()
 

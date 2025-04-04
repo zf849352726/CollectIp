@@ -13,7 +13,7 @@ sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'CollectIp'))
 
 # 设置Django设置模块
-os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings_optimized'
 
 # 其他Scrapy设置...
 BOT_NAME = 'crawl_ip'
