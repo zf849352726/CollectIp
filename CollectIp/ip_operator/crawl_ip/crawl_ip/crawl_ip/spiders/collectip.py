@@ -107,7 +107,7 @@ class CollectipSpider(scrapy.Spider):
     
     def __init__(self, *args, **kwargs):
         super(CollectipSpider, self).__init__(*args, **kwargs)
-        print("【调试】CollectIP爬虫初始化，将使用代理中间件和UA中间件")
+        logger.info("【调试】CollectIP爬虫初始化，将使用代理中间件和UA中间件")
         
         # 在爬虫初始化时获取验证码最大重试次数（避免异步上下文问题）
         self.captcha_max_retries = 5  # 默认值
@@ -129,18 +129,18 @@ class CollectipSpider(scrapy.Spider):
                 settings_obj = ProxySettings.objects.first()
                 if settings_obj and hasattr(settings_obj, 'captcha_retries'):
                     self.captcha_max_retries = settings_obj.captcha_retries
-                    print(f"从数据库获取验证码最大重试次数: {self.captcha_max_retries}")
+                    logger.info(f"从数据库获取验证码最大重试次数: {self.captcha_max_retries}")
                     logger.info(f"从数据库获取验证码最大重试次数: {self.captcha_max_retries}")
                 else:
-                    print("未找到验证码重试设置，使用默认值: 5")
+                    logger.info("未找到验证码重试设置，使用默认值: 5")
                     logger.warning("未找到验证码重试设置，使用默认值: 5")
             except Exception as e:
-                print(f"获取数据库设置时出错: {e}")
+                logger.info(f"获取数据库设置时出错: {e}")
                 logger.error(f"获取数据库设置时出错: {e}")
         except Exception as e:
-            print(f"导入Django设置时出错: {e}")
+            logger.info(f"导入Django设置时出错: {e}")
             
-        print(f"验证码识别将使用最大重试次数: {self.captcha_max_retries}")
+        logger.info(f"验证码识别将使用最大重试次数: {self.captcha_max_retries}")
 
     def parse(self, response):
         options = Options()
@@ -515,9 +515,9 @@ class CollectipSpider(scrapy.Spider):
             # 测试验证码识别
             successful_test = False
             for i in range(3):  # 测试3次
-                print(f"\n开始第{i + 1}次测试:")
+                logger.info(f"\n开始第{i + 1}次测试:")
                 code = self.get_captcha_text(driver)
-                print(f"识别结果: {code}")
+                logger.info(f"识别结果: {code}")
 
                 # 尝试输入验证码
                 code_input = driver.find_element(By.XPATH, '//*[@id="code"]')
@@ -534,27 +534,27 @@ class CollectipSpider(scrapy.Spider):
                 try:
                     # 尝试获取数据表格，如果能获取到说明验证码正确
                     driver.find_element(By.XPATH, '//*[@id="proxytable"]')
-                    print("验证码识别成功！")
+                    logger.info("验证码识别成功！")
                     successful_test = True
                     break
                 except:
-                    print("验证码可能识别错误，将重试")
+                    logger.info("验证码可能识别错误，将重试")
                     # 刷新页面重试
                     driver.refresh()
                     time.sleep(2)
                     
             if not successful_test:
-                print("所有测试都失败，验证码识别功能可能有问题")
+                logger.info("所有测试都失败，验证码识别功能可能有问题")
 
         except Exception as e:
-            print(f"测试过程中出错: {e}")
+            logger.info(f"测试过程中出错: {e}")
             import traceback
-            traceback.print_exc()
+            traceback.logger.info_exc()
             
         finally:
             # 确保无论如何都关闭浏览器
             if driver:
-                print("关闭Chrome浏览器")
+                logger.info("关闭Chrome浏览器")
                 try:
                     driver.quit()
                     self.test_driver = None  # 清除引用
@@ -567,22 +567,50 @@ class CollectipSpider(scrapy.Spider):
                     try:
                         # 尝试使用psutil进行更彻底的清理
                         import psutil
-                        for proc in psutil.process_iter(['pid', 'name']):
+                        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
                             try:
                                 # 如果是测试期间创建的Chrome进程，尝试终止它
                                 if 'chrome' in proc.name().lower():
-                                    print(f"尝试终止可能的Chrome残留进程: {proc.pid}")
+                                    logger.info(f"尝试终止可能的Chrome残留进程: {proc.pid}")
                                     if platform.system() == 'Windows':
                                         os.kill(proc.pid, signal.SIGTERM)
                                     else:
-                                        os.kill(proc.pid, signal.SIGKILL)
-                            except (psutil.NoSuchProcess, psutil.AccessDenied, OSError):
-                                pass
+                                        # Linux系统下的处理
+                                        logger.info(f"在Linux系统下终止Chrome进程: {proc.pid}")
+                                        # 首先尝试正常终止
+                                        os.kill(proc.pid, signal.SIGTERM)
+                                        # 给进程一些时间来正常关闭
+                                        time.sleep(0.5)
+                                        # 检查进程是否还存在
+                                        if psutil.pid_exists(proc.pid):
+                                            logger.info(f"进程 {proc.pid} 没有响应SIGTERM，尝试SIGKILL")
+                                            os.kill(proc.pid, signal.SIGKILL)
+                                        
+                                        # 对于Linux系统，还可以使用命令行工具进行额外清理
+                                        try:
+                                            import subprocess
+                                            # 查找并杀死所有chromedriver进程
+                                            subprocess.run("pkill -f chromedriver", shell=True)
+                                            # 查找并杀死所有zombie状态的chrome相关进程
+                                            subprocess.run("ps -ef | grep chrome | grep defunct | awk '{logger.info $2}' | xargs -r kill -9", shell=True)
+                                        except Exception as e:
+                                            logger.info(f"执行Linux命令行清理时出错: {e}")
+                            except (psutil.NoSuchProcess, psutil.AccessDenied, OSError) as e:
+                                logger.info(f"处理进程时出错: {e}")
                     except ImportError:
-                        print("psutil不可用，无法进行额外的进程清理")
+                        logger.info("psutil不可用，无法进行额外的进程清理")
+                        # 在Linux系统下尝试使用命令行工具进行清理
+                        if platform.system() != 'Windows':
+                            try:
+                                import subprocess
+                                logger.info("尝试使用Linux命令行工具清理Chrome进程")
+                                subprocess.run("pkill -f chrome", shell=True)
+                                subprocess.run("pkill -f chromedriver", shell=True)
+                            except Exception as e:
+                                logger.info(f"使用命令行工具清理时出错: {e}")
                         
                 except Exception as e:
-                    print(f"关闭浏览器时出错: {e}")
+                    logger.info(f"关闭浏览器时出错: {e}")
 
     def closed(self, reason):
         """Spider关闭时的清理操作，确保所有WebDriver实例都被关闭"""
