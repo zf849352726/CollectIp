@@ -47,7 +47,40 @@ Apache启动时显示错误：`Invalid command 'WSGIScriptAlias', perhaps misspe
    python manage.py migrate --settings=CollectIp.settings_optimized
    ```
 
-## 3. Apache配置错误："No such file or directory"
+## 3. URL配置错误："No installed app with label 'admin'"
+
+### 问题描述
+运行Django命令时显示错误：`LookupError: No installed app with label 'admin'`
+
+### 解决方法
+这个错误表明URL配置引用了admin应用，但在优化的设置中没有安装admin应用。
+
+1. 使用优化版URL配置：
+   ```bash
+   # 确认settings_optimized.py中设置了
+   ROOT_URLCONF = 'CollectIp.urls_optimized'
+   ```
+
+2. 或者在urls.py中注释掉admin相关配置：
+   ```python
+   # 将
+   # path('admin/', admin.site.urls),
+   # 替换为
+   # 移除admin路径
+   # path('admin/', admin.site.urls),
+   ```
+
+3. 分步迁移：
+   ```bash
+   # 对各个应用单独迁移
+   python manage.py migrate auth --settings=CollectIp.settings_optimized
+   python manage.py migrate contenttypes --settings=CollectIp.settings_optimized
+   python manage.py migrate sessions --settings=CollectIp.settings_optimized
+   python manage.py migrate index --settings=CollectIp.settings_optimized
+   python manage.py migrate ip_operator --settings=CollectIp.settings_optimized
+   ```
+
+## 4. Apache配置错误："No such file or directory"
 
 ### 问题描述
 Apache启动时提示找不到文件或目录。
@@ -67,7 +100,7 @@ Apache启动时提示找不到文件或目录。
    sudo chmod 644 /usr/local/CollectIp/CollectIp/CollectIp/wsgi.py
    ```
 
-## 4. 数据库连接错误："Access denied for user"
+## 5. 数据库连接错误："Access denied for user"
 
 ### 问题描述
 Django尝试连接数据库时返回"Access denied for user"错误。
@@ -93,7 +126,7 @@ Django尝试连接数据库时返回"Access denied for user"错误。
    }
    ```
 
-## 5. 静态文件未加载
+## 6. 静态文件未加载
 
 ### 问题描述
 部署后，网站的CSS、JavaScript和图片等静态文件无法正常加载。
@@ -115,7 +148,7 @@ Django尝试连接数据库时返回"Access denied for user"错误。
    sudo chown -R www-data:www-data /usr/local/CollectIp/CollectIp/staticfiles
    ```
 
-## 6. 系统日志查看
+## 7. 系统日志查看
 
 当遇到问题时，检查以下日志文件可能会有帮助：
 
@@ -139,7 +172,7 @@ Django尝试连接数据库时返回"Access denied for user"错误。
    sudo journalctl -xe
    ```
 
-## 7. Apache状态检查
+## 8. Apache状态检查
 
 检查Apache状态和语法：
 
@@ -154,7 +187,7 @@ sudo apache2ctl configtest
 sudo apache2ctl -M
 ```
 
-## 8. Python环境问题
+## 9. Python环境问题
 
 如果遇到Python相关错误：
 

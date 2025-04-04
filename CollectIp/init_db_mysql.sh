@@ -4,7 +4,7 @@
 echo "开始初始化MySQL数据库..."
 
 # MySQL密码
-MYSQL_PASSWORD="123456"
+MYSQL_PASSWORD="Usb04usb.com"
 
 # 确保collectipdb数据库存在
 echo "创建数据库（如果不存在）..."

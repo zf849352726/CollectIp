@@ -48,7 +48,8 @@ MIDDLEWARE = [
     # 'debug_toolbar.middleware.DebugToolbarMiddleware', # 移除调试工具栏
 ]
 
-ROOT_URLCONF = 'CollectIp.urls'
+# 设置URL配置为优化版本
+ROOT_URLCONF = 'CollectIp.urls_optimized'
 
 TEMPLATES = [
     {
