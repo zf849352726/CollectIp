@@ -12,6 +12,10 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
+# 添加项目根目录到Python路径
+PROJECT_ROOT = '/usr/local/CollectIp'
+sys.path.append(PROJECT_ROOT)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -218,4 +222,10 @@ LOGGING = {
 
 # 减少文件上传处理的内存使用
 FILE_UPLOAD_MAX_MEMORY_SIZE = 2621440  # 2.5MB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440  # 2.5MB 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440  # 2.5MB
+
+# 设置正确的Django设置模块
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+
+# 延迟Django设置初始化
+# 将django.setup()移到爬虫的__init__方法中 
