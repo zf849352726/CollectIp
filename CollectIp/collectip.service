@@ -1,0 +1,33 @@
+[Unit]
+Description=CollectIp Django Application
+After=network.target mysql.service
+Requires=mysql.service
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/usr/local/CollectIp
+ExecStart=/usr/local/CollectIp/venv/bin/gunicorn --config /usr/local/CollectIp/gunicorn_config.py CollectIp.wsgi:application
+
+# 内存优化设置
+MemoryLimit=256M
+MemoryAccounting=true
+CPUAccounting=true
+IOAccounting=true
+Restart=on-failure
+RestartSec=5s
+
+# 优化OOM杀死行为
+OOMScoreAdjust=-500
+
+# 限制文件描述符数
+LimitNOFILE=4096
+
+# 安全设置
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target 
