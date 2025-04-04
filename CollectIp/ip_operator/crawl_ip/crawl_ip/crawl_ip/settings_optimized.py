@@ -1,29 +1,73 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy设置 - 内存优化版本
-# 适用于内存有限的Linux VPS
+# Scrapy settings for crawl_ip project
 
+import os
+import sys
+
+# 将系统路径调整为能找到Django项目
+# 获取爬虫项目目录的父级目录
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+# 添加到Python路径
+sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'CollectIp'))
+
+# 设置Django设置模块
+os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'
+
+# 其他Scrapy设置...
 BOT_NAME = 'crawl_ip'
 
 SPIDER_MODULES = ['crawl_ip.spiders']
 NEWSPIDER_MODULE = 'crawl_ip.spiders'
 
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
+
+# Configure maximum concurrent requests performed by Scrapy
+CONCURRENT_REQUESTS = 4
+
+# 添加下载延迟以减轻服务器负担
+DOWNLOAD_DELAY = 3
+
+# 其他爬虫设置...
+
+# 禁用cookie
+COOKIES_ENABLED = False
+
+# 启用或禁用爬虫中间件
+SPIDER_MIDDLEWARES = {
+   # 'crawl_ip.middlewares.CrawlIpSpiderMiddleware': 543,
+}
+
+# 启用或禁用下载中间件
+DOWNLOADER_MIDDLEWARES = {
+   # 'crawl_ip.middlewares.CrawlIpDownloaderMiddleware': 543,
+}
+
+# 设置项目管道
+ITEM_PIPELINES = {
+   'crawl_ip.pipelines.IpPipeline': 300,
+}
+
+# 设置日志级别
+LOG_LEVEL = 'INFO'
+
+# 配置日志文件
+LOG_FILE = os.path.join(BASE_DIR, 'logs/scrapy_collectip.log')
+
+# 延迟Django设置初始化到爬虫运行时
+# (不要在settings.py中调用django.setup())
+
+# 使爬虫输出中文不出现乱码
+FEED_EXPORT_ENCODING = 'utf-8'
+
 # 爬虫行为配置
 USER_AGENT = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36'
 
-# 遵守robots.txt规则
-ROBOTSTXT_OBEY = True
-
 # 减少并发请求数以降低内存使用
-CONCURRENT_REQUESTS = 4
 CONCURRENT_REQUESTS_PER_DOMAIN = 2
 CONCURRENT_REQUESTS_PER_IP = 2
-
-# 下载延迟，增大以减少服务器负载和内存使用
-DOWNLOAD_DELAY = 3
-
-# 禁用cookies以减少内存使用
-COOKIES_ENABLED = False
 
 # 禁用Telnet控制台以减少内存使用
 TELNETCONSOLE_ENABLED = False
@@ -36,12 +80,6 @@ SPIDER_MIDDLEWARES = {
 DOWNLOADER_MIDDLEWARES = {
    'crawl_ip.middlewares.CrawlIpDownloaderMiddleware': 543,
    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-}
-
-# 减少Item Pipeline使用
-ITEM_PIPELINES = {
-   'crawl_ip.pipelines.ProxyPipeline': 300,
-   'crawl_ip.pipelines.CommentPipeline': 200,
 }
 
 # 禁用大多数扩展以减少内存使用
@@ -68,8 +106,6 @@ MEMUSAGE_WARNING_MB = 100
 
 # 启用日志文件而不是控制台输出，并降低日志级别以减少磁盘IO
 LOG_ENABLED = True
-LOG_LEVEL = 'WARNING'  # 只记录警告和错误
-LOG_FILE = 'crawl_ip.log'
 LOG_FILE_APPEND = False  # 每次运行覆盖日志文件以避免文件过大
 
 # 禁用统计信息收集以减少内存使用
@@ -79,10 +115,6 @@ STATS_DUMP = False
 SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
 SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 SCHEDULER_PRIORITY_QUEUE = 'scrapy.pqueues.DownloaderAwarePriorityQueue'
-
-# 减少每个域名和IP的请求数
-CONCURRENT_REQUESTS_PER_DOMAIN = 2
-CONCURRENT_REQUESTS_PER_IP = 2
 
 # 关闭重试以减少请求数量
 RETRY_ENABLED = False 
