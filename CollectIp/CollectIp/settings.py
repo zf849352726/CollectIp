@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'collectipdb',
         'USER': 'root',  # 确保这个用户名正确
-        'PASSWORD': 'Usb04usb@com',  # 根据实际情况修改密码，如果root没有设置密码，设为空字符串
+        'PASSWORD': '123456',  # 根据实际情况修改密码，如果root没有设置密码，设为空字符串
         'HOST': '127.0.0.1',
         'PORT': '3306',
     },
