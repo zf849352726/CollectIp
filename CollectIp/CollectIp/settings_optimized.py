@@ -22,7 +22,7 @@ SECRET_KEY = 'django-insecure-2ockpy=7#hbuh4!a=01@we$*vko#j-xp$4w+9w73u+!u#ml)55
 DEBUG = False
 
 # 允许所有主机连接，或指定您的域名
-ALLOWED_HOSTS = ['108.165.40.14']
+ALLOWED_HOSTS = ['*']
 
 # Application definition - 只保留必要的应用
 INSTALLED_APPS = [
@@ -74,7 +74,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'collectipdb',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': '123456',  # 更新为新设置的MySQL密码
         'HOST': '127.0.0.1',
         'PORT': '3306',
         # 添加连接池优化

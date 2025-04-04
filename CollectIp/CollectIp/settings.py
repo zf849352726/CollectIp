@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-2ockpy=7#hbuh4!a=01@we$*vko#j-xp$4w+9w73u+!u#ml)55
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # 允许所有主机连接，适用于开发环境
 
 # Application definition
 
@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'collectipdb',
-        'USER': 'root',
-        'PASSWORD': '123456',
+        'USER': 'root',  # 确保这个用户名正确
+        'PASSWORD': 'Usb04usb@com',  # 根据实际情况修改密码，如果root没有设置密码，设为空字符串
         'HOST': '127.0.0.1',
         'PORT': '3306',
     },
