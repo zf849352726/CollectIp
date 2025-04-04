@@ -75,7 +75,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'collectipdb',
         'USER': 'root',
-        'PASSWORD': '123456',  # 更新为新设置的MySQL密码
+        'PASSWORD': '123456',  # 更新为新的MySQL密码
         'HOST': '127.0.0.1',
         'PORT': '3306',
         # 添加连接池优化
