@@ -3,7 +3,8 @@ import jieba
 import jieba.analyse
 from collections import Counter
 import logging
-from snownlp import SnowNLP
+# 禁用SnowNLP导入
+# from snownlp import SnowNLP
 import numpy as np
 from typing import List, Tuple, Dict
 
@@ -36,14 +37,34 @@ class TextProcessor:
     
     @staticmethod
     def analyze_sentiment(text: str) -> Tuple[int, float]:
-        """分析文本情感"""
+        """分析文本情感 (SnowNLP已禁用，使用简单词典代替)"""
         try:
             if not text.strip():
                 return 0, 0.5
+            
+            # 简单的情感词典 - 正面词汇
+            positive_words = ['好', '赞', '喜欢', '棒', '优秀', '推荐', '精彩', '满意', '不错', '值得']
+            # 简单的情感词典 - 负面词汇
+            negative_words = ['差', '糟', '失望', '烂', '不好', '讨厌', '无聊', '垃圾', '浪费', '后悔']
+            
+            # 计算情感得分
+            pos_count = 0
+            neg_count = 0
+            
+            for word in positive_words:
+                if word in text:
+                    pos_count += 1
+                    
+            for word in negative_words:
+                if word in text:
+                    neg_count += 1
+            
+            # 计算得分
+            total = pos_count + neg_count
+            if total == 0:
+                return 0, 0.5  # 中性
                 
-            # 使用SnowNLP进行情感分析
-            s = SnowNLP(text)
-            score = s.sentiments
+            score = pos_count / total
             
             # 根据得分判断情感倾向
             if score > 0.6:
@@ -54,6 +75,20 @@ class TextProcessor:
                 sentiment = 0  # 中性
                 
             return sentiment, round(score, 4)
+            
+            # SnowNLP代码已禁用
+            # s = SnowNLP(text)
+            # score = s.sentiments
+            # 
+            # # 根据得分判断情感倾向
+            # if score > 0.6:
+            #     sentiment = 1  # 正面
+            # elif score < 0.4:
+            #     sentiment = -1  # 负面
+            # else:
+            #     sentiment = 0  # 中性
+            #     
+            # return sentiment, round(score, 4)
         except Exception as e:
             logger.error(f"情感分析失败: {str(e)}")
             return 0, 0.5
