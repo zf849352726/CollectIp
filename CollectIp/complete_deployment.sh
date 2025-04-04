@@ -20,11 +20,11 @@ fi
 
 # 第1步: 更新设置文件中的MySQL密码
 echo -e "${GREEN}【步骤1/6】更新数据库设置...${NC}"
-if grep -q "PASSWORD = 'Usb04usb.com'" CollectIp/settings_optimized.py; then
+if grep -q "PASSWORD = '123456'" CollectIp/settings_optimized.py; then
     echo -e "${GREEN}数据库密码已更新。${NC}"
 else
     echo -e "${YELLOW}更新数据库密码...${NC}"
-    sed -i "s/PASSWORD = '.*'/PASSWORD = 'Usb04usb.com'/" CollectIp/settings_optimized.py
+    sed -i "s/PASSWORD = '.*'/PASSWORD = '123456'/" CollectIp/settings_optimized.py
     if [ $? -ne 0 ]; then
         echo -e "${RED}更新密码失败。请手动修改settings_optimized.py中的密码。${NC}"
         exit 1
@@ -49,7 +49,7 @@ fi
 # 第3步: 初始化数据库
 echo -e "${GREEN}【步骤3/6】初始化数据库...${NC}"
 echo -e "${YELLOW}检查并创建数据库...${NC}"
-mysql -u root -p'Usb04usb.com' -e "CREATE DATABASE IF NOT EXISTS collectipdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p'123456' -e "CREATE DATABASE IF NOT EXISTS collectipdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 if [ $? -ne 0 ]; then
     echo -e "${RED}数据库初始化失败。请检查MySQL连接和密码。${NC}"
     exit 1
