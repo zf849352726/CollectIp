@@ -30,7 +30,8 @@ from index.views import (
     toggle_movie_published,
     get_last_crawl_status,
     create_collection, get_collection, update_collection, delete_collection,
-    logs_view, get_log_content, download_log
+    logs_view, get_log_content, download_log,
+    csrf_debug
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -73,6 +74,7 @@ urlpatterns = [
     path('logs/', logs_view, name='logs_view'),
     path('api/logs/content/', get_log_content, name='get_log_content'),
     path('api/logs/download/', download_log, name='download_log'),
+    path('csrf-debug/', csrf_debug, name='csrf_debug'),
 ]
 
 if settings.DEBUG:

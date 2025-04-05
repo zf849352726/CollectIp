@@ -27,12 +27,17 @@ from django.utils import timezone
 from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import HttpResponse
+from django.middleware.csrf import get_token
+import re
+import time
 
 logger = logging.getLogger(__name__)
 
 # Create your views here.
 def login_view(request):
     if request.method == 'GET':
+        # 确保创建新的CSRF令牌
+        request.META["CSRF_COOKIE_USED"] = True
         return render(request, 'login.html')
     
     if request.method == 'POST':
@@ -50,6 +55,8 @@ def login_view(request):
             else:
                 request.session.set_expiry(0)  # 浏览器关闭即过期
                 
+            # 确保CSRF令牌在登录后更新
+            request.META["CSRF_COOKIE_USED"] = True
             return redirect('ip_pool')  # 改为新的URL名称
         else:
             messages.error(request, '用户名或密码错误')
@@ -1642,3 +1649,19 @@ def check_log_for_errors(log_path):
     except Exception:
         # 如果读取出错，默认返回False
         return False
+
+# 添加CSRF调试视图
+@csrf_exempt
+def csrf_debug(request):
+    """调试CSRF配置的视图"""
+    csrf_token = get_token(request)
+    debug_info = {
+        'csrf_token': csrf_token,
+        'headers': dict(request.headers),
+        'cookies': dict(request.COOKIES),
+        'is_secure': request.is_secure(),
+        'method': request.method,
+        'path': request.path,
+        'host': request.get_host(),
+    }
+    return JsonResponse(debug_info)
