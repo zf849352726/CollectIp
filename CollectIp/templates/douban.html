@@ -7,10 +7,15 @@
     <title>{{ page_title|default:"豆瓣数据分析" }}</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
+    <script src="{% static 'js/douban.js' %}"></script>
     {% csrf_token %}
 </head>
 <body>
     <!-- 顶部标题栏 -->
+    {% block scripts %}
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
+    {% endblock %}
     <nav class="top-nav">
         <div class="nav-logo">
             <h1><a href="/" style="text-decoration: none; color: inherit;">凡眼工作台</a></h1>
@@ -402,11 +407,5 @@
             </div>
         </div>
     </div>
-
-    {% block scripts %}
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/douban.js' %}"></script>
-    {% endblock %}
 </body>
 </html> 
