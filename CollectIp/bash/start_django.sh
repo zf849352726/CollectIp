@@ -53,16 +53,32 @@ python manage.py check
 # 收集静态文件
 echo "收集静态文件..."
 python manage.py collectstatic --noinput
-
 # 启动Django服务器
 echo "正在启动Django应用服务器..."
 echo "======================================================"
-if [ "$1" == "production" ]; then
-    # 生产环境模式 - 使用Gunicorn
-    echo "生产环境模式 - 使用Gunicorn"
-    gunicorn --bind 0.0.0.0:8000 CollectIp.wsgi:application
-else
-    # 开发环境模式 - 使用Django内置服务器
-    echo "开发环境模式 - 使用Django内置服务器"
-    python manage.py runserver 0.0.0.0:8000
+echo "请选择启动模式:"
+echo "1) 开发环境 - 使用Django内置服务器"
+echo "2) 生产环境 - 使用Gunicorn"
+echo "3) 调试模式 - 使用Django内置服务器(DEBUG=True)"
+echo "4) 测试模式 - 运行测试套件"
+read -p "请输入选项 [1-4] (默认: 1): " choice
+
+case $choice in
+    2)
+        echo "生产环境模式 - 使用Gunicorn"
+        gunicorn --bind 0.0.0.0:8000 CollectIp.wsgi:application
+        ;;
+    3)
+        echo "调试模式 - 使用Django内置服务器(DEBUG=True)"
+        python manage.py runserver 0.0.0.0:8000 --settings=CollectIp.settings.debug
+        ;;
+    4)
+        echo "测试模式 - 运行测试套件"
+        python manage.py test
+        ;;
+    *)
+        echo "开发环境模式 - 使用Django内置服务器"
+        python manage.py runserver 0.0.0.0:8000
+        ;;
+esac
 fi 
