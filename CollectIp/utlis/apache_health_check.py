@@ -3,7 +3,7 @@
 Apache部署健康检查 - 低内存环境下验证Django项目状态
 
 使用方法:
-  python apache_health_check.py
+  python apache_health_check.py [项目根目录]
 
 此脚本执行以下操作:
 1. 验证项目结构
@@ -22,14 +22,60 @@ import traceback
 
 # 修正项目路径
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-# 向上两级目录获取项目根目录
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
+
+# 自动检测项目根目录的函数
+def detect_project_root():
+    """自动检测项目根目录"""
+    # 检查是否通过命令行参数提供了项目根目录
+    if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+        return os.path.abspath(sys.argv[1])
+    
+    # 尝试不同的可能路径
+    candidate_paths = [
+        # 向上两级目录（如果脚本在 CollectIp/CollectIp/utlis 目录下）
+        os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..')),
+        # 向上三级目录（如果脚本在 /usr/local/CollectIp/CollectIp/utlis 目录下）
+        os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..', '..')),
+        # 直接检查标准位置
+        "/var/www/CollectIp",
+        "/var/www/html/CollectIp",
+        "/usr/local/CollectIp"
+    ]
+    
+    for path in candidate_paths:
+        # 判断是否是Django项目根目录（包含manage.py）
+        if os.path.isfile(os.path.join(path, 'manage.py')):
+            return path
+    
+    # 如果找不到项目根目录，尝试搜索整个文件系统
+    try:
+        print("正在搜索整个文件系统，寻找manage.py... (可能需要一些时间)")
+        result = subprocess.run(
+            ["find", "/", "-name", "manage.py", "-type", "f", "-not", "-path", "*/\.*"],
+            capture_output=True,
+            text=True,
+            timeout=60  # 设置超时，避免搜索过久
+        )
+        
+        # 如果找到了manage.py文件
+        if result.stdout:
+            # 取第一个找到的manage.py的目录
+            manage_py_path = result.stdout.strip().split('\n')[0]
+            return os.path.dirname(manage_py_path)
+    except:
+        pass
+    
+    # 如果仍然找不到，返回默认路径
+    return "/usr/local/CollectIp"
+
+# 获取项目根目录
+PROJECT_ROOT = detect_project_root()
 sys.path.insert(0, PROJECT_ROOT)
 
 class HealthChecker:
     """健康检查类"""
     
-    def __init__(self):
+    def __init__(self, project_root=None):
         self.checks_passed = 0
         self.checks_failed = 0
         self.has_fatal_error = False
@@ -37,12 +83,40 @@ class HealthChecker:
         # 跳过验证的应用
         self.skip_apps = ['mongo_admin']
         
-        # 设置Django环境
-        os.environ["DJANGO_SETTINGS_MODULE"] = "CollectIp.settings_optimized"
-        
         # 项目根目录
-        self.project_root = PROJECT_ROOT
+        self.project_root = project_root or PROJECT_ROOT
         print(f"项目根目录: {self.project_root}")
+        
+        # 检查项目根目录是否存在
+        if not os.path.isdir(self.project_root):
+            print(f"错误: 项目根目录不存在: {self.project_root}")
+            print("请提供正确的项目根目录路径作为命令行参数: python apache_health_check.py [项目根目录]")
+            sys.exit(1)
+        
+        # 检查Django设置模块
+        possible_settings = [
+            "CollectIp.settings_optimized",
+            "CollectIp.settings",
+            "settings_optimized",
+            "settings"
+        ]
+        
+        self.settings_module = None
+        for module_name in possible_settings:
+            try:
+                sys.path.insert(0, self.project_root)
+                __import__(module_name)
+                self.settings_module = module_name
+                break
+            except ImportError:
+                continue
+        
+        # 设置Django环境
+        if self.settings_module:
+            os.environ["DJANGO_SETTINGS_MODULE"] = self.settings_module
+        else:
+            print("警告: 无法找到Django设置模块，将使用默认值: CollectIp.settings_optimized")
+            os.environ["DJANGO_SETTINGS_MODULE"] = "CollectIp.settings_optimized"
     
     def print_header(self, title):
         """打印标题"""
@@ -72,28 +146,26 @@ class HealthChecker:
         
         # 检查主要目录和文件
         key_dirs = [
-            os.path.join(self.project_root, 'index'),
-            os.path.join(self.project_root, 'CollectIp'),
-            os.path.join(self.project_root, 'ip_operator'),
-            os.path.join(self.project_root, 'static'),
-            os.path.join(self.project_root, 'templates')
+            ('index', os.path.join(self.project_root, 'index')),
+            ('CollectIp', os.path.join(self.project_root, 'CollectIp')),
+            ('ip_operator', os.path.join(self.project_root, 'ip_operator')),
+            ('static', os.path.join(self.project_root, 'static')),
+            ('templates', os.path.join(self.project_root, 'templates'))
         ]
         key_files = [
-            os.path.join(self.project_root, 'manage.py'),
-            os.path.join(self.project_root, 'CollectIp', 'settings_optimized.py'),
-            os.path.join(self.project_root, 'CollectIp', 'wsgi.py')
+            ('manage.py', os.path.join(self.project_root, 'manage.py')),
+            ('settings_optimized.py', os.path.join(self.project_root, 'CollectIp', 'settings_optimized.py')),
+            ('wsgi.py', os.path.join(self.project_root, 'CollectIp', 'wsgi.py'))
         ]
         
-        for dir_path in key_dirs:
-            dir_name = os.path.basename(dir_path)
+        for dir_name, dir_path in key_dirs:
             self.print_result(
                 f"目录 '{dir_name}' 存在",
                 os.path.isdir(dir_path),
                 f"目录 '{dir_path}' 不存在"
             )
         
-        for file_path in key_files:
-            file_name = os.path.basename(file_path)
+        for file_name, file_path in key_files:
             self.print_result(
                 f"文件 '{file_name}' 存在",
                 os.path.isfile(file_path),
@@ -106,23 +178,31 @@ class HealthChecker:
             current_dir = os.getcwd()
             os.chdir(self.project_root)  # 切换到项目根目录
             
-            import django
-            django.setup()
-            
-            from django.conf import settings
-            if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT:
-                static_dir = settings.STATIC_ROOT
-                static_dir_exists = os.path.isdir(static_dir)
+            # 尝试导入Django设置
+            try:
+                import django
+                django.setup()
+                
+                from django.conf import settings
+                if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT:
+                    static_dir = settings.STATIC_ROOT
+                    static_dir_exists = os.path.isdir(static_dir)
+                    self.print_result(
+                        f"静态文件目录 '{static_dir}' 存在",
+                        static_dir_exists,
+                        f"静态文件目录 '{static_dir}' 不存在，您需要运行 'python manage.py collectstatic'"
+                    )
+                else:
+                    self.print_result(
+                        "STATIC_ROOT 已设置",
+                        False,
+                        "STATIC_ROOT 未在设置中定义"
+                    )
+            except ImportError as e:
                 self.print_result(
-                    f"静态文件目录 '{static_dir}' 存在",
-                    static_dir_exists,
-                    f"静态文件目录 '{static_dir}' 不存在，您需要运行 'python manage.py collectstatic'"
-                )
-            else:
-                self.print_result(
-                    "STATIC_ROOT 已设置",
+                    "检查静态文件目录",
                     False,
-                    "STATIC_ROOT 未在设置中定义"
+                    f"无法导入Django设置: {e}"
                 )
                 
             # 恢复工作目录
@@ -144,60 +224,62 @@ class HealthChecker:
             current_dir = os.getcwd()
             os.chdir(self.project_root)
             
-            import django
-            django.setup()
-            
-            from django.conf import settings
-            
-            # 检查关键设置
-            self.print_result(
-                "DEBUG 设置为 False",
-                not settings.DEBUG,
-                "生产环境中 DEBUG 应该设置为 False"
-            )
-            
-            self.print_result(
-                "ALLOWED_HOSTS 已配置",
-                len(settings.ALLOWED_HOSTS) > 0 and settings.ALLOWED_HOSTS != [''],
-                "ALLOWED_HOSTS 应该配置为您的域名或 '*'"
-            )
-            
-            self.print_result(
-                "数据库设置已配置",
-                hasattr(settings, 'DATABASES') and 'default' in settings.DATABASES,
-                "默认数据库设置不完整"
-            )
-            
-            self.print_result(
-                "静态文件设置已配置",
-                hasattr(settings, 'STATIC_URL') and hasattr(settings, 'STATIC_ROOT'),
-                "静态文件设置不完整"
-            )
-            
-            # 检查内存优化设置
-            memory_optimized = (
-                'django.contrib.admin' not in settings.INSTALLED_APPS and
-                len(settings.MIDDLEWARE) <= 10 and
-                hasattr(settings, 'FILE_UPLOAD_MAX_MEMORY_SIZE') and 
-                settings.FILE_UPLOAD_MAX_MEMORY_SIZE <= 5242880  # 5MB
-            )
-            
-            self.print_result(
-                "内存优化设置已应用",
-                memory_optimized,
-                "某些内存优化设置未应用"
-            )
+            # 尝试导入Django
+            try:
+                import django
+                django.setup()
+                
+                from django.conf import settings
+                
+                # 检查关键设置
+                self.print_result(
+                    "DEBUG 设置为 False",
+                    not settings.DEBUG,
+                    "生产环境中 DEBUG 应该设置为 False"
+                )
+                
+                self.print_result(
+                    "ALLOWED_HOSTS 已配置",
+                    len(settings.ALLOWED_HOSTS) > 0 and settings.ALLOWED_HOSTS != [''],
+                    "ALLOWED_HOSTS 应该配置为您的域名或 '*'"
+                )
+                
+                self.print_result(
+                    "数据库设置已配置",
+                    hasattr(settings, 'DATABASES') and 'default' in settings.DATABASES,
+                    "默认数据库设置不完整"
+                )
+                
+                self.print_result(
+                    "静态文件设置已配置",
+                    hasattr(settings, 'STATIC_URL') and hasattr(settings, 'STATIC_ROOT'),
+                    "静态文件设置不完整"
+                )
+                
+                # 检查内存优化设置
+                memory_optimized = (
+                    'django.contrib.admin' not in settings.INSTALLED_APPS and
+                    len(settings.MIDDLEWARE) <= 10 and
+                    hasattr(settings, 'FILE_UPLOAD_MAX_MEMORY_SIZE') and 
+                    settings.FILE_UPLOAD_MAX_MEMORY_SIZE <= 5242880  # 5MB
+                )
+                
+                self.print_result(
+                    "内存优化设置已应用",
+                    memory_optimized,
+                    "某些内存优化设置未应用"
+                )
+            except ImportError as e:
+                self.print_result(
+                    "导入设置模块",
+                    False,
+                    f"无法导入设置: {e}",
+                    fatal=True
+                )
             
             # 恢复工作目录
             os.chdir(current_dir)
             
-        except ImportError as e:
-            self.print_result(
-                "导入设置模块",
-                False,
-                f"无法导入设置: {e}",
-                fatal=True
-            )
         except Exception as e:
             self.print_result(
                 "检查设置",
@@ -219,32 +301,39 @@ class HealthChecker:
             current_dir = os.getcwd()
             os.chdir(self.project_root)
             
-            import django
-            django.setup()
-            
-            from django.db import connections
-            connection = connections['default']
-            connection.ensure_connection()
-            
-            self.print_result(
-                "连接到默认数据库",
-                True
-            )
-            
-            # 检查migrations是否已应用
             try:
-                with connection.cursor() as cursor:
-                    cursor.execute("SELECT COUNT(*) FROM django_migrations")
-                    count = cursor.fetchone()[0]
-                    
+                import django
+                django.setup()
+                
+                from django.db import connections
+                connection = connections['default']
+                connection.ensure_connection()
+                
                 self.print_result(
-                    "数据库迁移已应用",
-                    count > 0,
-                    f"发现 {count} 迁移记录，如果这是第一次部署，您需要运行 'python manage.py migrate'"
+                    "连接到默认数据库",
+                    True
                 )
-            except Exception as e:
+                
+                # 检查migrations是否已应用
+                try:
+                    with connection.cursor() as cursor:
+                        cursor.execute("SELECT COUNT(*) FROM django_migrations")
+                        count = cursor.fetchone()[0]
+                        
+                    self.print_result(
+                        "数据库迁移已应用",
+                        count > 0,
+                        f"发现 {count} 迁移记录，如果这是第一次部署，您需要运行 'python manage.py migrate'"
+                    )
+                except Exception as e:
+                    self.print_result(
+                        "检查数据库迁移",
+                        False,
+                        f"错误: {e}"
+                    )
+            except ImportError as e:
                 self.print_result(
-                    "检查数据库迁移",
+                    "导入数据库模块",
                     False,
                     f"错误: {e}"
                 )
@@ -252,12 +341,6 @@ class HealthChecker:
             # 恢复工作目录
             os.chdir(current_dir)
                 
-        except ImportError as e:
-            self.print_result(
-                "导入数据库模块",
-                False,
-                f"错误: {e}"
-            )
         except Exception as e:
             self.print_result(
                 "连接到数据库",
@@ -280,31 +363,32 @@ class HealthChecker:
             current_dir = os.getcwd()
             os.chdir(self.project_root)
             
-            import django
-            django.setup()
-            
-            # 导入URL配置
-            from django.urls import get_resolver
-            resolver = get_resolver()
-            
-            # 检查关键URL模式是否存在
-            key_url_names = ['index', 'login', 'logout', 'ip_pool', 'logs_view']
-            for url_name in key_url_names:
+            try:
+                import django
+                django.setup()
+                
+                # 导入URL配置
+                from django.urls import get_resolver
+                resolver = get_resolver()
+                
+                # 检查关键URL模式是否存在
+                key_url_names = ['index', 'login', 'logout', 'ip_pool', 'logs_view']
+                for url_name in key_url_names:
+                    self.print_result(
+                        f"URL名称 '{url_name}' 已配置",
+                        url_name in resolver.reverse_dict,
+                        f"URL名称 '{url_name}' 未找到"
+                    )
+            except ImportError as e:
                 self.print_result(
-                    f"URL名称 '{url_name}' 已配置",
-                    url_name in resolver.reverse_dict,
-                    f"URL名称 '{url_name}' 未找到"
+                    "导入URL配置",
+                    False,
+                    f"错误: {e}"
                 )
             
             # 恢复工作目录
             os.chdir(current_dir)
                 
-        except ImportError as e:
-            self.print_result(
-                "导入URL配置",
-                False,
-                f"错误: {e}"
-            )
         except Exception as e:
             self.print_result(
                 "检查URL配置",
@@ -328,48 +412,56 @@ class HealthChecker:
             if os.path.exists(wsgi_optimized_path):
                 # 尝试导入优化的WSGI
                 mod_path = "CollectIp.wsgi_optimized"
-                sys.path.insert(0, self.project_root)
-                module = importlib.import_module(mod_path)
-                self.print_result(
-                    "加载优化的WSGI配置",
-                    hasattr(module, 'application'),
-                    "wsgi_optimized.py 不包含 'application' 对象"
-                )
+                try:
+                    sys.path.insert(0, self.project_root)
+                    module = importlib.import_module(mod_path)
+                    self.print_result(
+                        "加载优化的WSGI配置",
+                        hasattr(module, 'application'),
+                        "wsgi_optimized.py 不包含 'application' 对象"
+                    )
+                except ImportError as e:
+                    self.print_result(
+                        "导入优化的WSGI模块",
+                        False,
+                        f"错误: {e}"
+                    )
             else:
                 # 尝试导入默认WSGI
                 mod_path = "CollectIp.wsgi"
-                sys.path.insert(0, self.project_root)
-                module = importlib.import_module(mod_path)
-                self.print_result(
-                    "加载WSGI配置",
-                    hasattr(module, 'application'),
-                    "wsgi.py 不包含 'application' 对象"
-                )
-                
-                # 检查是否使用了优化的设置
-                is_optimized = False
                 try:
-                    with open(wsgi_path, 'r') as f:
-                        content = f.read()
-                        is_optimized = "settings_optimized" in content
-                except:
-                    pass
-                
-                self.print_result(
-                    "WSGI使用优化的设置",
-                    is_optimized,
-                    "wsgi.py 未配置为使用 'settings_optimized'"
-                )
+                    sys.path.insert(0, self.project_root)
+                    module = importlib.import_module(mod_path)
+                    self.print_result(
+                        "加载WSGI配置",
+                        hasattr(module, 'application'),
+                        "wsgi.py 不包含 'application' 对象"
+                    )
+                    
+                    # 检查是否使用了优化的设置
+                    is_optimized = False
+                    try:
+                        with open(wsgi_path, 'r') as f:
+                            content = f.read()
+                            is_optimized = "settings_optimized" in content
+                    except:
+                        pass
+                    
+                    self.print_result(
+                        "WSGI使用优化的设置",
+                        is_optimized,
+                        "wsgi.py 未配置为使用 'settings_optimized'"
+                    )
+                except ImportError as e:
+                    self.print_result(
+                        "导入WSGI模块",
+                        False,
+                        f"错误: {e}"
+                    )
             
             # 恢复工作目录
             os.chdir(current_dir)
                 
-        except ImportError as e:
-            self.print_result(
-                "导入WSGI模块",
-                False,
-                f"错误: {e}"
-            )
         except Exception as e:
             self.print_result(
                 "检查WSGI配置",
@@ -460,6 +552,17 @@ class HealthChecker:
         print("   sudo a2ensite collectip.conf")
         print("4. 重启Apache:")
         print("   sudo systemctl restart apache2")
+        
+        # 如果检查失败，提供一些额外的帮助信息
+        if self.has_fatal_error:
+            print("\n如果您的项目结构不同于标准Django项目结构，您可以通过命令行参数指定项目根目录:")
+            print("   python apache_health_check.py /path/to/your/project")
+            
+        # 提供一些可能有用的调试建议
+        print("\n调试提示:")
+        print("- 确保已激活正确的Python虚拟环境")
+        print("- 如果您使用非标准的项目结构，请在命令行参数中提供正确的项目根目录")
+        print("- 检查 DJANGO_SETTINGS_MODULE 环境变量是否正确设置")
     
     def run_all_checks(self):
         """运行所有检查"""
@@ -483,7 +586,14 @@ class HealthChecker:
 def main():
     """主函数"""
     print(f"运行Apache健康检查脚本，脚本位置: {os.path.abspath(__file__)}")
-    checker = HealthChecker()
+    
+    # 解析命令行参数
+    project_root = None
+    if len(sys.argv) > 1:
+        project_root = sys.argv[1]
+        print(f"使用指定的项目根目录: {project_root}")
+    
+    checker = HealthChecker(project_root)
     success = checker.run_all_checks()
     return 0 if success else 1
 

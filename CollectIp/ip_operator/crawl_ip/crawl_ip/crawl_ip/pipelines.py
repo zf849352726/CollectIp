@@ -8,10 +8,165 @@
 from itemadapter import ItemAdapter
 import pymysql
 import logging
+import os
+import sys
 from django.conf import settings
 from django.utils import timezone
 from index.mongodb_utils import MongoDBClient
-from CollectIp.utlis.text_utils import TextProcessor
+# 修复导入问题
+# 获取当前文件的目录
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 尝试查找项目根目录
+def find_project_root():
+    """尝试查找项目根目录"""
+    # 可能的项目根目录和utlis目录列表
+    possible_roots = []
+    
+    # 从当前目录向上查找，最多查找5级
+    current_path = CURRENT_DIR
+    for _ in range(5):
+        parent_path = os.path.dirname(current_path)
+        # 检查是否有manage.py，这通常表示Django项目根目录
+        if os.path.isfile(os.path.join(parent_path, 'manage.py')):
+            possible_roots.append(parent_path)
+        # 检查是否有CollectIp目录，这可能是中间目录
+        if os.path.basename(parent_path) == 'CollectIp':
+            # 检查上一级目录是否有manage.py
+            grandparent = os.path.dirname(parent_path)
+            if os.path.isfile(os.path.join(grandparent, 'manage.py')):
+                possible_roots.append(grandparent)
+        # 向上移动一级
+        current_path = parent_path
+    
+    # 添加常见的部署路径
+    possible_roots.extend([
+        '/usr/local/CollectIp',
+        '/var/www/CollectIp',
+        '/var/www/html/CollectIp'
+    ])
+    
+    # 去除重复项
+    possible_roots = list(set(possible_roots))
+    
+    return possible_roots
+
+# 尝试加载TextProcessor
+TEXT_PROCESSOR_LOADED = False
+
+def load_text_processor():
+    """尝试加载TextProcessor，使用多种可能的路径"""
+    global TEXT_PROCESSOR_LOADED
+    
+    # 如果已经加载，直接返回
+    if TEXT_PROCESSOR_LOADED:
+        return True
+    
+    # 记录尝试日志
+    logger = logging.getLogger(__name__)
+    logger.info("尝试导入TextProcessor...")
+    
+    # 获取可能的项目根目录
+    project_roots = find_project_root()
+    logger.info(f"找到可能的项目根目录: {project_roots}")
+    
+    # 可能的导入路径列表
+    import_paths = [
+        # 直接导入
+        'from utlis.text_utils import TextProcessor',
+        # 从CollectIp导入
+        'from CollectIp.utlis.text_utils import TextProcessor',
+        # 尝试绝对路径导入
+    ]
+    
+    # 添加项目根目录到sys.path并尝试导入
+    for root in project_roots:
+        if root not in sys.path:
+            sys.path.insert(0, root)
+            logger.info(f"添加路径到sys.path: {root}")
+    
+    # 尝试不同的导入路径
+    for import_path in import_paths:
+        try:
+            logger.info(f"尝试导入: {import_path}")
+            exec(import_path)
+            logger.info(f"成功导入TextProcessor")
+            TEXT_PROCESSOR_LOADED = True
+            return True
+        except ImportError as e:
+            logger.warning(f"导入失败: {import_path}, 错误: {e}")
+    
+    # 如果前面的导入都失败了，再尝试一次直接导入，可能前面的步骤修改了sys.path
+    try:
+        # 尝试直接导入
+        from utlis.text_utils import TextProcessor
+        logger.info("成功导入TextProcessor")
+        TEXT_PROCESSOR_LOADED = True
+        return True
+    except ImportError as e:
+        logger.error(f"所有导入尝试都失败: {e}")
+        return False
+
+# 尝试导入TextProcessor
+try:
+    # 首先尝试直接导入
+    try:
+        from utlis.text_utils import TextProcessor
+        logging.info("直接导入TextProcessor成功")
+    except ImportError:
+        # 然后尝试从CollectIp导入
+        try:
+            from CollectIp.utlis.text_utils import TextProcessor
+            logging.info("从CollectIp导入TextProcessor成功")
+        except ImportError:
+            # 使用我们的自定义函数尝试加载
+            if not load_text_processor():
+                # 如果所有尝试都失败，创建一个简单的替代类
+                logging.warning("创建TextProcessor替代类")
+                class TextProcessor:
+                    @staticmethod
+                    def clean_text(text):
+                        """清洗文本，去除无效字符"""
+                        if not text:
+                            return ""
+                        # 简单的文本清洗
+                        import re
+                        # 去除HTML标签
+                        text = re.sub(r'<[^>]+>', '', text)
+                        # 去除URL
+                        text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
+                        # 去除特殊字符和多余空格
+                        text = re.sub(r'[^\w\s\u4e00-\u9fff]', ' ', text)
+                        text = re.sub(r'\s+', ' ', text)
+                        # 去除首尾空格
+                        text = text.strip()
+                        return text
+                    
+                    @staticmethod
+                    def analyze_sentiment(text):
+                        """简单的情感分析"""
+                        return 0, 0.5
+                    
+                    @staticmethod
+                    def extract_keywords(text, top_n=5):
+                        """提取关键词"""
+                        return []
+except Exception as e:
+    logging.error(f"导入或创建TextProcessor时出错: {e}")
+    # 确保无论如何都有一个TextProcessor
+    class TextProcessor:
+        @staticmethod
+        def clean_text(text):
+            return text if text else ""
+        
+        @staticmethod
+        def analyze_sentiment(text):
+            return 0, 0.5
+        
+        @staticmethod
+        def extract_keywords(text, top_n=5):
+            return []
+
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
