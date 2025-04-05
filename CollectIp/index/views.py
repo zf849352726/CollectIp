@@ -1359,11 +1359,14 @@ def logs_view(request):
     """日志查看页面"""
     log_files = []
     
-    # Django日志
+    # 路径兼容性处理
+    is_windows = os.name == 'nt'
+    
+    # Django日志目录
     django_log_dir = os.path.join(settings.BASE_DIR, 'logs')
     if os.path.exists(django_log_dir):
         for file in os.listdir(django_log_dir):
-            if file.startswith('django'):
+            if file.startswith('django') or file.endswith('.log'):
                 log_path = os.path.join(django_log_dir, file)
                 file_stat = os.stat(log_path)
                 size_bytes = file_stat.st_size
@@ -1373,58 +1376,109 @@ def logs_view(request):
                 # 检查是否包含错误
                 has_error = check_log_for_errors(log_path)
                 
+                # 确定日志类型
+                log_type = 'django'
+                description = 'Django系统日志，记录Web应用运行状态'
+                
+                if 'ip_operator' in file:
+                    log_type = 'crawler'
+                    description = 'IP爬虫日志，记录IP采集过程'
+                
                 log_files.append({
                     'name': file,
                     'path': log_path,
                     'size': size_display,
                     'last_modified': last_modified,
-                    'type': 'django',
+                    'type': log_type,
                     'has_error': has_error,
-                    'description': 'Django系统日志，记录Web应用运行状态'
+                    'description': description
                 })
     
-    # 应用日志
-    app_log_dir = os.path.join(os.path.dirname(settings.BASE_DIR), 'logs')
-    if os.path.exists(app_log_dir):
+    # 应用日志 - 根据操作系统调整路径
+    # Windows: 父目录下的logs
+    # Linux: 当前项目目录下的logs
+    if is_windows:
+        app_log_dir = os.path.join(os.path.dirname(settings.BASE_DIR), 'logs')
+    else:
+        app_log_dir = django_log_dir  # Linux下使用同一日志目录
+        
+    if os.path.exists(app_log_dir) and app_log_dir != django_log_dir:
         for file in os.listdir(app_log_dir):
-            log_path = os.path.join(app_log_dir, file)
-            file_stat = os.stat(log_path)
-            size_bytes = file_stat.st_size
-            size_display = format_file_size(size_bytes)
-            last_modified = datetime.fromtimestamp(file_stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
-            
-            # 检查是否包含错误
-            has_error = check_log_for_errors(log_path)
-            
-            # 根据文件名确定日志类型
-            if 'crawler' in file:
-                log_type = 'crawler'
-                description = 'IP爬虫日志，记录IP采集过程'
-            elif 'spider' in file:
-                log_type = 'spider'
-                description = '爬虫进程日志，记录爬虫运行状态'
-            elif 'scheduler' in file:
-                log_type = 'scheduler'
-                description = '调度器日志，记录自动任务执行'
-            elif 'douban' in file:
-                log_type = 'douban'
-                description = '豆瓣数据采集日志'
-            elif 'scorer' in file:
-                log_type = 'scorer'
-                description = 'IP评分器日志，记录IP评分过程'
-            else:
-                log_type = 'other'
-                description = '其他系统日志'
+            if file.endswith('.log'):
+                log_path = os.path.join(app_log_dir, file)
+                file_stat = os.stat(log_path)
+                size_bytes = file_stat.st_size
+                size_display = format_file_size(size_bytes)
+                last_modified = datetime.fromtimestamp(file_stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
                 
-            log_files.append({
-                'name': file,
-                'path': log_path,
-                'size': size_display,
-                'last_modified': last_modified,
-                'type': log_type,
-                'has_error': has_error,
-                'description': description
-            })
+                # 检查是否包含错误
+                has_error = check_log_for_errors(log_path)
+                
+                # 根据文件名确定日志类型
+                if 'crawler' in file:
+                    log_type = 'crawler'
+                    description = 'IP爬虫日志，记录IP采集过程'
+                elif 'spider' in file or 'scrapy' in file or 'collectip' in file:
+                    log_type = 'spider'
+                    description = '爬虫进程日志，记录爬虫运行状态'
+                elif 'scheduler' in file:
+                    log_type = 'scheduler'
+                    description = '调度器日志，记录自动任务执行'
+                elif 'douban' in file:
+                    log_type = 'douban'
+                    description = '豆瓣数据采集日志'
+                elif 'scorer' in file:
+                    log_type = 'scorer'
+                    description = 'IP评分器日志，记录IP评分过程'
+                else:
+                    log_type = 'other'
+                    description = '其他系统日志'
+                    
+                log_files.append({
+                    'name': file,
+                    'path': log_path,
+                    'size': size_display,
+                    'last_modified': last_modified,
+                    'type': log_type,
+                    'has_error': has_error,
+                    'description': description
+                })
+    
+    # 检查Apache日志目录
+    apache_log_dirs = ['/var/log/apache2', '/var/log/httpd']
+    for apache_dir in apache_log_dirs:
+        if os.path.exists(apache_dir):
+            for file in os.listdir(apache_dir):
+                if 'collectip' in file and file.endswith('.log'):
+                    log_path = os.path.join(apache_dir, file)
+                    try:
+                        file_stat = os.stat(log_path)
+                        size_bytes = file_stat.st_size
+                        size_display = format_file_size(size_bytes)
+                        last_modified = datetime.fromtimestamp(file_stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                        
+                        # 确定日志类型和描述
+                        log_type = 'apache'
+                        description = 'Apache服务器日志'
+                        if 'error' in file:
+                            description = 'Apache错误日志'
+                            has_error = True
+                        elif 'access' in file:
+                            description = 'Apache访问日志'
+                            has_error = False
+                        
+                        log_files.append({
+                            'name': file,
+                            'path': log_path,
+                            'size': size_display,
+                            'last_modified': last_modified,
+                            'type': log_type,
+                            'has_error': has_error,
+                            'description': description
+                        })
+                    except (PermissionError, OSError):
+                        # 如果没有权限读取Apache日志，跳过
+                        continue
     
     # 按最后修改时间排序，最新的在前面
     log_files.sort(key=lambda x: x['last_modified'], reverse=True)
@@ -1447,20 +1501,46 @@ def get_log_content(request):
         })
     
     try:
+        # 检查是否为Apache日志，需要特殊处理权限
+        is_apache_log = '/var/log/apache' in log_path or '/var/log/httpd' in log_path
+        
         # 判断文件大小，如果过大则只读取尾部内容
         file_size = os.path.getsize(log_path)
         max_size = 1024 * 1024  # 1MB
         
-        with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-            if file_size > max_size:
-                # 文件过大，只读取尾部
-                f.seek(max_size * -1, os.SEEK_END)
-                # 丢弃第一行，因为可能是不完整的
-                f.readline()
-                content = f.read()
-                content = "... [文件过大，仅显示最后部分] ...\n\n" + content
-            else:
-                content = f.read()
+        if is_apache_log and not os.access(log_path, os.R_OK):
+            # 对于Apache日志，如果没有直接读取权限，尝试使用系统命令获取
+            import subprocess
+            try:
+                # 使用tail命令获取最后1000行
+                process = subprocess.run(['sudo', 'tail', '-n', '1000', log_path], 
+                                      capture_output=True, text=True, check=True)
+                content = process.stdout
+                if not content:
+                    content = "日志文件为空或无法读取权限不足的内容"
+            except subprocess.CalledProcessError:
+                # 如果sudo tail失败，尝试不带sudo
+                try:
+                    process = subprocess.run(['tail', '-n', '1000', log_path], 
+                                          capture_output=True, text=True, check=True)
+                    content = process.stdout
+                except:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Apache日志文件权限不足，无法读取'
+                    })
+        else:
+            # 常规文件读取处理
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                if file_size > max_size:
+                    # 文件过大，只读取尾部
+                    f.seek(max_size * -1, os.SEEK_END)
+                    # 丢弃第一行，因为可能是不完整的
+                    f.readline()
+                    content = f.read()
+                    content = "... [文件过大，仅显示最后部分] ...\n\n" + content
+                else:
+                    content = f.read()
         
         return JsonResponse({
             'status': 'success',
@@ -1486,10 +1566,43 @@ def download_log(request):
     
     try:
         filename = os.path.basename(log_path)
-        with open(log_path, 'rb') as f:
-            response = HttpResponse(f.read(), content_type='application/octet-stream')
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
+        
+        # 检查是否为Apache日志，需要特殊处理权限
+        is_apache_log = '/var/log/apache' in log_path or '/var/log/httpd' in log_path
+        
+        if is_apache_log and not os.access(log_path, os.R_OK):
+            # 对于Apache日志，如果没有直接读取权限，尝试使用系统命令获取
+            import subprocess
+            import tempfile
+            
+            # 创建临时文件
+            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                temp_path = temp_file.name
+            
+            try:
+                # 尝试使用sudo复制文件到临时位置
+                subprocess.run(['sudo', 'cp', log_path, temp_path], check=True)
+                subprocess.run(['sudo', 'chmod', '644', temp_path], check=True)
+                
+                # 读取临时文件
+                with open(temp_path, 'rb') as f:
+                    response = HttpResponse(f.read(), content_type='application/octet-stream')
+                
+                # 删除临时文件
+                os.unlink(temp_path)
+            except subprocess.CalledProcessError:
+                # 如果sudo命令失败，返回错误信息
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Apache日志文件权限不足，无法下载'
+                })
+        else:
+            # 常规文件处理
+            with open(log_path, 'rb') as f:
+                response = HttpResponse(f.read(), content_type='application/octet-stream')
+        
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
     except Exception as e:
         logger.exception(f"下载日志文件失败: {e}")
         return JsonResponse({
