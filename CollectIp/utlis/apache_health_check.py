@@ -20,6 +20,12 @@ import importlib
 import subprocess
 import traceback
 
+# 修正项目路径
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 向上两级目录获取项目根目录
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
+sys.path.insert(0, PROJECT_ROOT)
+
 class HealthChecker:
     """健康检查类"""
     
@@ -33,6 +39,10 @@ class HealthChecker:
         
         # 设置Django环境
         os.environ["DJANGO_SETTINGS_MODULE"] = "CollectIp.settings_optimized"
+        
+        # 项目根目录
+        self.project_root = PROJECT_ROOT
+        print(f"项目根目录: {self.project_root}")
     
     def print_header(self, title):
         """打印标题"""
@@ -61,25 +71,44 @@ class HealthChecker:
         self.print_header("项目结构检查")
         
         # 检查主要目录和文件
-        key_dirs = ['index', 'CollectIp', 'ip_operator', 'static', 'templates']
-        key_files = ['manage.py', 'CollectIp/settings_optimized.py', 'CollectIp/wsgi.py']
+        key_dirs = [
+            os.path.join(self.project_root, 'index'),
+            os.path.join(self.project_root, 'CollectIp'),
+            os.path.join(self.project_root, 'ip_operator'),
+            os.path.join(self.project_root, 'static'),
+            os.path.join(self.project_root, 'templates')
+        ]
+        key_files = [
+            os.path.join(self.project_root, 'manage.py'),
+            os.path.join(self.project_root, 'CollectIp', 'settings_optimized.py'),
+            os.path.join(self.project_root, 'CollectIp', 'wsgi.py')
+        ]
         
-        for dir_name in key_dirs:
+        for dir_path in key_dirs:
+            dir_name = os.path.basename(dir_path)
             self.print_result(
                 f"目录 '{dir_name}' 存在",
-                os.path.isdir(dir_name),
-                f"目录 '{dir_name}' 不存在"
+                os.path.isdir(dir_path),
+                f"目录 '{dir_path}' 不存在"
             )
         
-        for file_name in key_files:
+        for file_path in key_files:
+            file_name = os.path.basename(file_path)
             self.print_result(
                 f"文件 '{file_name}' 存在",
-                os.path.isfile(file_name),
-                f"文件 '{file_name}' 不存在"
+                os.path.isfile(file_path),
+                f"文件 '{file_path}' 不存在"
             )
         
         # 检查静态文件目录
         try:
+            # 添加Django设置到路径
+            current_dir = os.getcwd()
+            os.chdir(self.project_root)  # 切换到项目根目录
+            
+            import django
+            django.setup()
+            
             from django.conf import settings
             if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT:
                 static_dir = settings.STATIC_ROOT
@@ -95,6 +124,9 @@ class HealthChecker:
                     False,
                     "STATIC_ROOT 未在设置中定义"
                 )
+                
+            # 恢复工作目录
+            os.chdir(current_dir)
         except Exception as e:
             self.print_result(
                 "检查静态文件目录",
@@ -108,6 +140,13 @@ class HealthChecker:
         
         # 尝试导入设置
         try:
+            # 切换到项目根目录
+            current_dir = os.getcwd()
+            os.chdir(self.project_root)
+            
+            import django
+            django.setup()
+            
             from django.conf import settings
             
             # 检查关键设置
@@ -149,6 +188,9 @@ class HealthChecker:
                 "某些内存优化设置未应用"
             )
             
+            # 恢复工作目录
+            os.chdir(current_dir)
+            
         except ImportError as e:
             self.print_result(
                 "导入设置模块",
@@ -173,6 +215,13 @@ class HealthChecker:
             return
         
         try:
+            # 切换到项目根目录
+            current_dir = os.getcwd()
+            os.chdir(self.project_root)
+            
+            import django
+            django.setup()
+            
             from django.db import connections
             connection = connections['default']
             connection.ensure_connection()
@@ -199,6 +248,9 @@ class HealthChecker:
                     False,
                     f"错误: {e}"
                 )
+            
+            # 恢复工作目录
+            os.chdir(current_dir)
                 
         except ImportError as e:
             self.print_result(
@@ -224,6 +276,13 @@ class HealthChecker:
             return
         
         try:
+            # 切换到项目根目录
+            current_dir = os.getcwd()
+            os.chdir(self.project_root)
+            
+            import django
+            django.setup()
+            
             # 导入URL配置
             from django.urls import get_resolver
             resolver = get_resolver()
@@ -236,6 +295,9 @@ class HealthChecker:
                     url_name in resolver.reverse_dict,
                     f"URL名称 '{url_name}' 未找到"
                 )
+            
+            # 恢复工作目录
+            os.chdir(current_dir)
                 
         except ImportError as e:
             self.print_result(
@@ -256,9 +318,17 @@ class HealthChecker:
         
         # 检查WSGI文件
         try:
-            if os.path.exists("CollectIp/wsgi_optimized.py"):
+            # 准备导入WSGI
+            current_dir = os.getcwd()
+            os.chdir(self.project_root)
+            
+            wsgi_optimized_path = os.path.join(self.project_root, "CollectIp", "wsgi_optimized.py")
+            wsgi_path = os.path.join(self.project_root, "CollectIp", "wsgi.py")
+            
+            if os.path.exists(wsgi_optimized_path):
                 # 尝试导入优化的WSGI
                 mod_path = "CollectIp.wsgi_optimized"
+                sys.path.insert(0, self.project_root)
                 module = importlib.import_module(mod_path)
                 self.print_result(
                     "加载优化的WSGI配置",
@@ -268,6 +338,7 @@ class HealthChecker:
             else:
                 # 尝试导入默认WSGI
                 mod_path = "CollectIp.wsgi"
+                sys.path.insert(0, self.project_root)
                 module = importlib.import_module(mod_path)
                 self.print_result(
                     "加载WSGI配置",
@@ -278,7 +349,6 @@ class HealthChecker:
                 # 检查是否使用了优化的设置
                 is_optimized = False
                 try:
-                    wsgi_path = "CollectIp/wsgi.py"
                     with open(wsgi_path, 'r') as f:
                         content = f.read()
                         is_optimized = "settings_optimized" in content
@@ -290,6 +360,9 @@ class HealthChecker:
                     is_optimized,
                     "wsgi.py 未配置为使用 'settings_optimized'"
                 )
+            
+            # 恢复工作目录
+            os.chdir(current_dir)
                 
         except ImportError as e:
             self.print_result(
@@ -309,10 +382,11 @@ class HealthChecker:
         self.print_header("Apache部署需求检查")
         
         # 检查Apache配置文件
+        apache_conf = os.path.join(self.project_root, "collectip_apache.conf")
         self.print_result(
             "Apache配置文件存在",
-            os.path.exists("collectip_apache.conf"),
-            "未找到 'collectip_apache.conf'，请先创建此文件"
+            os.path.exists(apache_conf),
+            f"未找到 'collectip_apache.conf'，请先创建此文件: {apache_conf}"
         )
         
         # 检查mod_wsgi是否可用
@@ -339,7 +413,7 @@ class HealthChecker:
             )
         
         # 检查文件权限
-        logs_dir = "logs"
+        logs_dir = os.path.join(self.project_root, "logs")
         logs_dir_exists = os.path.isdir(logs_dir)
         logs_writable = False
         
@@ -356,7 +430,7 @@ class HealthChecker:
         self.print_result(
             "日志目录可写",
             logs_dir_exists and logs_writable,
-            "日志目录不存在或不可写，您需要创建 'logs' 目录并设置正确的权限"
+            f"日志目录不存在或不可写，您需要创建 '{logs_dir}' 目录并设置正确的权限"
         )
     
     def print_summary(self):
@@ -379,7 +453,7 @@ class HealthChecker:
             
         print("\n部署命令:")
         print("1. 收集静态文件:")
-        print("   python manage.py collectstatic --settings=CollectIp.settings_optimized --noinput")
+        print(f"   cd {self.project_root} && python manage.py collectstatic --settings=CollectIp.settings_optimized --noinput")
         print("2. 复制Apache配置:")
         print("   sudo cp collectip_apache.conf /etc/apache2/sites-available/")
         print("3. 启用站点:")
@@ -408,6 +482,7 @@ class HealthChecker:
 
 def main():
     """主函数"""
+    print(f"运行Apache健康检查脚本，脚本位置: {os.path.abspath(__file__)}")
     checker = HealthChecker()
     success = checker.run_all_checks()
     return 0 if success else 1
