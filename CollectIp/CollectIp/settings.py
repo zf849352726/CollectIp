@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-2ockpy=7#hbuh4!a=01@we$*vko#j-xp$4w+9w73u+!u#ml)55
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']  # 允许所有主机连接，适用于开发环境
+ALLOWED_HOSTS = ['663712.xyz', 'www.663712.xyz', 'localhost', '127.0.0.1']  # 允许指定主机连接
 
 # Application definition
 
@@ -272,3 +272,26 @@ MONGODB_CONN = {
     'username': '',
     'password': '',
 }
+
+# CSRF设置
+CSRF_TRUSTED_ORIGINS = ['http://663712.xyz', 'https://663712.xyz', 
+                       'http://www.663712.xyz', 'https://www.663712.xyz']
+
+# HTTPS 设置
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False  # 在生产环境中设置为True
+SESSION_COOKIE_SECURE = False  # 在生产环境中设置为True
+CSRF_COOKIE_SECURE = False  # 在生产环境中设置为True
+
+# 电子邮件设置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'  # 或使用其他邮件服务商
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'admin@663712.xyz'  # 请替换为实际的邮箱
+EMAIL_HOST_PASSWORD = 'your_email_password'  # 请替换为实际密码
+DEFAULT_FROM_EMAIL = 'CollectIp <admin@663712.xyz>'
+
+# 管理员设置
+ADMINS = [('Admin', 'admin@663712.xyz')]
+MANAGERS = ADMINS

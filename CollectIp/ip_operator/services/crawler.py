@@ -337,5 +337,5 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
                 logger.error(f"删除爬虫锁文件时出错: {e}")
 
 if __name__ == '__main__':
-    # start_crawl()
-    start_douban_crawl('出走的决心')
+    start_crawl()
+    # start_douban_crawl('出走的决心')

@@ -1,0 +1,3 @@
+2025-04-05 13:17:08,490 - WARNING - 爬虫锁文件已过期，删除锁文件: D:\python_learn\CollectIp\crawler_collectip.lock
+2025-04-05 13:17:08,491 - WARNING - 开始爬取IP，类型: qq
+2025-04-05 13:17:08,498 - WARNING - 爬虫进程已启动，PID: 7408

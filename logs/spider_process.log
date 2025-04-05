@@ -1,0 +1,4 @@
+2025-04-05 13:16:15,692 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 13:16:16,931 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-05 13:17:09,163 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 13:17:10,205 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
