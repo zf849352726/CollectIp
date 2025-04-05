@@ -117,8 +117,6 @@ class CollectipSpider(scrapy.Spider):
             from django.conf import settings
             import django
             import os
-            import logging
-            logger = logging.getLogger(__name__)
             
             os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
             django.setup()
@@ -141,6 +139,13 @@ class CollectipSpider(scrapy.Spider):
             logger.info(f"导入Django设置时出错: {e}")
             
         logger.info(f"验证码识别将使用最大重试次数: {self.captcha_max_retries}")
+        
+        # 初始化一些属性
+        self.debug_mode = False
+        self.proxy_data = []
+        self.max_proxies = 1000
+        self.captcha_driver = None
+        self.max_pages = 5
 
     def parse(self, response):
         options = Options()
