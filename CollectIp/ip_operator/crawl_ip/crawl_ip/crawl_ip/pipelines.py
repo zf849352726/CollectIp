@@ -11,7 +11,7 @@ import logging
 from django.conf import settings
 from django.utils import timezone
 from index.mongodb_utils import MongoDBClient
-from CollectIp.ulits.text_utils import TextProcessor
+from CollectIp.utlis.text_utils import TextProcessor
 from datetime import datetime
 
 logger = logging.getLogger(__name__)

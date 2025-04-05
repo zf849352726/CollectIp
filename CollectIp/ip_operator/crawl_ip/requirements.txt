@@ -1,4 +1,0 @@
-scrapy>=2.5.0
-selenium>=4.0.0
-ddddocr>=1.4.7
-pillow>=9.0.0 

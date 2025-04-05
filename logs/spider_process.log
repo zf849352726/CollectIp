@@ -13,3 +13,39 @@
 2025-04-05 19:51:49,653 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
 2025-04-05 19:51:50,687 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
 2025-04-05 19:51:50,687 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:44:03,292 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:44:03,293 - WARNING - 设置爬取类型: qq
+2025-04-05 20:44:03,294 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:44:04,533 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:44:04,533 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:45:16,375 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:45:16,375 - WARNING - 设置爬取类型: qq
+2025-04-05 20:45:16,376 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:45:17,498 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:45:17,498 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:45:39,006 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:45:39,007 - WARNING - 设置爬取类型: qq
+2025-04-05 20:45:39,007 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:45:40,195 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:45:40,196 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:46:39,214 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:46:39,214 - WARNING - 设置爬取类型: qq
+2025-04-05 20:46:39,215 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:46:40,357 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:46:40,357 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:47:56,686 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:47:56,687 - WARNING - 设置爬取类型: qq
+2025-04-05 20:47:56,687 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:47:57,787 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:47:57,787 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:49:21,049 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:49:21,049 - WARNING - 设置爬取类型: qq
+2025-04-05 20:49:21,050 - WARNING - 设置爬取配置: {'crawl_type': 'qq'}
+2025-04-05 20:49:22,134 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.collectip
+2025-04-05 20:49:22,134 - WARNING - 启动爬虫，参数: {'crawl_type': 'qq'}
+2025-04-05 20:49:58,443 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-05 20:49:58,443 - WARNING - 电影名已编码: 霸王别姬 -> 6Zy4546L5Yir5aes
+2025-04-05 20:49:58,444 - WARNING - 设置电影名: 霸王别姬
+2025-04-05 20:49:58,444 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-05 20:49:59,530 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-05 20:49:59,531 - WARNING - 启动爬虫，参数: {'comment_strategy': 'sequential', 'max_pages': 5}

@@ -3,3 +3,6 @@
 2025-04-05 19:50:28,903 - WARNING - 准备爬取电影: 霸王别姬，使用策略: sequential，参数: {'strategy': 'sequential', 'max_pages': 5}
 2025-04-05 19:50:28,904 - WARNING - 开始爬取电影: 霸王别姬，使用策略: sequential
 2025-04-05 19:50:28,913 - WARNING - 爬虫进程已启动，PID: 39240
+2025-04-05 20:49:57,589 - WARNING - 准备爬取电影: 霸王别姬，使用策略: sequential，参数: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-05 20:49:57,590 - WARNING - 开始爬取电影: 霸王别姬，使用策略: sequential
+2025-04-05 20:49:57,596 - WARNING - 爬虫进程已启动，PID: 44788

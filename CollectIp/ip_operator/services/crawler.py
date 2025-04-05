@@ -410,6 +410,6 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
 
 
 if __name__ == '__main__':
-    start_crawl()
+    # start_crawl()
     # start_crawl_douban('霸王别姬')
-    # start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=5)
+    start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=5)
