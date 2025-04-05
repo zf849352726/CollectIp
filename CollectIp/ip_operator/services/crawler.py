@@ -10,6 +10,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import base64
 
+
 # 设置Django环境
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # 添加项目根目录到Python路径
@@ -34,6 +35,25 @@ else:
 CURRENT_DIR = Path(__file__).resolve().parent
 # 项目根目录
 PROJECT_ROOT = CURRENT_DIR.parent.parent.parent
+
+# 处理中文编码的函数
+def encode_movie_name(movie_name):
+    """使用Base64编码电影名，解决中文编码问题"""
+    try:
+        encoded_name = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
+        return encoded_name
+    except Exception as e:
+        print(f"编码电影名称出错: {str(e)}")
+        return None
+
+def decode_movie_name(encoded_name):
+    """解码Base64编码的电影名"""
+    try:
+        decoded_name = base64.b64decode(encoded_name.encode('ascii')).decode('utf-8')
+        return decoded_name
+    except Exception as e:
+        print(f"解码电影名称出错: {str(e)}")
+        return None
 
 # 设置日志
 def setup_logging(name="ip_operator", level=logging.WARNING):
@@ -92,27 +112,15 @@ def setup_logging(name="ip_operator", level=logging.WARNING):
     
     return logger
 
-# 处理中文编码的函数
-def encode_movie_name(movie_name):
-    """使用Base64编码电影名，解决中文编码问题"""
-    try:
-        encoded_name = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
-        return encoded_name
-    except Exception as e:
-        print(f"编码电影名称出错: {str(e)}")
-        return None
-        
-def decode_movie_name(encoded_name):
-    """解码Base64编码的电影名"""
-    try:
-        decoded_name = base64.b64decode(encoded_name.encode('ascii')).decode('utf-8')
-        return decoded_name
-    except Exception as e:
-        print(f"解码电影名称出错: {str(e)}")
-        return None
-
-def run_spider_process(spider_name, project_root, movie_name, crawl_config=None):
-    """在子进程中运行爬虫"""
+def run_spider_process(spider_name, project_root, input_data=None, crawl_config=None):
+    """在子进程中运行爬虫
+    
+    参数:
+        spider_name (str): 爬虫名称
+        project_root (str): 项目根目录
+        input_data (str): 输入数据，例如电影名称或者爬取类型
+        crawl_config (dict): 爬虫配置参数
+    """
     logger = setup_logging("spider_process", logging.WARNING)
     
     try:
@@ -120,7 +128,9 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         # 可能的爬虫目录列表
         possible_dirs = [
             os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip'),
-            os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip')
+            os.path.join(project_root, 'ip_operator', 'crawl_ip', 'crawl_ip'),
+            os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip'),
+            os.path.join(project_root, 'ip_operator', 'crawl_ip')
         ]
         
         # 查找第一个存在的目录
@@ -143,23 +153,35 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         from scrapy.utils.project import get_project_settings
         from importlib import import_module
         
-        # 使用Base64编码电影名
-        try:
-            encoded_movie_name = encode_movie_name(movie_name)
-            if encoded_movie_name:
-                os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
-                logger.warning(f"电影名已Base64编码: {movie_name} -> {encoded_movie_name}")
-        except Exception as e:
-            logger.error(f"编码电影名出错: {str(e)}")
+        # 根据爬虫类型设置环境变量
+        if spider_name == 'douban_spider' and input_data:
+            # 如果是电影名，处理编码问题
+            try:
+                # 使用base64编码解决中文问题
+                encoded_name = encode_movie_name(input_data)
+                if encoded_name:
+                    os.environ['MOVIE_NAME_ENCODED'] = encoded_name
+                    logger.warning(f"电影名已编码: {input_data} -> {encoded_name}")
+            except Exception as e:
+                logger.error(f"编码电影名失败: {str(e)}")
             
-        # 同时设置原始电影名作为备份
-        os.environ['MOVIE_NAME'] = movie_name
+            # 同时设置普通环境变量作为备用
+            os.environ['MOVIE_NAME'] = input_data
+            logger.warning(f"设置电影名: {input_data}")
+        elif spider_name == 'collectip' and input_data:
+            # 如果是IP爬虫，设置爬取类型
+            os.environ['CRAWL_TYPE'] = input_data
+            logger.warning(f"设置爬取类型: {input_data}")
         
         # 将爬取配置设置为环境变量
         if crawl_config:
             import json
-            os.environ['CRAWL_CONFIG'] = json.dumps(crawl_config)
-            logger.warning(f"设置爬取配置: {crawl_config}")
+            try:
+                config_json = json.dumps(crawl_config)
+                os.environ['CRAWL_CONFIG'] = config_json
+                logger.warning(f"设置爬取配置: {crawl_config}")
+            except Exception as e:
+                logger.error(f"序列化配置失败: {str(e)}")
         
         # 加载爬虫设置
         settings = get_project_settings()
@@ -173,7 +195,8 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         module_paths = [
             f"crawl_ip.spiders.{spider_name}",
             f"crawl_ip.crawl_ip.spiders.{spider_name}",
-            f"ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}"
+            f"ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}",
+            f"spiders.{spider_name}"
         ]
         
         # 尝试导入爬虫模块
@@ -196,7 +219,7 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         for obj_name in dir(spider_module):
             obj = getattr(spider_module, obj_name)
             # 检查是否是爬虫类且名称匹配
-            if hasattr(obj, 'name') and obj.name == spider_name:
+            if hasattr(obj, 'name') and getattr(obj, 'name') == spider_name:
                 spider_class = obj
                 break
         
@@ -207,17 +230,27 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         # 准备爬虫参数
         spider_kwargs = {}
         
+        # 如果是豆瓣爬虫，需要传递电影名称
+        if spider_name == 'douban_spider' and input_data:
+            # 不传递movie_name参数，让爬虫从环境变量中获取
+            pass
+        
         # 如果有配置参数，添加到爬虫参数中
         if crawl_config:
-            # 添加策略参数
-            if 'strategy' in crawl_config:
-                spider_kwargs['comment_strategy'] = crawl_config['strategy']
-                
-                # 添加各种策略特定的参数
-                for param in ['max_pages', 'sample_size', 'max_interval', 'block_size', 'use_random_strategy']:
-                    if param in crawl_config:
-                        spider_kwargs[param] = crawl_config[param]
-                        
+            if spider_name == 'douban_spider':
+                # 添加策略参数
+                if 'strategy' in crawl_config:
+                    spider_kwargs['comment_strategy'] = crawl_config['strategy']
+                    
+                    # 添加各种策略特定的参数
+                    for param in ['max_pages', 'sample_size', 'max_interval', 'block_size', 'use_random_strategy']:
+                        if param in crawl_config:
+                            spider_kwargs[param] = crawl_config[param]
+            elif spider_name == 'collectip':
+                # 添加IP爬虫相关参数
+                if 'crawl_type' in crawl_config:
+                    spider_kwargs['crawl_type'] = crawl_config['crawl_type']
+                    
             logger.warning(f"启动爬虫，参数: {spider_kwargs}")
         
         # 启动爬虫
@@ -240,52 +273,45 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
             del os.environ['MOVIE_NAME_ENCODED']
         if 'CRAWL_CONFIG' in os.environ:
             del os.environ['CRAWL_CONFIG']
+        if 'CRAWL_TYPE' in os.environ:
+            del os.environ['CRAWL_TYPE']
+
 
 def start_douban_crawl(movie_name, crawl_config=None):
     """开始豆瓣爬虫"""
     logger = setup_logging("douban_crawler", logging.WARNING)
-    
+
     try:
         # 添加项目根目录到Python路径
         if str(PROJECT_ROOT) not in sys.path:
             sys.path.insert(0, str(PROJECT_ROOT))
-            
-        # 设置要爬取的电影名
-        os.environ['MOVIE_NAME'] = movie_name
-        
+
         # 记录策略配置
         if crawl_config:
             strategy = crawl_config.get('strategy', 'sequential')
             logger.warning(f"开始爬取电影: {movie_name}，使用策略: {strategy}")
         else:
             logger.warning(f"开始爬取电影: {movie_name}，使用默认策略")
-        
+
         # 使用Process创建子进程
         spider_process = Process(
             target=run_spider_process,
             args=('douban_spider', str(PROJECT_ROOT), movie_name, crawl_config)
         )
-        
+
         # 启动子进程
         spider_process.start()
         logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
-        
-        # 等待子进程完成
-        spider_process.join()
-        
-        # 检查子进程的退出码
-        if spider_process.exitcode == 0:
-            logger.warning("爬虫任务完成")
-            return True
-        else:
-            logger.error(f"爬虫任务失败，退出码: {spider_process.exitcode}")
-            return False
-            
+
+        # 返回结果，不等待进程完成
+        return True
+
     except Exception as e:
         logger.error(f"启动爬虫时出错: {str(e)}")
         import traceback
         logger.error(traceback.format_exc())
         return False
+
 
 def start_douban_crawl_with_params(movie_name, strategy="sequential", max_pages=None, sample_size=None, 
                       max_interval=None, block_size=None, use_random_strategy=None):
@@ -350,37 +376,23 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
         os.environ['CRAWL_TYPE'] = crawl_type
         logger.warning(f"开始爬取IP，类型: {crawl_type}")
         
+        # 创建爬虫配置
+        crawl_config = {
+            'crawl_type': crawl_type
+        }
+        
         # 使用Process创建子进程
         spider_process = Process(
             target=run_spider_process,
-            args=(spider_name, PROJECT_ROOT, crawl_type)
+            args=(spider_name, PROJECT_ROOT, crawl_type, crawl_config)
         )
         
         # 启动子进程
         spider_process.start()
         logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
         
-        # 等待子进程完成
-        spider_process.join(timeout=3600)  # 最多等待1小时
-        
-        # 检查进程是否还在运行
-        if spider_process.is_alive():
-            logger.error(f"爬虫进程超时，强制终止: {spider_process.pid}")
-            spider_process.terminate()
-            time.sleep(5)  # 等待进程终止
-            if spider_process.is_alive():
-                logger.error("无法终止爬虫进程，尝试更强力的终止")
-                import signal
-                os.kill(spider_process.pid, signal.SIGKILL)
-            return False
-            
-        # 检查退出码
-        if spider_process.exitcode == 0:
-            logger.warning("爬虫任务完成")
-            return True
-        else:
-            logger.error(f"爬虫任务失败，退出码: {spider_process.exitcode}")
-            return False
+        # 不等待子进程完成
+        return True
             
     except Exception as e:
         logger.error(f"启动爬虫时出错: {str(e)}")
@@ -389,10 +401,6 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
         return False
         
     finally:
-        # 清理环境变量
-        if 'CRAWL_TYPE' in os.environ:
-            del os.environ['CRAWL_TYPE']
-            
         # 清理锁文件
         if os.path.exists(lock_file):
             try:
@@ -400,6 +408,8 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
             except Exception as e:
                 logger.error(f"删除爬虫锁文件时出错: {e}")
 
+
 if __name__ == '__main__':
     start_crawl()
-    # start_douban_crawl('出走的决心')
+    # start_crawl_douban('霸王别姬')
+    # start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=5)

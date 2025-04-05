@@ -21,7 +21,7 @@ def run_check_command():
     
     # 确认TextProcessor不再使用SnowNLP
     try:
-        from index.text_utils import TextProcessor
+        from CollectIp.ulits.text_utils import TextProcessor
         
         # 尝试进行简单情感分析
         sentiment, score = TextProcessor.analyze_sentiment("这个项目很棒")

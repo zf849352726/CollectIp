@@ -8,3 +8,13 @@ DEBUG 2025-04-05 13:17:10,323 utils 7408 20372 (0.000)
             ; args=None; alias=default
 DEBUG 2025-04-05 13:17:10,325 utils 7408 20372 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None; alias=default
 DEBUG 2025-04-05 13:17:10,368 utils 7408 20372 (0.047) SELECT `proxy_settings`.`id`, `proxy_settings`.`crawler_interval`, `proxy_settings`.`score_interval`, `proxy_settings`.`min_score`, `proxy_settings`.`auto_crawler`, `proxy_settings`.`auto_score`, `proxy_settings`.`captcha_retries` FROM `proxy_settings` ORDER BY `proxy_settings`.`id` ASC LIMIT 1; args=(); alias=default
+DEBUG 2025-04-05 19:51:50,793 utils 48348 28460 (0.016) 
+                SELECT VERSION(),
+                       @@sql_mode,
+                       @@default_storage_engine,
+                       @@sql_auto_is_null,
+                       @@lower_case_table_names,
+                       CONVERT_TZ('2001-01-01 01:00:00', 'UTC', 'UTC') IS NOT NULL
+            ; args=None; alias=default
+DEBUG 2025-04-05 19:51:50,795 utils 48348 28460 (0.000) SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED; args=None; alias=default
+DEBUG 2025-04-05 19:51:50,800 utils 48348 28460 (0.000) SELECT `proxy_settings`.`id`, `proxy_settings`.`crawler_interval`, `proxy_settings`.`score_interval`, `proxy_settings`.`min_score`, `proxy_settings`.`auto_crawler`, `proxy_settings`.`auto_score`, `proxy_settings`.`captcha_retries` FROM `proxy_settings` ORDER BY `proxy_settings`.`id` ASC LIMIT 1; args=(); alias=default

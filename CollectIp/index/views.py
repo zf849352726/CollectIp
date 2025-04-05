@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from index.mongodb_utils import MongoDBClient
-from index.text_utils import TextProcessor
+from CollectIp.ulits.text_utils import TextProcessor
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
