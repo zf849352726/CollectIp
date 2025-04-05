@@ -167,39 +167,39 @@ class CollectipSpider(scrapy.Spider):
 
         url = 'https://freeproxylist.org/en/free-proxy-list.htm'
         driver = None
-        
+
         try:
             # 自动下载和配置 ChromeDriver
             try:
-            driver_path = ChromeDriverManager().install()
-        except ValueError as e:
+                driver_path = ChromeDriverManager().install()
+            except ValueError as e:
                 logger.warning(f"ChromeDriver自动安装失败: {e}，使用备用路径")
-            driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
-                
-        # 创建 Service 对象，传入 ChromeDriver 的路径
-        service = Service(driver_path)
+                driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
 
-        # 创建 Chrome 对象时，传入 service 和 options 对象
-        driver = Chrome(service=service, options=options)
-        driver.get(url)
+            # 创建 Service 对象，传入 ChromeDriver 的路径
+            service = Service(driver_path)
+
+            # 创建 Chrome 对象时，传入 service 和 options 对象
+            driver = Chrome(service=service, options=options)
+            driver.get(url)
 
             # 设置页面加载超时
             driver.set_page_load_timeout(30)
-            
+
             # 使用显式等待来确保页面加载完成
             wait = WebDriverWait(driver, 20)  # 增加等待时间
-            
+
             # 等待下拉框加载完成
             logger.info("等待下拉框加载完成...")
             select_elem_free = wait.until(
                 EC.presence_of_element_located((By.ID, 'select9'))
             )
 
-        # 创建 Select 对象
-        select = Select(select_elem_free)
+            # 创建 Select 对象
+            select = Select(select_elem_free)
 
-        # 通过文本内容选择选项
-        select.select_by_visible_text('free proxy servers')
+            # 通过文本内容选择选项
+            select.select_by_visible_text('free proxy servers')
             logger.info("已选择 'free proxy servers' 选项")
 
             # 给页面一些时间响应选择操作
@@ -218,7 +218,7 @@ class CollectipSpider(scrapy.Spider):
                     wait.until(EC.visibility_of_element_located((By.XPATH, code_img_xpath)))
                     
                     # 获取验证码文本
-        code = self.get_captcha_text(driver)
+                    code = self.get_captcha_text(driver)
                     logger.info(f"识别的验证码: {code}")
                     
                     # 等待验证码输入框
@@ -226,13 +226,13 @@ class CollectipSpider(scrapy.Spider):
                         EC.presence_of_element_located((By.XPATH, '//*[@id="code"]'))
                     )
                     code_input.clear()
-        code_input.send_keys(code)
+                    code_input.send_keys(code)
 
                     # 查找并点击提交按钮
                     submit_tag = wait.until(
                         EC.element_to_be_clickable((By.XPATH, '//*[@id="filter"]'))
                     )
-        submit_tag.click()
+                    submit_tag.click()
                     
                     # 等待页面加载结果
                     time.sleep(3)
@@ -240,13 +240,13 @@ class CollectipSpider(scrapy.Spider):
                     # 等待数据表格加载
                     wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]')))
                     
-        # 检查验证码是否有效
+                    # 检查验证码是否有效
                     try:
                         # 使用新的等待实例和查询来获取第一行数据
                         first_tr = wait.until(
                             EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]/tbody/tr[2]'))
                         )
-        first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
+                        first_server = first_tr.find_elements(By.XPATH, './/td')[1].text
                         
                         if '*' not in first_server:
                             logger.info("验证码验证成功")
@@ -295,24 +295,24 @@ class CollectipSpider(scrapy.Spider):
                     wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="proxytable"]/tbody/tr')))
                     
                     # 获取表格行
-            trs = driver.find_elements(By.XPATH, '//*[@id="proxytable"]/tbody/tr')
+                    trs = driver.find_elements(By.XPATH, '//*[@id="proxytable"]/tbody/tr')
                     
                     if len(trs) <= 1:
                         logger.warning(f"第 {p} 页没有找到数据行")
                         continue
-                        
+
                     logger.info(f"找到 {len(trs) - 1} 行数据")
                     
                     # 处理每一行数据
-            for i, tr in enumerate(trs[1:]):
+                    for i, tr in enumerate(trs[1:]):
                         try:
-                td_list = tr.find_elements(By.XPATH, './/td')  # td合集
+                            td_list = tr.find_elements(By.XPATH, './/td')  # td合集
                             
                             if len(td_list) < 12:  # 确保有足够的列
                                 logger.warning(f"行 {i+1} 列数不足，跳过")
                                 continue
                                 
-                item = IpItem()
+                            item = IpItem()
 
                             # 使用更安全的方式提取数据
                             server = td_list[1].text if len(td_list) > 1 else ""
@@ -343,11 +343,11 @@ class CollectipSpider(scrapy.Spider):
                                 post = "N/A"
                                 
                             try:
-                last_work_time = td_list[11].find_elements(By.TAG_NAME, 'div')[0].get_attribute('title')
+                                last_work_time = td_list[11].find_elements(By.TAG_NAME, 'div')[0].get_attribute('title')
                             except:
                                 last_work_time = "N/A"
 
-                item['server'] = server
+                            item['server'] = server
                             
                             # 清洗ping数据，将非数字值转换为None
                             if ping == '?' or not ping or not ping.replace('.', '').isdigit():
@@ -368,17 +368,17 @@ class CollectipSpider(scrapy.Spider):
                                     item['speed'] = None
                                     
                             # 其他字段正常赋值
-                item['uptime1'] = uptime1
-                item['uptime2'] = uptime2
-                item['type_data'] = type_data
-                item['country'] = country
-                item['ssl'] = ssl
-                item['conn'] = conn
-                item['post'] = post
-                item['last_work_time'] = last_work_time
+                            item['uptime1'] = uptime1
+                            item['uptime2'] = uptime2
+                            item['type_data'] = type_data
+                            item['country'] = country
+                            item['ssl'] = ssl
+                            item['conn'] = conn
+                            item['post'] = post
+                            item['last_work_time'] = last_work_time
                             
                             # 产生项目
-                yield item
+                            yield item
 
                         except StaleElementReferenceException:
                             logger.warning(f"在处理第 {p} 页的第 {i+1} 行时遇到过时元素引用异常，重新获取")
@@ -427,7 +427,7 @@ class CollectipSpider(scrapy.Spider):
             if driver:
                 logger.info("关闭Chrome浏览器")
                 try:
-        driver.quit()
+                    driver.quit()
                 except Exception as e:
                     logger.error(f"关闭浏览器时出错: {e}")
 
@@ -443,27 +443,27 @@ class CollectipSpider(scrapy.Spider):
             # 等待一小段时间确保图片完全加载
             time.sleep(1)
         
-        # 获取验证码图片的base64数据
-        img_base64 = driver.execute_script("""
-            var ele = arguments[0];
-            var cnv = document.createElement('canvas');
-            cnv.width = ele.width;
-            cnv.height = ele.height;
-            cnv.getContext('2d').drawImage(ele, 0, 0);
-            return cnv.toDataURL('image/jpeg').substring(22);
-        """, img_element)
+            # 获取验证码图片的base64数据
+            img_base64 = driver.execute_script("""
+                var ele = arguments[0];
+                var cnv = document.createElement('canvas');
+                cnv.width = ele.width;
+                cnv.height = ele.height;
+                cnv.getContext('2d').drawImage(ele, 0, 0);
+                return cnv.toDataURL('image/jpeg').substring(22);
+            """, img_element)
         
-        # 将base64转换为bytes
-        img_bytes = base64.b64decode(img_base64)
-        
-        # 使用ddddocr识别验证码
-        ocr = DdddOcr(show_ad=False)
-        result = ocr.classification(img_bytes)
+            # 将base64转换为bytes
+            img_bytes = base64.b64decode(img_base64)
+
+            # 使用ddddocr识别验证码
+            ocr = DdddOcr(show_ad=False)
+            result = ocr.classification(img_bytes)
             
             # 记录结果
             logger.info(f"验证码识别结果: {result}")
             
-        return result
+            return result
         except Exception as e:
             logger.error(f"获取验证码文本时出错: {e}")
             return ""
@@ -499,13 +499,13 @@ class CollectipSpider(scrapy.Spider):
         self.test_driver = None  # 在Spider实例上存储driver引用，便于清理
         
         try:
-        try:
-            driver_path = ChromeDriverManager().install()
-        except ValueError:
-            driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
+            try:
+                driver_path = ChromeDriverManager().install()
+            except ValueError:
+                driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
 
-        service = Service(driver_path)
-        driver = Chrome(service=service, options=options)
+            service = Service(driver_path)
+            driver = Chrome(service=service, options=options)
             self.test_driver = driver  # 保存引用到Spider实例
 
             # 访问目标网页
@@ -623,7 +623,7 @@ class CollectipSpider(scrapy.Spider):
                 driver = getattr(self, attr)
                 if hasattr(driver, 'quit'):
                     logger.info(f"关闭WebDriver实例: {attr}")
-            driver.quit()
+                    driver.quit()
             except Exception as e:
                 logger.error(f"关闭WebDriver实例 {attr} 时出错: {e}")
         
