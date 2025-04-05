@@ -460,6 +460,120 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/douban.js' %}"></script>
+    {% if active_menu == 'douban_overview' %}
+    <!-- 直接在页面中定义函数，解决函数未定义问题 -->
+    <script>
+        // 用于overview页面的备选函数定义
+        if (typeof crawlMovieWithStrategy !== 'function') {
+            function crawlMovieWithStrategy() {
+                // 尝试从不同的输入框获取电影名称，兼容不同页面
+                const movieNameElement = document.getElementById('movieName');
+                const homeMovieNameElement = document.getElementById('homeMovieName');
+                
+                let movieName = '';
+                if (movieNameElement && movieNameElement.value.trim()) {
+                    movieName = movieNameElement.value.trim();
+                } else if (homeMovieNameElement && homeMovieNameElement.value.trim()) {
+                    movieName = homeMovieNameElement.value.trim();
+                }
+                
+                if (!movieName) {
+                    alert('请输入电影名称');
+                    return;
+                }
+                
+                // 获取选择的策略和参数
+                const strategySelector = document.getElementById('commentStrategy');
+                if (!strategySelector) {
+                    alert('找不到策略选择器');
+                    return;
+                }
+                
+                const strategy = strategySelector.value;
+                const params = {};
+                
+                // 根据选择的策略获取参数
+                if (strategy === 'sequential') {
+                    params.max_pages = 5; // 默认值
+                } else if (strategy === 'random_pages') {
+                    params.sample_size = 5; // 默认值
+                } else if (strategy === 'random_interval') {
+                    params.max_interval = 3; // 默认值
+                    params.max_pages = 5; // 默认值
+                } else if (strategy === 'random_block') {
+                    params.block_size = 3; // 默认值
+                } else if (strategy === 'random') {
+                    params.use_random_strategy = true;
+                }
+                
+                // 显示加载状态
+                const submitButton = movieNameElement ? movieNameElement.nextElementSibling : null;
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 采集中...';
+                }
+                
+                // 获取状态元素并显示加载状态
+                const statusElement = document.getElementById('crawlStatus');
+                if (statusElement) {
+                    statusElement.innerHTML = '<div class="alert alert-info">正在采集电影数据，请稍候...</div>';
+                }
+                
+                // 发送采集请求
+                fetch('/crawl_movie/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        movie_name: movieName,
+                        comment_strategy: strategy,
+                        strategy_params: params
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (statusElement) {
+                            statusElement.innerHTML = '<div class="alert alert-success">采集已开始，请稍后刷新页面查看结果</div>';
+                        } else {
+                            alert('采集请求已发送');
+                        }
+                        
+                        // 10秒后自动刷新页面
+                        setTimeout(() => {
+                            location.reload();
+                        }, 10000);
+                    } else {
+                        if (statusElement) {
+                            statusElement.innerHTML = `<div class="alert alert-danger">采集失败: ${data.error || '未知错误'}</div>`;
+                        } else {
+                            alert('采集请求失败: ' + (data.error || '未知错误'));
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('采集请求出错:', error);
+                    if (statusElement) {
+                        statusElement.innerHTML = `<div class="alert alert-danger">请求出错: ${error.message}</div>`;
+                    } else {
+                        alert('请求出错：' + error.message);
+                    }
+                })
+                .finally(() => {
+                    // 恢复按钮状态
+                    if (submitButton) {
+                        setTimeout(() => {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = '立即采集';
+                        }, 2000);
+                    }
+                });
+            }
+        }
+    </script>
+    {% endif %}
     {% endblock %}
 </body>
 </html> 
