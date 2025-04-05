@@ -152,9 +152,26 @@ class DoubanSpider(scrapy.Spider):
         print("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
         
         # 从环境变量中获取电影名，优先级高于参数
+        movie_name = None
         env_movie_name = os.environ.get('MOVIE_NAME')
-        if env_movie_name:
-            self.movie_names = [env_movie_name]
+        env_movie_name_encoded = os.environ.get('MOVIE_NAME_ENCODED')
+        
+        # 尝试解码Base64编码的电影名称
+        if env_movie_name_encoded:
+            try:
+                import base64
+                movie_name = base64.b64decode(env_movie_name_encoded.encode('ascii')).decode('utf-8')
+                logger.warning(f"成功解码电影名称: {movie_name}")
+            except Exception as e:
+                logger.error(f"解码电影名称出错: {str(e)}")
+                # 使用备用环境变量或参数
+                movie_name = env_movie_name
+        elif env_movie_name:
+            movie_name = env_movie_name
+        
+        # 设置电影名称列表
+        if movie_name:
+            self.movie_names = [movie_name]
         elif movie_names:
             if isinstance(movie_names, str):
                 self.movie_names = [movie_names]
@@ -162,7 +179,7 @@ class DoubanSpider(scrapy.Spider):
                 self.movie_names = movie_names
         else:
             self.movie_names = ['肖申克的救赎']  # 默认电影
-            
+        
         # 记录电影名
         logger.warning(f"豆瓣爬虫爬取电影: {self.movie_names}")
         

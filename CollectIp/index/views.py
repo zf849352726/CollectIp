@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import logging
-from ip_operator.services.crawler import start_crawl, start_douban_crawl
+from ip_operator.services.crawler import start_crawl, start_douban_crawl, start_douban_crawl_with_params
 from ip_operator.services.scorer import start_score
 import threading
 from django.conf import settings
@@ -564,7 +564,7 @@ def douban_settings(request):
 def crawl_movie_view(request):
     """接收电影名称并启动豆瓣爬虫"""
     import json
-    from ip_operator.services.crawler import start_douban_crawl
+    from ip_operator.services.crawler import start_douban_crawl_with_params
     import os
     from datetime import datetime, timedelta
     
@@ -613,27 +613,35 @@ def crawl_movie_view(request):
         logger.info(f"准备启动爬虫: {movie_name}, 策略: {comment_strategy}")
         
         # 处理策略参数
-        crawl_config = {
-            'strategy': comment_strategy
-        }
+        max_pages = None
+        sample_size = None
+        max_interval = None
+        block_size = None
+        use_random_strategy = None
         
         # 根据不同策略添加对应参数
         if comment_strategy == 'sequential':
-            crawl_config['max_pages'] = int(strategy_params.get('max_pages', 5))
+            max_pages = int(strategy_params.get('max_pages', 5))
         elif comment_strategy == 'random_pages':
-            crawl_config['sample_size'] = int(strategy_params.get('sample_size', 5))
+            sample_size = int(strategy_params.get('sample_size', 5))
         elif comment_strategy == 'random_interval':
-            crawl_config['max_interval'] = int(strategy_params.get('max_interval', 3))
-            crawl_config['max_pages'] = int(strategy_params.get('max_pages', 5))
+            max_interval = int(strategy_params.get('max_interval', 3))
+            max_pages = int(strategy_params.get('max_pages', 5))
         elif comment_strategy == 'random_block':
-            crawl_config['block_size'] = int(strategy_params.get('block_size', 3))
+            block_size = int(strategy_params.get('block_size', 3))
         elif comment_strategy == 'random':
-            crawl_config['use_random_strategy'] = True
-            
-        logger.info(f"爬虫配置: {crawl_config}")
+            use_random_strategy = True
         
-        # 使用我们的新方法启动爬虫，传入配置参数
-        result = start_douban_crawl(movie_name, crawl_config)
+        # 使用支持参数的爬虫函数
+        result = start_douban_crawl_with_params(
+            movie_name=movie_name, 
+            strategy=comment_strategy,
+            max_pages=max_pages,
+            sample_size=sample_size,
+            max_interval=max_interval,
+            block_size=block_size,
+            use_random_strategy=use_random_strategy
+        )
         
         if result:
             return JsonResponse({

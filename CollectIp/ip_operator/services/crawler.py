@@ -8,6 +8,7 @@ from multiprocessing import Process
 import time
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+import base64
 
 # 设置Django环境
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -91,6 +92,25 @@ def setup_logging(name="ip_operator", level=logging.WARNING):
     
     return logger
 
+# 处理中文编码的函数
+def encode_movie_name(movie_name):
+    """使用Base64编码电影名，解决中文编码问题"""
+    try:
+        encoded_name = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
+        return encoded_name
+    except Exception as e:
+        print(f"编码电影名称出错: {str(e)}")
+        return None
+        
+def decode_movie_name(encoded_name):
+    """解码Base64编码的电影名"""
+    try:
+        decoded_name = base64.b64decode(encoded_name.encode('ascii')).decode('utf-8')
+        return decoded_name
+    except Exception as e:
+        print(f"解码电影名称出错: {str(e)}")
+        return None
+
 def run_spider_process(spider_name, project_root, movie_name, crawl_config=None):
     """在子进程中运行爬虫"""
     logger = setup_logging("spider_process", logging.WARNING)
@@ -123,7 +143,16 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         from scrapy.utils.project import get_project_settings
         from importlib import import_module
         
-        # 设置电影名环境变量，供爬虫使用
+        # 使用Base64编码电影名
+        try:
+            encoded_movie_name = encode_movie_name(movie_name)
+            if encoded_movie_name:
+                os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
+                logger.warning(f"电影名已Base64编码: {movie_name} -> {encoded_movie_name}")
+        except Exception as e:
+            logger.error(f"编码电影名出错: {str(e)}")
+            
+        # 同时设置原始电影名作为备份
         os.environ['MOVIE_NAME'] = movie_name
         
         # 将爬取配置设置为环境变量
@@ -176,7 +205,7 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
             return 1
                 
         # 准备爬虫参数
-        spider_kwargs = {'movie_name': movie_name}
+        spider_kwargs = {}
         
         # 如果有配置参数，添加到爬虫参数中
         if crawl_config:
@@ -207,6 +236,8 @@ def run_spider_process(spider_name, project_root, movie_name, crawl_config=None)
         # 清理环境变量
         if 'MOVIE_NAME' in os.environ:
             del os.environ['MOVIE_NAME']
+        if 'MOVIE_NAME_ENCODED' in os.environ:
+            del os.environ['MOVIE_NAME_ENCODED']
         if 'CRAWL_CONFIG' in os.environ:
             del os.environ['CRAWL_CONFIG']
 
@@ -252,6 +283,39 @@ def start_douban_crawl(movie_name, crawl_config=None):
             
     except Exception as e:
         logger.error(f"启动爬虫时出错: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
+        return False
+
+def start_douban_crawl_with_params(movie_name, strategy="sequential", max_pages=None, sample_size=None, 
+                      max_interval=None, block_size=None, use_random_strategy=None):
+    """启动豆瓣爬虫进程，支持所有参数"""
+    logger = setup_logging("douban_crawler", logging.WARNING)
+
+    try:
+        # 构建爬取配置
+        crawl_config = {
+            'strategy': strategy
+        }
+        
+        # 添加各种可选参数
+        if max_pages is not None:
+            crawl_config['max_pages'] = max_pages
+        if sample_size is not None:
+            crawl_config['sample_size'] = sample_size
+        if max_interval is not None:
+            crawl_config['max_interval'] = max_interval  
+        if block_size is not None:
+            crawl_config['block_size'] = block_size
+        if use_random_strategy is not None:
+            crawl_config['use_random_strategy'] = use_random_strategy
+            
+        # 调用主函数启动爬虫
+        logger.warning(f"准备爬取电影: {movie_name}，使用策略: {strategy}，参数: {crawl_config}")
+        return start_douban_crawl(movie_name, crawl_config)
+        
+    except Exception as e:
+        logger.error(f"启动爬虫出错: {str(e)}")
         import traceback
         logger.error(traceback.format_exc())
         return False
