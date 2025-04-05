@@ -539,7 +539,7 @@ class DoubanSpider(scrapy.Spider):
         search_url = f"https://search.douban.com/movie/subject_search?search_text={urllib.parse.quote(self.movie_names[0])}"
         logger.warning(f"开始搜索电影: {self.movie_names[0]}")
         
-            yield scrapy.Request(
+        yield scrapy.Request(
             url=search_url,
                 headers=self.headers,
                 callback=self.parse,
@@ -584,7 +584,7 @@ class DoubanSpider(scrapy.Spider):
     def parse_with_selenium(self, url, movie_names):
         """使用Selenium解析搜索结果页"""
         # 获取WebDriver
-            driver = self.get_driver()
+        driver = self.get_driver()
         if not driver:
             logger.error("无法获取WebDriver")
             return
@@ -989,7 +989,7 @@ class DoubanSpider(scrapy.Spider):
                 comments = []
                 try:
                     # 尝试原始选择器
-        comments = response.css('.comment-item .comment-content::text').getall()
+                    comments = response.css('.comment-item .comment-content::text').getall()
 
                     # 如果原始选择器没有结果，尝试其他选择器
                     if not comments:
@@ -1344,7 +1344,7 @@ class DoubanSpider(scrapy.Spider):
                                     else:
                                         logger.warning("验证码iframe已消失，可能验证成功")
                                         success = True
-        except:
+                                except:
                                     logger.warning("验证码iframe已消失，可能验证成功")
                                     success = True
                             else:
