@@ -237,7 +237,7 @@ class ProxyMiddleware:
 
             conn = self.get_connection()
             with conn.cursor() as cursor:
-                    sql = """
+                sql = """
                 UPDATE index_ipdata 
                 SET score = %s,
                             updated_at = NOW()
@@ -275,7 +275,7 @@ class ProxyMiddleware:
             if request.url.startswith('https://'):
                 request.meta['proxy'] = f"https://{proxy}"
             else:
-            request.meta['proxy'] = f"http://{proxy}"
+                request.meta['proxy'] = f"http://{proxy}"
                 
             # 始终输出代理调试信息
             protocol = "HTTPS" if request.url.startswith('https://') else "HTTP"
@@ -306,7 +306,7 @@ class ProxyMiddleware:
                 if request.url.startswith('https://'):
                     request.meta['proxy'] = f"https://{new_proxy}"
                 else:
-                request.meta['proxy'] = f"http://{new_proxy}"
+                    request.meta['proxy'] = f"http://{new_proxy}"
                     
                 if self.debug:
                     print(f"【代理中间件】使用新代理重试: {new_proxy}")
@@ -341,7 +341,7 @@ class ProxyMiddleware:
             if request.url.startswith('https://'):
                 request.meta['proxy'] = f"https://{new_proxy}"
             else:
-            request.meta['proxy'] = f"http://{new_proxy}"
+                request.meta['proxy'] = f"http://{new_proxy}"
                 
             if self.debug:
                 print(f"【代理中间件】使用新代理重试: {new_proxy}")
