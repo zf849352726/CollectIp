@@ -8,3 +8,45 @@
 2025-04-05 20:49:59,535 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
 2025-04-05 20:49:59,536 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 5}
 2025-04-05 20:49:59,536 - WARNING - 使用评论采集策略: 顺序采集(最多5页), 参数: {'max_pages': 5}
+2025-04-06 14:51:41,596 - WARNING - 成功解码电影名称: 霸王别姬
+2025-04-06 14:51:41,597 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 14:51:41,597 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-06 14:51:41,598 - WARNING - 使用评论采集策略: 顺序采集(最多5页), 参数: {'max_pages': 5}
+2025-04-06 14:51:53,815 - WARNING - MySQL数据库连接成功
+2025-04-06 14:51:54,799 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-06 14:51:55,533 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-06 14:51:55,533 - WARNING - 未找到Cookie文件，需要登录
+2025-04-06 14:51:55,533 - WARNING - 开始搜索电影: 霸王别姬
+2025-04-06 14:51:56,337 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E9%9C%B8%E7%8E%8B%E5%88%AB%E5%A7%AC
+2025-04-06 14:52:01,682 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-06 14:52:21,356 - ERROR - 查找电影链接出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00A1C7F3+24435]
+	(No symbol) [0x009A2074]
+	(No symbol) [0x008706E3]
+	(No symbol) [0x008B8B39]
+	(No symbol) [0x008B8E8B]
+	(No symbol) [0x00901AC2]
+	(No symbol) [0x008DD804]
+	(No symbol) [0x008FF20A]
+	(No symbol) [0x008DD5B6]
+	(No symbol) [0x008AC54F]
+	(No symbol) [0x008AD894]
+	GetHandleVerifier [0x00D270A3+3213347]
+	GetHandleVerifier [0x00D3B0C9+3295305]
+	GetHandleVerifier [0x00D3558C+3271948]
+	GetHandleVerifier [0x00AB7360+658144]
+	(No symbol) [0x009AB27D]
+	(No symbol) [0x009A8208]
+	(No symbol) [0x009A83A9]
+	(No symbol) [0x0099AAC0]
+	BaseThreadInitThunk [0x76937BA9+25]
+	RtlInitializeExceptionChain [0x7765C2EB+107]
+	RtlClearBits [0x7765C26F+191]
+
+2025-04-06 14:52:21,356 - ERROR - 直接搜索出错: quote_from_bytes() expected bytes
+2025-04-06 14:52:21,357 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-06 14:52:21,357 - WARNING - 爬虫关闭: finished
+2025-04-06 14:52:21,576 - WARNING - WebDriver已关闭
+2025-04-06 14:52:21,576 - WARNING - MySQL连接已关闭
+2025-04-06 14:52:21,576 - WARNING - 爬虫资源已清理完毕

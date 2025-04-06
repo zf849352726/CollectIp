@@ -49,3 +49,95 @@
 2025-04-05 20:49:58,444 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
 2025-04-05 20:49:59,530 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
 2025-04-05 20:49:59,531 - WARNING - 启动爬虫，参数: {'comment_strategy': 'sequential', 'max_pages': 5}
+2025-04-06 14:49:10,939 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 14:49:10,940 - WARNING - 电影名已编码: 霸王别姬 -> 6Zy4546L5Yir5aes
+2025-04-06 14:49:10,940 - WARNING - 设置电影名: 霸王别姬
+2025-04-06 14:49:10,941 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-06 14:49:12,032 - ERROR - 运行爬虫时出错: unexpected indent (douban_spider.py, line 559)
+2025-04-06 14:49:12,036 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 192, in run_spider_process
+    process = CrawlerProcess(settings)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 424, in __init__
+    super().__init__(settings)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 295, in __init__
+    self.spider_loader: SpiderLoader = self._get_spider_loader(settings)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 289, in _get_spider_loader
+    return cast("SpiderLoader", loader_cls.from_settings(settings.frozencopy()))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 81, in from_settings
+    return cls(settings)
+           ^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 36, in __init__
+    self._load_all_spiders()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 65, in _load_all_spiders
+    for module in walk_modules(name):
+                  ^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 98, in walk_modules
+    submod = import_module(fullpath)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\douban_spider.py", line 559
+    yield scrapy.Request(
+IndentationError: unexpected indent
+
+2025-04-06 14:49:27,578 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 14:49:27,579 - WARNING - 电影名已编码: 霸王别姬 -> 6Zy4546L5Yir5aes
+2025-04-06 14:49:27,580 - WARNING - 设置电影名: 霸王别姬
+2025-04-06 14:49:27,580 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-06 14:49:28,676 - ERROR - 运行爬虫时出错: unexpected indent (douban_spider.py, line 559)
+2025-04-06 14:49:28,678 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 192, in run_spider_process
+    process = CrawlerProcess(settings)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 424, in __init__
+    super().__init__(settings)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 295, in __init__
+    self.spider_loader: SpiderLoader = self._get_spider_loader(settings)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 289, in _get_spider_loader
+    return cast("SpiderLoader", loader_cls.from_settings(settings.frozencopy()))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 81, in from_settings
+    return cls(settings)
+           ^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 36, in __init__
+    self._load_all_spiders()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\spiderloader.py", line 65, in _load_all_spiders
+    for module in walk_modules(name):
+                  ^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 98, in walk_modules
+    submod = import_module(fullpath)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\douban_spider.py", line 559
+    yield scrapy.Request(
+IndentationError: unexpected indent
+
+2025-04-06 14:51:40,361 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 14:51:40,361 - WARNING - 电影名已编码: 霸王别姬 -> 6Zy4546L5Yir5aes
+2025-04-06 14:51:40,361 - WARNING - 设置电影名: 霸王别姬
+2025-04-06 14:51:40,362 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
+2025-04-06 14:51:41,593 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 14:51:41,594 - WARNING - 启动爬虫，参数: {'comment_strategy': 'sequential', 'max_pages': 5}
