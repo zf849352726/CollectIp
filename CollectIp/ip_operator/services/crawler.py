@@ -121,8 +121,13 @@ def encode_movie_name(movie_name):
     if not movie_name:
         return ""
     try:
+        # 确保是字符串
+        if not isinstance(movie_name, str):
+            movie_name = str(movie_name)
+        
         # 编码为base64
-        return base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
+        encoded = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
+        return encoded
     except Exception as e:
         logger = setup_logging("encoder")
         logger.error(f"编码电影名失败: {str(e)}")
@@ -135,7 +140,8 @@ def decode_movie_name(encoded_name):
         return ""
     try:
         # 从base64解码
-        return base64.b64decode(encoded_name).decode('utf-8')
+        decoded = base64.b64decode(encoded_name).decode('utf-8')
+        return decoded
     except Exception as e:
         logger = setup_logging("decoder")
         logger.error(f"解码电影名失败: {str(e)}")
