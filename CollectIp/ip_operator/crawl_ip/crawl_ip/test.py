@@ -23,7 +23,14 @@ import random
 import string
 from urllib.parse import urlparse, parse_qs
 from webdriver_manager.chrome import ChromeDriverManager
+import logging
 
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 def generate_wechat_cookie():
     """生成微信请求所需的随机cookie值"""
@@ -413,5 +420,61 @@ def main():
         print("微信公众号登录测试结束")
         print("=" * 50)
 
+def test_chrome_window():
+    """测试Chrome浏览器窗口是否能正常显示"""
+    try:
+        logger.info("开始Chrome浏览器窗口测试")
+        
+        # 安装ChromeDriver
+        driver_path = ChromeDriverManager().install()
+        logger.info(f"ChromeDriver路径: {driver_path}")
+        
+        # 创建Chrome服务
+        service = Service(executable_path=driver_path)
+        
+        # 设置Chrome选项
+        options = webdriver.ChromeOptions()
+        options.add_argument('--disable-gpu')
+        options.add_argument('--start-maximized')
+        options.add_argument('--window-size=1920,1080')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        
+        # 添加实验选项，绕过自动化检测
+        options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        options.add_experimental_option('useAutomationExtension', False)
+        options.add_experimental_option('detach', True)
+        
+        logger.info("创建Chrome浏览器实例")
+        driver = webdriver.Chrome(service=service, options=options)
+        
+        # 访问测试网站
+        logger.info("访问测试网站: https://www.douban.com")
+        driver.get("https://www.douban.com")
+        
+        # 打印当前URL和标题
+        logger.info(f"当前URL: {driver.current_url}")
+        logger.info(f"页面标题: {driver.title}")
+        
+        # 截图
+        screenshot_path = "browser_test.png"
+        driver.save_screenshot(screenshot_path)
+        logger.info(f"截图已保存到: {screenshot_path}")
+        
+        # 等待10秒，手动查看窗口
+        logger.info("等待10秒钟，请观察浏览器窗口是否显示...")
+        time.sleep(10)
+        
+        # 关闭浏览器
+        driver.quit()
+        logger.info("测试完成，浏览器已关闭")
+        
+        return True
+    except Exception as e:
+        logger.error(f"测试失败: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
+        return False
+
 if __name__ == "__main__":
-    main()
+    test_chrome_window()

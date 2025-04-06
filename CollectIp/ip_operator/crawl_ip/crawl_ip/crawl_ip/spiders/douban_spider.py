@@ -124,6 +124,7 @@ except ImportError:
     except ImportError:
         logger.error("无法导入MovieItem")
 
+
 class DoubanSpider(scrapy.Spider):
     name = 'douban_spider'
     allowed_domains = ['douban.com']
@@ -149,28 +150,14 @@ class DoubanSpider(scrapy.Spider):
         """初始化爬虫"""
         super(DoubanSpider, self).__init__(name='douban_spider', **kwargs)
         
-        print("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
+        logger.info("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
         
         # 从环境变量中获取电影名，优先级高于参数
-        movie_name = None
-        env_movie_name = os.environ.get('MOVIE_NAME')
-        env_movie_name_encoded = os.environ.get('MOVIE_NAME_ENCODED')
-        
-        # 尝试解码Base64编码的电影名称
-        if env_movie_name_encoded:
-            try:
-                import base64
-                movie_name = base64.b64decode(env_movie_name_encoded.encode('ascii')).decode('utf-8')
-                logger.warning(f"成功解码电影名称: {movie_name}")
-            except Exception as e:
-                logger.error(f"解码电影名称出错: {str(e)}")
-                # 使用备用环境变量或参数
-                movie_name = env_movie_name
-        elif env_movie_name:
-            movie_name = env_movie_name
+        movie_name = os.environ.get('MOVIE_NAME')
         
         # 设置电影名称列表
         if movie_name:
+            logger.warning(f"从环境变量获取电影名: {movie_name}")
             self.movie_names = [movie_name]
         elif movie_names:
             if isinstance(movie_names, str):
@@ -254,9 +241,11 @@ class DoubanSpider(scrapy.Spider):
         self.options.add_argument('--disable-gpu')
         self.options.add_argument(f'user-agent={self.headers["User-Agent"]}')
         self.options.add_argument('--disable-blink-features=AutomationControlled')
-        self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
+        # self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
+        # 确保浏览器窗口可见
+        self.options.add_argument('--start-maximized')
         # 确保不分离浏览器进程
-        # self.options.add_experimental_option('detach', True)
+        self.options.add_experimental_option('detach', True)
         
         # 初始化MySQL连接
         self.db_conn = None
@@ -298,24 +287,45 @@ class DoubanSpider(scrapy.Spider):
             return False, None
         
     def get_driver(self):
-        """获取undetected_chromedriver实例，增强反爬性能"""
+        """获取Chrome浏览器实例"""
+        logger.warning("开始初始化Chrome浏览器")
+        
         if self.driver is None and self.driver_path:
             try:
-                # 使用undetected_chromedriver代替普通ChromeDriver
-                options = uc.ChromeOptions()
+                logger.warning(f"ChromeDriver路径: {self.driver_path}")
+                logger.warning("正在创建浏览器实例...")
                 
-                # 配置选项
+                # 使用标准Chrome WebDriver
+                from selenium.webdriver.chrome.service import Service
+                from selenium import webdriver
+                
+                service = Service(executable_path=self.driver_path)
+                
+                # 设置 Chrome 选项
+                options = webdriver.ChromeOptions()
                 options.add_argument('--disable-gpu')
                 options.add_argument(f'user-agent={self.headers["User-Agent"]}')
-                options.add_argument('--headless')  # 登录时不建议使用无头模式
+                options.add_argument('--disable-blink-features=AutomationControlled')
+                options.add_argument('--start-maximized')
+                options.add_argument('--window-size=1920,1080')
+                options.add_argument('--no-sandbox')
+                options.add_argument('--disable-dev-shm-usage')
                 
-                # 创建undetected_chromedriver实例
-                self.driver = uc.Chrome(
-                    driver_executable_path=self.driver_path,
-                    options=options
-                )
+                # 添加排除自动化控制的实验选项
+                options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                options.add_experimental_option('useAutomationExtension', False)
+                options.add_experimental_option('detach', True)
                 
-                logger.warning("创建新的undetected_chromedriver实例")
+                logger.warning("Chrome浏览器配置已设置，准备启动")
+                
+                # 创建Chrome实例
+                self.driver = webdriver.Chrome(service=service, options=options)
+                
+                # 执行JS脚本绕过反自动化检测
+                self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                
+                logger.warning("创建新的Chrome实例成功")
+                logger.warning(f"浏览器地址: {self.driver.current_url}")
                 
                 # 加载已保存的Cookie
                 if self.load_cookies():
@@ -325,8 +335,14 @@ class DoubanSpider(scrapy.Spider):
                 return self.driver
             except Exception as e:
                 logger.error(f"创建WebDriver失败: {e}")
+                logger.error(traceback.format_exc())
                 return None
-        return self.driver
+        elif self.driver is not None:
+            logger.warning("使用现有的WebDriver实例")
+            return self.driver
+        else:
+            logger.error("未找到ChromeDriver路径")
+            return None
     
     def load_cookies(self):
         """加载保存的Cookie"""
@@ -541,28 +557,23 @@ class DoubanSpider(scrapy.Spider):
         
     def start_requests(self):
         """定义起始URL并传递电影名称"""
+        logger.warning(f"使用Selenium启动爬虫，电影名: {self.movie_names}")
+        
         # 获取WebDriver并确保登录
         driver = self.get_driver()
         if not driver:
             logger.error("无法获取WebDriver")
             return
-            
-        # # 确保已登录
-        # if not self.ensure_login():
-        #     logger.error("登录失败，无法继续爬取")
-        #     return
+        
+        # 打印浏览器版本和状态确认
+        logger.warning(f"Chrome浏览器已启动，地址: {driver.current_url}")
             
         # 生成搜索URL
         search_url = f"https://search.douban.com/movie/subject_search?search_text={urllib.parse.quote(self.movie_names[0])}"
         logger.warning(f"开始搜索电影: {self.movie_names[0]}")
         
-        yield scrapy.Request(
-            url=search_url,
-                headers=self.headers,
-                callback=self.parse,
-            dont_filter=True,
-            meta={'movie_names': self.movie_names}  # 传递电影名称参数
-        )
+        # 使用Selenium直接访问和处理
+        yield from self.parse_with_selenium(search_url, self.movie_names)
             
     def generate_search_urls(self, movie_names=None):
         """生成电影搜索URL列表"""

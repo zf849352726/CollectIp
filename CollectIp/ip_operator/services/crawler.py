@@ -1,15 +1,14 @@
-from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 import os
 import sys
 import logging
 import django
-from multiprocessing import Process
+import threading
 import time
+import json
+import traceback
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-import base64
-
+import signal
 
 # 设置Django环境
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -36,27 +35,11 @@ CURRENT_DIR = Path(__file__).resolve().parent
 # 项目根目录
 PROJECT_ROOT = CURRENT_DIR.parent.parent.parent
 
-# 处理中文编码的函数
-def encode_movie_name(movie_name):
-    """使用Base64编码电影名，解决中文编码问题"""
-    try:
-        encoded_name = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
-        return encoded_name
-    except Exception as e:
-        print(f"编码电影名称出错: {str(e)}")
-        return None
-
-def decode_movie_name(encoded_name):
-    """解码Base64编码的电影名"""
-    try:
-        decoded_name = base64.b64decode(encoded_name.encode('ascii')).decode('utf-8')
-        return decoded_name
-    except Exception as e:
-        print(f"解码电影名称出错: {str(e)}")
-        return None
+# 添加调试标志 - 开发时设为True，生产环境设为False
+DEBUG = True
 
 # 设置日志
-def setup_logging(name="ip_operator", level=logging.WARNING):
+def setup_logging(name="ip_operator", level=logging.INFO):
     """设置日志配置"""
     logger = logging.getLogger(name)
     
@@ -71,345 +54,365 @@ def setup_logging(name="ip_operator", level=logging.WARNING):
     log_file = os.path.join(log_dir, f"{name}.log")
     
     try:
-        # 尝试创建文件处理器
+        # 创建文件处理器
         handler = RotatingFileHandler(
             log_file, 
-            maxBytes=10*1024*1024,  # 10MB
+            maxBytes=10*1024*1024,
             backupCount=5,
             encoding='utf-8',
-            delay=True  # 延迟创建文件，直到第一次写入
+            delay=True
         )
-    except PermissionError:
-        # 如果文件被占用，使用时间戳创建一个新的日志文件
-        timestamp = int(time.time())
-        alt_log_file = os.path.join(log_dir, f"{name}_{timestamp}.log")
-        try:
-            handler = RotatingFileHandler(
-                alt_log_file, 
-                maxBytes=10*1024*1024,
-                backupCount=5,
-                encoding='utf-8',
-                delay=True
-            )
-            print(f"原日志文件被占用，使用备用日志文件: {alt_log_file}")
-        except Exception as e:
-            # 如果仍然失败，只使用控制台输出
-            print(f"无法创建日志文件处理器: {e}")
-            handler = logging.StreamHandler()
+    except Exception as e:
+        # 如果创建失败，使用控制台输出
+        print(f"无法创建日志文件处理器: {e}")
+        handler = logging.StreamHandler()
     
-    # 使用简化的日志格式，只包含时间、级别和消息
+    # 设置日志格式
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
+    logger.addHandler(handler)
     
-    # 只在DEBUG模式下添加控制台处理器
-    if level == logging.DEBUG:
+    # 调试模式使用更详细的日志
+    if DEBUG:
+        logger.setLevel(logging.DEBUG)
+        # 添加控制台处理器，方便调试
         console = logging.StreamHandler()
         console.setFormatter(formatter)
         logger.addHandler(console)
-    
-    logger.addHandler(handler)
-    logger.setLevel(level)
+    else:
+        logger.setLevel(level)
     
     return logger
 
-def run_spider_process(spider_name, project_root, input_data=None, crawl_config=None):
-    """在子进程中运行爬虫
+def find_crawler_dir(project_root):
+    """查找爬虫目录"""
+    possible_dirs = [
+        os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip'),
+        os.path.join(project_root, 'ip_operator', 'crawl_ip', 'crawl_ip'),
+        os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip'),
+        os.path.join(project_root, 'ip_operator', 'crawl_ip')
+    ]
     
-    参数:
-        spider_name (str): 爬虫名称
-        project_root (str): 项目根目录
-        input_data (str): 输入数据，例如电影名称或者爬取类型
-        crawl_config (dict): 爬虫配置参数
-    """
-    logger = setup_logging("spider_process", logging.WARNING)
+    for dir_path in possible_dirs:
+        if os.path.exists(dir_path):
+            return dir_path
+    return None
+
+def find_spider_module(spider_name):
+    """查找爬虫模块"""
+    from importlib import import_module
+    
+    module_paths = [
+        f"crawl_ip.spiders.{spider_name}",
+        f"spiders.{spider_name}"
+    ]
+    
+    for module_path in module_paths:
+        try:
+            return import_module(module_path)
+        except ImportError:
+            continue
+    return None
+
+
+def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=None):
+    """在线程中运行爬虫的实际执行函数"""
+    logger = setup_logging("spider_process", logging.DEBUG)
+    logger.debug(f"开始执行爬虫 {spider_name}，参数: {input_data}, 配置: {crawl_config}")
     
     try:
-        # 设置当前工作目录为爬虫项目目录
-        # 可能的爬虫目录列表
-        possible_dirs = [
-            os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip'),
-            os.path.join(project_root, 'ip_operator', 'crawl_ip', 'crawl_ip'),
-            os.path.join(project_root, 'CollectIp', 'ip_operator', 'crawl_ip'),
-            os.path.join(project_root, 'ip_operator', 'crawl_ip')
-        ]
-        
-        # 查找第一个存在的目录
-        crawler_dir = None
-        for dir_path in possible_dirs:
-            if os.path.exists(dir_path):
-                crawler_dir = dir_path
-                break
-                
-        if crawler_dir is None:
+        # 查找并切换到爬虫目录
+        crawler_dir = find_crawler_dir(project_root)
+        if not crawler_dir:
             logger.error("找不到爬虫目录")
             return 1
             
-        # 切换工作目录
         os.chdir(crawler_dir)
-        logger.warning(f"当前工作目录: {os.getcwd()}")
+        logger.debug(f"切换工作目录: {os.getcwd()}")
         
-        # 导入必要的Spider组件
-        from scrapy.crawler import CrawlerProcess
+        # 导入Scrapy组件
+        from scrapy.crawler import CrawlerRunner
         from scrapy.utils.project import get_project_settings
-        from importlib import import_module
+        from twisted.internet import reactor
+        import twisted.internet.error
+        from scrapy.utils.log import configure_logging
         
-        # 根据爬虫类型设置环境变量
+        # 配置Scrapy日志
+        configure_logging({"LOG_LEVEL": "INFO" if DEBUG else "WARNING"})
+        
+        # 设置环境变量
         if spider_name == 'douban_spider' and input_data:
-            # 如果是电影名，处理编码问题
-            try:
-                # 使用base64编码解决中文问题
-                encoded_name = encode_movie_name(input_data)
-                if encoded_name:
-                    os.environ['MOVIE_NAME_ENCODED'] = encoded_name
-                    logger.warning(f"电影名已编码: {input_data} -> {encoded_name}")
-            except Exception as e:
-                logger.error(f"编码电影名失败: {str(e)}")
-            
-            # 同时设置普通环境变量作为备用
             os.environ['MOVIE_NAME'] = input_data
-            logger.warning(f"设置电影名: {input_data}")
+            logger.debug(f"设置电影名环境变量: {input_data}")
+            # 直接设置为电影名，无需编码
+            os.environ['MOVIE_NAME_ENCODED'] = input_data
         elif spider_name == 'collectip' and input_data:
-            # 如果是IP爬虫，设置爬取类型
             os.environ['CRAWL_TYPE'] = input_data
-            logger.warning(f"设置爬取类型: {input_data}")
+            logger.debug(f"设置爬取类型环境变量: {input_data}")
         
-        # 将爬取配置设置为环境变量
+        # 设置爬取配置
         if crawl_config:
-            import json
             try:
-                config_json = json.dumps(crawl_config)
-                os.environ['CRAWL_CONFIG'] = config_json
-                logger.warning(f"设置爬取配置: {crawl_config}")
+                os.environ['CRAWL_CONFIG'] = json.dumps(crawl_config)
+                logger.debug(f"设置爬取配置环境变量: {json.dumps(crawl_config)}")
             except Exception as e:
                 logger.error(f"序列化配置失败: {str(e)}")
         
-        # 加载爬虫设置
+        # 加载爬虫设置并禁用信号处理
         settings = get_project_settings()
-        settings.set('LOG_LEVEL', 'WARNING')  # 提高日志级别，减少输出
-        settings.set('ROBOTSTXT_OBEY', False)  # 忽略robots.txt
+        settings.set('LOG_LEVEL', 'INFO' if DEBUG else 'WARNING')
+        settings.set('ROBOTSTXT_OBEY', False)
+        # 禁用信号处理以防止非主线程错误
+        settings.set('EXTENSIONS', {
+            'scrapy.extensions.telnet.TelnetConsole': None,
+            'scrapy.extensions.corestats.CoreStats': None,
+            'scrapy.extensions.memusage.MemoryUsage': None,
+            'scrapy.extensions.logstats.LogStats': None,
+        })
+        logger.debug("已加载爬虫设置")
         
-        # 创建爬虫进程
-        process = CrawlerProcess(settings)
-        
-        # 可能的模块导入路径
-        module_paths = [
-            f"crawl_ip.spiders.{spider_name}",
-            f"crawl_ip.crawl_ip.spiders.{spider_name}",
-            f"ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}",
-            f"spiders.{spider_name}"
-        ]
-        
-        # 尝试导入爬虫模块
-        spider_module = None
-        for module_path in module_paths:
-            try:
-                spider_module = import_module(module_path)
-                logger.warning(f"成功导入爬虫模块: {module_path}")
-                break
-            except ImportError as e:
-                logger.warning(f"尝试导入 {module_path} 失败: {str(e)}")
-                continue
-                
-        if spider_module is None:
+        # 导入爬虫模块并查找爬虫类
+        spider_module = find_spider_module(spider_name)
+        if not spider_module:
             logger.error(f"无法导入爬虫模块: {spider_name}")
             return 1
         
-        # 找到爬虫类并启动
+        logger.debug(f"成功导入爬虫模块: {spider_module.__name__}")
+        
+        # 查找爬虫类
         spider_class = None
         for obj_name in dir(spider_module):
             obj = getattr(spider_module, obj_name)
-            # 检查是否是爬虫类且名称匹配
             if hasattr(obj, 'name') and getattr(obj, 'name') == spider_name:
                 spider_class = obj
                 break
         
-        if spider_class is None:
+        if not spider_class:
             logger.error(f"未找到爬虫类: {spider_name}")
             return 1
                 
+        logger.debug(f"找到爬虫类: {spider_class.__name__}")
+        
         # 准备爬虫参数
         spider_kwargs = {}
         
-        # 如果是豆瓣爬虫，需要传递电影名称
-        if spider_name == 'douban_spider' and input_data:
-            # 不传递movie_name参数，让爬虫从环境变量中获取
-            pass
-        
-        # 如果有配置参数，添加到爬虫参数中
+        # 处理配置参数
         if crawl_config:
             if spider_name == 'douban_spider':
-                # 添加策略参数
                 if 'strategy' in crawl_config:
                     spider_kwargs['comment_strategy'] = crawl_config['strategy']
                     
-                    # 添加各种策略特定的参数
                     for param in ['max_pages', 'sample_size', 'max_interval', 'block_size', 'use_random_strategy']:
                         if param in crawl_config:
                             spider_kwargs[param] = crawl_config[param]
-            elif spider_name == 'collectip':
-                # 添加IP爬虫相关参数
-                if 'crawl_type' in crawl_config:
-                    spider_kwargs['crawl_type'] = crawl_config['crawl_type']
+            elif spider_name == 'collectip' and 'crawl_type' in crawl_config:
+                spider_kwargs['crawl_type'] = crawl_config['crawl_type']
                     
-            logger.warning(f"启动爬虫，参数: {spider_kwargs}")
+            logger.debug(f"爬虫参数: {spider_kwargs}")
+        
+        # 使用CrawlerRunner运行爬虫
+        runner = CrawlerRunner(settings)
+        logger.debug("创建CrawlerRunner实例")
+        
+        # 创建完成事件
+        finished = threading.Event()
+        
+        # 定义爬虫完成后的回调
+        def on_spider_closed(spider):
+            logger.debug(f"爬虫 {spider.name} 已完成")
+            finished.set()
+        
+        # 添加爬虫完成的回调
+        crawler = runner.create_crawler(spider_class)
+        crawler.signals.connect(on_spider_closed, signal='spider_closed')
         
         # 启动爬虫
-        process.crawl(spider_class, **spider_kwargs)
-        process.start()  # 这会阻塞直到所有爬虫完成
+        logger.debug("开始运行爬虫")
+        deferred = crawler.crawl(**spider_kwargs)
         
-        return 0  # 成功退出码
+        # 启动reactor
+        if not reactor.running:
+            # 在新线程中运行reactor
+            reactor_thread = threading.Thread(target=reactor.run, 
+                                             kwargs={'installSignalHandlers': False})
+            reactor_thread.daemon = True
+            reactor_thread.start()
+            logger.debug("Reactor已在子线程中启动")
+        
+        # 等待爬虫完成
+        logger.debug("等待爬虫完成...")
+        finished.wait(timeout=3600)  # 最多等待1小时
+        
+        if finished.is_set():
+            logger.debug("爬虫已正常完成")
+        else:
+            logger.warning("爬虫超时或未正常完成")
+        
+        return 0  # 成功
         
     except Exception as e:
         logger.error(f"运行爬虫时出错: {str(e)}")
-        import traceback
         logger.error(traceback.format_exc())
-        return 1  # 错误退出码
+        return 1  # 失败
     
     finally:
         # 清理环境变量
-        if 'MOVIE_NAME' in os.environ:
-            del os.environ['MOVIE_NAME']
-        if 'MOVIE_NAME_ENCODED' in os.environ:
-            del os.environ['MOVIE_NAME_ENCODED']
-        if 'CRAWL_CONFIG' in os.environ:
-            del os.environ['CRAWL_CONFIG']
-        if 'CRAWL_TYPE' in os.environ:
-            del os.environ['CRAWL_TYPE']
+        for var in ['MOVIE_NAME', 'MOVIE_NAME_ENCODED', 'CRAWL_CONFIG', 'CRAWL_TYPE']:
+            if var in os.environ:
+                del os.environ[var]
+        logger.debug("清理环境变量完成")
+
+
+def run_spider_thread(spider_name, project_root, input_data=None, crawl_config=None):
+    """在单独的线程中运行爬虫"""
+    logger = setup_logging("spider_thread", logging.DEBUG)
+    logger.debug(f"爬虫线程启动: {spider_name}")
+    
+    # 在单独的线程中执行实际的爬虫逻辑
+    res = run_scrapy_spider(spider_name, project_root, input_data, crawl_config)
+    
+    logger.debug(f"爬虫 {spider_name} 执行结束，结果: {res}")
+    return res
 
 
 def start_douban_crawl(movie_name, crawl_config=None):
     """开始豆瓣爬虫"""
-    logger = setup_logging("douban_crawler", logging.WARNING)
+    logger = setup_logging("douban_crawler", logging.DEBUG)
+    logger.debug(f"准备启动豆瓣爬虫: {movie_name}")
 
     try:
-        # 添加项目根目录到Python路径
-        if str(PROJECT_ROOT) not in sys.path:
-            sys.path.insert(0, str(PROJECT_ROOT))
+        # 记录爬取信息
+        strategy = crawl_config.get('strategy', 'sequential') if crawl_config else 'sequential'
+        logger.debug(f"爬取策略: {strategy}, 配置: {crawl_config}")
 
-        # 记录策略配置
-        if crawl_config:
-            strategy = crawl_config.get('strategy', 'sequential')
-            logger.warning(f"开始爬取电影: {movie_name}，使用策略: {strategy}")
-        else:
-            logger.warning(f"开始爬取电影: {movie_name}，使用默认策略")
-
-        # 使用Process创建子进程
-        spider_process = Process(
-            target=run_spider_process,
-            args=('douban_spider', str(PROJECT_ROOT), movie_name, crawl_config)
+        # 创建并启动爬虫线程
+        spider_thread = threading.Thread(
+            target=run_spider_thread,
+            args=('douban_spider', str(PROJECT_ROOT), movie_name, crawl_config),
+            name=f"DoubanSpider-{int(time.time())}"
         )
-
-        # 启动子进程
-        spider_process.start()
-        logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
-
-        # 返回结果，不等待进程完成
+        # 设置为非守护线程，确保主程序退出前线程能完成
+        spider_thread.daemon = False
+        spider_thread.start()
+        
+        logger.debug(f"爬虫线程已启动: {spider_thread.name}")
         return True
-
     except Exception as e:
         logger.error(f"启动爬虫时出错: {str(e)}")
-        import traceback
         logger.error(traceback.format_exc())
         return False
 
 
 def start_douban_crawl_with_params(movie_name, strategy="sequential", max_pages=None, sample_size=None, 
                       max_interval=None, block_size=None, use_random_strategy=None):
-    """启动豆瓣爬虫进程，支持所有参数"""
-    logger = setup_logging("douban_crawler", logging.WARNING)
-
+    """启动豆瓣爬虫线程，支持所有参数"""
+    logger = setup_logging("douban_crawler", logging.DEBUG)
+    logger.debug(f"使用参数启动豆瓣爬虫: {movie_name}, 策略: {strategy}")
+    
     try:
         # 构建爬取配置
-        crawl_config = {
-            'strategy': strategy
+        crawl_config = {'strategy': strategy}
+        
+        # 添加可选参数
+        params = {
+            'max_pages': max_pages,
+            'sample_size': sample_size,
+            'max_interval': max_interval,
+            'block_size': block_size,
+            'use_random_strategy': use_random_strategy
         }
         
-        # 添加各种可选参数
-        if max_pages is not None:
-            crawl_config['max_pages'] = max_pages
-        if sample_size is not None:
-            crawl_config['sample_size'] = sample_size
-        if max_interval is not None:
-            crawl_config['max_interval'] = max_interval  
-        if block_size is not None:
-            crawl_config['block_size'] = block_size
-        if use_random_strategy is not None:
-            crawl_config['use_random_strategy'] = use_random_strategy
+        # 过滤掉None值
+        crawl_config.update({k: v for k, v in params.items() if v is not None})
+        logger.debug(f"最终配置参数: {crawl_config}")
             
-        # 调用主函数启动爬虫
-        logger.warning(f"准备爬取电影: {movie_name}，使用策略: {strategy}，参数: {crawl_config}")
+        # 启动爬虫
         return start_douban_crawl(movie_name, crawl_config)
-        
     except Exception as e:
         logger.error(f"启动爬虫出错: {str(e)}")
-        import traceback
         logger.error(traceback.format_exc())
         return False
 
+
+def generate_lock_file_path(spider_name):
+    """生成爬虫锁文件路径"""
+    # 确保锁文件目录存在
+    lock_dir = os.path.join(PROJECT_ROOT, 'locks')
+    os.makedirs(lock_dir, exist_ok=True)
+    
+    # 返回锁文件路径
+    return os.path.join(lock_dir, f'crawler_{spider_name}.lock')
+
+
 def start_crawl(spider_name='collectip', crawl_type='qq'):
     """开始爬虫，适用于IP爬虫等"""
-    logger = setup_logging("ip_crawler", logging.WARNING)
+    logger = setup_logging("ip_crawler", logging.DEBUG)
+    logger.debug(f"准备启动IP爬虫: {spider_name}, 类型: {crawl_type}")
     
     # 爬虫锁文件路径
-    lock_file = os.path.join(PROJECT_ROOT, f'crawler_{spider_name}.lock')
+    lock_file = generate_lock_file_path(spider_name)
+    logger.debug(f"锁文件路径: {lock_file}")
     
     # 检查锁文件
     if os.path.exists(lock_file):
         # 检查锁文件是否过期（超过1小时）
         if os.path.getmtime(lock_file) < (time.time() - 3600):
-            logger.warning(f"爬虫锁文件已过期，删除锁文件: {lock_file}")
+            logger.debug(f"爬虫锁文件已过期，删除锁文件")
             os.remove(lock_file)
         else:
             logger.warning(f"爬虫正在运行中，跳过本次任务: {spider_name}")
             return False
     
+    # 创建锁文件 - 此步骤提前，但不在finally中删除
     try:
-        # 创建锁文件
-        with open(lock_file, 'w') as f:
+        with open(lock_file, 'w', encoding='utf-8') as f:
             f.write(f"{os.getpid()},{time.time()}")
+        logger.debug(f"创建锁文件: {lock_file}")
             
-        # 添加项目根目录到Python路径
-        if str(PROJECT_ROOT) not in sys.path:
-            sys.path.insert(0, str(PROJECT_ROOT))
-            
-        # 设置类型环境变量
-        os.environ['CRAWL_TYPE'] = crawl_type
-        logger.warning(f"开始爬取IP，类型: {crawl_type}")
+        # 配置爬虫参数
+        logger.debug(f"开始爬取IP，类型: {crawl_type}")
+        crawl_config = {'crawl_type': crawl_type}
         
-        # 创建爬虫配置
-        crawl_config = {
-            'crawl_type': crawl_type
-        }
-        
-        # 使用Process创建子进程
-        spider_process = Process(
-            target=run_spider_process,
-            args=(spider_name, PROJECT_ROOT, crawl_type, crawl_config)
+        # 创建并启动爬虫线程
+        spider_thread = threading.Thread(
+            target=run_spider_thread,
+            args=(spider_name, PROJECT_ROOT, crawl_type, crawl_config),
+            name=f"IpSpider-{crawl_type}-{int(time.time())}"
         )
+        # 设置为非守护线程，确保主程序退出前线程能完成
+        spider_thread.daemon = False
+        spider_thread.start()
         
-        # 启动子进程
-        spider_process.start()
-        logger.warning(f"爬虫进程已启动，PID: {spider_process.pid}")
-        
-        # 不等待子进程完成
+        logger.debug(f"爬虫线程已启动: {spider_thread.name}")
         return True
-            
     except Exception as e:
         logger.error(f"启动爬虫时出错: {str(e)}")
-        import traceback
         logger.error(traceback.format_exc())
-        return False
         
-    finally:
-        # 清理锁文件
+        # 发生异常时删除锁文件
         if os.path.exists(lock_file):
             try:
                 os.remove(lock_file)
-            except Exception as e:
-                logger.error(f"删除爬虫锁文件时出错: {e}")
+                logger.debug("删除锁文件成功")
+            except Exception as ex:
+                logger.error(f"删除爬虫锁文件时出错: {ex}")
+        return False
 
 
+# 当作为脚本直接运行时的入口点
 if __name__ == '__main__':
-    # start_crawl()
-    # start_crawl_douban('霸王别姬')
-    start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=5)
+    # 设置Django环境
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+    django.setup()
+    
+    # 测试爬虫
+    print("开始测试爬虫...")
+    result = start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=2)
+    print(f"爬虫启动结果: {result}")
+    
+    # 防止主程序退出导致线程终止
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("手动终止程序")

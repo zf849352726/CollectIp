@@ -141,3 +141,195 @@ IndentationError: unexpected indent
 2025-04-06 14:51:40,362 - WARNING - 设置爬取配置: {'strategy': 'sequential', 'max_pages': 5}
 2025-04-06 14:51:41,593 - WARNING - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
 2025-04-06 14:51:41,594 - WARNING - 启动爬虫，参数: {'comment_strategy': 'sequential', 'max_pages': 5}
+2025-04-06 15:08:25,900 - WARNING - 当前工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:30:19,704 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:30:19,704 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:30:20,158 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:30:20,158 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:30:20,162 - DEBUG - 已加载爬虫设置
+2025-04-06 15:30:21,078 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:30:21,079 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:30:21,079 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:30:21,094 - DEBUG - 创建CrawlerProcess实例
+2025-04-06 15:30:27,176 - DEBUG - 添加爬虫到进程
+2025-04-06 15:30:27,177 - DEBUG - 开始运行爬虫进程
+2025-04-06 15:30:53,672 - DEBUG - 爬虫进程执行完毕
+2025-04-06 15:30:53,673 - DEBUG - 清理环境变量完成
+2025-04-06 15:35:29,570 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:35:29,570 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:35:29,979 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:35:29,979 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:35:29,983 - DEBUG - 已加载爬虫设置
+2025-04-06 15:35:30,774 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:35:30,774 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:35:30,774 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:35:30,780 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 15:35:30,782 - ERROR - 运行爬虫时出错: 'SignalManager' object has no attribute 'spider_closed'
+2025-04-06 15:35:30,783 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 224, in run_scrapy_spider
+    crawler.signals.connect(on_spider_closed, signal=crawler.signals.spider_closed)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SignalManager' object has no attribute 'spider_closed'
+
+2025-04-06 15:35:30,783 - DEBUG - 清理环境变量完成
+2025-04-06 15:39:44,253 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:39:44,253 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:39:44,595 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:39:44,596 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:39:44,600 - DEBUG - 已加载爬虫设置
+2025-04-06 15:39:44,606 - ERROR - 运行爬虫时出错: unexpected indent (douban_spider.py, line 544)
+2025-04-06 15:39:44,608 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 172, in run_scrapy_spider
+    spider_module = find_spider_module(spider_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 112, in find_spider_module
+    return import_module(module_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\douban_spider.py", line 544
+    yield scrapy.Request(
+IndentationError: unexpected indent
+
+2025-04-06 15:39:44,608 - DEBUG - 清理环境变量完成
+2025-04-06 15:40:24,024 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:40:24,025 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:40:24,410 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:40:24,410 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:40:24,415 - DEBUG - 已加载爬虫设置
+2025-04-06 15:40:25,223 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:40:25,223 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:40:25,224 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:40:25,239 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 15:40:25,244 - ERROR - 运行爬虫时出错: 'SignalManager' object has no attribute 'spider_closed'
+2025-04-06 15:40:25,245 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 224, in run_scrapy_spider
+    crawler.signals.connect(on_spider_closed, signal=crawler.signals.spider_closed)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SignalManager' object has no attribute 'spider_closed'
+
+2025-04-06 15:40:25,247 - DEBUG - 清理环境变量完成
+2025-04-06 15:41:47,174 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:41:47,175 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:41:47,523 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:41:47,524 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:41:47,527 - DEBUG - 已加载爬虫设置
+2025-04-06 15:41:48,185 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:41:48,185 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:41:48,186 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:41:48,191 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 15:41:48,192 - DEBUG - 开始运行爬虫
+2025-04-06 15:41:53,068 - DEBUG - Reactor已在子线程中启动
+2025-04-06 15:41:53,069 - DEBUG - 等待爬虫完成...
+2025-04-06 15:43:51,029 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:43:51,030 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:43:51,434 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:43:51,435 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:43:51,440 - DEBUG - 已加载爬虫设置
+2025-04-06 15:43:52,195 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:43:52,195 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:43:52,195 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:43:52,201 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 15:43:52,202 - DEBUG - 开始运行爬虫
+2025-04-06 15:43:57,138 - DEBUG - Reactor已在子线程中启动
+2025-04-06 15:43:57,139 - DEBUG - 等待爬虫完成...
+2025-04-06 15:44:02,147 - WARNING - 爬虫超时或未正常完成
+2025-04-06 15:44:02,147 - DEBUG - 清理环境变量完成
+2025-04-06 15:45:48,034 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:45:48,034 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 15:45:48,389 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 15:45:48,389 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 15:45:48,394 - DEBUG - 已加载爬虫设置
+2025-04-06 15:45:49,103 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 15:45:49,103 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 15:45:49,103 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:45:49,108 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 15:45:49,109 - DEBUG - 开始运行爬虫
+2025-04-06 15:45:53,829 - DEBUG - Reactor已在子线程中启动
+2025-04-06 15:45:53,830 - DEBUG - 等待爬虫完成...
+2025-04-06 16:24:28,462 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:24:28,462 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 16:24:28,855 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 16:24:28,855 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 16:24:28,859 - DEBUG - 已加载爬虫设置
+2025-04-06 16:24:29,575 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 16:24:29,575 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 16:24:29,576 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:24:29,581 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 16:24:29,583 - DEBUG - 开始运行爬虫
+2025-04-06 16:24:34,811 - DEBUG - Reactor已在子线程中启动
+2025-04-06 16:24:34,812 - DEBUG - 等待爬虫完成...
+2025-04-06 16:37:49,270 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:37:49,271 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 16:37:49,717 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 16:37:49,718 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 16:37:49,722 - DEBUG - 已加载爬虫设置
+2025-04-06 16:37:50,766 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 16:37:50,766 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 16:37:50,766 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:37:50,772 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 16:37:50,774 - DEBUG - 开始运行爬虫
+2025-04-06 16:37:55,970 - DEBUG - Reactor已在子线程中启动
+2025-04-06 16:37:55,973 - DEBUG - 等待爬虫完成...
+2025-04-06 16:38:28,501 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:38:28,502 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 16:38:28,880 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 16:38:28,881 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 16:38:28,885 - DEBUG - 已加载爬虫设置
+2025-04-06 16:38:29,830 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 16:38:29,831 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 16:38:29,831 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:38:29,836 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 16:38:29,838 - DEBUG - 开始运行爬虫
+2025-04-06 16:38:34,808 - DEBUG - Reactor已在子线程中启动
+2025-04-06 16:38:34,809 - DEBUG - 等待爬虫完成...
+2025-04-06 18:53:18,517 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:53:27,157 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 18:53:33,641 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 18:53:33,645 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 18:53:33,662 - DEBUG - 已加载爬虫设置
+2025-04-06 18:53:39,628 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 18:53:39,629 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 18:53:39,629 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:53:46,370 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 18:53:54,354 - DEBUG - 开始运行爬虫
+2025-04-06 18:55:03,113 - DEBUG - Reactor已在子线程中启动
+2025-04-06 18:55:03,115 - DEBUG - 等待爬虫完成...
+2025-04-06 18:55:38,874 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:55:45,391 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 18:55:52,134 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 18:55:52,136 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 18:55:52,152 - DEBUG - 已加载爬虫设置
+2025-04-06 18:56:02,663 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:56:03,739 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 18:56:11,264 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 18:56:11,267 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 18:56:11,284 - DEBUG - 已加载爬虫设置
+2025-04-06 18:56:14,838 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 18:56:14,839 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 18:56:14,840 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:56:32,953 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 18:56:38,704 - DEBUG - 开始运行爬虫
+2025-04-06 18:57:58,405 - DEBUG - Reactor已在子线程中启动
+2025-04-06 18:58:00,292 - DEBUG - 等待爬虫完成...
+2025-04-06 18:58:05,490 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:58:05,490 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 18:58:05,837 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 18:58:05,837 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 18:58:05,843 - DEBUG - 已加载爬虫设置
+2025-04-06 18:58:06,544 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 18:58:06,544 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 18:58:06,545 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:58:06,550 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 18:58:06,551 - DEBUG - 开始运行爬虫
+2025-04-06 18:58:11,784 - DEBUG - Reactor已在子线程中启动
+2025-04-06 18:58:11,784 - DEBUG - 等待爬虫完成...

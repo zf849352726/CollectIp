@@ -50,3 +50,123 @@ Stacktrace:
 2025-04-06 14:52:21,576 - WARNING - WebDriver已关闭
 2025-04-06 14:52:21,576 - WARNING - MySQL连接已关闭
 2025-04-06 14:52:21,576 - WARNING - 爬虫资源已清理完毕
+2025-04-06 15:30:21,096 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 15:30:21,096 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:30:21,096 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 15:30:26,236 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 15:30:26,248 - WARNING - MySQL数据库连接成功
+2025-04-06 15:30:27,172 - INFO - CommentPipeline: MongoDB连接成功
+2025-04-06 15:30:27,914 - WARNING - 创建新的undetected_chromedriver实例
+2025-04-06 15:30:27,914 - WARNING - 未找到Cookie文件，需要登录
+2025-04-06 15:30:27,915 - WARNING - 开始搜索电影: 肖申克的救赎
+2025-04-06 15:30:28,518 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E8%82%96%E7%94%B3%E5%85%8B%E7%9A%84%E6%95%91%E8%B5%8E
+2025-04-06 15:30:33,779 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-06 15:30:53,435 - ERROR - 查找电影链接出错: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00CEC7F3+24435]
+	(No symbol) [0x00C72074]
+	(No symbol) [0x00B406E3]
+	(No symbol) [0x00B88B39]
+	(No symbol) [0x00B88E8B]
+	(No symbol) [0x00BD1AC2]
+	(No symbol) [0x00BAD804]
+	(No symbol) [0x00BCF20A]
+	(No symbol) [0x00BAD5B6]
+	(No symbol) [0x00B7C54F]
+	(No symbol) [0x00B7D894]
+	GetHandleVerifier [0x00FF70A3+3213347]
+	GetHandleVerifier [0x0100B0C9+3295305]
+	GetHandleVerifier [0x0100558C+3271948]
+	GetHandleVerifier [0x00D87360+658144]
+	(No symbol) [0x00C7B27D]
+	(No symbol) [0x00C78208]
+	(No symbol) [0x00C783A9]
+	(No symbol) [0x00C6AAC0]
+	BaseThreadInitThunk [0x76937BA9+25]
+	RtlInitializeExceptionChain [0x7765C2EB+107]
+	RtlClearBits [0x7765C26F+191]
+
+2025-04-06 15:30:53,436 - ERROR - 直接搜索出错: quote_from_bytes() expected bytes
+2025-04-06 15:30:53,437 - INFO - CommentPipeline: 爬虫关闭，评论处理完成
+2025-04-06 15:30:53,438 - WARNING - 爬虫关闭: finished
+2025-04-06 15:30:53,643 - WARNING - WebDriver已关闭
+2025-04-06 15:30:53,644 - WARNING - MySQL连接已关闭
+2025-04-06 15:30:53,645 - WARNING - 爬虫资源已清理完毕
+2025-04-06 15:41:48,193 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 15:41:48,193 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:41:48,193 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 15:41:53,061 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 15:41:53,067 - WARNING - MySQL数据库连接成功
+2025-04-06 15:43:52,203 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 15:43:52,203 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:43:52,203 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 15:43:57,129 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 15:43:57,136 - WARNING - MySQL数据库连接成功
+2025-04-06 15:45:49,109 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 15:45:49,110 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 15:45:49,110 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 15:45:53,825 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 15:45:53,828 - WARNING - MySQL数据库连接成功
+2025-04-06 16:24:29,583 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 16:24:29,583 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:24:29,584 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 16:24:34,801 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 16:24:34,809 - WARNING - MySQL数据库连接成功
+2025-04-06 16:37:50,774 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 16:37:50,777 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:37:50,778 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 16:37:55,958 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 16:37:55,967 - WARNING - MySQL数据库连接成功
+2025-04-06 16:38:29,839 - WARNING - 豆瓣爬虫爬取电影: ['肖申克的救赎']
+2025-04-06 16:38:29,840 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:38:29,840 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 16:38:34,796 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 16:38:34,804 - WARNING - MySQL数据库连接成功
+2025-04-06 16:59:38,318 - WARNING - 从环境变量获取电影名: 霸王别姬
+2025-04-06 16:59:38,319 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 16:59:38,320 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 16:59:38,320 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 16:59:43,656 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 16:59:43,672 - WARNING - MySQL数据库连接成功
+2025-04-06 16:59:43,674 - WARNING - 使用Selenium启动爬虫，电影名: ['霸王别姬']
+2025-04-06 16:59:43,676 - WARNING - 开始初始化Chrome浏览器
+2025-04-06 16:59:43,677 - WARNING - ChromeDriver路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 16:59:43,680 - WARNING - 正在创建浏览器实例...
+2025-04-06 16:59:43,683 - WARNING - Chrome浏览器配置已设置，准备启动
+2025-04-06 16:59:44,499 - WARNING - 创建新的Chrome实例成功
+2025-04-06 16:59:44,504 - WARNING - 浏览器地址: data:,
+2025-04-06 16:59:44,505 - WARNING - 未找到Cookie文件，需要登录
+2025-04-06 16:59:44,510 - WARNING - Chrome浏览器已启动，地址: data:,
+2025-04-06 16:59:44,510 - WARNING - 开始搜索电影: 霸王别姬
+2025-04-06 16:59:44,511 - WARNING - 开始初始化Chrome浏览器
+2025-04-06 16:59:44,511 - WARNING - 使用现有的WebDriver实例
+2025-04-06 16:59:44,512 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E9%9C%B8%E7%8E%8B%E5%88%AB%E5%A7%AC
+2025-04-06 16:59:51,676 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-06 17:00:01,011 - WARNING - 找到电影详情页: https://movie.douban.com/subject/1291546/
+2025-04-06 17:00:01,012 - WARNING - 解析电影详情页: https://movie.douban.com/subject/1291546/
+2025-04-06 17:00:01,012 - WARNING - 开始初始化Chrome浏览器
+2025-04-06 17:00:01,013 - WARNING - 使用现有的WebDriver实例
+2025-04-06 17:00:16,506 - WARNING - 电影《霸王别姬》已存在于数据库，ID: 2
+2025-04-06 17:00:16,506 - WARNING - 电影《霸王别姬》已存在，只更新评分、评分人数和评论
+2025-04-06 17:00:16,594 - WARNING - 更新电影数据: 霸王别姬, 评分:9.6, 评分人数:2327290
+2025-04-06 18:53:57,229 - INFO - 【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件
+2025-04-06 18:53:57,232 - WARNING - 从环境变量获取电影名: 霸王别姬
+2025-04-06 18:53:57,233 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 18:53:57,234 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:53:57,235 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 18:54:02,517 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 18:54:02,540 - WARNING - MySQL数据库连接成功
+2025-04-06 18:56:41,352 - INFO - 【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件
+2025-04-06 18:56:41,353 - WARNING - 从环境变量获取电影名: 霸王别姬
+2025-04-06 18:56:41,353 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 18:56:41,354 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:56:41,354 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 18:56:46,276 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 18:56:46,300 - WARNING - MySQL数据库连接成功
+2025-04-06 18:58:06,552 - INFO - 【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件
+2025-04-06 18:58:06,553 - WARNING - 从环境变量获取电影名: 霸王别姬
+2025-04-06 18:58:06,553 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 18:58:06,553 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 18:58:06,553 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 18:58:11,773 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 18:58:11,782 - WARNING - MySQL数据库连接成功
