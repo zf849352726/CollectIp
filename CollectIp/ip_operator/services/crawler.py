@@ -263,18 +263,6 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         logger.debug("清理环境变量完成")
 
 
-def run_spider_thread(spider_name, project_root, input_data=None, crawl_config=None):
-    """在单独的线程中运行爬虫"""
-    logger = setup_logging("spider_thread", logging.DEBUG)
-    logger.debug(f"爬虫线程启动: {spider_name}")
-    
-    # 在单独的线程中执行实际的爬虫逻辑
-    res = run_scrapy_spider(spider_name, project_root, input_data, crawl_config)
-    
-    logger.debug(f"爬虫 {spider_name} 执行结束，结果: {res}")
-    return res
-
-
 def start_douban_crawl(movie_name, crawl_config=None):
     """开始豆瓣爬虫"""
     logger = setup_logging("douban_crawler", logging.DEBUG)
@@ -287,7 +275,7 @@ def start_douban_crawl(movie_name, crawl_config=None):
 
         # 创建并启动爬虫线程
         spider_thread = threading.Thread(
-            target=run_spider_thread,
+            target=run_scrapy_spider,
             args=('douban_spider', str(PROJECT_ROOT), movie_name, crawl_config),
             name=f"DoubanSpider-{int(time.time())}"
         )
@@ -375,7 +363,7 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
         
         # 创建并启动爬虫线程
         spider_thread = threading.Thread(
-            target=run_spider_thread,
+            target=run_scrapy_spider,
             args=(spider_name, PROJECT_ROOT, crawl_type, crawl_config),
             name=f"IpSpider-{crawl_type}-{int(time.time())}"
         )

@@ -170,3 +170,10 @@ Stacktrace:
 2025-04-06 18:58:06,553 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
 2025-04-06 18:58:11,773 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
 2025-04-06 18:58:11,782 - WARNING - MySQL数据库连接成功
+2025-04-06 21:44:19,686 - INFO - 【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件
+2025-04-06 21:44:19,686 - WARNING - 从环境变量获取电影名: 霸王别姬
+2025-04-06 21:44:19,687 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-06 21:44:19,687 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 21:44:19,687 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-06 21:44:25,612 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-06 21:44:25,624 - WARNING - MySQL数据库连接成功

@@ -335,3 +335,15 @@ AttributeError: 'SignalManager' object has no attribute 'spider_closed'
 2025-04-06 18:58:11,784 - DEBUG - 等待爬虫完成...
 2025-04-06 19:58:11,797 - WARNING - 爬虫超时或未正常完成
 2025-04-06 19:58:11,798 - DEBUG - 清理环境变量完成
+2025-04-06 21:44:18,284 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-06 21:44:18,285 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-06 21:44:18,773 - DEBUG - 设置电影名环境变量: 霸王别姬
+2025-04-06 21:44:18,773 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-06 21:44:18,778 - DEBUG - 已加载爬虫设置
+2025-04-06 21:44:19,679 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-06 21:44:19,680 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-06 21:44:19,680 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-06 21:44:19,685 - DEBUG - 创建CrawlerRunner实例
+2025-04-06 21:44:19,686 - DEBUG - 开始运行爬虫
+2025-04-06 21:44:25,626 - DEBUG - Reactor已在子线程中启动
+2025-04-06 21:44:25,626 - DEBUG - 等待爬虫完成...
