@@ -620,14 +620,14 @@ def crawl_movie_view(request):
         
         # 根据不同策略添加对应参数
         if comment_strategy == 'sequential':
-            max_pages = int(strategy_params.get('max_pages', 5))
+            max_pages = int(strategy_params.get('maxPages', 5))
         elif comment_strategy == 'random_pages':
-            sample_size = int(strategy_params.get('sample_size', 5))
+            sample_size = int(strategy_params.get('sampleSize', 5))
         elif comment_strategy == 'random_interval':
             max_interval = int(strategy_params.get('max_interval', 3))
-            max_pages = int(strategy_params.get('max_pages', 5))
+            max_pages = int(strategy_params.get('maxInterval', 5))
         elif comment_strategy == 'random_block':
-            block_size = int(strategy_params.get('block_size', 3))
+            block_size = int(strategy_params.get('blockSize', 3))
         elif comment_strategy == 'random':
             use_random_strategy = True
         
