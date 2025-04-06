@@ -7,7 +7,7 @@
     <title>{{ page_title|default:"豆瓣数据分析" }}</title>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/doubanstyle.css' %}">
-    <script src="{% static 'js/douban.js' %}"></script>
+    <script src="{% static 'js/douban.js' %}?v={% now 'U' %}"></script>
     {% csrf_token %}
 </head>
 <body>

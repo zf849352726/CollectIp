@@ -145,15 +145,22 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.file'  # 使用文件而不�
 SESSION_COOKIE_AGE = 86400  # 降低为1天
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 关闭浏览器时清除session
 
-# 缓存配置 - 使用文件缓存以减少内存使用
+# # 缓存配置 - 使用文件缓存以减少内存使用
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
+#         'TIMEOUT': 60,  # 降低缓存超时时间
+#         'OPTIONS': {
+#             'MAX_ENTRIES': 1000,  # 限制缓存条目数量
+#         }
+#     }
+# }
+
+# 禁用缓存配置
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
-        'TIMEOUT': 60,  # 降低缓存超时时间
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,  # 限制缓存条目数量
-        }
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 
@@ -225,7 +232,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 2621440  # 2.5MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 2621440  # 2.5MB
 
 # 设置正确的Django设置模块
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings_optimized')
 
 # 延迟Django设置初始化
 # 将django.setup()移到爬虫的__init__方法中
@@ -251,11 +258,11 @@ X_FRAME_OPTIONS = 'DENY'
 
 # 电子邮件设置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.163.com'  # 或使用其他邮件服务商
+EMAIL_HOST = 'smtp.gmail.com'  # 使用Google邮件服务
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'admin@663712.xyz'  # 请替换为实际的邮箱
-EMAIL_HOST_PASSWORD = 'your_email_password'  # 请替换为实际密码
+EMAIL_HOST_USER = 'qq849352726@gmail.com'  # 请替换为实际的邮箱
+EMAIL_HOST_PASSWORD = 'zxcvbnm.1'  # 请替换为实际密码
 DEFAULT_FROM_EMAIL = 'CollectIp <admin@663712.xyz>'
 
 # 管理员设置
