@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import logging
-from ip_operator.services.crawler import start_crawl, start_douban_crawl, start_douban_crawl_with_params
+from ip_operator.services.crawler import start_crawl, start_douban_crawl, start_douban_crawl_with_params, encode_movie_name
 from ip_operator.services.scorer import start_score
 import threading
 from django.conf import settings
@@ -563,7 +563,7 @@ def douban_settings(request):
 def crawl_movie_view(request):
     """接收电影名称并启动豆瓣爬虫"""
     import json
-    from ip_operator.services.crawler import start_douban_crawl_with_params
+    from ip_operator.services.crawler import start_douban_crawl_with_params, encode_movie_name
     import os
     import threading
     from datetime import datetime, timedelta
@@ -587,6 +587,14 @@ def crawl_movie_view(request):
                 'success': False,
                 'error': '电影名称不能为空'
             })
+            
+        # 检查电影名是否为中文，并记录以便调试
+        has_chinese = any('\u4e00' <= ch <= '\u9fff' for ch in movie_name)
+        if has_chinese:
+            logger.info(f"电影名包含中文字符: {movie_name}")
+            # 编码电影名用于调试
+            encoded_name = encode_movie_name(movie_name)
+            logger.debug(f"编码后的电影名: {encoded_name}")
             
         # 检查锁文件以防止频繁启动
         if os.path.exists(lock_file):

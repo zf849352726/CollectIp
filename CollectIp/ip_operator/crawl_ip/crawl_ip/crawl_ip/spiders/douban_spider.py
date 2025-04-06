@@ -23,6 +23,7 @@ import urllib.request
 from ddddocr import DdddOcr
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver import Chrome
+import base64
 
 # 获取项目根目录
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..'))
@@ -124,6 +125,17 @@ except ImportError:
     except ImportError:
         logger.error("无法导入MovieItem")
 
+def decode_movie_name(encoded_name):
+    """从base64解码电影名"""
+    if not encoded_name:
+        return ""
+    try:
+        # 从base64解码
+        decoded = base64.b64decode(encoded_name).decode('utf-8')
+        return decoded
+    except Exception as e:
+        logger.error(f"解码电影名失败: {str(e)}")
+        return ""
 
 class DoubanSpider(scrapy.Spider):
     name = 'douban_spider'
@@ -150,14 +162,27 @@ class DoubanSpider(scrapy.Spider):
         """初始化爬虫"""
         super(DoubanSpider, self).__init__(name='douban_spider', **kwargs)
         
-        logger.info("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
+        print("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
         
         # 从环境变量中获取电影名，优先级高于参数
         movie_name = os.environ.get('MOVIE_NAME')
+        encoded_movie_name = os.environ.get('MOVIE_NAME_ENCODED')
+        
+        # 如果MOVIE_NAME设置失败，尝试从MOVIE_NAME_ENCODED解码
+        if not movie_name and encoded_movie_name:
+            movie_name = decode_movie_name(encoded_movie_name)
+            logger.warning(f"从编码的环境变量获取电影名: {movie_name}")
+        elif movie_name:
+            logger.warning(f"从环境变量获取电影名: {movie_name}")
+        
+        # 最后尝试从MOVIE_NAME_ORIGINAL获取
+        if not movie_name:
+            movie_name = os.environ.get('MOVIE_NAME_ORIGINAL')
+            if movie_name:
+                logger.warning(f"从MOVIE_NAME_ORIGINAL环境变量获取电影名: {movie_name}")
         
         # 设置电影名称列表
         if movie_name:
-            logger.warning(f"从环境变量获取电影名: {movie_name}")
             self.movie_names = [movie_name]
         elif movie_names:
             if isinstance(movie_names, str):

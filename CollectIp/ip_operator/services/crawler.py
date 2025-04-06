@@ -6,6 +6,7 @@ import threading
 import time
 import json
 import traceback
+import base64
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import signal
@@ -114,6 +115,35 @@ def find_spider_module(spider_name):
             continue
     return None
 
+def encode_movie_name(movie_name):
+    """将电影名编码为base64以用于环境变量"""
+    if not movie_name:
+        return ""
+    try:
+        # 确保是字符串
+        if not isinstance(movie_name, str):
+            movie_name = str(movie_name)
+        
+        # 编码为base64
+        encoded = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
+        return encoded
+    except Exception as e:
+        logger = setup_logging("movie_encoder")
+        logger.error(f"编码电影名失败: {str(e)}")
+        return ""
+
+def decode_movie_name(encoded_name):
+    """从base64解码电影名"""
+    if not encoded_name:
+        return ""
+    try:
+        # 从base64解码
+        decoded = base64.b64decode(encoded_name).decode('utf-8')
+        return decoded
+    except Exception as e:
+        logger = setup_logging("movie_encoder")
+        logger.error(f"解码电影名失败: {str(e)}")
+        return ""
 
 def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=None):
     """在线程中运行爬虫的实际执行函数"""
@@ -142,10 +172,16 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         
         # 设置环境变量
         if spider_name == 'douban_spider' and input_data:
-            os.environ['MOVIE_NAME'] = input_data
-            logger.debug(f"设置电影名环境变量: {input_data}")
-            # 直接设置为电影名，无需编码
-            os.environ['MOVIE_NAME_ENCODED'] = input_data
+            # 原始电影名（可能包含中文）
+            os.environ['MOVIE_NAME'] = input_data  # 尝试设置，如果失败会在下面的编码处理
+            
+            # 编码电影名以防止环境变量编码问题
+            encoded_movie_name = encode_movie_name(input_data)
+            os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
+            logger.debug(f"设置电影名环境变量: {input_data} (编码后: {encoded_movie_name})")
+            
+            # 防止原始设置失败，使用英文变量名
+            os.environ['MOVIE_NAME_ORIGINAL'] = input_data
         elif spider_name == 'collectip' and input_data:
             os.environ['CRAWL_TYPE'] = input_data
             logger.debug(f"设置爬取类型环境变量: {input_data}")
