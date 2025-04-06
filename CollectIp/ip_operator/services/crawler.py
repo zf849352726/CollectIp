@@ -172,16 +172,33 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         
         # 设置环境变量
         if spider_name == 'douban_spider' and input_data:
-            # 原始电影名（可能包含中文）
-            os.environ['MOVIE_NAME'] = input_data  # 尝试设置，如果失败会在下面的编码处理
+            try:
+                # 尝试设置原始电影名（可能会失败）
+                os.environ['MOVIE_NAME'] = input_data
+                logger.debug(f"成功设置原始电影名环境变量: {input_data}")
+            except (UnicodeError, ValueError) as e:
+                # 捕获编码错误，记录但不中断程序
+                logger.warning(f"设置原始MOVIE_NAME环境变量失败: {str(e)}")
             
-            # 编码电影名以防止环境变量编码问题
+            # 必须设置：编码电影名，确保不会有编码问题
             encoded_movie_name = encode_movie_name(input_data)
             os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
-            logger.debug(f"设置电影名环境变量: {input_data} (编码后: {encoded_movie_name})")
+            logger.debug(f"设置编码电影名环境变量: {input_data} (编码后: {encoded_movie_name})")
             
-            # 防止原始设置失败，使用英文变量名
-            os.environ['MOVIE_NAME_ORIGINAL'] = input_data
+            # 尝试通过英文变量名来存储原文
+            try:
+                os.environ['MOVIE_NAME_ORIGINAL'] = input_data
+                logger.debug(f"成功设置MOVIE_NAME_ORIGINAL环境变量: {input_data}")
+            except (UnicodeError, ValueError) as e:
+                logger.warning(f"设置MOVIE_NAME_ORIGINAL环境变量失败: {str(e)}")
+            
+            # 设置一个安全的ASCII电影名环境变量，确保至少有一个可用
+            safe_movie_name = ''.join(c for c in input_data if ord(c) < 128)
+            if not safe_movie_name:
+                safe_movie_name = 'encoded_movie_' + encoded_movie_name[:8]
+            os.environ['MOVIE_NAME_ASCII'] = safe_movie_name
+            logger.debug(f"设置安全ASCII电影名环境变量: {safe_movie_name}")
+                
         elif spider_name == 'collectip' and input_data:
             os.environ['CRAWL_TYPE'] = input_data
             logger.debug(f"设置爬取类型环境变量: {input_data}")
@@ -293,10 +310,11 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
     
     finally:
         # 清理环境变量，注意先检查是否存在
-        for var in ['MOVIE_NAME', 'MOVIE_NAME_ENCODED', 'MOVIE_NAME_ORIGINAL', 'CRAWL_CONFIG', 'CRAWL_TYPE']:
+        for var in ['MOVIE_NAME', 'MOVIE_NAME_ENCODED', 'MOVIE_NAME_ORIGINAL', 'MOVIE_NAME_ASCII', 'CRAWL_CONFIG', 'CRAWL_TYPE']:
             if var in os.environ:
                 try:
                     del os.environ[var]
+                    logger.debug(f"成功清理环境变量: {var}")
                 except Exception as e:
                     logger.error(f"清理环境变量 {var} 失败: {str(e)}")
         logger.debug("清理环境变量完成")

@@ -164,22 +164,32 @@ class DoubanSpider(scrapy.Spider):
         
         print("【调试】豆瓣爬虫初始化，将使用代理中间件和UA中间件")
         
-        # 从环境变量中获取电影名，优先级高于参数
-        movie_name = os.environ.get('MOVIE_NAME')
-        encoded_movie_name = os.environ.get('MOVIE_NAME_ENCODED')
+        # 从环境变量中获取电影名
+        movie_name = None  # 初始化为None，之后尝试各种方式获取
         
-        # 如果MOVIE_NAME设置失败，尝试从MOVIE_NAME_ENCODED解码
-        if not movie_name and encoded_movie_name:
+        # 先尝试从编码的环境变量获取（最可靠的方式）
+        encoded_movie_name = os.environ.get('MOVIE_NAME_ENCODED')
+        if encoded_movie_name:
             movie_name = decode_movie_name(encoded_movie_name)
             logger.warning(f"从编码的环境变量获取电影名: {movie_name}")
-        elif movie_name:
-            logger.warning(f"从环境变量获取电影名: {movie_name}")
         
-        # 最后尝试从MOVIE_NAME_ORIGINAL获取
+        # 如果失败，尝试直接获取
+        if not movie_name:
+            movie_name = os.environ.get('MOVIE_NAME')
+            if movie_name:
+                logger.warning(f"从原始环境变量获取电影名: {movie_name}")
+        
+        # 如果还是失败，尝试从MOVIE_NAME_ORIGINAL获取
         if not movie_name:
             movie_name = os.environ.get('MOVIE_NAME_ORIGINAL')
             if movie_name:
                 logger.warning(f"从MOVIE_NAME_ORIGINAL环境变量获取电影名: {movie_name}")
+        
+        # 最后尝试ASCII版本
+        if not movie_name:
+            movie_name = os.environ.get('MOVIE_NAME_ASCII')
+            if movie_name:
+                logger.warning(f"从ASCII环境变量获取电影名: {movie_name}")
         
         # 设置电影名称列表
         if movie_name:
