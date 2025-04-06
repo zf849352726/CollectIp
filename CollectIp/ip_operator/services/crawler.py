@@ -10,6 +10,7 @@ import base64
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 import signal
+import datetime
 
 # 设置Django环境
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -116,21 +117,17 @@ def find_spider_module(spider_name):
     return None
 
 def encode_movie_name(movie_name):
-    """将电影名编码为base64以用于环境变量"""
+    """将电影名编码为base64字符串（确保可以安全地存储在环境变量中）"""
     if not movie_name:
         return ""
     try:
-        # 确保是字符串
-        if not isinstance(movie_name, str):
-            movie_name = str(movie_name)
-        
         # 编码为base64
-        encoded = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
-        return encoded
+        return base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
     except Exception as e:
-        logger = setup_logging("movie_encoder")
+        logger = setup_logging("encoder")
         logger.error(f"编码电影名失败: {str(e)}")
-        return ""
+        # 返回一个安全的回退值
+        return base64.b64encode("unknown_movie".encode('utf-8')).decode('ascii')
 
 def decode_movie_name(encoded_name):
     """从base64解码电影名"""
@@ -138,12 +135,11 @@ def decode_movie_name(encoded_name):
         return ""
     try:
         # 从base64解码
-        decoded = base64.b64decode(encoded_name).decode('utf-8')
-        return decoded
+        return base64.b64decode(encoded_name).decode('utf-8')
     except Exception as e:
-        logger = setup_logging("movie_encoder")
+        logger = setup_logging("decoder")
         logger.error(f"解码电影名失败: {str(e)}")
-        return ""
+        return "unknown_movie"
 
 def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=None):
     """在线程中运行爬虫的实际执行函数"""
@@ -180,24 +176,41 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
                 # 捕获编码错误，记录但不中断程序
                 logger.warning(f"设置原始MOVIE_NAME环境变量失败: {str(e)}")
             
-            # 必须设置：编码电影名，确保不会有编码问题
-            encoded_movie_name = encode_movie_name(input_data)
-            os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
-            logger.debug(f"设置编码电影名环境变量: {input_data} (编码后: {encoded_movie_name})")
-            
-            # 尝试通过英文变量名来存储原文
             try:
+                # 必须设置：编码电影名，确保不会有编码问题
+                encoded_movie_name = encode_movie_name(input_data)
+                os.environ['MOVIE_NAME_ENCODED'] = encoded_movie_name
+                logger.debug(f"设置编码电影名环境变量: {input_data} (编码后: {encoded_movie_name})")
+            except Exception as e:
+                logger.error(f"设置MOVIE_NAME_ENCODED环境变量失败: {str(e)}")
+            
+            try:
+                # 尝试通过英文变量名来存储原文
                 os.environ['MOVIE_NAME_ORIGINAL'] = input_data
                 logger.debug(f"成功设置MOVIE_NAME_ORIGINAL环境变量: {input_data}")
             except (UnicodeError, ValueError) as e:
                 logger.warning(f"设置MOVIE_NAME_ORIGINAL环境变量失败: {str(e)}")
             
             # 设置一个安全的ASCII电影名环境变量，确保至少有一个可用
-            safe_movie_name = ''.join(c for c in input_data if ord(c) < 128)
-            if not safe_movie_name:
-                safe_movie_name = 'encoded_movie_' + encoded_movie_name[:8]
-            os.environ['MOVIE_NAME_ASCII'] = safe_movie_name
-            logger.debug(f"设置安全ASCII电影名环境变量: {safe_movie_name}")
+            try:
+                # 生成安全ASCII名称 - 强制转换为拉丁字符
+                safe_movie_name = ''.join(c if ord(c) < 128 else '_' for c in input_data)
+                if not safe_movie_name or safe_movie_name.strip() == '':
+                    safe_movie_name = 'encoded_movie_' + encoded_movie_name[:8]
+                
+                # 确保至少有一些有效字符
+                if len(safe_movie_name) < 3:
+                    safe_movie_name = 'movie_' + encoded_movie_name[:8]
+                    
+                os.environ['MOVIE_NAME_ASCII'] = safe_movie_name
+                logger.debug(f"设置安全ASCII电影名环境变量: {safe_movie_name}")
+            except Exception as e:
+                # 如果连ASCII处理也失败，使用固定字符串
+                try:
+                    os.environ['MOVIE_NAME_ASCII'] = 'movie_fallback'
+                    logger.error(f"使用备用电影名: movie_fallback，原因: {str(e)}")
+                except Exception as ex:
+                    logger.critical(f"设置所有电影名环境变量均失败: {str(ex)}")
                 
         elif spider_name == 'collectip' and input_data:
             os.environ['CRAWL_TYPE'] = input_data
