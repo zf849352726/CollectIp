@@ -605,7 +605,7 @@ def crawl_movie_view(request):
             os.remove(lock_file)
         
         # 创建新的锁文件
-        with open(lock_file, 'w') as f:
+        with open(lock_file, 'w', encoding='utf-8') as f:
             f.write(f"Douban crawler started at {datetime.now()} for movie: {movie_name}, strategy: {comment_strategy}")
             
         # 记录日志

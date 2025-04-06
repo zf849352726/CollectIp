@@ -240,7 +240,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings_optimized')
 # CSRF设置
 CSRF_TRUSTED_ORIGINS = ['http://663712.xyz', 'https://663712.xyz', 
                        'http://www.663712.xyz', 'https://www.663712.xyz'] 
-CSRF_USE_SESSIONS = False  # 添加此行，使用session存储CSRF token
+CSRF_USE_SESSIONS = True  # 添加此行，使用session存储CSRF token
 CSRF_COOKIE_DOMAIN = '.663712.xyz'  # 添加此行，确保子域名可以共享CSRF cookie
 CSRF_COOKIE_SAMESITE = 'Lax'  # 添加此行，允许来自相同站点的请求
 

@@ -2,6 +2,7 @@
 
 # Scrapy settings for crawl_ip project
 
+from importlib import reload
 import os
 import sys
 
@@ -117,4 +118,5 @@ SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 SCHEDULER_PRIORITY_QUEUE = 'scrapy.pqueues.DownloaderAwarePriorityQueue'
 
 # 关闭重试以减少请求数量
-RETRY_ENABLED = False 
+RETRY_ENABLED = False
+
