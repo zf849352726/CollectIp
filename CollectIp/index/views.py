@@ -579,7 +579,7 @@ def crawl_movie_view(request):
         comment_strategy = data.get('comment_strategy', 'sequential')  # 默认使用顺序采集策略
         strategy_params = data.get('strategy_params', {})  # 获取策略相关参数
         
-        logger.error(f"收到电影采集请求: {movie_name}, 策略: {comment_strategy}, 参数: {strategy_params}")
+        logger.info(f"收到电影采集请求: {movie_name}, 策略: {comment_strategy}, 参数: {strategy_params}")
         
         if not movie_name:
             return JsonResponse({
@@ -609,7 +609,7 @@ def crawl_movie_view(request):
             f.write(f"Douban crawler started at {datetime.now()} for movie: {movie_name}, strategy: {comment_strategy}")
             
         # 记录日志
-        logger.error(f"准备启动爬虫: {movie_name}, 策略: {comment_strategy}")
+        logger.info(f"准备启动爬虫: {movie_name}, 策略: {comment_strategy}")
         
         # 处理策略参数
         max_pages = None
