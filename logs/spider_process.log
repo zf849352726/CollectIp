@@ -333,3 +333,5 @@ AttributeError: 'SignalManager' object has no attribute 'spider_closed'
 2025-04-06 18:58:06,551 - DEBUG - 开始运行爬虫
 2025-04-06 18:58:11,784 - DEBUG - Reactor已在子线程中启动
 2025-04-06 18:58:11,784 - DEBUG - 等待爬虫完成...
+2025-04-06 19:58:11,797 - WARNING - 爬虫超时或未正常完成
+2025-04-06 19:58:11,798 - DEBUG - 清理环境变量完成
