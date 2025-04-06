@@ -292,10 +292,13 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         return 1  # 失败
     
     finally:
-        # 清理环境变量
-        for var in ['MOVIE_NAME', 'MOVIE_NAME_ENCODED', 'CRAWL_CONFIG', 'CRAWL_TYPE']:
+        # 清理环境变量，注意先检查是否存在
+        for var in ['MOVIE_NAME', 'MOVIE_NAME_ENCODED', 'MOVIE_NAME_ORIGINAL', 'CRAWL_CONFIG', 'CRAWL_TYPE']:
             if var in os.environ:
-                del os.environ[var]
+                try:
+                    del os.environ[var]
+                except Exception as e:
+                    logger.error(f"清理环境变量 {var} 失败: {str(e)}")
         logger.debug("清理环境变量完成")
 
 

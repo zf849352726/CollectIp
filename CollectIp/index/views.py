@@ -628,17 +628,36 @@ def crawl_movie_view(request):
         use_random_strategy = None
         
         # 根据不同策略添加对应参数
-        if comment_strategy == 'sequential':
-            max_pages = int(strategy_params.get('maxPages', 5))
-        elif comment_strategy == 'random_pages':
-            sample_size = int(strategy_params.get('sampleSize', 5))
-        elif comment_strategy == 'random_interval':
-            max_interval = int(strategy_params.get('maxInterval', 3))
-            max_pages = int(strategy_params.get('maxPages', 5))
-        elif comment_strategy == 'random_block':
-            block_size = int(strategy_params.get('blockSize', 3))
-        elif comment_strategy == 'random':
-            use_random_strategy = True
+        try:
+            if comment_strategy == 'sequential':
+                max_pages_value = strategy_params.get('maxPages')
+                max_pages = int(max_pages_value) if max_pages_value is not None else 5
+            elif comment_strategy == 'random_pages':
+                sample_size_value = strategy_params.get('sampleSize')
+                sample_size = int(sample_size_value) if sample_size_value is not None else 5
+            elif comment_strategy == 'random_interval':
+                max_interval_value = strategy_params.get('maxInterval')
+                max_interval = int(max_interval_value) if max_interval_value is not None else 3
+                
+                max_pages_value = strategy_params.get('maxPages')
+                max_pages = int(max_pages_value) if max_pages_value is not None else 5
+            elif comment_strategy == 'random_block':
+                block_size_value = strategy_params.get('blockSize')
+                block_size = int(block_size_value) if block_size_value is not None else 3
+            elif comment_strategy == 'random':
+                use_random_strategy = True
+        except (ValueError, TypeError) as e:
+            logger.warning(f"参数转换错误，使用默认值: {str(e)}")
+            # 使用默认值
+            if comment_strategy == 'sequential':
+                max_pages = 5
+            elif comment_strategy == 'random_pages':
+                sample_size = 5
+            elif comment_strategy == 'random_interval':
+                max_interval = 3
+                max_pages = 5
+            elif comment_strategy == 'random_block':
+                block_size = 3
         
         # 定义启动爬虫的函数
         def start_movie_crawler():
