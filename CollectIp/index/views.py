@@ -659,50 +659,31 @@ def crawl_movie_view(request):
             elif comment_strategy == 'random_block':
                 block_size = 3
         
-        # 定义启动爬虫的函数
-        def start_movie_crawler():
-            try:
-                # 使用支持参数的爬虫函数
-                result = start_douban_crawl_with_params(
-                    movie_name=movie_name, 
-                    strategy=comment_strategy,
-                    max_pages=max_pages,
-                    sample_size=sample_size,
-                    max_interval=max_interval,
-                    block_size=block_size,
-                    use_random_strategy=use_random_strategy
-                )
-                
-                if not result and os.path.exists(lock_file):
-                    # 如果启动失败，删除锁文件以允许重试
-                    os.remove(lock_file)
-                    logger.error(f"爬虫执行失败: {movie_name}")
-            except Exception as e:
-                logger.error(f"爬虫线程中发生异常: {str(e)}")
-                import traceback
-                logger.error(traceback.format_exc())
-                
-                # 发生异常时也删除锁文件
-                if os.path.exists(lock_file):
-                    os.remove(lock_file)
-        
-        # 在新线程中启动爬虫
-        thread = threading.Thread(
-            target=start_movie_crawler,
-            name=f"MovieCrawler-{movie_name}-{int(datetime.now().timestamp())}"
-        )
-        thread.daemon = False  # 设置为非守护线程，确保完成任务
-        thread.start()
-        
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        logger.info(f"豆瓣电影爬虫线程已启动 - 时间: {timestamp}, 电影: {movie_name}, 策略: {comment_strategy}")
-        
-        return JsonResponse({
-            'success': True,
-            'message': f'已开始采集电影: {movie_name}, 使用策略: {comment_strategy}',
-            'timestamp': timestamp,
-            'details': f'采集操作启动于 {timestamp}，电影: {movie_name}，策略: {comment_strategy}。系统将自动爬取电影评论，完成后可在电影详情页查看。'
-        })
+        # 启动爬虫
+        try:
+            result = start_douban_crawl_with_params(
+                movie_name=movie_name, 
+                strategy=comment_strategy,
+                max_pages=max_pages,
+                sample_size=sample_size,
+                max_interval=max_interval,
+                block_size=block_size,
+                use_random_strategy=use_random_strategy
+            )
+            
+            if not result:
+                logger.error(f"爬虫启动失败: {movie_name}")
+                messages.error(request, f"爬虫启动失败: {movie_name}")
+                return redirect('index')
+            
+            messages.success(request, f"成功启动爬虫: {movie_name}")
+            return redirect('index')
+            
+        except Exception as e:
+            logger.error(f"启动爬虫时发生异常: {str(e)}")
+            logger.error(traceback.format_exc())
+            messages.error(request, f"启动爬虫时发生错误: {str(e)}")
+            return redirect('index')
     except Exception as e:
         logger.error(f"启动电影采集失败: {str(e)}")
         import traceback
