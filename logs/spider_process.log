@@ -347,3 +347,1118 @@ AttributeError: 'SignalManager' object has no attribute 'spider_closed'
 2025-04-06 21:44:19,686 - DEBUG - 开始运行爬虫
 2025-04-06 21:44:25,626 - DEBUG - Reactor已在子线程中启动
 2025-04-06 21:44:25,626 - DEBUG - 等待爬虫完成...
+2025-04-07 21:56:57,098 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 21:56:57,100 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-07 21:56:57,578 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-07 21:56:57,579 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-07 21:56:57,584 - DEBUG - 已加载爬虫设置
+2025-04-07 21:56:58,546 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-07 21:56:58,547 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-07 21:56:58,547 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-07 21:56:58,553 - DEBUG - 创建CrawlerRunner实例
+2025-04-07 21:56:58,554 - DEBUG - 开始运行爬虫
+2025-04-07 21:57:10,934 - DEBUG - Reactor已在子线程中启动
+2025-04-07 21:57:10,934 - DEBUG - 等待爬虫完成...
+2025-04-07 22:52:04,265 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:52:04,265 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-07 22:52:04,691 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-07 22:52:04,691 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-07 22:52:04,695 - DEBUG - 已加载爬虫设置
+2025-04-07 22:52:05,470 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-07 22:52:05,470 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-07 22:52:05,471 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:52:05,476 - DEBUG - 创建CrawlerRunner实例
+2025-04-07 22:52:05,477 - DEBUG - 开始运行爬虫
+2025-04-07 22:52:10,949 - DEBUG - Reactor已在子线程中启动
+2025-04-07 22:52:10,949 - DEBUG - 等待爬虫完成...
+2025-04-07 22:56:01,603 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:56:01,604 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-07 22:56:02,053 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-07 22:56:02,053 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-07 22:56:02,054 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-07 22:56:02,054 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-07 22:56:02,054 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-07 22:56:02,059 - DEBUG - 已加载爬虫设置
+2025-04-07 22:56:02,066 - ERROR - 运行爬虫时出错: unexpected indent (douban_spider.py, line 650)
+2025-04-07 22:56:02,068 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 241, in run_scrapy_spider
+    spider_module = find_spider_module(spider_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 114, in find_spider_module
+    return import_module(module_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip\crawl_ip\spiders\douban_spider.py", line 650
+    driver = self.get_driver()
+IndentationError: unexpected indent
+
+2025-04-07 22:56:02,068 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-07 22:56:02,068 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-07 22:56:02,069 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-07 22:56:02,069 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-07 22:56:02,069 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-07 22:56:02,069 - DEBUG - 清理环境变量完成
+2025-04-07 22:57:00,722 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:57:00,723 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-07 22:57:01,068 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-07 22:57:01,068 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-07 22:57:01,069 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-07 22:57:01,069 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-07 22:57:01,069 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-07 22:57:01,073 - DEBUG - 已加载爬虫设置
+2025-04-07 22:57:01,949 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-07 22:57:01,949 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-07 22:57:01,949 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:57:01,955 - DEBUG - 创建CrawlerRunner实例
+2025-04-07 22:57:01,957 - DEBUG - 开始运行爬虫
+2025-04-07 22:57:06,959 - DEBUG - Reactor已在子线程中启动
+2025-04-07 22:57:06,959 - DEBUG - 等待爬虫完成...
+2025-04-07 23:05:48,104 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 23:05:48,104 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-07 23:05:48,517 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-07 23:05:48,517 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-07 23:05:48,518 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-07 23:05:48,518 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-07 23:05:48,518 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-07 23:05:48,522 - DEBUG - 已加载爬虫设置
+2025-04-07 23:05:49,327 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-07 23:05:49,327 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-07 23:05:49,327 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-07 23:05:49,344 - DEBUG - 创建CrawlerProcess实例
+2025-04-07 23:05:49,344 - DEBUG - 开始运行爬虫
+2025-04-07 23:05:54,370 - DEBUG - 爬虫进程已启动
+2025-04-07 23:05:54,371 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-07 23:05:54,371 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-07 23:05:54,371 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-07 23:05:54,371 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-07 23:05:54,372 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-07 23:05:54,372 - DEBUG - 清理环境变量完成
+2025-04-08 11:32:50,880 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:32:50,881 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 11:32:51,116 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 11:32:51,116 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 11:32:51,117 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 11:32:51,117 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 11:32:51,117 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 11:32:51,122 - DEBUG - 已加载爬虫设置
+2025-04-08 11:32:51,939 - DEBUG - 成功导入爬虫模块: crawl_ip.spiders.douban_spider
+2025-04-08 11:32:51,939 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 11:32:51,939 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:32:51,946 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 11:32:51,946 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 11:32:51,946 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 11:33:04,558 - ERROR - 爬虫执行过程中出错: The installed reactor (twisted.internet.selectreactor.SelectReactor) does not match the requested one (twisted.internet.asyncioreactor.AsyncioSelectorReactor)
+2025-04-08 11:33:04,560 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 296, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 150, in crawl
+    self._apply_settings()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 124, in _apply_settings
+    verify_installed_reactor(reactor_class)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\reactor.py", line 157, in verify_installed_reactor
+    raise Exception(msg)
+Exception: The installed reactor (twisted.internet.selectreactor.SelectReactor) does not match the requested one (twisted.internet.asyncioreactor.AsyncioSelectorReactor)
+
+2025-04-08 11:33:04,561 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 11:33:04,561 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 11:33:04,561 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 11:33:04,562 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 11:33:04,566 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 11:33:04,566 - DEBUG - 清理环境变量完成
+2025-04-08 11:38:52,643 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:38:52,644 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 11:38:52,827 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 11:38:52,828 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 11:38:52,828 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 11:38:52,828 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 11:38:52,828 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 11:38:52,829 - DEBUG - 已加载爬虫设置
+2025-04-08 11:38:52,831 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 11:38:52,831 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 11:38:52,831 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 11:38:52,831 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 11:38:52,831 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 11:38:52,832 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 11:38:52,832 - DEBUG - 清理环境变量完成
+2025-04-08 15:10:20,038 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:10:37,514 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:10:48,174 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:10:48,175 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:10:48,176 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:10:48,176 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:10:48,178 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:10:48,183 - DEBUG - 已加载爬虫设置
+2025-04-08 15:13:25,229 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:13:28,223 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:13:30,208 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:13:30,208 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:13:30,209 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:13:30,209 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:13:30,210 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:13:30,214 - DEBUG - 已加载爬虫设置
+2025-04-08 15:20:05,709 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:20:12,807 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:20:16,996 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:20:16,997 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:20:16,997 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:20:16,998 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:20:16,999 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:20:17,002 - DEBUG - 已加载爬虫设置
+2025-04-08 15:23:32,475 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:23:32,475 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:23:32,634 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:23:32,634 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:23:32,634 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:23:32,635 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:23:32,635 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:23:32,635 - DEBUG - 已加载爬虫设置
+2025-04-08 15:23:32,637 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:23:32,637 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:23:32,637 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:23:32,637 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:23:32,639 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:23:32,639 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:23:32,639 - DEBUG - 清理环境变量完成
+2025-04-08 15:30:03,180 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:30:03,180 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:30:03,359 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:30:03,359 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:30:03,360 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:30:03,360 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:30:03,360 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:30:03,361 - DEBUG - 已加载爬虫设置
+2025-04-08 15:30:03,363 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:30:03,363 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:30:03,363 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:30:03,363 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:30:03,363 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:30:03,364 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:30:03,364 - DEBUG - 清理环境变量完成
+2025-04-08 15:31:48,126 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:31:48,127 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:31:48,302 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:31:48,304 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:31:48,304 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:31:48,304 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:31:48,304 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:31:48,304 - DEBUG - 已加载爬虫设置
+2025-04-08 15:31:48,306 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:31:48,306 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:31:48,306 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:31:48,306 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:31:48,307 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:31:48,307 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:31:48,307 - DEBUG - 清理环境变量完成
+2025-04-08 15:32:24,956 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:32:24,957 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:32:25,132 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:32:25,133 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:32:25,134 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:32:25,134 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:32:25,135 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:32:25,135 - DEBUG - 已加载爬虫设置
+2025-04-08 15:32:25,139 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:32:25,140 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:32:25,141 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:32:25,142 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:32:25,143 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:32:25,143 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:32:25,144 - DEBUG - 清理环境变量完成
+2025-04-08 15:41:26,331 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:41:26,331 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:41:26,518 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:41:26,519 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:41:26,519 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:41:26,520 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:41:26,520 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:41:26,521 - DEBUG - 已加载爬虫设置
+2025-04-08 15:41:26,523 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:41:26,523 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:41:26,523 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:41:26,523 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:41:26,524 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:41:26,524 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:41:26,524 - DEBUG - 清理环境变量完成
+2025-04-08 15:46:35,893 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:35,894 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:46:36,063 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:46:36,063 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:46:36,064 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:46:36,064 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:46:36,064 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:46:36,064 - DEBUG - 已加载爬虫设置
+2025-04-08 15:46:36,066 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:46:36,066 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:46:36,066 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:46:36,066 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:46:36,066 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:46:36,067 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:46:36,067 - DEBUG - 清理环境变量完成
+2025-04-08 15:46:57,032 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:57,033 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:46:57,199 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:46:57,199 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:46:57,200 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:46:57,200 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:46:57,200 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:46:57,201 - DEBUG - 已加载爬虫设置
+2025-04-08 15:46:57,201 - ERROR - 无法导入爬虫模块: douban_spider
+2025-04-08 15:46:57,202 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:46:57,202 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:46:57,202 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:46:57,202 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:46:57,202 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:46:57,203 - DEBUG - 清理环境变量完成
+2025-04-08 15:47:07,390 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:47:07,392 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:47:07,578 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:47:07,579 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:47:07,579 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:47:07,579 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:47:07,580 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:47:07,580 - DEBUG - 已加载爬虫设置
+2025-04-08 15:47:08,506 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 15:47:08,506 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 15:47:08,506 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:47:08,509 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 15:47:08,509 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 15:47:08,509 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 15:47:14,119 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip'
+2025-04-08 15:47:14,125 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 314, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1128, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip'
+
+2025-04-08 15:47:14,132 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 15:47:14,132 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 15:47:14,132 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 15:47:14,132 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 15:47:14,133 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 15:47:14,133 - DEBUG - 清理环境变量完成
+2025-04-08 15:54:47,301 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:54:49,477 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 15:54:51,452 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 15:54:51,453 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 15:54:51,455 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 15:54:51,456 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 15:54:51,457 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 15:54:51,462 - DEBUG - 已加载爬虫设置
+2025-04-08 15:55:01,681 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 15:55:37,754 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 15:55:37,755 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:55:37,769 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 15:56:23,223 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 15:56:31,989 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 16:07:18,202 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:18,203 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:07:18,414 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:07:18,415 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:07:18,415 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:07:18,415 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:07:18,415 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:07:18,416 - DEBUG - 已加载爬虫设置
+2025-04-08 16:07:53,039 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:53,039 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:07:53,277 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:07:53,278 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:07:53,278 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:07:53,278 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:07:53,279 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:07:53,279 - DEBUG - 已加载爬虫设置
+2025-04-08 16:09:28,298 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:09:28,298 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:09:28,524 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:09:28,524 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:09:28,525 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:09:28,525 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:09:28,526 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:09:28,527 - DEBUG - 已加载爬虫设置
+2025-04-08 16:10:49,956 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:10:52,424 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:10:55,371 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:10:55,372 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:10:55,373 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:10:55,374 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:10:55,375 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:10:55,379 - DEBUG - 已加载爬虫设置
+2025-04-08 16:13:53,532 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:13:53,532 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:13:53,738 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:13:53,738 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:13:53,739 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:13:53,739 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:13:53,739 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:13:53,740 - DEBUG - 已加载爬虫设置
+2025-04-08 16:14:29,066 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:14:29,067 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:14:29,285 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:14:29,287 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:14:29,288 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:14:29,288 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:14:29,288 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:14:29,289 - DEBUG - 已加载爬虫设置
+2025-04-08 16:24:49,316 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:24:49,317 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:24:49,566 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:24:49,566 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:24:49,566 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:24:49,567 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:24:49,567 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:24:49,567 - DEBUG - 已加载爬虫设置
+2025-04-08 16:25:00,533 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:28:27,714 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:28:32,061 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:28:32,062 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:28:32,063 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:28:32,063 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:28:32,064 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:28:32,069 - DEBUG - 已加载爬虫设置
+2025-04-08 16:40:01,556 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:40:01,557 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:40:01,838 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:40:01,839 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:40:01,839 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:40:01,839 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:40:01,840 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:40:01,840 - DEBUG - 已加载爬虫设置
+2025-04-08 16:43:17,196 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:43:17,197 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:43:17,479 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:43:17,479 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:43:17,480 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:43:17,480 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:43:17,480 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:43:17,481 - DEBUG - 已加载爬虫设置
+2025-04-08 16:54:45,558 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:54:45,560 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:54:45,802 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:54:45,804 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:54:45,805 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:54:45,805 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:54:45,806 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:54:45,807 - DEBUG - 已加载爬虫设置
+2025-04-08 16:55:05,157 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:55:06,998 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 16:55:08,615 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 16:55:08,617 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 16:55:08,618 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 16:55:08,618 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 16:55:08,620 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 16:55:08,625 - DEBUG - 已加载爬虫设置
+2025-04-08 17:17:35,621 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 17:17:35,622 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 17:17:35,876 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 17:17:35,877 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 17:17:35,877 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 17:17:35,878 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 17:17:35,878 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 17:17:35,879 - DEBUG - 已加载爬虫设置
+2025-04-08 17:17:37,049 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 17:17:37,050 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 17:17:37,051 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 17:17:37,060 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 17:17:37,062 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 17:17:37,064 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 17:17:44,513 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 17:17:44,521 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 319, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 17:17:44,524 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 17:17:44,525 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 17:17:44,525 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 17:17:44,525 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 17:17:44,526 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 17:17:44,526 - DEBUG - 清理环境变量完成
+2025-04-08 18:32:36,486 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:32:36,488 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:32:36,900 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:32:36,902 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:32:36,902 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:32:36,903 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:32:36,904 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:32:36,905 - DEBUG - 已加载爬虫设置
+2025-04-08 18:32:38,567 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:32:38,568 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:32:38,569 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:32:38,574 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:32:38,575 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:32:38,577 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:32:47,417 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:32:47,425 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:32:47,435 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:32:47,437 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:32:47,439 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:32:47,440 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:32:47,441 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:32:47,442 - DEBUG - 清理环境变量完成
+2025-04-08 18:35:28,727 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:35:28,728 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:35:28,926 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:35:28,930 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:35:28,930 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:35:28,931 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:35:28,931 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:35:28,932 - DEBUG - 已加载爬虫设置
+2025-04-08 18:35:30,087 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:35:30,087 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:35:30,087 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:35:30,090 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:35:30,091 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:35:30,091 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:35:36,305 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:35:36,310 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:35:36,323 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:35:36,324 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:35:36,324 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:35:36,324 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:35:36,329 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:35:36,329 - DEBUG - 清理环境变量完成
+2025-04-08 18:45:37,756 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:45:37,756 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:45:38,048 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:45:38,048 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:45:38,049 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:45:38,049 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:45:38,049 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:45:38,050 - DEBUG - 已加载爬虫设置
+2025-04-08 18:45:39,243 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:45:39,243 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:45:39,244 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:45:39,247 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:45:39,247 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:45:39,247 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:45:46,305 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:45:46,314 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:45:46,324 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:45:46,325 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:45:46,325 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:45:46,326 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:45:46,327 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:45:46,327 - DEBUG - 清理环境变量完成
+2025-04-08 18:49:00,042 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:49:00,044 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:49:00,294 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:49:00,294 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:49:00,294 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:49:00,295 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:49:00,295 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:49:00,296 - DEBUG - 已加载爬虫设置
+2025-04-08 18:49:01,115 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:49:01,115 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:49:01,115 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:49:01,117 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:49:01,117 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:49:01,118 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:49:07,918 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:49:07,929 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:49:07,935 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:49:07,936 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:49:07,937 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:49:07,938 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:49:07,939 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:49:07,940 - DEBUG - 清理环境变量完成
+2025-04-08 18:50:06,995 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:50:06,997 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:50:07,255 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:50:07,256 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:50:07,256 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:50:07,257 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:50:07,258 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:50:07,260 - DEBUG - 已加载爬虫设置
+2025-04-08 18:50:08,659 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:50:08,659 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:50:08,659 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:50:08,661 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:50:08,662 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:50:08,662 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:50:15,654 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:50:15,659 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:50:15,672 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:50:15,673 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:50:15,673 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:50:15,674 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:50:15,674 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:50:15,674 - DEBUG - 清理环境变量完成
+2025-04-08 18:51:12,276 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:51:12,277 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:51:12,512 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:51:12,513 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:51:12,513 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:51:12,513 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:51:12,514 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:51:12,514 - DEBUG - 已加载爬虫设置
+2025-04-08 18:51:13,730 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:51:13,731 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:51:13,732 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:51:13,737 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:51:13,737 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:51:13,738 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:51:20,446 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:51:20,451 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:51:20,455 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:51:20,455 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:51:20,455 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:51:20,456 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:51:20,456 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:51:20,456 - DEBUG - 清理环境变量完成
+2025-04-08 18:52:14,056 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:52:14,057 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:52:14,449 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:52:14,451 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:52:14,451 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:52:14,452 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:52:14,452 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:52:14,452 - DEBUG - 已加载爬虫设置
+2025-04-08 18:52:15,621 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:52:15,621 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:52:15,621 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:52:15,623 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:52:15,624 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:52:15,624 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:52:23,089 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:52:23,093 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:52:23,100 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:52:23,100 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:52:23,101 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:52:23,101 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:52:23,102 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:52:23,102 - DEBUG - 清理环境变量完成
+2025-04-08 18:53:07,678 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:53:07,680 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:53:07,920 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:53:07,921 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:53:07,921 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:53:07,921 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:53:07,922 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:53:07,923 - DEBUG - 已加载爬虫设置
+2025-04-08 18:53:09,217 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:53:09,217 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:53:09,217 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:53:09,220 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:53:09,220 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:53:09,220 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:53:16,563 - ERROR - 爬虫执行过程中出错: No module named 'crawl_ip.middlewares'
+2025-04-08 18:53:16,566 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'crawl_ip.middlewares'
+
+2025-04-08 18:53:16,570 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:53:16,571 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:53:16,571 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:53:16,571 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:53:16,572 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:53:16,572 - DEBUG - 清理环境变量完成
+2025-04-08 18:54:57,319 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:54:57,320 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:54:57,637 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:54:57,638 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:54:57,639 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:54:57,639 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:54:57,640 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:54:57,641 - DEBUG - 已加载爬虫设置
+2025-04-08 18:54:59,131 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:54:59,131 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:54:59,132 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:54:59,136 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:54:59,137 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:54:59,137 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:55:05,958 - ERROR - 爬虫执行过程中出错: No module named 'CollectIp.ip_operator'
+2025-04-08 18:55:05,968 - ERROR - Traceback (most recent call last):
+  File "D:\python_learn\CollectIp\CollectIp\ip_operator\services\crawler.py", line 335, in run_scrapy_spider
+    run_spider()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 449, in wrapper
+    return eventual_result.wait(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\crochet\_eventloop.py", line 196, in wait
+    result.raiseException()
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\python\failure.py", line 455, in raiseException
+    raise self.value.with_traceback(self.tb)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\twisted\internet\defer.py", line 2017, in _inlineCallbacks
+    result = context.run(gen.send, result)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 152, in crawl
+    self.engine = self._create_engine()
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\crawler.py", line 166, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\engine.py", line 101, in __init__
+    self.downloader: Downloader = downloader_cls(crawler)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\core\downloader\__init__.py", line 109, in __init__
+    DownloaderMiddlewareManager.from_crawler(crawler)
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 77, in from_crawler
+    return cls._from_settings(crawler.settings, crawler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\middleware.py", line 86, in _from_settings
+    mwcls = load_object(clspath)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\site-packages\scrapy\utils\misc.py", line 71, in load_object
+    mod = import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda\envs\djangoLearn\Lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1128, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1128, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1128, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1128, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'CollectIp.ip_operator'
+
+2025-04-08 18:55:05,971 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:55:05,972 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:55:05,973 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:55:05,973 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:55:05,974 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:55:05,974 - DEBUG - 清理环境变量完成
+2025-04-08 18:55:34,117 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:55:34,117 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 18:55:34,322 - DEBUG - 成功设置原始电影名环境变量: 霸王别姬
+2025-04-08 18:55:34,322 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 18:55:34,323 - DEBUG - 成功设置MOVIE_NAME_ORIGINAL环境变量: 霸王别姬
+2025-04-08 18:55:34,324 - DEBUG - 设置安全ASCII电影名环境变量: ____
+2025-04-08 18:55:34,324 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 18:55:34,325 - DEBUG - 已加载爬虫设置
+2025-04-08 18:55:35,167 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 18:55:35,167 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 18:55:35,167 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:55:35,170 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 18:55:35,170 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 18:55:35,170 - DEBUG - 开始运行爬虫: douban_spider
+2025-04-08 18:55:48,526 - DEBUG - 爬虫已完成执行
+2025-04-08 18:55:48,526 - DEBUG - 成功清理环境变量: MOVIE_NAME
+2025-04-08 18:55:48,527 - DEBUG - 成功清理环境变量: MOVIE_NAME_ENCODED
+2025-04-08 18:55:48,527 - DEBUG - 成功清理环境变量: MOVIE_NAME_ORIGINAL
+2025-04-08 18:55:48,527 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
+2025-04-08 18:55:48,528 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
+2025-04-08 18:55:48,528 - DEBUG - 清理环境变量完成

@@ -27,7 +27,7 @@ def run_douban_spider():
     """运行豆瓣爬虫"""
     try:
         # 导入爬虫模块
-        from crawl_ip.spiders.douban_spider import DoubanSpider
+        from CollectIp.ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider import DoubanSpider
         
         # 设置电影名称和爬取参数
         movie_name = "霸王别姬"

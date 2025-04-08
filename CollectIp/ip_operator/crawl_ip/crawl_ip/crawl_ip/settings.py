@@ -90,7 +90,7 @@ ITEM_PIPELINES = {
 
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+TWISTED_REACTOR = "twisted.internet.selectreactor.SelectReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 # 将日志级别设置为INFO，确保调试信息可见
@@ -128,9 +128,21 @@ STATS_DUMP = False
 import sys
 import os
 import django
+from pathlib import Path
 
-sys.path.append('/usr/local/CollectIp/CollectIp')  # 替换为你的 Django 项目的路径
-os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'  # 替换为你的 Django 项目的 settings 模块
+# 获取项目根目录
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent.parent
+
+# 添加必要的路径到Python搜索路径
+sys.path.insert(0, str(PROJECT_ROOT))
+sys.path.insert(0, str(PROJECT_ROOT / 'CollectIp'))
+sys.path.insert(0, str(PROJECT_ROOT / 'CollectIp' / 'ip_operator'))
+sys.path.insert(0, str(PROJECT_ROOT / 'CollectIp' / 'ip_operator' / 'crawl_ip'))
+sys.path.insert(0, str(PROJECT_ROOT / 'CollectIp' / 'ip_operator' / 'crawl_ip' / 'crawl_ip'))
+sys.path.insert(0, str(PROJECT_ROOT / 'CollectIp' / 'ip_operator' / 'crawl_ip' / 'crawl_ip' / 'crawl_ip'))
+
+# 设置Django环境
+os.environ['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'
 django.setup()
 
 # 数据库配置

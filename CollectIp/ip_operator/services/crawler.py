@@ -9,8 +9,31 @@ import traceback
 import base64
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-import signal
-import datetime
+
+
+# 添加spider目录路径列表
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
+# print(f"PROJECT_ROOT路径：{PROJECT_ROOT}")
+spider_dir_paths = [
+    os.path.join(PROJECT_ROOT, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip', 'crawl_ip', 'spiders'),
+    os.path.join(PROJECT_ROOT, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip', 'crawl_ip'),
+    os.path.join(PROJECT_ROOT, 'CollectIp', 'ip_operator', 'crawl_ip', 'crawl_ip'),
+    os.path.join(PROJECT_ROOT, 'CollectIp', 'ip_operator', 'crawl_ip'),
+    os.path.join(PROJECT_ROOT, 'CollectIp', 'ip_operator'),
+    os.path.join(PROJECT_ROOT, 'CollectIp'),
+]
+for spider_dir_path in spider_dir_paths:
+    # print(f"spider_dir_path:{spider_dir_path}")
+    if os.path.exists(spider_dir_path) and spider_dir_path not in sys.path:
+        sys.path.insert(0, spider_dir_path)
+
+# 在导入crochet之前设置环境变量，指定使用select reactor
+os.environ['SCRAPY_SETTINGS_MODULE'] = 'scrapy.settings'
+os.environ['TWISTED_REACTOR'] = 'twisted.internet.selectreactor.SelectReactor'
+
+# 导入并设置crochet
+import crochet
+crochet.setup()  # 必须在导入twisted之前调用
 
 # 设置Django环境
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,6 +42,7 @@ sys.path.insert(0, BASE_DIR)
 # 添加Django项目目录到Python路径
 DJANGO_PROJECT_DIR = os.path.join(BASE_DIR, 'CollectIp')
 sys.path.insert(0, DJANGO_PROJECT_DIR)
+
 
 # 只有在单独运行这个脚本时才打印详细日志信息
 if __name__ == '__main__':
@@ -103,17 +127,32 @@ def find_crawler_dir(project_root):
 def find_spider_module(spider_name):
     """查找爬虫模块"""
     from importlib import import_module
-    
     module_paths = [
+        f"ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}",
+        f"crawl_ip.crawl_ip.crawl_ip.spiders.{spider_name}",
+        f"crawl_ip.crawl_ip.spiders.{spider_name}",
         f"crawl_ip.spiders.{spider_name}",
         f"spiders.{spider_name}"
     ]
     
+    logger = setup_logging("spider_finder")
+    logger.debug(f"尝试查找爬虫模块: {spider_name}")
+    logger.debug(f"Python路径: {sys.path}")
+    
     for module_path in module_paths:
         try:
-            return import_module(module_path)
-        except ImportError:
+            logger.debug(f"尝试导入: {module_path}")
+            module = import_module(module_path)
+            logger.debug(f"成功导入模块: {module_path}")
+            return module
+        except ImportError as e:
+            logger.debug(f"导入 {module_path} 失败: {str(e)}")
             continue
+        except Exception as e:
+            logger.error(f"导入 {module_path} 时发生错误: {str(e)}")
+            continue
+    
+    logger.error(f"无法找到爬虫模块: {spider_name}")
     return None
 
 def encode_movie_name(movie_name):
@@ -121,13 +160,8 @@ def encode_movie_name(movie_name):
     if not movie_name:
         return ""
     try:
-        # 确保是字符串
-        if not isinstance(movie_name, str):
-            movie_name = str(movie_name)
-        
         # 编码为base64
-        encoded = base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
-        return encoded
+        return base64.b64encode(movie_name.encode('utf-8')).decode('ascii')
     except Exception as e:
         logger = setup_logging("encoder")
         logger.error(f"编码电影名失败: {str(e)}")
@@ -140,15 +174,14 @@ def decode_movie_name(encoded_name):
         return ""
     try:
         # 从base64解码
-        decoded = base64.b64decode(encoded_name).decode('utf-8')
-        return decoded
+        return base64.b64decode(encoded_name).decode('utf-8')
     except Exception as e:
         logger = setup_logging("decoder")
         logger.error(f"解码电影名失败: {str(e)}")
         return "unknown_movie"
 
 def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=None):
-    """在线程中运行爬虫的实际执行函数"""
+    """在线程中运行爬虫的实际执行函数，使用crochet管理twisted的reactor"""
     logger = setup_logging("spider_process", logging.DEBUG)
     logger.debug(f"开始执行爬虫 {spider_name}，参数: {input_data}, 配置: {crawl_config}")
     
@@ -165,8 +198,6 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         # 导入Scrapy组件
         from scrapy.crawler import CrawlerRunner
         from scrapy.utils.project import get_project_settings
-        from twisted.internet import reactor
-        import twisted.internet.error
         from scrapy.utils.log import configure_logging
         
         # 配置Scrapy日志
@@ -174,13 +205,13 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         
         # 设置环境变量
         if spider_name == 'douban_spider' and input_data:
-            # try:
-            #     # 尝试设置原始电影名（可能会失败）
-            #     os.environ['MOVIE_NAME'] = input_data
-            #     logger.debug(f"成功设置原始电影名环境变量: {input_data}")
-            # except (UnicodeError, ValueError) as e:
-            #     # 捕获编码错误，记录但不中断程序
-            #     logger.warning(f"设置原始MOVIE_NAME环境变量失败: {str(e)}")
+            try:
+                # 尝试设置原始电影名（可能会失败）
+                os.environ['MOVIE_NAME'] = input_data
+                logger.debug(f"成功设置原始电影名环境变量: {input_data}")
+            except (UnicodeError, ValueError) as e:
+                # 捕获编码错误，记录但不中断程序
+                logger.warning(f"设置原始MOVIE_NAME环境变量失败: {str(e)}")
             
             try:
                 # 必须设置：编码电影名，确保不会有编码问题
@@ -190,33 +221,33 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
             except Exception as e:
                 logger.error(f"设置MOVIE_NAME_ENCODED环境变量失败: {str(e)}")
             
-            # try:
-            #     # 尝试通过英文变量名来存储原文
-            #     os.environ['MOVIE_NAME_ORIGINAL'] = input_data
-            #     logger.debug(f"成功设置MOVIE_NAME_ORIGINAL环境变量: {input_data}")
-            # except (UnicodeError, ValueError) as e:
-            #     logger.warning(f"设置MOVIE_NAME_ORIGINAL环境变量失败: {str(e)}")
+            try:
+                # 尝试通过英文变量名来存储原文
+                os.environ['MOVIE_NAME_ORIGINAL'] = input_data
+                logger.debug(f"成功设置MOVIE_NAME_ORIGINAL环境变量: {input_data}")
+            except (UnicodeError, ValueError) as e:
+                logger.warning(f"设置MOVIE_NAME_ORIGINAL环境变量失败: {str(e)}")
             
-            # # 设置一个安全的ASCII电影名环境变量，确保至少有一个可用
-            # try:
-            #     # 生成安全ASCII名称 - 强制转换为拉丁字符
-            #     safe_movie_name = ''.join(c if ord(c) < 128 else '_' for c in input_data)
-            #     if not safe_movie_name or safe_movie_name.strip() == '':
-            #         safe_movie_name = 'encoded_movie_' + encoded_movie_name[:8]
+            # 设置一个安全的ASCII电影名环境变量，确保至少有一个可用
+            try:
+                # 生成安全ASCII名称 - 强制转换为拉丁字符
+                safe_movie_name = ''.join(c if ord(c) < 128 else '_' for c in input_data)
+                if not safe_movie_name or safe_movie_name.strip() == '':
+                    safe_movie_name = 'encoded_movie_' + encoded_movie_name[:8]
                 
-            #     # 确保至少有一些有效字符
-            #     if len(safe_movie_name) < 3:
-            #         safe_movie_name = 'movie_' + encoded_movie_name[:8]
+                # 确保至少有一些有效字符
+                if len(safe_movie_name) < 3:
+                    safe_movie_name = 'movie_' + encoded_movie_name[:8]
                     
-            #     os.environ['MOVIE_NAME_ASCII'] = safe_movie_name
-            #     logger.debug(f"设置安全ASCII电影名环境变量: {safe_movie_name}")
-            # except Exception as e:
-            #     # 如果连ASCII处理也失败，使用固定字符串
-            #     try:
-            #         os.environ['MOVIE_NAME_ASCII'] = 'movie_fallback'
-            #         logger.error(f"使用备用电影名: movie_fallback，原因: {str(e)}")
-            #     except Exception as ex:
-            #         logger.critical(f"设置所有电影名环境变量均失败: {str(ex)}")
+                os.environ['MOVIE_NAME_ASCII'] = safe_movie_name
+                logger.debug(f"设置安全ASCII电影名环境变量: {safe_movie_name}")
+            except Exception as e:
+                # 如果连ASCII处理也失败，使用固定字符串
+                try:
+                    os.environ['MOVIE_NAME_ASCII'] = 'movie_fallback'
+                    logger.error(f"使用备用电影名: movie_fallback，原因: {str(e)}")
+                except Exception as ex:
+                    logger.critical(f"设置所有电影名环境变量均失败: {str(ex)}")
                 
         elif spider_name == 'collectip' and input_data:
             os.environ['CRAWL_TYPE'] = input_data
@@ -234,6 +265,10 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         settings = get_project_settings()
         settings.set('LOG_LEVEL', 'INFO' if DEBUG else 'WARNING')
         settings.set('ROBOTSTXT_OBEY', False)
+        
+        # 设置使用与crochet兼容的reactor
+        settings.set('TWISTED_REACTOR', 'twisted.internet.selectreactor.SelectReactor')
+        
         # 禁用信号处理以防止非主线程错误
         settings.set('EXTENSIONS', {
             'scrapy.extensions.telnet.TelnetConsole': None,
@@ -286,41 +321,24 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         runner = CrawlerRunner(settings)
         logger.debug("创建CrawlerRunner实例")
         
-        # 创建完成事件
-        finished = threading.Event()
+        # 使用crochet等待爬虫完成
+        @crochet.wait_for(timeout=3600)
+        def run_spider():
+            """运行爬虫并返回Deferred对象"""
+            logger.debug(f"开始运行爬虫: {spider_name}")
+            return runner.crawl(spider_class, **spider_kwargs)
         
-        # 定义爬虫完成后的回调
-        def on_spider_closed(spider):
-            logger.debug(f"爬虫 {spider.name} 已完成")
-            finished.set()
-        
-        # 添加爬虫完成的回调
-        crawler = runner.create_crawler(spider_class)
-        crawler.signals.connect(on_spider_closed, signal='spider_closed')
-        
-        # 启动爬虫
-        logger.debug("开始运行爬虫")
-        deferred = crawler.crawl(**spider_kwargs)
-        
-        # 启动reactor
-        if not reactor.running:
-            # 在新线程中运行reactor
-            reactor_thread = threading.Thread(target=reactor.run, 
-                                             kwargs={'installSignalHandlers': False})
-            reactor_thread.daemon = True
-            reactor_thread.start()
-            logger.debug("Reactor已在子线程中启动")
-        
-        # 等待爬虫完成
-        logger.debug("等待爬虫完成...")
-        finished.wait(timeout=3600)  # 最多等待1小时
-        
-        if finished.is_set():
-            logger.debug("爬虫已正常完成")
-        else:
-            logger.warning("爬虫超时或未正常完成")
-        
-        return 0  # 成功
+        # 执行爬虫并等待结果
+        try:
+            logger.debug("开始爬虫运行并等待完成...")
+            # crochet.wait_for装饰器会阻塞直到爬虫完成
+            run_spider()
+            logger.debug("爬虫已完成执行")
+            return 0  # 成功
+        except Exception as e:
+            logger.error(f"爬虫执行过程中出错: {str(e)}")
+            logger.error(traceback.format_exc())
+            return 1  # 失败
         
     except Exception as e:
         logger.error(f"运行爬虫时出错: {str(e)}")

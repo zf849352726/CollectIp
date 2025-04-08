@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 # 添加项目根目录到Python路径
-PROJECT_ROOT = '/usr/local/CollectIp'
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.append(PROJECT_ROOT)
 
 # Quick-start development settings - unsuitable for production

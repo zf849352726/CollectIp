@@ -26,12 +26,14 @@ from selenium.webdriver import Chrome
 import base64
 
 # 获取项目根目录
-PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..'))
+PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..', '..'))
+# print(f"PROJECT_DIR路径：{PROJECT_DIR}")
 if PROJECT_DIR not in sys.path:
     sys.path.insert(0, PROJECT_DIR)
 
 # 确保策略模块可以被导入
-CRAWL_IP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+CRAWL_IP_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
+# print(f"CRAWL_IP_DIR :策略模块{CRAWL_IP_DIR }")
 if CRAWL_IP_DIR not in sys.path:
     sys.path.insert(0, CRAWL_IP_DIR)
 
@@ -152,12 +154,13 @@ class DoubanSpider(scrapy.Spider):
         'UA_DEBUG': True,     # 明确启用UA调试
         'LOG_STDOUT': True,   # 确保日志输出到控制台
         'DOWNLOADER_MIDDLEWARES': {
-            'crawl_ip.middlewares.RandomUserAgentMiddleware': 543,
-            'crawl_ip.middlewares.DoubanDownloaderMiddleware': 600,
-            'crawl_ip.middlewares.ProxyMiddleware': 750,
+            'ip_operator.crawl_ip.crawl_ip.crawl_ip.middlewares.RandomUserAgentMiddleware': 543,
+            'ip_operator.crawl_ip.crawl_ip.crawl_ip.middlewares.DoubanDownloaderMiddleware': 600,
+            'ip_operator.crawl_ip.crawl_ip.crawl_ip.middlewares.ProxyMiddleware': 750,
         }
     }
-    
+
+
     def __init__(self, movie_names=None, comment_strategy=None, douban_username=None, douban_password=None, **kwargs):
         """初始化爬虫"""
         super(DoubanSpider, self).__init__(name='douban_spider', **kwargs)
@@ -276,7 +279,7 @@ class DoubanSpider(scrapy.Spider):
         self.options.add_argument('--disable-gpu')
         self.options.add_argument(f'user-agent={self.headers["User-Agent"]}')
         self.options.add_argument('--disable-blink-features=AutomationControlled')
-        # self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
+        self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
         # 确保浏览器窗口可见
         self.options.add_argument('--start-maximized')
         # 确保不分离浏览器进程
@@ -320,7 +323,7 @@ class DoubanSpider(scrapy.Spider):
         except Exception as e:
             logger.error(f"查询数据库失败: {e}")
             return False, None
-        
+            
     def get_driver(self):
         """获取Chrome浏览器实例"""
         logger.warning("开始初始化Chrome浏览器")

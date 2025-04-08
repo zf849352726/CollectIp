@@ -102,3 +102,212 @@
 2025-04-06 21:44:18,283 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
 2025-04-06 21:44:18,283 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
 2025-04-06 21:44:18,284 - DEBUG - 爬虫线程已启动: DoubanSpider-1743947058
+2025-04-07 21:56:57,095 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-07 21:56:57,096 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 21:56:57,096 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-07 21:56:57,097 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 21:56:57,098 - DEBUG - 爬虫线程已启动: DoubanSpider-1744034217
+2025-04-07 22:52:04,264 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-07 22:52:04,264 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:52:04,265 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-07 22:52:04,265 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:56:01,600 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-07 22:56:01,601 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:56:01,601 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-07 22:56:01,601 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:56:01,602 - DEBUG - 爬虫线程已启动: DoubanSpider-1744037761
+2025-04-07 22:57:00,720 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-07 22:57:00,720 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:57:00,720 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-07 22:57:00,721 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 22:57:00,721 - DEBUG - 爬虫线程已启动: DoubanSpider-1744037820
+2025-04-07 23:05:48,101 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-07 23:05:48,102 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 23:05:48,102 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-07 23:05:48,103 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-07 23:05:48,103 - DEBUG - 爬虫线程已启动: DoubanSpider-1744038348
+2025-04-08 11:32:50,878 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 11:32:50,879 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:32:50,879 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 11:32:50,880 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:32:50,880 - DEBUG - 爬虫线程已启动: DoubanSpider-1744083170
+2025-04-08 11:38:52,640 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 11:38:52,641 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:38:52,641 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 11:38:52,641 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 11:38:52,642 - DEBUG - 爬虫线程已启动: DoubanSpider-1744083532
+2025-04-08 15:10:20,035 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:10:20,036 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:10:20,036 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:10:20,037 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:10:20,038 - DEBUG - 爬虫线程已启动: DoubanSpider-1744096220
+2025-04-08 15:13:25,226 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:13:25,227 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:13:25,227 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:13:25,228 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:13:25,228 - DEBUG - 爬虫线程已启动: DoubanSpider-1744096405
+2025-04-08 15:20:05,706 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:20:05,707 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:20:05,707 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:20:05,707 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:20:05,708 - DEBUG - 爬虫线程已启动: DoubanSpider-1744096805
+2025-04-08 15:23:32,473 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:23:32,473 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:23:32,474 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:23:32,474 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:23:32,474 - DEBUG - 爬虫线程已启动: DoubanSpider-1744097012
+2025-04-08 15:30:03,178 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:30:03,179 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:30:03,179 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:30:03,179 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:30:03,180 - DEBUG - 爬虫线程已启动: DoubanSpider-1744097403
+2025-04-08 15:31:48,125 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:31:48,125 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:31:48,125 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:31:48,126 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:31:48,126 - DEBUG - 爬虫线程已启动: DoubanSpider-1744097508
+2025-04-08 15:32:24,955 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:32:24,955 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:32:24,955 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:32:24,955 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:32:24,956 - DEBUG - 爬虫线程已启动: DoubanSpider-1744097544
+2025-04-08 15:41:26,329 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:41:26,329 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:41:26,330 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:41:26,330 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:41:26,330 - DEBUG - 爬虫线程已启动: DoubanSpider-1744098086
+2025-04-08 15:46:35,891 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:46:35,892 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:35,892 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:46:35,892 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:35,893 - DEBUG - 爬虫线程已启动: DoubanSpider-1744098395
+2025-04-08 15:46:57,031 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:46:57,031 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:57,031 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:46:57,032 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:46:57,032 - DEBUG - 爬虫线程已启动: DoubanSpider-1744098417
+2025-04-08 15:47:07,388 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:47:07,388 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:47:07,388 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:47:07,389 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:47:07,389 - DEBUG - 爬虫线程已启动: DoubanSpider-1744098427
+2025-04-08 15:54:47,298 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 15:54:47,298 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:54:47,300 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 15:54:47,300 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 15:54:47,301 - DEBUG - 爬虫线程已启动: DoubanSpider-1744098887
+2025-04-08 16:07:18,201 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:07:18,201 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:18,202 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:07:18,202 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:18,202 - DEBUG - 爬虫线程已启动: DoubanSpider-1744099638
+2025-04-08 16:07:53,037 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:07:53,038 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:53,038 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:07:53,038 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:07:53,039 - DEBUG - 爬虫线程已启动: DoubanSpider-1744099673
+2025-04-08 16:09:28,296 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:09:28,296 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:09:28,296 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:09:28,297 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:09:28,297 - DEBUG - 爬虫线程已启动: DoubanSpider-1744099768
+2025-04-08 16:10:49,954 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:10:49,955 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:10:49,955 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:10:49,955 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:10:49,956 - DEBUG - 爬虫线程已启动: DoubanSpider-1744099849
+2025-04-08 16:13:53,529 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:13:53,531 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:13:53,531 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:13:53,531 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:13:53,532 - DEBUG - 爬虫线程已启动: DoubanSpider-1744100033
+2025-04-08 16:14:29,064 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:14:29,064 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:14:29,065 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:14:29,065 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:14:29,066 - DEBUG - 爬虫线程已启动: DoubanSpider-1744100069
+2025-04-08 16:24:49,314 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:24:49,315 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:24:49,315 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:24:49,315 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:24:49,316 - DEBUG - 爬虫线程已启动: DoubanSpider-1744100689
+2025-04-08 16:25:00,531 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:25:00,532 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:25:00,532 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:25:00,533 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:25:00,533 - DEBUG - 爬虫线程已启动: DoubanSpider-1744100700
+2025-04-08 16:40:01,553 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:40:01,554 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:40:01,555 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:40:01,555 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:40:01,556 - DEBUG - 爬虫线程已启动: DoubanSpider-1744101601
+2025-04-08 16:43:17,194 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:43:17,195 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:43:17,195 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:43:17,195 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:43:17,196 - DEBUG - 爬虫线程已启动: DoubanSpider-1744101797
+2025-04-08 16:54:45,556 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:54:45,556 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:54:45,557 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:54:45,557 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:54:45,558 - DEBUG - 爬虫线程已启动: DoubanSpider-1744102485
+2025-04-08 16:55:05,156 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 16:55:05,156 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:55:05,157 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 16:55:05,157 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 16:55:05,157 - DEBUG - 爬虫线程已启动: DoubanSpider-1744102505
+2025-04-08 17:17:35,618 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 17:17:35,619 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 17:17:35,620 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 17:17:35,620 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 17:17:35,621 - DEBUG - 爬虫线程已启动: DoubanSpider-1744103855
+2025-04-08 18:32:36,482 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:32:36,483 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:32:36,484 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:32:36,484 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:32:36,486 - DEBUG - 爬虫线程已启动: DoubanSpider-1744108356
+2025-04-08 18:35:28,724 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:35:28,724 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:35:28,725 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:35:28,726 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:35:28,727 - DEBUG - 爬虫线程已启动: DoubanSpider-1744108528
+2025-04-08 18:45:37,752 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:45:37,753 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:45:37,754 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:45:37,754 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:45:37,754 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109137
+2025-04-08 18:49:00,036 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:49:00,038 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:49:00,039 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:49:00,039 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:49:00,041 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109340
+2025-04-08 18:50:06,991 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:50:06,992 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:50:06,993 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:50:06,994 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:50:06,995 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109406
+2025-04-08 18:51:12,274 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:51:12,275 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:51:12,275 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:51:12,275 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:51:12,276 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109472
+2025-04-08 18:52:14,053 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:52:14,053 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:52:14,055 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:52:14,055 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:52:14,055 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109534
+2025-04-08 18:53:07,674 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:53:07,675 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:53:07,675 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:53:07,676 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:53:07,677 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109587
+2025-04-08 18:54:57,317 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:54:57,317 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:54:57,318 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:54:57,318 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:54:57,319 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109697
+2025-04-08 18:55:34,114 - DEBUG - 使用参数启动豆瓣爬虫: 霸王别姬, 策略: sequential
+2025-04-08 18:55:34,115 - DEBUG - 最终配置参数: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:55:34,115 - DEBUG - 准备启动豆瓣爬虫: 霸王别姬
+2025-04-08 18:55:34,115 - DEBUG - 爬取策略: sequential, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 18:55:34,117 - DEBUG - 爬虫线程已启动: DoubanSpider-1744109734
