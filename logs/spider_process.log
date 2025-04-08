@@ -1462,3 +1462,14 @@ ModuleNotFoundError: No module named 'CollectIp.ip_operator'
 2025-04-08 18:55:48,527 - DEBUG - 成功清理环境变量: MOVIE_NAME_ASCII
 2025-04-08 18:55:48,528 - DEBUG - 成功清理环境变量: CRAWL_CONFIG
 2025-04-08 18:55:48,528 - DEBUG - 清理环境变量完成
+2025-04-08 20:27:56,918 - DEBUG - 开始执行爬虫 douban_spider，参数: 霸王别姬, 配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 20:27:56,919 - DEBUG - 切换工作目录: D:\python_learn\CollectIp\CollectIp\ip_operator\crawl_ip\crawl_ip
+2025-04-08 20:27:57,166 - DEBUG - 设置编码电影名环境变量: 霸王别姬 (编码后: 6Zy4546L5Yir5aes)
+2025-04-08 20:27:57,167 - DEBUG - 设置爬取配置环境变量: {"strategy": "sequential", "max_pages": 2}
+2025-04-08 20:27:57,168 - DEBUG - 已加载爬虫设置
+2025-04-08 20:27:58,071 - DEBUG - 成功导入爬虫模块: ip_operator.crawl_ip.crawl_ip.crawl_ip.spiders.douban_spider
+2025-04-08 20:27:58,072 - DEBUG - 找到爬虫类: DoubanSpider
+2025-04-08 20:27:58,072 - DEBUG - 爬虫参数: {'comment_strategy': 'sequential', 'max_pages': 2}
+2025-04-08 20:27:58,074 - DEBUG - 创建CrawlerRunner实例
+2025-04-08 20:27:58,074 - DEBUG - 开始爬虫运行并等待完成...
+2025-04-08 20:27:58,075 - DEBUG - 开始运行爬虫: douban_spider

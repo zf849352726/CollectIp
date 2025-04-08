@@ -442,3 +442,50 @@ Stacktrace:
 2025-04-08 18:55:48,524 - WARNING - WebDriver已关闭
 2025-04-08 18:55:48,525 - WARNING - MySQL连接已关闭
 2025-04-08 18:55:48,525 - WARNING - 爬虫资源已清理完毕
+2025-04-08 20:27:58,076 - WARNING - 从编码的环境变量获取电影名: 霸王别姬
+2025-04-08 20:27:58,077 - WARNING - 豆瓣爬虫爬取电影: ['霸王别姬']
+2025-04-08 20:27:58,077 - WARNING - 从环境变量获取爬取配置: {'strategy': 'sequential', 'max_pages': 2}
+2025-04-08 20:27:58,078 - WARNING - 使用评论采集策略: 顺序采集(最多2页), 参数: {'max_pages': 2}
+2025-04-08 20:28:03,251 - DEBUG - ChromeDriver安装路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-08 20:28:03,284 - WARNING - MySQL数据库连接成功
+2025-04-08 20:28:03,524 - WARNING - 使用Selenium启动爬虫，电影名: ['霸王别姬']
+2025-04-08 20:28:03,524 - WARNING - 开始初始化Chrome浏览器
+2025-04-08 20:28:03,525 - WARNING - ChromeDriver路径: C:\Users\帅张张\.wdm\drivers\chromedriver\win64\134.0.6998.165\chromedriver-win32/chromedriver.exe
+2025-04-08 20:28:03,525 - WARNING - 正在创建浏览器实例...
+2025-04-08 20:28:03,525 - WARNING - Chrome浏览器配置已设置，准备启动
+2025-04-08 20:28:05,983 - WARNING - 创建新的Chrome实例成功
+2025-04-08 20:28:05,987 - WARNING - 浏览器地址: data:,
+2025-04-08 20:28:05,987 - WARNING - 未找到Cookie文件，需要登录
+2025-04-08 20:28:05,991 - WARNING - Chrome浏览器已启动，地址: data:,
+2025-04-08 20:28:05,991 - WARNING - 开始搜索电影: 霸王别姬
+2025-04-08 20:28:05,992 - WARNING - 开始初始化Chrome浏览器
+2025-04-08 20:28:05,992 - WARNING - 使用现有的WebDriver实例
+2025-04-08 20:28:05,992 - WARNING - 访问搜索页面: https://search.douban.com/movie/subject_search?search_text=%E9%9C%B8%E7%8E%8B%E5%88%AB%E5%A7%AC
+2025-04-08 20:28:09,398 - WARNING - 未检测到豆瓣验证码iframe
+2025-04-08 20:28:09,403 - ERROR - 查找电影链接出错: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=134.0.6998.178)
+Stacktrace:
+	GetHandleVerifier [0x0057C7F3+24435]
+	(No symbol) [0x00502074]
+	(No symbol) [0x003D06E3]
+	(No symbol) [0x003AF83E]
+	(No symbol) [0x0044455E]
+	(No symbol) [0x0045EB19]
+	(No symbol) [0x0043D5B6]
+	(No symbol) [0x0040C54F]
+	(No symbol) [0x0040D894]
+	GetHandleVerifier [0x008870A3+3213347]
+	GetHandleVerifier [0x0089B0C9+3295305]
+	GetHandleVerifier [0x0089558C+3271948]
+	GetHandleVerifier [0x00617360+658144]
+	(No symbol) [0x0050B27D]
+	(No symbol) [0x00508208]
+	(No symbol) [0x005083A9]
+	(No symbol) [0x004FAAC0]
+	BaseThreadInitThunk [0x75F17BA9+25]
+	RtlInitializeExceptionChain [0x76F5C2EB+107]
+	RtlClearBits [0x76F5C26F+191]
+
+2025-04-08 20:28:09,403 - ERROR - 直接搜索出错: quote_from_bytes() expected bytes
+2025-04-08 20:28:09,404 - WARNING - 爬虫关闭: finished
