@@ -24,6 +24,8 @@ from ddddocr import DdddOcr
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver import Chrome
 import base64
+import uuid
+import tempfile
 
 # 获取项目根目录
 PROJECT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', '..', '..'))
@@ -349,12 +351,16 @@ class DoubanSpider(scrapy.Spider):
                 options.add_argument('--no-sandbox')
                 options.add_argument('--disable-dev-shm-usage')
 
-                import tempfile
-
-                # 生成临时目录，避免冲突
-                user_data_dir = tempfile.mkdtemp()
-                 
-                # 加这个唯一 user-data-dir 避免冲突
+                # 生成唯一的临时目录名称，避免不同爬虫实例之间的冲突
+                random_uuid = str(uuid.uuid4())
+                user_data_dir = os.path.join(tempfile.gettempdir(), f'chrome_user_data_{random_uuid}')
+                
+                # 确保目录存在
+                os.makedirs(user_data_dir, exist_ok=True)
+                
+                logger.warning(f"使用唯一的Chrome用户数据目录: {user_data_dir}")
+                
+                # 添加用户数据目录参数
                 options.add_argument(f'--user-data-dir={user_data_dir}')
                 
                 # 添加排除自动化控制的实验选项
@@ -372,6 +378,9 @@ class DoubanSpider(scrapy.Spider):
                 
                 logger.warning("创建新的Chrome实例成功")
                 logger.warning(f"浏览器地址: {self.driver.current_url}")
+                
+                # 记录用户数据目录，以便在爬虫关闭时清理
+                self._user_data_dir = user_data_dir
                 
                 # 加载已保存的Cookie
                 if self.load_cookies():
@@ -1122,29 +1131,38 @@ class DoubanSpider(scrapy.Spider):
         return False
             
     def closed(self, reason):
-        """爬虫关闭时的清理操作"""
-        logger.warning(f'爬虫关闭: {reason}')
+        """爬虫关闭时的清理工作"""
+        logger.warning(f"爬虫结束，原因: {reason}")
         
-        # 关闭WebDriver
-        if hasattr(self, 'driver') and self.driver:
+        # 关闭浏览器
+        if self.driver:
             try:
+                logger.warning("关闭浏览器实例")
                 self.driver.quit()
-                logger.warning("WebDriver已关闭")
             except Exception as e:
-                logger.error(f"关闭WebDriver出错: {e}")
-        
-        # 关闭数据库连接
-        if hasattr(self, 'db_conn') and self.db_conn:
-            try:
-                if hasattr(self, 'db_cursor') and self.db_cursor:
-                    self.db_cursor.close()
-                self.db_conn.close()
-                logger.warning("MySQL连接已关闭")
-            except Exception as e:
-                logger.error(f"关闭MySQL连接出错: {e}")
+                logger.error(f"关闭浏览器时出错: {e}")
+            finally:
+                self.driver = None
                 
-        # 其他清理操作
-        logger.warning("爬虫资源已清理完毕")
+        # 清理Chrome用户数据目录
+        if hasattr(self, '_user_data_dir') and self._user_data_dir:
+            try:
+                import shutil
+                logger.warning(f"清理Chrome用户数据目录: {self._user_data_dir}")
+                shutil.rmtree(self._user_data_dir, ignore_errors=True)
+            except Exception as e:
+                logger.error(f"清理用户数据目录时出错: {e}")
+                
+        # 写入爬取结果统计
+        logger.warning(f"电影详情页爬取统计: {self.stats}")
+        logger.warning(f"总评论条数: {self.comment_count}")
+        
+        all_comments = []
+        for movie_id, comments in self.collected_comments.items():
+            all_comments.extend(comments)
+            
+        logger.warning(f"成功采集评论数: {len(all_comments)}")
+        logger.warning("爬虫清理工作完成")
 
     def process_current_page_comments(self, driver, all_comments):
         """处理当前页面的评论"""
