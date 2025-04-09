@@ -311,4 +311,4 @@ CELERY_WORKER_MAX_TASKS_PER_CHILD = 50  # 处理50个任务后重启worker
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
-REDIS_PASSWORD = None  # 如果Redis设置了密码，请在此处设置
+REDIS_PASSWORD = '123456'  # 如果Redis设置了密码，请在此处设置
