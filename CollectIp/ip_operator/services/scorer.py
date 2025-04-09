@@ -3,10 +3,10 @@ from django.db import transaction
 from index.models import IpData
 from ..ip_scorer import IPScorer
 from django.conf import settings
-from .old_crawler import setup_logging
 
-# 使用自定义日志设置，设置为WARNING级别
-logger = setup_logging("ip_scorer", logging.WARNING)
+# 设置日志
+logger = logging.getLogger('ip_operator')
+
 
 def start_score():
     """评分服务"""
