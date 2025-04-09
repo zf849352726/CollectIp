@@ -8,11 +8,6 @@ from pathlib import Path
 import os
 import sys
 
-
-# lang
-os.environ['LANG'] = 'zh_CN.UTF-8'
-os.environ['LC_ALL'] = 'zh_CN.UTF-8'
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
@@ -272,4 +267,21 @@ DEFAULT_FROM_EMAIL = 'CollectIp <admin@663712.xyz>'
 
 # 管理员设置
 ADMINS = [('Admin', 'admin@663712.xyz')]
-MANAGERS = ADMINS 
+MANAGERS = ADMINS
+
+# Celery配置
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60  # 30分钟超时
+CELERY_WORKER_MAX_TASKS_PER_CHILD = 50  # 处理50个任务后重启worker
+
+# Redis配置
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_PASSWORD = '123456'  # 如果Redis设置了密码，请在此处设置

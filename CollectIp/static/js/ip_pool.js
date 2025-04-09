@@ -21,17 +21,19 @@ async function runOneCrawl() {
     button.disabled = true;
     
     // 显示状态栏为"进行中"
-    showStatusBar('info', 'IP采集任务正在执行中...', '请稍候，系统正在抓取新的代理IP');
+    showStatusBar('info', 'IP采集任务正在提交中...', '请稍候，系统正在准备抓取新的代理IP');
     
     try {
         console.log('开始执行采集请求...');
         
+        // 准备表单数据，可指定爬取类型
+        const formData = new FormData();
+        formData.append('crawl_type', 'all'); // 默认爬取所有类型
+        formData.append('csrfmiddlewaretoken', getCSRFToken());
+        
         const response = await fetch('/crawl_once/', {
             method: 'POST',
-            headers: {
-                'X-CSRFToken': getCSRFToken(),
-                'Content-Type': 'application/json'
-            }
+            body: formData
         });
         
         console.log('采集请求响应状态:', response.status);
@@ -40,13 +42,12 @@ async function runOneCrawl() {
         console.log('采集响应数据:', data);
         
         if (data.success) {
-            showNotification('成功', 'IP采集任务已启动，请稍后刷新页面查看结果', 'success');
-            // 更新状态栏
-            showStatusBar('success', 'IP采集任务已成功启动', data.message || '系统将自动抓取新的代理IP，10秒后页面将自动刷新');
-            // 10秒后自动刷新页面
-            setTimeout(() => {
-                location.reload();
-            }, 10000);
+            // 更新状态栏，显示任务信息
+            showStatusBar('success', 'IP采集任务已成功启动', 
+                          `任务ID: ${data.task_id}<br>系统将自动抓取新的代理IP，正在监控任务状态...`);
+            
+            // 开始轮询任务状态
+            pollTaskStatus(data.task_id);
         } else {
             showNotification('错误', '采集请求失败: ' + (data.error || '未知错误'), 'danger');
             // 更新状态栏
@@ -64,6 +65,92 @@ async function runOneCrawl() {
             button.disabled = false;
         }, 2000);
     }
+}
+
+// 轮询任务状态
+let statusPollingInterval = null;
+
+function pollTaskStatus(taskId) {
+    // 清除之前的轮询
+    if (statusPollingInterval) {
+        clearInterval(statusPollingInterval);
+    }
+    
+    // 设置轮询间隔为 5 秒
+    statusPollingInterval = setInterval(async () => {
+        try {
+            const response = await fetch(`/check_task/?task_id=${taskId}`);
+            const data = await response.json();
+            
+            console.log('任务状态:', data);
+            
+            if (data.success) {
+                let statusMessage = '';
+                let statusTitle = '';
+                let statusType = 'info';
+                
+                // 根据任务状态更新显示
+                switch(data.status) {
+                    case 'SUCCESS':
+                        statusTitle = 'IP采集任务已完成';
+                        statusMessage = `任务ID: ${taskId}<br>采集已成功完成，10秒后页面将自动刷新`;
+                        statusType = 'success';
+                        
+                        // 停止轮询
+                        clearInterval(statusPollingInterval);
+                        
+                        // 10秒后自动刷新页面
+                        setTimeout(() => {
+                            location.reload();
+                        }, 10000);
+                        break;
+                        
+                    case 'FAILURE':
+                        statusTitle = 'IP采集任务失败';
+                        statusMessage = `任务ID: ${taskId}<br>采集过程中发生错误: ${data.result?.error || '未知错误'}`;
+                        statusType = 'error';
+                        
+                        // 停止轮询
+                        clearInterval(statusPollingInterval);
+                        break;
+                        
+                    case 'PENDING':
+                        statusTitle = 'IP采集任务等待中';
+                        statusMessage = `任务ID: ${taskId}<br>任务已提交，正在等待执行...`;
+                        statusType = 'info';
+                        break;
+                        
+                    case 'STARTED':
+                        statusTitle = 'IP采集任务执行中';
+                        statusMessage = `任务ID: ${taskId}<br>任务正在执行，请耐心等待...`;
+                        statusType = 'info';
+                        break;
+                        
+                    default:
+                        statusTitle = 'IP采集任务状态未知';
+                        statusMessage = `任务ID: ${taskId}<br>任务状态: ${data.status}`;
+                        statusType = 'warning';
+                }
+                
+                // 更新状态栏
+                showStatusBar(statusType, statusTitle, statusMessage);
+            }
+        } catch (error) {
+            console.error('获取任务状态失败:', error);
+        }
+    }, 5000);
+    
+    // 设置 3 分钟后自动停止轮询
+    setTimeout(() => {
+        if (statusPollingInterval) {
+            clearInterval(statusPollingInterval);
+            statusPollingInterval = null;
+            
+            // 更新状态栏
+            showStatusBar('warning', 'IP采集任务监控已停止', 
+                         '已停止自动监控任务状态，任务可能仍在后台执行。请稍后手动刷新页面查看结果。');
+        }
+    }, 180000);
 }
 
 // IP评分函数

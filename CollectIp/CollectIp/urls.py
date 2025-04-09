@@ -25,13 +25,14 @@ from index.views import (
     tv_list, data_trend, douban_settings,
     crawl_once_view,
     score_once_view,
-    crawl_movie_view,
+    crawl_movie,
     update_movie_wordcloud,
     toggle_movie_published,
     get_last_crawl_status,
     create_collection, get_collection, update_collection, delete_collection,
     logs_view, get_log_content, download_log,
-    csrf_debug
+    csrf_debug,
+    check_crawler_task
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -70,7 +71,8 @@ urlpatterns = [
     path('crawl_once/', crawl_once_view, name='crawl_once'),
     path('score_once/', score_once_view, name='score_once'),
     path('crawl_status/', get_last_crawl_status, name='crawl_status'),
-    path('crawl_movie/', crawl_movie_view, name='crawl_movie'),
+    path('crawl_movie/', crawl_movie, name='crawl_movie'),
+    path('check_task/', check_crawler_task, name='check_task'),
     path('logs/', logs_view, name='logs_view'),
     path('api/logs/content/', get_log_content, name='get_log_content'),
     path('api/logs/download/', download_log, name='download_log'),

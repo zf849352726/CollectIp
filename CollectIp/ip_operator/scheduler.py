@@ -4,7 +4,7 @@ import logging
 import psutil
 import os
 from django.conf import settings
-from .services.crawler import start_crawl, setup_logging
+from .services.old_crawler import start_crawl, setup_logging
 from .services.scorer import start_score
 
 # 使用自定义日志设置，设置级别为WARNING

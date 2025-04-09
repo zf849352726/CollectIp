@@ -407,5 +407,209 @@
             </div>
         </div>
     </div>
+
+    <!-- 在页面底部的 JavaScript 区域修改 -->
+    <script>
+        // ... existing code ...
+        
+        function crawlMovieWithStrategy() {
+            const movieName = $('#movieName').val().trim();
+            if (!movieName) {
+                alert('请输入电影名称');
+                return;
+            }
+            
+            const strategy = $('#commentStrategy').val();
+            
+            // 准备参数
+            const formData = new FormData();
+            formData.append('movie_name', movieName);
+            formData.append('strategy', strategy);
+            
+            // 根据不同策略添加参数
+            if (strategy === 'sequential') {
+                formData.append('max_pages', $('#maxPages').val());
+            } else if (strategy === 'random_pages') {
+                formData.append('sample_size', $('#sampleSize').val());
+            } else if (strategy === 'random_interval') {
+                formData.append('max_interval', $('#maxInterval').val());
+                formData.append('max_pages', $('#maxPages').val());
+            } else if (strategy === 'random_block') {
+                formData.append('block_size', $('#blockSize').val());
+            }
+            
+            // CSRF Token
+            formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+            
+            // 显示加载中状态
+            $('#crawlStatus').html('<div class="alert alert-info">正在提交爬虫任务...</div>');
+            
+            // 发送 AJAX 请求
+            $.ajax({
+                url: '/crawl_movie/',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        $('#crawlStatus').html(`
+                            <div class="alert alert-success">
+                                <strong>成功:</strong> ${response.message}<br>
+                                <small>${response.details}</small>
+                                <div class="mt-2">
+                                    <strong>任务ID:</strong> <span id="taskId">${response.task_id}</span>
+                                    <button class="btn btn-sm btn-info ms-2" onclick="checkTaskStatus('${response.task_id}')">检查状态</button>
+                                </div>
+                            </div>
+                        `);
+                        
+                        // 自动开始轮询任务状态
+                        startTaskPolling(response.task_id);
+                    } else {
+                        $('#crawlStatus').html(`
+                            <div class="alert alert-danger">
+                                <strong>错误:</strong> ${response.error}<br>
+                                <small>${response.details || ''}</small>
+                            </div>
+                        `);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#crawlStatus').html(`
+                        <div class="alert alert-danger">
+                            <strong>请求失败:</strong> ${error}<br>
+                            <small>服务器可能暂时无法响应，请稍后再试</small>
+                        </div>
+                    `);
+                }
+            });
+        }
+        
+        // 任务状态轮询相关变量和函数
+        let pollingInterval = null;
+        
+        function startTaskPolling(taskId) {
+            // 清除之前的轮询
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+            
+            // 设置轮询间隔为 5 秒
+            pollingInterval = setInterval(function() {
+                checkTaskStatus(taskId, true);
+            }, 5000);
+            
+            // 设置 2 分钟后自动停止轮询
+            setTimeout(function() {
+                if (pollingInterval) {
+                    clearInterval(pollingInterval);
+                    pollingInterval = null;
+                    
+                    // 更新状态显示
+                    const statusDiv = $('#taskStatus');
+                    if (statusDiv.text().includes('PENDING') || statusDiv.text().includes('STARTED')) {
+                        statusDiv.html('<span class="text-warning">已停止自动检查，任务可能仍在后台运行</span>');
+                    }
+                }
+            }, 120000);
+        }
+        
+        function checkTaskStatus(taskId, isPolling = false) {
+            $.ajax({
+                url: '/check_task/',
+                type: 'GET',
+                data: { task_id: taskId },
+                success: function(response) {
+                    if (response.success) {
+                        let statusHtml = '';
+                        let statusClass = '';
+                        
+                        // 根据任务状态设置不同的显示样式
+                        switch(response.status) {
+                            case 'SUCCESS':
+                                statusClass = 'text-success';
+                                statusHtml = '完成';
+                                // 停止轮询
+                                if (pollingInterval) {
+                                    clearInterval(pollingInterval);
+                                    pollingInterval = null;
+                                }
+                                break;
+                            case 'FAILURE':
+                                statusClass = 'text-danger';
+                                statusHtml = '失败';
+                                // 停止轮询
+                                if (pollingInterval) {
+                                    clearInterval(pollingInterval);
+                                    pollingInterval = null;
+                                }
+                                break;
+                            case 'PENDING':
+                                statusClass = 'text-warning';
+                                statusHtml = '等待中';
+                                break;
+                            case 'STARTED':
+                                statusClass = 'text-primary';
+                                statusHtml = '运行中';
+                                break;
+                            default:
+                                statusClass = 'text-secondary';
+                                statusHtml = response.status;
+                        }
+                        
+                        // 更新状态显示
+                        if (isPolling) {
+                            // 如果是自动轮询，更新已有的状态显示
+                            const statusElement = $('#taskStatus');
+                            if (statusElement.length) {
+                                statusElement.html(`<span class="${statusClass}">${statusHtml}</span>`);
+                            } else {
+                                // 如果状态元素不存在，则创建它
+                                $('#crawlStatus .alert').append(`
+                                    <div class="mt-2">
+                                        <strong>状态:</strong> <span id="taskStatus" class="${statusClass}">${statusHtml}</span>
+                                    </div>
+                                `);
+                            }
+                        } else {
+                            // 如果是手动检查，显示更详细的信息
+                            $('#crawlStatus').html(`
+                                <div class="alert alert-info">
+                                    <strong>任务ID:</strong> ${taskId}<br>
+                                    <strong>状态:</strong> <span id="taskStatus" class="${statusClass}">${statusHtml}</span><br>
+                                    <strong>更新时间:</strong> ${response.timestamp}
+                                    ${response.result ? '<br><strong>结果:</strong> ' + JSON.stringify(response.result) : ''}
+                                    <div class="mt-2">
+                                        <button class="btn btn-sm btn-info" onclick="checkTaskStatus('${taskId}')">刷新状态</button>
+                                    </div>
+                                </div>
+                            `);
+                        }
+                    } else {
+                        if (!isPolling) {
+                            $('#crawlStatus').html(`
+                                <div class="alert alert-danger">
+                                    <strong>检查任务状态失败:</strong> ${response.error}
+                                </div>
+                            `);
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (!isPolling) {
+                        $('#crawlStatus').html(`
+                            <div class="alert alert-danger">
+                                <strong>请求失败:</strong> ${error}<br>
+                                <small>服务器可能暂时无法响应，请稍后再试</small>
+                            </div>
+                        `);
+                    }
+                }
+            });
+        }
+        
+        // ... existing code ...
+    </script>
 </body>
 </html> 

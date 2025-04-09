@@ -9,7 +9,6 @@ import traceback
 import base64
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-import argparse
 
 
 # 添加spider目录路径列表
@@ -28,9 +27,9 @@ for spider_dir_path in spider_dir_paths:
     if os.path.exists(spider_dir_path) and spider_dir_path not in sys.path:
         sys.path.insert(0, spider_dir_path)
 
-# 在导入crochet之前设置环境变量，指定使用select reactor
-os.environ['SCRAPY_SETTINGS_MODULE'] = 'scrapy.settings'
-os.environ['TWISTED_REACTOR'] = 'twisted.internet.selectreactor.SelectReactor'
+# # 在导入crochet之前设置环境变量，指定使用select reactor
+# os.environ['SCRAPY_SETTINGS_MODULE'] = 'scrapy.settings'
+# os.environ['TWISTED_REACTOR'] = 'twisted.internet.selectreactor.SelectReactor'
 
 # 导入并设置crochet
 import crochet
@@ -230,8 +229,8 @@ def run_scrapy_spider(spider_name, project_root, input_data=None, crawl_config=N
         settings.set('LOG_LEVEL', 'INFO' if DEBUG else 'WARNING')
         settings.set('ROBOTSTXT_OBEY', False)
         
-        # 设置使用与crochet兼容的reactor
-        settings.set('TWISTED_REACTOR', 'twisted.internet.selectreactor.SelectReactor')
+        # # 设置使用与crochet兼容的reactor
+        # settings.set('TWISTED_REACTOR', 'twisted.internet.selectreactor.SelectReactor')
         
         # 禁用信号处理以防止非主线程错误
         settings.set('EXTENSIONS', {
@@ -445,84 +444,20 @@ def start_crawl(spider_name='collectip', crawl_type='qq'):
         return False
 
 
-# 在文件末尾添加命令行参数处理
-if __name__ == "__main__":
-    import argparse
-    
-    # 创建命令行参数解析器
-    parser = argparse.ArgumentParser(description='网络爬虫')
-    
-    # 爬虫类型参数
-    parser.add_argument('--crawl_type', type=str, choices=['ip', 'douban'], help='爬虫类型: ip 或 douban')
-    
-    # 豆瓣爬虫参数
-    parser.add_argument('--movie_name', type=str, help='电影名称')
-    parser.add_argument('--strategy', type=str, default='sequential', help='采集策略: sequential, random_pages, random_interval, random_block, random')
-    parser.add_argument('--max_pages', type=int, help='最大页数')
-    parser.add_argument('--sample_size', type=int, help='随机样本大小')
-    parser.add_argument('--max_interval', type=int, help='最大间隔页数')
-    parser.add_argument('--block_size', type=int, help='区块大小')
-    parser.add_argument('--use_random_strategy', action='store_true', help='使用随机策略')
-    
-    # 解析命令行参数
-    args = parser.parse_args()
-    
+# 当作为脚本直接运行时的入口点
+if __name__ == '__main__':
     # 设置Django环境
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
     django.setup()
     
-    # 设置日志
-    logger = setup_logging('crawler_script')
+    # 测试爬虫
+    print("开始测试爬虫...")
+    result = start_douban_crawl_with_params('霸王别姬', strategy='sequential', max_pages=2)
+    print(f"爬虫启动结果: {result}")
     
-    # 根据爬虫类型执行不同的爬虫
-    if args.crawl_type == 'ip':
-        logger.info("从命令行启动IP爬虫")
-        result = start_crawl()
-        if result:
-            logger.info("IP爬虫执行成功")
-            sys.exit(0)
-        else:
-            logger.error("IP爬虫执行失败")
-            sys.exit(1)
-    
-    elif args.crawl_type == 'douban' or args.movie_name:
-        if not args.movie_name:
-            logger.error("错误: 使用豆瓣爬虫时必须提供电影名称参数 --movie_name")
-            sys.exit(1)
-            
-        logger.info(f"从命令行启动豆瓣爬虫: 电影={args.movie_name}, 策略={args.strategy}")
-        
-        # 构建参数字典
-        params = {
-            'movie_name': args.movie_name,
-            'strategy': args.strategy
-        }
-        
-        # 添加可选参数
-        if args.max_pages is not None:
-            params['max_pages'] = args.max_pages
-        if args.sample_size is not None:
-            params['sample_size'] = args.sample_size
-        if args.max_interval is not None:
-            params['max_interval'] = args.max_interval
-        if args.block_size is not None:
-            params['block_size'] = args.block_size
-        if args.use_random_strategy:
-            params['use_random_strategy'] = True
-        
-        logger.info(f"爬虫参数: {params}")
-        
-        # 启动爬虫并等待完成
-        result = start_douban_crawl_with_params(**params)
-        
-        if result:
-            logger.info(f"豆瓣爬虫执行成功: {args.movie_name}")
-            sys.exit(0)
-        else:
-            logger.error(f"豆瓣爬虫执行失败: {args.movie_name}")
-            sys.exit(1)
-    
-    else:
-        logger.error("错误: 请指定爬虫类型 --crawl_type [ip|douban] 或提供电影名称 --movie_name")
-        parser.print_help()
-        sys.exit(1)
+    # 防止主程序退出导致线程终止
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("手动终止程序")
