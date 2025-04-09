@@ -270,7 +270,7 @@ ADMINS = [('Admin', 'admin@663712.xyz')]
 MANAGERS = ADMINS
 
 # Celery配置
-CELERY_BROKER_URL = 'redis://123456@localhost:6379/0'
+CELERY_BROKER_URL = 'redis://1234567@localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis:123456@//localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
