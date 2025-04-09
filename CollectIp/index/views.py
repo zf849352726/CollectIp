@@ -12,7 +12,7 @@ import logging
 from ip_operator.services.scorer import start_score
 from ip_operator.services.celery_crawler import start_crawl_ip, start_crawl_douban, check_task_status
 import threading
-from django.conf import settings
+from django.conf import settings_optimized
 import os
 from datetime import datetime, timedelta
 from django.views.decorators.cache import cache_page
