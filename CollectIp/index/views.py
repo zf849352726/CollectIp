@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import logging
-from ip_operator.services.old_crawler import start_score, encode_movie_name
+from ip_operator.services.scorer import start_score
 from ip_operator.services.celery_crawler import start_crawl_ip, start_crawl_douban, check_task_status
 import threading
 from django.conf import settings

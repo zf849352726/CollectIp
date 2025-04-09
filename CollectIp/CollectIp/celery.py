@@ -8,7 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings_optimized')
 app = Celery('CollectIp')
 
 # 使用Django的settings.py中的配置
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings_optimized', namespace='CELERY')
 
 # 加载Beat定时任务配置
 try:
