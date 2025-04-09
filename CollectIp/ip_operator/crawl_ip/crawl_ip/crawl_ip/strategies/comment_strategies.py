@@ -120,6 +120,40 @@ class RandomBlockStrategy(CommentStrategy):
         return f"随机区块采集(区块大小{self.block_size}页)"
 
 
+class RandomStrategy(CommentStrategy):
+    """随机策略 - 随机从四种策略中选择一种执行"""
+    
+    def __init__(self, **kwargs):
+        # 保存传入的参数供各策略使用
+        self.kwargs = kwargs
+        # 随机选择一个策略
+        self._strategy = self._get_random_strategy()
+        # 记录选择的策略名称
+        self._selected_strategy_name = self._strategy.get_name()
+    
+    def _get_random_strategy(self) -> CommentStrategy:
+        """随机选择一个策略"""
+        strategies = [
+            SequentialStrategy(max_pages=self.kwargs.get('max_pages', 5)),
+            RandomPagesStrategy(sample_size=self.kwargs.get('sample_size', 5)),
+            RandomIntervalStrategy(
+                max_interval=self.kwargs.get('max_interval', 3), 
+                max_pages=self.kwargs.get('max_pages', 5)
+            ),
+            RandomBlockStrategy(block_size=self.kwargs.get('block_size', 3))
+        ]
+        selected = random.choice(strategies)
+        logger.info(f"随机策略选择了: {selected.get_name()}")
+        return selected
+    
+    def get_pages_to_crawl(self, total_pages: int) -> List[int]:
+        """委托给随机选择的策略执行"""
+        return self._strategy.get_pages_to_crawl(total_pages)
+    
+    def get_name(self) -> str:
+        return f"随机策略(选择了: {self._selected_strategy_name})"
+
+
 # 策略工厂，用于获取指定的策略实例
 class CommentStrategyFactory:
     """评论采集策略工厂"""
@@ -140,7 +174,8 @@ class CommentStrategyFactory:
             'sequential': SequentialStrategy,
             'random_pages': RandomPagesStrategy,
             'random_interval': RandomIntervalStrategy,
-            'random_block': RandomBlockStrategy
+            'random_block': RandomBlockStrategy,
+            'random': RandomStrategy
         }
         
         if strategy_type not in strategies:
@@ -148,15 +183,3 @@ class CommentStrategyFactory:
             return SequentialStrategy(**kwargs)
             
         return strategies[strategy_type](**kwargs)
-
-
-# 使用示例
-def get_random_strategy() -> CommentStrategy:
-    """随机选择一个采集策略"""
-    strategies = [
-        RandomPagesStrategy(sample_size=random.randint(3, 8)),
-        RandomIntervalStrategy(max_interval=random.randint(2, 5), max_pages=random.randint(3, 8)),
-        RandomBlockStrategy(block_size=random.randint(2, 5)),
-        SequentialStrategy(max_pages=random.randint(3, 8))
-    ]
-    return random.choice(strategies) 

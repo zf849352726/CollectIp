@@ -209,7 +209,7 @@ def crawl_douban_task(movie_name, strategy="sequential", max_pages=2, **kwargs):
     
     Args:
         movie_name: 电影名称
-        strategy: 爬取策略，例如 sequential, random 等
+        strategy: 爬取策略，例如 sequential, random_pages, random_interval, random_block, random 等
         max_pages: 最大爬取页数
         **kwargs: 其他爬虫参数
     """
@@ -217,6 +217,26 @@ def crawl_douban_task(movie_name, strategy="sequential", max_pages=2, **kwargs):
         'strategy': strategy,
         'max_pages': max_pages
     }
-    params.update(kwargs)
+    
+    # 根据不同策略添加所需参数
+    if strategy == 'random_pages':
+        # 随机页码策略需要sample_size参数
+        params['sample_size'] = kwargs.get('sample_size', 5)
+    elif strategy == 'random_interval':
+        # 随机间隔策略需要max_interval参数
+        params['max_interval'] = kwargs.get('max_interval', 3)
+    elif strategy == 'random_block':
+        # 随机区块策略需要block_size参数
+        params['block_size'] = kwargs.get('block_size', 3)
+    elif strategy == 'random':
+        # 随机策略可能需要所有参数，取决于随机选择的策略
+        params['sample_size'] = kwargs.get('sample_size', 5)
+        params['max_interval'] = kwargs.get('max_interval', 3)
+        params['block_size'] = kwargs.get('block_size', 3)
+    
+    # 添加其他参数
+    for key, value in kwargs.items():
+        if key not in params:
+            params[key] = value
     
     return run_spider_task.delay('douban_spider', movie_name=movie_name, **params) 
