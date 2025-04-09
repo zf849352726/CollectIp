@@ -18,7 +18,7 @@ redis_client = redis.Redis(
 )
 
 # 设置日志
-logger = logging.getLogger('celery_crawler')
+logger = logging.getLogger('task_logger')
 
 def get_crawler_dir():
     """获取爬虫目录路径"""
@@ -129,13 +129,13 @@ def run_spider_task(self, spider_name, movie_name=None, crawl_type=None, **kwarg
             '-m', 'scrapy', 'crawl', spider_name
         ]
         
-        # 添加命令行参数（如果有）
+        # 添加命令行参数，使用-a传递Spider参数
         if movie_name:
-            cmd.extend(['--movie', movie_name])
+            cmd.extend(['-a', f'movie="{movie_name}"'])
         if 'strategy' in kwargs:
-            cmd.extend(['--strategy', kwargs['strategy']])
+            cmd.extend(['-a', f'strategy={kwargs["strategy"]}'])
         if 'max_pages' in kwargs:
-            cmd.extend(['--max_pages', str(kwargs['max_pages'])])
+            cmd.extend(['-a', f'max_pages={kwargs["max_pages"]}'])
         
         logger.info(f"开始运行爬虫: {' '.join(cmd)}")
         
