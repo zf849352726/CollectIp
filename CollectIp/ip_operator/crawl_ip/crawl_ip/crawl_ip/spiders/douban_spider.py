@@ -348,11 +348,19 @@ class DoubanSpider(scrapy.Spider):
                 options.add_argument('--window-size=1920,1080')
                 options.add_argument('--no-sandbox')
                 options.add_argument('--disable-dev-shm-usage')
+
+                import tempfile
+
+                # 生成临时目录，避免冲突
+                user_data_dir = tempfile.mkdtemp()
+                 
+                # 加这个唯一 user-data-dir 避免冲突
+                options.add_argument(f'--user-data-dir={user_data_dir}')
                 
                 # 添加排除自动化控制的实验选项
                 options.add_experimental_option('excludeSwitches', ['enable-automation'])
                 options.add_experimental_option('useAutomationExtension', False)
-                options.add_experimental_option('detach', True)
+                # options.add_experimental_option('detach', True)
                 
                 logger.warning("Chrome浏览器配置已设置，准备启动")
                 
