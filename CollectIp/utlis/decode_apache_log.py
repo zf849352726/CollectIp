@@ -11,32 +11,28 @@ import re
 import codecs
 import argparse
 
+def decode_utf8_hex_sequences(line: str) -> str:
+    def decode_match(match):
+        hex_str = match.group(0)  # 例如：\xe4\xbd\xa0\xe5\xa5\xbd
+        try:
+            # 将字符串中的 \x 转为字节串
+            raw_bytes = bytes(hex_str, "utf-8").decode("unicode_escape").encode("latin1")
+            return raw_bytes.decode("utf-8")
+        except Exception:
+            return hex_str  # 解码失败就返回原样
 
-def decode_utf8_bytestring(s):
-    try:
-        # 找到所有的转义字节字符串
-        matches = re.findall(r'(\\x[0-9a-fA-F]{2})+', s)
-        for m in matches:
-            # 转换字节串为可读字符串
-            byte_seq = bytes(m, "utf-8").decode("unicode_escape").encode("latin1")
-            decoded = codecs.decode(byte_seq, "utf-8")
-            s = s.replace(m, decoded)
-        return s
-    except Exception:
-        return s  # 如果失败就返回原始内容
-
+    # 匹配连续的 UTF-8 字节转义序列
+    return re.sub(r'(\\x[0-9a-fA-F]{2}){3,}', decode_match, line)
 
 def decode_log_file(log_path):
     with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
         for line in f:
-            decoded_line = decode_utf8_bytestring(line)
-            print(decoded_line, end='')
-
+            decoded = decode_utf8_hex_sequences(line)
+            print(decoded, end='')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Decode Apache UTF-8 escaped log lines.")
+    parser = argparse.ArgumentParser(description="Decode Apache error log lines with UTF-8 escape sequences.")
     parser.add_argument("log_path", nargs="?", default="/var/log/apache2/error.log",
                         help="Path to the Apache error log file (default: /var/log/apache2/error.log)")
-
     args = parser.parse_args()
     decode_log_file(args.log_path)
