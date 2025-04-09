@@ -350,23 +350,76 @@ class DoubanSpider(scrapy.Spider):
                 options.add_argument('--window-size=1920,1080')
                 options.add_argument('--no-sandbox')
                 options.add_argument('--disable-dev-shm-usage')
-
-                # 生成唯一的临时目录名称，避免不同爬虫实例之间的冲突
-                random_uuid = str(uuid.uuid4())
-                user_data_dir = os.path.join(tempfile.gettempdir(), f'chrome_user_data_{random_uuid}')
                 
-                # 确保目录存在
+                # 清理目前可能存在的旧浏览器进程
+                try:
+                    import psutil
+                    for proc in psutil.process_iter(['pid', 'name']):
+                        if 'chrome' in proc.info['name'].lower():
+                            try:
+                                p = psutil.Process(proc.info['pid'])
+                                cmdline = ' '.join(p.cmdline())
+                                # 如果是之前启动的Chrome实例，尝试终止它
+                                if 'user-data-dir' in cmdline and 'chrome_user_data_' in cmdline:
+                                    logger.warning(f"发现可能的遗留Chrome进程 (PID: {proc.info['pid']})，尝试终止")
+                                    p.terminate()
+                            except:
+                                pass
+                except Exception as e:
+                    logger.warning(f"尝试清理旧Chrome进程时出错: {e}")
+
+                # 生成随机UUID确保唯一性
+                import uuid
+                import tempfile
+                import os
+                import time
+                
+                # 添加时间戳和进程ID使目录名更具唯一性
+                timestamp = int(time.time())
+                pid = os.getpid()
+                random_uuid = str(uuid.uuid4())
+                
+                # 使用临时目录作为基础，避免权限问题
+                user_data_dir = os.path.join(
+                    tempfile.gettempdir(), 
+                    f'chrome_data_{timestamp}_{pid}_{random_uuid}'
+                )
+                
+                # 确保目录不存在（如果存在则删除后重建）
+                import shutil
+                if os.path.exists(user_data_dir):
+                    try:
+                        shutil.rmtree(user_data_dir)
+                    except Exception as e:
+                        logger.warning(f"清理已存在的用户数据目录失败: {e}")
+                        # 生成另一个唯一目录名
+                        random_uuid = str(uuid.uuid4())
+                        user_data_dir = os.path.join(
+                            tempfile.gettempdir(), 
+                            f'chrome_data_{timestamp}_{pid}_{random_uuid}_alt'
+                        )
+                
+                # 创建目录
                 os.makedirs(user_data_dir, exist_ok=True)
                 
-                logger.warning(f"使用唯一的Chrome用户数据目录: {user_data_dir}")
+                logger.warning(f"使用全新的Chrome用户数据目录: {user_data_dir}")
                 
                 # 添加用户数据目录参数
                 options.add_argument(f'--user-data-dir={user_data_dir}')
+                
+                # 强制使用新会话，避免复用
+                options.add_argument('--no-first-run')
+                options.add_argument('--no-service-autorun') 
+                options.add_argument('--password-store=basic')
+                options.add_argument('--disable-infobars')
                 
                 # 添加排除自动化控制的实验选项
                 options.add_experimental_option('excludeSwitches', ['enable-automation'])
                 options.add_experimental_option('useAutomationExtension', False)
                 # options.add_experimental_option('detach', True)
+                
+                # 禁用共享内存使用
+                options.add_argument('--disable-dev-shm-usage')
                 
                 logger.warning("Chrome浏览器配置已设置，准备启动")
                 
@@ -1139,17 +1192,71 @@ class DoubanSpider(scrapy.Spider):
             try:
                 logger.warning("关闭浏览器实例")
                 self.driver.quit()
+                
+                # 给Chrome一些时间完全退出
+                import time
+                time.sleep(2)
             except Exception as e:
                 logger.error(f"关闭浏览器时出错: {e}")
             finally:
                 self.driver = None
+        
+        # 强制终止可能残留的Chrome进程
+        try:
+            import psutil
+            import os
+            
+            # 查找与当前Python进程相关的Chrome进程
+            current_pid = os.getpid()
+            parent_process = psutil.Process(current_pid)
+            
+            for proc in psutil.process_iter(['pid', 'name', 'ppid']):
+                try:
+                    # 检查是否是Chrome进程
+                    if 'chrome' in proc.info['name'].lower():
+                        # 检查是否是当前进程的子进程
+                        if proc.info.get('ppid') == current_pid:
+                            logger.warning(f"发现子Chrome进程 (PID: {proc.info['pid']})，尝试终止")
+                            p = psutil.Process(proc.info['pid'])
+                            p.terminate()
+                            continue
+                            
+                        # 检查命令行是否包含当前用户数据目录
+                        if hasattr(self, '_user_data_dir') and self._user_data_dir:
+                            p = psutil.Process(proc.info['pid'])
+                            cmdline = ' '.join(p.cmdline())
+                            if self._user_data_dir in cmdline:
+                                logger.warning(f"发现使用当前用户数据目录的Chrome进程 (PID: {proc.info['pid']})，尝试终止")
+                                p.terminate()
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    continue
+        except Exception as e:
+            logger.error(f"终止残留Chrome进程时出错: {e}")
                 
         # 清理Chrome用户数据目录
         if hasattr(self, '_user_data_dir') and self._user_data_dir:
             try:
                 import shutil
                 logger.warning(f"清理Chrome用户数据目录: {self._user_data_dir}")
-                shutil.rmtree(self._user_data_dir, ignore_errors=True)
+                
+                # 如果目录仍在使用，先等待一段时间
+                import time
+                time.sleep(1)
+                
+                # 再次尝试删除，如果之前的关闭Chrome操作成功
+                for i in range(3):  # 尝试3次
+                    try:
+                        if os.path.exists(self._user_data_dir):
+                            shutil.rmtree(self._user_data_dir, ignore_errors=True)
+                            if not os.path.exists(self._user_data_dir):
+                                logger.warning("成功删除用户数据目录")
+                                break
+                        else:
+                            logger.warning("用户数据目录已不存在")
+                            break
+                    except Exception as e:
+                        logger.error(f"第{i+1}次尝试清理用户数据目录时出错: {e}")
+                        time.sleep(1)  # 等待1秒后重试
             except Exception as e:
                 logger.error(f"清理用户数据目录时出错: {e}")
                 
