@@ -2,13 +2,13 @@ import os
 from celery import Celery
 
 # 设置Django设置模块
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings_optimized')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CollectIp.settings')
 
 # 创建Celery实例
 app = Celery('CollectIp')
 
 # 使用Django的settings.py中的配置
-app.config_from_object('django.conf:settings_optimized', namespace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # 加载Beat定时任务配置
 try:
