@@ -29,6 +29,8 @@ from django.http import HttpResponse
 from django.middleware.csrf import get_token
 import re
 import time
+import subprocess
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -563,10 +565,11 @@ def douban_settings(request):
 def crawl_movie_view(request):
     """接收电影名称并启动豆瓣爬虫"""
     import json
-    from ip_operator.services.crawler import start_douban_crawl_with_params, encode_movie_name
     import os
-    import threading
+    import subprocess
     from datetime import datetime, timedelta
+    from django.conf import settings
+    import traceback
     
     # 创建锁文件目录
     lock_dir = os.path.join(settings.BASE_DIR, 'locks')
@@ -592,9 +595,6 @@ def crawl_movie_view(request):
         has_chinese = any('\u4e00' <= ch <= '\u9fff' for ch in movie_name)
         if has_chinese:
             logger.info(f"电影名包含中文字符: {movie_name}")
-            # 编码电影名用于调试
-            encoded_name = encode_movie_name(movie_name)
-            logger.debug(f"编码后的电影名: {encoded_name}")
             
         # 检查锁文件以防止频繁启动
         if os.path.exists(lock_file):
@@ -659,34 +659,68 @@ def crawl_movie_view(request):
             elif comment_strategy == 'random_block':
                 block_size = 3
         
-        # 启动爬虫
+        # 使用subprocess启动爬虫进程
         try:
-            result = start_douban_crawl_with_params(
-                movie_name=movie_name, 
-                strategy=comment_strategy,
-                max_pages=max_pages,
-                sample_size=sample_size,
-                max_interval=max_interval,
-                block_size=block_size,
-                use_random_strategy=use_random_strategy
+            # 构建命令行参数
+            python_path = sys.executable  # 当前Python解释器路径
+            script_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'services', 'crawler.py')
+            
+            cmd = [python_path, script_path, '--movie_name', movie_name, '--strategy', comment_strategy]
+            
+            # 添加策略参数
+            if max_pages is not None:
+                cmd.extend(['--max_pages', str(max_pages)])
+            if sample_size is not None:
+                cmd.extend(['--sample_size', str(sample_size)])
+            if max_interval is not None:
+                cmd.extend(['--max_interval', str(max_interval)])
+            if block_size is not None:
+                cmd.extend(['--block_size', str(block_size)])
+            if use_random_strategy is not None:
+                cmd.append('--use_random_strategy')
+                
+            # 设置环境变量
+            env = os.environ.copy()
+            env['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'
+            
+            # 启动进程，不等待完成
+            logger.info(f"启动爬虫进程: {' '.join(cmd)}")
+            process = subprocess.Popen(
+                cmd,
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                start_new_session=True  # 创建新的进程组，避免被父进程信号影响
             )
             
-            if not result:
-                logger.error(f"爬虫启动失败: {movie_name}")
-                messages.error(request, f"爬虫启动失败: {movie_name}")
-                return redirect('index')
+            # 不等待进程完成，立即返回
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            logger.info(f"豆瓣电影爬虫进程已启动 - 时间: {timestamp}, 电影: {movie_name}, 策略: {comment_strategy}, PID: {process.pid}")
             
-            messages.success(request, f"成功启动爬虫: {movie_name}")
-            return redirect('index')
+            return JsonResponse({
+                'success': True,
+                'message': f'已开始采集电影: {movie_name}, 使用策略: {comment_strategy}',
+                'timestamp': timestamp,
+                'details': f'采集操作启动于 {timestamp}，电影: {movie_name}，策略: {comment_strategy}。系统将自动爬取电影评论，完成后可在电影详情页查看。'
+            })
             
         except Exception as e:
-            logger.error(f"启动爬虫时发生异常: {str(e)}")
+            logger.error(f"启动爬虫进程时发生异常: {str(e)}")
             logger.error(traceback.format_exc())
-            messages.error(request, f"启动爬虫时发生错误: {str(e)}")
-            return redirect('index')
+            
+            # 删除锁文件
+            if os.path.exists(lock_file):
+                os.remove(lock_file)
+                
+            return JsonResponse({
+                'success': False,
+                'error': f'启动爬虫进程失败: {str(e)}',
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'details': f'启动爬虫进程时发生错误: {str(e)}。请检查系统日志获取更多信息。'
+            })
     except Exception as e:
         logger.error(f"启动电影采集失败: {str(e)}")
-        import traceback
         logger.error(traceback.format_exc())
         
         # 发生异常时也删除锁文件
@@ -709,15 +743,31 @@ def crawl_once_view(request):
         start_time = timezone.now()
         timestamp = start_time.strftime('%Y-%m-%d %H:%M:%S')
         
-        # 在新线程中启动爬虫
-        thread = threading.Thread(target=start_crawl)
-        thread.start()
+        # 使用subprocess启动爬虫进程
+        python_path = sys.executable  # 当前Python解释器路径
+        script_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'services', 'crawler.py')
+        
+        # 设置环境变量
+        env = os.environ.copy()
+        env['DJANGO_SETTINGS_MODULE'] = 'CollectIp.settings'
+        env['CRAWL_TYPE'] = 'ip'  # 设置爬虫类型为IP爬虫
+        
+        # 启动进程，不等待完成
+        logger.info(f"启动IP爬虫进程: {python_path} {script_path} --crawl_type ip")
+        process = subprocess.Popen(
+            [python_path, script_path, '--crawl_type', 'ip'],
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            start_new_session=True  # 创建新的进程组，避免被父进程信号影响
+        )
         
         # 获取当前IP总数，用于后续对比
         current_ip_count = IpData.objects.count()
         
         # 记录执行信息到日志
-        logger.info(f"IP采集任务已启动 - 时间: {timestamp}, 当前IP数: {current_ip_count}")
+        logger.info(f"IP采集任务已启动 - 时间: {timestamp}, 当前IP数: {current_ip_count}, PID: {process.pid}")
         
         return JsonResponse({
             'success': True,
@@ -727,6 +777,7 @@ def crawl_once_view(request):
         })
     except Exception as e:
         logger.error(f"启动爬虫失败: {str(e)}")
+        logger.error(traceback.format_exc())
         return JsonResponse({
             'success': False,
             'error': str(e),
