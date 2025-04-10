@@ -249,23 +249,16 @@ class DoubanSpider(scrapy.Spider):
         logger.warning(f"使用评论采集策略: {self.comment_strategy.get_name()}, 参数: {strategy_params}")
         
         # 设置ChromeDriver路径
-        try:
-            self.driver_path = ChromeDriverManager().install()
-            # 只在DEBUG模式记录详细信息
-            if logger.level <= logging.DEBUG:
-                logger.debug(f"ChromeDriver安装路径: {self.driver_path}")
-        except Exception as e:
-            logger.error(f"ChromeDriver安装失败: {e}")
-            # 使用相对路径指向chrome-linux64目录
-            import os
-            from django.conf import settings
-            chrome_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'chrome-linux64', 'chrome')
-            self.driver_path = chrome_path if os.path.exists(chrome_path) else None
-            if self.driver_path:
-                logger.info(f"使用本地Chrome路径: {self.driver_path}")
-            else:
-                logger.warning("本地Chrome路径不存在，将使用默认设置")
-                self.driver_path = None
+        # 使用相对路径指向chrome-linux64目录
+        import os
+        from django.conf import settings
+        chrome_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'chrome-linux64', 'chrome')
+        self.driver_path = chrome_path if os.path.exists(chrome_path) else None
+        if self.driver_path:
+            logger.info(f"使用本地Chrome路径: {self.driver_path}")
+        else:
+            logger.warning("本地Chrome路径不存在，将使用默认设置")
+            self.driver_path = None
             
         # 初始化driver为None
         self.driver = None
