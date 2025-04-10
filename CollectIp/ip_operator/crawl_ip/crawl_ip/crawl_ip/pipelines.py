@@ -594,9 +594,26 @@ class CommentPipeline:
         else:
             comment_strategy = 'sequential'  # 默认策略
         
-        for comment_text in comments:
-            if not comment_text.strip():
-                continue
+        for comment_item in comments:
+            # 检查评论是否为字典对象（新格式）或字符串（旧格式）
+            if isinstance(comment_item, dict):
+                # 新格式的评论，已经是字典格式
+                if not comment_item.get('content', '').strip():
+                    continue
+                
+                comment_text = comment_item.get('content', '')
+                user_nickname = comment_item.get('user', '匿名用户')
+                user_rating = comment_item.get('rating', '0')
+                comment_time = comment_item.get('time', None)
+            else:
+                # 旧格式的评论，纯文本字符串
+                if not isinstance(comment_item, str) or not comment_item.strip():
+                    continue
+                
+                comment_text = comment_item
+                user_nickname = None
+                user_rating = None
+                comment_time = None
                 
             # 文本清洗
             cleaned_text = TextProcessor.clean_text(comment_text)
@@ -610,9 +627,9 @@ class CommentPipeline:
                 'content': cleaned_text,
                 'sentiment': sentiment,
                 'sentiment_score': sentiment_score,
-                'user_nickname': None,
-                'user_rating': None,
-                'comment_time': None,
+                'user_nickname': user_nickname,
+                'user_rating': user_rating,
+                'comment_time': comment_time,
                 'keywords': TextProcessor.extract_keywords(cleaned_text, top_n=5),
                 'comment_strategy': comment_strategy  # 添加策略信息
             }
