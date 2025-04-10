@@ -171,7 +171,7 @@ class DoubanSpider(scrapy.Spider):
         
         # 从环境变量中获取电影名
         movie_name = None  # 初始化为None，之后尝试各种方式获取
-        
+        import os
         # 先尝试从编码的环境变量获取（最可靠的方式）
         encoded_movie_name = os.environ.get('MOVIE_NAME_ENCODED')
         if encoded_movie_name:
