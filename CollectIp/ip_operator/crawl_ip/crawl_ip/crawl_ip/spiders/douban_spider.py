@@ -250,10 +250,10 @@ class DoubanSpider(scrapy.Spider):
         
         # 设置ChromeDriver路径
         # 使用相对路径指向chrome-linux64目录
-        import os
-        from django.conf import settings
-        chrome_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'chrome-linux64')
-        self.driver_path = chrome_path if os.path.exists(chrome_path) else None
+        # import os
+        # from django.conf import settings
+        # chrome_path = os.path.join(settings.BASE_DIR, 'ip_operator', 'chrome-linux64')
+        self.driver_path = r'/usr/local/CollectIp/CollectIp/ip_operator/chromedriver-linux64/'
         logger.info(f"路径为：{self.driver_path}")
         if self.driver_path:
             logger.info(f"使用本地Chrome路径: {self.driver_path}")
