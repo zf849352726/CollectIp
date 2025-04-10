@@ -1007,7 +1007,16 @@ class DoubanSpider(scrapy.Spider):
                 
             # 先返回电影基本信息
             self.stats['movies_found'] += 1
-            yield movie_item
+            # yield movie_item  # 这里是直接yield一个Item，可能导致问题
+            
+            # 正确的方式：如果需要yield item，请使用Request对象包装
+            # 使用dont_filter=True确保请求不会被过滤
+            yield scrapy.Request(
+                url=driver.current_url,
+                callback=self.parse_item,
+                meta={'item': movie_item},
+                dont_filter=True
+            )
             
             # 构建评论页URL
             comments_url = url + 'comments'
@@ -1092,67 +1101,29 @@ class DoubanSpider(scrapy.Spider):
             self.stats['details_scraped'] += 1
             
             # 返回包含评论的电影信息
-            yield comment_item
+            # yield comment_item  # 这里是直接yield一个Item，可能导致问题
+            
+            # 正确的方式：如果需要yield item，请使用Request对象包装
+            yield scrapy.Request(
+                url=driver.current_url,
+                callback=self.parse_item,
+                meta={'item': comment_item},
+                dont_filter=True
+            )
             
         except Exception as e:
             logger.error(f"获取评论出错: {str(e)}")
             import traceback as tb
             tb.print_exc()
             
-    def parse_comments(self, response):
-        """解析电影评论页面"""
-        movie_id = response.meta.get('movie_id')
-        comments = []
-        
-        try:
-            # 获取电影信息
-            movie_item = response.meta.get('movie_item').copy()
-            
-            # 如果是HTML响应，使用CSS选择器
-            if isinstance(response, scrapy.http.HtmlResponse):
-                # 获取评论内容 - 尝试多种可能的选择器
-                comments = []
-                try:
-                    # 尝试原始选择器
-                    comments = response.css('.comment-item .comment-content::text').getall()
+    def parse_item(self, response):
+        """处理由crawl_comments方法传递过来的item"""
+        # 从response.meta中获取item
+        item = response.meta.get('item')
+        if item:
+            return item  # 直接返回item给管道处理
+        return None
 
-                    # 如果原始选择器没有结果，尝试其他选择器
-                    if not comments:
-                        logger.warning("原始评论选择器无结果，尝试替代选择器")
-                        
-                        # 尝试多种可能的选择器
-                        alternative_selectors = [
-                            '.comment-item .short::text',
-                            '.comment-item .comment-text::text',
-                            '.comment-item p::text',
-                            '.comment-item .abstract::text'
-                        ]
-                        
-                        for selector in alternative_selectors:
-                            comments = response.css(selector).getall()
-                            if comments:
-                                logger.info(f"成功使用替代选择器: {selector}")
-                                break
-                except Exception as e:
-                    logger.error(f"获取评论内容时出错: {str(e)}")
-
-                # 添加到电影评论列表
-                if 'comments' not in movie_item:
-                    movie_item['comments'] = []
-
-                movie_item['comments'].extend(comments)
-                logger.warning(f"获取到{len(comments)}条评论")
-            else:
-                logger.warning("响应不是HTML，无法获取评论")
-
-            # 返回带有评论的电影信息
-            yield movie_item
-            
-        except Exception as e:
-            logger.error(f"解析评论出错: {str(e)}")
-            import traceback
-            logger.error(traceback.format_exc())
-           
     def random_sleep(self, min_seconds=1, max_seconds=3):
         """随机延时，防止反爬"""
         time.sleep(random.uniform(min_seconds, max_seconds))
