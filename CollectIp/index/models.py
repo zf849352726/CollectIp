@@ -4,21 +4,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-
-# class IpData(models.Model):
-#     server = models.CharField(max_length=21, unique=True, verbose_name='服务器', default='Unknown Server')
-#     ping = models.DecimalField(max_digits=6, decimal_places=4, verbose_name='延迟ms', blank=True, null=True)
-#     speed = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='速度', blank=True, null=True)
-#     uptime1 = models.CharField(max_length=5, verbose_name='上传时间1', default='N/A')
-#     uptime2 = models.CharField(max_length=5, verbose_name='上传时间2', default='N/A')
-#     type_data = models.CharField(max_length=20, verbose_name='类型', default='Unknown')
-#     country = models.CharField(max_length=20, verbose_name='国家', default='Unknown')
-#     ssl = models.CharField(max_length=50, verbose_name='SSL', default='N/A')
-#     conn = models.CharField(max_length=50, verbose_name='CONN.', default='N/A')
-#     post = models.CharField(max_length=50, verbose_name='POST', default='N/A')
-#     last_work_time = models.CharField(max_length=30, verbose_name='最近工作时间', default='N/A')
-#     score = models.IntegerField(verbose_name='分数', default=100)
-
 class IpData(models.Model):
     server = models.CharField(max_length=21, unique=True, verbose_name='服务器', default='Unknown Server')
     ping = models.DecimalField(max_digits=6, decimal_places=4, verbose_name='延迟ms', blank=True, null=True)

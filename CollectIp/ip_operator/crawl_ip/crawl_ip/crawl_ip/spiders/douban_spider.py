@@ -210,6 +210,11 @@ class DoubanSpider(scrapy.Spider):
         # 记录电影名
         logger.warning(f"豆瓣爬虫爬取电影: {self.movie_names}")
         
+        # 初始化统计属性
+        self.stats = {'movies_found': 0, 'details_scraped': 0, 'comments_scraped': 0}
+        self.comment_count = 0
+        self.collected_comments = {}
+        
         # 从环境变量中获取爬取配置
         crawl_config = {}
         try:
@@ -712,7 +717,13 @@ class DoubanSpider(scrapy.Spider):
                         logger.warning(f'找到电影详情页: {detail_link}')
                         
                         # 解析详情页
-                        yield from self.parse_detail_with_selenium(detail_link)
+                        for item in self.parse_detail_with_selenium(detail_link):
+                            # 确保我们返回的是Request对象
+                            if isinstance(item, scrapy.Request):
+                                yield item
+                            else:
+                                # 对于Item对象，需要包装成Request
+                                yield item
                         return
             except Exception as e:
                 logger.error(f"查找电影链接出错: {e}")
@@ -738,7 +749,13 @@ class DoubanSpider(scrapy.Spider):
                         
                 if first_movie_link:
                     logger.warning(f'找到电影链接: {first_movie_link}')
-                    yield from self.parse_detail_with_selenium(first_movie_link)
+                    for item in self.parse_detail_with_selenium(first_movie_link):
+                        # 确保我们返回的是Request对象
+                        if isinstance(item, scrapy.Request):
+                            yield item
+                        else:
+                            # 对于Item对象，需要包装成Request
+                            yield item
                     
             except Exception as e:
                 logger.error(f"直接搜索出错: {e}")
@@ -975,11 +992,12 @@ class DoubanSpider(scrapy.Spider):
         try:
             # # 确保已登录
             # if not self.ensure_login():
-            #     logger.error("登录失败，无法继续爬取评论")
+            #     logger.error("登录失败，无法继续爬取")
             #     yield movie_item  # 返回无评论的电影数据
             #     return
                 
             # 先返回电影基本信息
+            self.stats['movies_found'] += 1
             yield movie_item
             
             # 构建评论页URL
@@ -1043,6 +1061,14 @@ class DoubanSpider(scrapy.Spider):
             valid_comments = [comment for comment in movie_item['comments'] if comment]
             logger.warning(f"共获取到{len(valid_comments)}条有效评论，总评论数：{len(movie_item['comments'])}")
             
+            # 更新统计
+            self.stats['comments_scraped'] += len(valid_comments)
+            self.comment_count += len(valid_comments)
+            
+            # 存储评论，以便在closed方法中访问
+            movie_id = movie_item.get('id', 'unknown')
+            self.collected_comments[movie_id] = valid_comments
+            
             # 创建一个新的item，包含评论数据
             comment_item = movie_item.copy()
             
@@ -1052,6 +1078,9 @@ class DoubanSpider(scrapy.Spider):
             
             # 添加评论详细信息列表 (为了提供给新的评论管道)
             comment_item['comment_details'] = movie_item['comments']
+            
+            # 更新详情统计
+            self.stats['details_scraped'] += 1
             
             # 返回包含评论的电影信息
             yield comment_item
