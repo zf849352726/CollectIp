@@ -637,7 +637,9 @@ class DoubanSpider(scrapy.Spider):
         logger.warning(f"开始搜索电影: {self.movie_names[0]}")
         
         # 使用Selenium直接访问和处理
-        yield from self.parse_with_selenium(search_url, self.movie_names)
+        # 修改：不使用yield from，而是直接遍历
+        for item in self.parse_with_selenium(search_url, self.movie_names):
+            yield item
             
     def generate_search_urls(self, movie_names=None):
         """生成电影搜索URL列表"""
@@ -668,10 +670,14 @@ class DoubanSpider(scrapy.Spider):
         if use_selenium:
             # 删除不必要的日志
             url = response.url
-            yield from self.parse_with_selenium(url, movie_names)
+            # 修改：不使用yield from，而是正确遍历并yield
+            for item in self.parse_with_selenium(url, movie_names):
+                yield item
         else:
             # 常规解析
-            yield from self.parse_search_results(response)
+            # 修改：不使用yield from，而是正确遍历并yield
+            for item in self.parse_search_results(response):
+                yield item
         
     def parse_with_selenium(self, url, movie_names):
         """使用Selenium解析搜索结果页"""
@@ -767,13 +773,16 @@ class DoubanSpider(scrapy.Spider):
         """解析搜索结果页面"""
         try:
             # 直接使用Selenium获取详情页
-            return self.parse_with_selenium(response.url, response.meta.get('movie_names'))
+            # 修改：不使用return yield from，而是正确使用生成器
+            for item in self.parse_with_selenium(response.url, response.meta.get('movie_names')):
+                yield item
                 
         except Exception as e:
             logger.error(f'解析搜索结果失败: {str(e)}')
             import traceback
             logger.error(traceback.format_exc())
-            return None
+            # 修改：不应该return None
+            return
     
     def parse_detail(self, response):
         """解析电影详情页，直接使用Selenium"""
