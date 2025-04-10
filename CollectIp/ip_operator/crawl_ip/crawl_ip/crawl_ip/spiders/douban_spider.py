@@ -276,16 +276,8 @@ class DoubanSpider(scrapy.Spider):
         self.is_logged_in = False
         self.cookies_file = os.path.join(PROJECT_DIR, 'logs', 'douban_cookies.pkl')
         
-        # 初始化Chrome配置
-        self.options = Options()
-        self.options.add_argument('--disable-gpu')
-        self.options.add_argument(f'user-agent={self.headers["User-Agent"]}')
-        self.options.add_argument('--disable-blink-features=AutomationControlled')
-        self.options.add_argument('--headless')  # 使用无头模式，登录时可能需要注释掉以便查看验证码
-        # 确保浏览器窗口可见
-        self.options.add_argument('--start-maximized')
-        # 确保不分离浏览器进程
-        self.options.add_experimental_option('detach', True)
+        # 移除重复定义的Chrome配置，因为get_driver中已有更完整的配置
+        # Chrome配置将在get_driver中一次性设置
         
         # 初始化MySQL连接
         self.db_conn = None
