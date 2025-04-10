@@ -1,23 +1,97 @@
 import logging
 from django.conf import settings
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.cron import CronTrigger
-from django_apscheduler.jobstores import DjangoJobStore
-from django_apscheduler.models import DjangoJobExecution
 import sys
 import os
-from datetime import datetime
+import time
+import threading
+from datetime import datetime, timedelta
 
 from .tasks import crawl_ip_task, score_ip_task, crawl_douban_task
 
 logger = logging.getLogger('scheduler')
+
+class SimpleJob:
+    """简单的任务类"""
+    
+    def __init__(self, func, interval, job_id, args=None, kwargs=None):
+        self.func = func
+        self.interval = interval  # 间隔秒数
+        self.job_id = job_id
+        self.args = args or []
+        self.kwargs = kwargs or {}
+        self.last_run = None
+        self.next_run = datetime.now()
+    
+    def should_run(self):
+        """检查是否应该运行"""
+        return datetime.now() >= self.next_run
+    
+    def run(self):
+        """运行任务"""
+        self.last_run = datetime.now()
+        self.next_run = self.last_run + timedelta(seconds=self.interval)
+        try:
+            return self.func(*self.args, **self.kwargs)
+        except Exception as e:
+            logger.error(f"任务 {self.job_id} 执行出错: {e}")
+            return None
+
+class SimpleScheduler(threading.Thread):
+    """简单的调度器实现"""
+    
+    def __init__(self):
+        super().__init__(daemon=True)
+        self.jobs = {}
+        self.running = False
+        self.lock = threading.Lock()
+        self.logger = logger
+    
+    def add_job(self, func, interval, job_id, args=None, kwargs=None, replace_existing=True):
+        """添加任务"""
+        with self.lock:
+            if job_id in self.jobs and not replace_existing:
+                return None
+                
+            job = SimpleJob(func, interval, job_id, args, kwargs)
+            self.jobs[job_id] = job
+            self.logger.info(f"添加任务: {job_id}, 间隔: {interval}秒")
+            return job
+    
+    def remove_job(self, job_id):
+        """移除任务"""
+        with self.lock:
+            if job_id in self.jobs:
+                self.logger.info(f"移除任务: {job_id}")
+                del self.jobs[job_id]
+                return True
+            return False
+    
+    def run(self):
+        """运行调度器主循环"""
+        self.running = True
+        self.logger.info("调度器启动")
+        
+        while self.running:
+            with self.lock:
+                now = datetime.now()
+                for job_id, job in list(self.jobs.items()):
+                    if job.should_run():
+                        self.logger.info(f"执行任务: {job_id}")
+                        job.run()
+            
+            # 睡眠1秒
+            time.sleep(1)
+    
+    def shutdown(self):
+        """关闭调度器"""
+        self.running = False
+        self.logger.info("调度器关闭")
 
 class IPScheduler:
     """IP爬虫调度器"""
     
     _instance = None
     _initialized = False
-    _scheduler = None
     
     @classmethod
     def get_instance(cls):
@@ -41,9 +115,8 @@ class IPScheduler:
         self.auto_crawler = self.settings.get('AUTO_CRAWLER', True)        # 默认启用自动爬虫
         self.auto_score = self.settings.get('AUTO_SCORE', True)            # 默认启用自动评分
         
-        # 初始化ApScheduler
-        self._scheduler = BackgroundScheduler()
-        self._scheduler.add_jobstore(DjangoJobStore(), "default")
+        # 初始化简单调度器
+        self._scheduler = SimpleScheduler()
         
         # 初始化任务状态
         self.crawl_job_id = None
@@ -94,32 +167,18 @@ class IPScheduler:
             # 先移除可能存在的旧任务
             if self.crawl_job_id:
                 self._scheduler.remove_job(self.crawl_job_id)
-                
-            # 转换为cron表达式
-            seconds = self.crawl_interval
-            minutes = seconds // 60
-            hours = minutes // 60
-            
-            if hours > 0:
-                cron_expr = f"0 0 */{hours} * * *"  # 每x小时执行
-            elif minutes > 0:
-                cron_expr = f"0 */{minutes} * * * *"  # 每x分钟执行
-            else:
-                cron_expr = f"*/{seconds} * * * * *"  # 每x秒执行
-                
-            self.logger.info(f"设置IP爬取任务，Cron表达式: {cron_expr}")
             
             # 添加定时任务
             job = self._scheduler.add_job(
                 self.start_crawl,
-                trigger=CronTrigger.from_crontab(cron_expr),
-                id="ip_crawl",
-                max_instances=1,
+                interval=self.crawl_interval,
+                job_id="ip_crawl",
+                args=["all"],
                 replace_existing=True,
             )
             
-            self.crawl_job_id = job.id
-            self.logger.info(f"添加IP爬取任务成功: {job.id}")
+            self.crawl_job_id = "ip_crawl"
+            self.logger.info(f"添加IP爬取任务成功: {self.crawl_job_id}, 间隔: {self.crawl_interval}秒")
             
             # 立即执行一次
             self.start_crawl()
@@ -133,31 +192,16 @@ class IPScheduler:
             if self.score_job_id:
                 self._scheduler.remove_job(self.score_job_id)
                 
-            # 转换为cron表达式
-            seconds = self.score_interval
-            minutes = seconds // 60
-            hours = minutes // 60
-            
-            if hours > 0:
-                cron_expr = f"0 0 */{hours} * * *"  # 每x小时执行
-            elif minutes > 0:
-                cron_expr = f"0 */{minutes} * * * *"  # 每x分钟执行
-            else:
-                cron_expr = f"*/{seconds} * * * * *"  # 每x秒执行
-                
-            self.logger.info(f"设置IP评分任务，Cron表达式: {cron_expr}")
-            
             # 添加定时任务
             job = self._scheduler.add_job(
                 self.start_score,
-                trigger=CronTrigger.from_crontab(cron_expr),
-                id="ip_score",
-                max_instances=1,
+                interval=self.score_interval,
+                job_id="ip_score",
                 replace_existing=True,
             )
             
-            self.score_job_id = job.id
-            self.logger.info(f"添加IP评分任务成功: {job.id}")
+            self.score_job_id = "ip_score"
+            self.logger.info(f"添加IP评分任务成功: {self.score_job_id}, 间隔: {self.score_interval}秒")
             
             # 立即执行一次
             self.start_score()
