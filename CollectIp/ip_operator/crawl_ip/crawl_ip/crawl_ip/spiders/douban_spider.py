@@ -335,27 +335,42 @@ class DoubanSpider(scrapy.Spider):
                 
                 # 设置 Chrome 选项
                 options = webdriver.ChromeOptions()
-                options.add_argument('--disable-gpu')
+                
+                # 解决DevToolsActivePort文件不存在的问题
+                options.add_argument('--no-sandbox')  # 禁用沙箱
+                options.add_argument('--disable-dev-shm-usage')  # 禁用/dev/shm使用
+                options.add_argument('--disable-gpu')  # 禁用GPU加速
+                
+                # 添加无头模式（在服务器环境中运行）
+                options.add_argument('--headless=new')  # 新版无头模式
+                
+                # 设置user-agent
                 options.add_argument(f'user-agent={self.headers["User-Agent"]}')
+                
+                # 禁用自动化控制检测
                 options.add_argument('--disable-blink-features=AutomationControlled')
-                options.add_argument('--start-maximized')
+                
+                # 设置窗口大小
                 options.add_argument('--window-size=1920,1080')
-                options.add_argument('--no-sandbox')
-                options.add_argument('--disable-dev-shm-usage')
-                options.add_argument('--chrome-skip-compat-layer-relaunch')
-
-                # 强制使用新会话，避免复用
-                options.add_argument('--no-first-run')
-                options.add_argument('--no-service-autorun') 
-                options.add_argument('--password-store=basic')
+                
+                # 解决在Docker容器中的问题
+                options.add_argument('--disable-extensions')
+                options.add_argument('--disable-software-rasterizer')
+                
+                # 禁用各种可能导致崩溃的功能
+                options.add_argument('--disable-extensions')
                 options.add_argument('--disable-infobars')
+                options.add_argument('--mute-audio')
+                options.add_argument('--no-first-run')
+                options.add_argument('--no-service-autorun')
+                options.add_argument('--password-store=basic')
                 
                 # 添加排除自动化控制的实验选项
-                options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
                 options.add_experimental_option('useAutomationExtension', False)
                 
-                # 禁用共享内存使用
-                options.add_argument('--disable-dev-shm-usage')
+                # 解决远程调试端口问题
+                options.add_argument('--remote-debugging-port=9222')
                 
                 logger.warning("Chrome浏览器配置已设置，准备启动")
                 
