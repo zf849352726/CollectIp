@@ -300,7 +300,7 @@
                                             {% if movie.is_published %}✅{% else %}❌{% endif %}
                                         </button>
                                         <button class="btn-icon" title="更新">🔄</button>
-                                        <button class="btn-icon" title="删除">🗑️</button>
+                                        <button class="btn-icon btn-delete" title="删除" data-id="{{ movie.id }}">🗑️</button>
                                     </td>
                                 </tr>
                                 {% endfor %}
