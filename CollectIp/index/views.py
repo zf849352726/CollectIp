@@ -1321,6 +1321,20 @@ def delete_movie(request, movie_id):
     try:
         movie = Movie.objects.get(id=movie_id)
         movie.delete()
+        # 记录日志
+        logger.info(f"电影已删除: ID={movie_id}, 标题={movie.title}")
+        
+        # 重置数据库自增ID
+        try:
+            from django.db import connection
+            with connection.cursor() as cursor:
+                # 获取当前表名
+                table_name = Movie._meta.db_table
+                # 执行SQL重置自增ID
+                cursor.execute(f"ALTER TABLE {table_name} AUTO_INCREMENT = 1")
+                logger.info(f"已重置{table_name}表的自增ID")
+        except Exception as e:
+            logger.error(f"重置自增ID失败: {str(e)}")
         return JsonResponse({'status': 'success', 'message': '电影删除成功'})
     except Movie.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': '电影不存在'}, status=404)
