@@ -1,16 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import DoubanMovie, DoubanComment
+from django.db import connection
+import logging
+
+logger = logging.getLogger(__name__)
 
 @login_required
-def delete_movie(request):
+def delete_movie(request, movie_id):
     """删除电影"""
     if request.method == 'POST':
         try:
-            movie_id = request.POST.get('movie_id')
-            if not movie_id:
-                return JsonResponse({'success': False, 'error': '电影ID不能为空'})
-            
             # 获取电影对象
             movie = DoubanMovie.objects.get(id=movie_id)
             
@@ -20,13 +20,36 @@ def delete_movie(request):
             # 删除电影
             movie.delete()
             
-            # 重新编号所有电影
-            movies = DoubanMovie.objects.all().order_by('id')
-            for index, movie in enumerate(movies, 1):
-                movie.id = index
-                movie.save()
+            # 获取所有剩余电影并按ID排序
+            remaining_movies = DoubanMovie.objects.all().order_by('id')
             
-            return JsonResponse({'success': True})
+            # 重新编号所有电影
+            for index, movie in enumerate(remaining_movies, 1):
+                # 如果当前ID不等于新的序号，则更新
+                if movie.id != index:
+                    # 先保存旧的ID
+                    old_id = movie.id
+                    # 更新ID
+                    movie.id = index
+                    # 保存更新
+                    movie.save(force_update=True)
+                    logger.info(f"电影ID从 {old_id} 更新为 {index}")
+            
+            # 重置数据库自增ID
+            try:
+                with connection.cursor() as cursor:
+                    # 获取当前表名
+                    table_name = DoubanMovie._meta.db_table
+                    # 获取当前最大ID
+                    cursor.execute(f"SELECT MAX(id) FROM {table_name}")
+                    max_id = cursor.fetchone()[0] or 0
+                    # 设置自增ID为当前最大ID+1
+                    cursor.execute(f"ALTER TABLE {table_name} AUTO_INCREMENT = {max_id + 1}")
+                    logger.info(f"已重置{table_name}表的自增ID为 {max_id + 1}")
+            except Exception as e:
+                logger.error(f"重置自增ID失败: {str(e)}")
+            
+            return JsonResponse({'success': True, 'message': '电影删除成功'})
         except DoubanMovie.DoesNotExist:
             return JsonResponse({'success': False, 'error': '电影不存在'})
         except Exception as e:
