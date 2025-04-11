@@ -195,7 +195,7 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'WARNING',  # 只记录警告和错误
+            'level': 'INFO',  # 只记录警告和错误
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/django.log'),
             'maxBytes': 5 * 1024 * 1024,  # 5MB

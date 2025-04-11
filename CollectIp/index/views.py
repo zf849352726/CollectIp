@@ -748,7 +748,8 @@ def movie_detail(request, movie_id):
             'sequential_wordcloud': '[]',
             'random_pages_wordcloud': '[]',
             'random_interval_wordcloud': '[]',
-            'random_block_wordcloud': '[]'
+            'random_block_wordcloud': '[]',
+            'random': '[]',
         }
         
         # 尝试获取MongoDB数据
