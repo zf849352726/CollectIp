@@ -810,6 +810,7 @@ def movie_detail(request, movie_id):
             random_pages_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_pages') or []
             random_interval_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_interval') or []
             random_block_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_block') or []
+            random_select_wordcloud = mongo_client.get_wordcloud_data_by_strategy(movie_id, 'random_select') or []
             
             logger.info(f"策略词云数据获取结果: 顺序={len(sequential_wordcloud)}项, 随机页码={len(random_pages_wordcloud)}项, " +
                        f"随机间隔={len(random_interval_wordcloud)}项, 随机区块={len(random_block_wordcloud)}项")

@@ -1561,7 +1561,8 @@ def test_comment_strategies():
         {'name': 'sequential', 'params': {'max_pages': 5}},
         {'name': 'random_pages', 'params': {'sample_size': 5}},
         {'name': 'random_interval', 'params': {'max_interval': 3, 'max_pages': 5}},
-        {'name': 'random_block', 'params': {'block_size': 3}}
+        {'name': 'random_block', 'params': {'block_size': 3}},
+        {'name': 'random_select', 'params': {'sample_size': 5}}
     ]
     
     # 结果存储

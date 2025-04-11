@@ -6,6 +6,7 @@ import datetime
 from typing import List, Dict, Any, Tuple, Optional, Union
 from bson.objectid import ObjectId
 import json
+import jieba
 
 logger = logging.getLogger(__name__)
 
@@ -423,7 +424,8 @@ class MongoDBClient:
                 'sequential': ["顺序采集", "sequential", "顺序策略"],
                 'random_pages': ["随机页码采集", "random_pages", "随机页码策略"],
                 'random_interval': ["随机间隔采集", "random_interval", "随机间隔策略"],
-                'random_block': ["随机区块采集", "random_block", "随机区块策略"]
+                'random_block': ["随机区块采集", "random_block", "随机区块策略"],
+                'random_select': ["随机选择采集", "random_select", "随机选择策略"]
             }
             
             # 获取策略对应的所有可能值
@@ -559,22 +561,24 @@ class MongoDBClient:
                 return []
             
             # 提取所有关键词
-            all_keywords = []
+            keyword_count = {}
             for comment in comments:
-                if 'keywords' in comment and isinstance(comment['keywords'], list):
-                    all_keywords.extend(comment['keywords'])
+                if 'keywords' in comment:
+                    if isinstance(comment['keywords'], list):
+                        for keyword in comment['keywords']:
+                            if keyword in keyword_count:
+                                keyword_count[keyword] += 1
+                            else:
+                                keyword_count[keyword] = 1
+                    elif isinstance(comment['keywords'], str):
+                        if comment['keywords'] in keyword_count:
+                            keyword_count[comment['keywords']] += 1
+                        else:
+                            keyword_count[comment['keywords']] = 1
             
-            if not all_keywords:
+            if not keyword_count:
                 logging.warning(f"电影 {movie_id} 的 {strategy} 策略评论没有关键词")
                 return []
-            
-            # 统计关键词频率
-            keyword_count = {}
-            for keyword in all_keywords:
-                if keyword in keyword_count:
-                    keyword_count[keyword] += 1
-                else:
-                    keyword_count[keyword] = 1
             
             # 转换为词云数据格式
             wordcloud_data = []
@@ -594,6 +598,10 @@ class MongoDBClient:
             
             # 保存生成的词云数据到数据库
             try:
+                # 确保策略词云集合存在
+                if 'strategy_wordcloud' not in self.db.list_collection_names():
+                    self.db.create_collection('strategy_wordcloud')
+                
                 strategy_collection = self.db['strategy_wordcloud']
                 strategy_collection.update_one(
                     {"movie_id": str(movie_id), "strategy": strategy},
@@ -718,6 +726,67 @@ class MongoDBClient:
             
         except Exception as e:
             logger.error(f"获取评论趋势失败: {str(e)}")
+            return []
+    
+    def get_wordcloud_data(self, movie_id):
+        """获取电影词云数据，如果不存在则生成"""
+        try:
+            # 先从wordcloud_collection中获取数据
+            db = self.client[self.db_name]
+            collection = db['wordcloud']
+            
+            # 获取词云数据
+            result = collection.find_one({'movie_id': str(movie_id)})
+            
+            if result and 'data' in result:
+                logging.info(f"获取到电影 {movie_id} 的词云数据: {len(result['data'])} 个词")
+                return result['data']
+            
+            # 如果词云数据不存在，尝试从评论中生成
+            logging.info(f"电影 {movie_id} 的词云数据不存在，尝试从评论中生成")
+            
+            # 获取电影评论
+            comments = self.get_movie_comments(movie_id)
+            if not comments:
+                logging.warning(f"电影 {movie_id} 没有评论数据")
+                return []
+            
+            # 提取评论文本
+            comment_texts = []
+            for comment in comments:
+                if 'content' in comment:
+                    comment_texts.append(comment['content'])
+            
+            if not comment_texts:
+                logging.warning(f"电影 {movie_id} 的评论内容为空")
+                return []
+            
+            # 合并所有评论文本
+            text = ' '.join(comment_texts)
+            
+            # 使用jieba进行分词
+            words = jieba.analyse.extract_tags(text, topK=100, withWeight=True)
+            
+            # 转换为词云需要的格式
+            wordcloud_data = []
+            for word, weight in words:
+                wordcloud_data.append({
+                    'name': word,
+                    'value': int(weight * 1000)  # 将权重转换为整数
+                })
+            
+            # 保存词云数据
+            collection.insert_one({
+                'movie_id': str(movie_id),
+                'data': wordcloud_data,
+                'update_time': datetime.now()
+            })
+            
+            logging.info(f"生成并保存了电影 {movie_id} 的词云数据: {len(wordcloud_data)} 个词")
+            return wordcloud_data
+            
+        except Exception as e:
+            logging.error(f"获取电影词云数据失败: {str(e)}", exc_info=True)
             return []
 
 if __name__ == "__main__":

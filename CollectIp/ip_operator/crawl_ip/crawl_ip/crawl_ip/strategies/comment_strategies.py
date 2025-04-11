@@ -120,7 +120,7 @@ class RandomBlockStrategy(CommentStrategy):
         return f"随机区块采集(区块大小{self.block_size}页)"
 
 
-class RandomStrategy(CommentStrategy):
+class RandomSelectStrategy(CommentStrategy):
     """随机策略 - 随机从四种策略中选择一种执行"""
     
     def __init__(self, **kwargs):
@@ -175,7 +175,7 @@ class CommentStrategyFactory:
             'random_pages': RandomPagesStrategy,
             'random_interval': RandomIntervalStrategy,
             'random_block': RandomBlockStrategy,
-            'random': RandomStrategy
+            'random_select': RandomSelectStrategy
         }
         
         if strategy_type not in strategies:
