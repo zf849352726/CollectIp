@@ -239,4 +239,17 @@ def crawl_douban_task(movie_name, strategy="sequential", max_pages=2, **kwargs):
         if key not in params:
             params[key] = value
     
-    return run_spider_task.delay('douban_spider', movie_name=movie_name, **params) 
+    return run_spider_task.delay('douban_spider', movie_name=movie_name, **params)
+
+@shared_task
+def score_ip_task():
+    """IP评分任务"""
+    try:
+        logger.info("开始执行IP评分任务")
+        from .services.crawler import start_score
+        result = start_score()
+        logger.info(f"IP评分任务完成: {result}")
+        return result
+    except Exception as e:
+        logger.error(f"IP评分任务执行失败: {str(e)}", exc_info=True)
+        return None 

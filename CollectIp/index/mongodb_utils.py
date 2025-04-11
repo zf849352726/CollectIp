@@ -10,6 +10,17 @@ import jieba
 
 logger = logging.getLogger(__name__)
 
+# 延迟导入jieba
+_jieba = None
+
+def get_jieba():
+    """延迟加载jieba模块"""
+    global _jieba
+    if _jieba is None:
+        import jieba
+        _jieba = jieba
+    return _jieba
+
 class MongoDBClient:
     """MongoDB客户端单例类"""
     _instance = None
@@ -765,6 +776,7 @@ class MongoDBClient:
             text = ' '.join(comment_texts)
             
             # 使用jieba进行分词
+            jieba = get_jieba()
             words = jieba.analyse.extract_tags(text, topK=100, withWeight=True)
             
             # 转换为词云需要的格式
