@@ -32,4 +32,29 @@ def delete_movie(request):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
     
+    return JsonResponse({'success': False, 'error': '无效的请求方法'})
+
+@login_required
+def toggle_movie_published(request, movie_id):
+    """切换电影的发表状态"""
+    if request.method == 'POST':
+        try:
+            # 获取电影对象
+            movie = DoubanMovie.objects.get(id=movie_id)
+            
+            # 切换发表状态
+            movie.is_published = not movie.is_published
+            movie.save()
+            
+            # 返回成功响应
+            return JsonResponse({
+                'success': True,
+                'is_published': movie.is_published,
+                'message': f'电影 "{movie.title}" {"已发表" if movie.is_published else "已取消发表"}'
+            })
+        except DoubanMovie.DoesNotExist:
+            return JsonResponse({'success': False, 'error': '电影不存在'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    
     return JsonResponse({'success': False, 'error': '无效的请求方法'}) 

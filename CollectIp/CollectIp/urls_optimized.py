@@ -18,7 +18,8 @@ from index.views import (
     toggle_movie_published,
     get_last_crawl_status,
     create_collection, get_collection, update_collection, delete_collection,
-    logs_view, get_log_content, download_log
+    logs_view, get_log_content, download_log,
+    delete_movie,
 )
 from django.contrib.auth.decorators import login_required
 from index import views
@@ -51,7 +52,7 @@ urlpatterns = [
     path('douban/overview/', douban_overview, name='douban_overview'),
     path('douban/movies/', movie_list, name='movie_list'),
     path('douban/movies/<int:movie_id>/', movie_detail, name='movie_detail'),
-    path('douban/movies/toggle_published/', toggle_movie_published, name='toggle_movie_published'),
+    path('douban/movies/<int:movie_id>/toggle_published/', toggle_movie_published, name='toggle_movie_published'),
     path('douban/tv/', tv_list, name='tv_list'),
     path('douban/trend/', data_trend, name='data_trend'),
     path('douban/settings/', douban_settings, name='douban_settings'),
@@ -62,6 +63,7 @@ urlpatterns = [
     path('logs/', logs_view, name='logs_view'),
     path('api/logs/content/', get_log_content, name='get_log_content'),
     path('api/logs/download/', download_log, name='download_log'),
+    path('douban/movies/<int:movie_id>/delete/', delete_movie, name='delete_movie'),
 ]
 
 # 非调试模式下的静态文件配置
