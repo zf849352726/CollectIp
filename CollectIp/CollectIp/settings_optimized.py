@@ -285,3 +285,13 @@ REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
 REDIS_PASSWORD = '123456'  # 如果Redis设置了密码，请在此处设置
+
+# MongoDB连接配置
+MONGODB_CONN = {
+    'host': 'localhost',
+    'port': 27017,
+    'db': 'collectip_comments',
+    'collection': 'movie_comments',
+    'username': '',
+    'password': '',
+}
