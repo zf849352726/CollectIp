@@ -14,7 +14,7 @@ sys.path.append(BASE_DIR)
 
 # 添加项目根目录到Python路径
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-sys.path.append(PROJECT_ROOT)
+sys.path.append(str(PROJECT_ROOT))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
