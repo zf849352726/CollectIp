@@ -1316,6 +1316,18 @@ def delete_collection(request, collection_id):
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 @login_required
+def delete_movie(request, movie_id):
+    """删除电影"""
+    try:
+        movie = Movie.objects.get(id=movie_id)
+        movie.delete()
+        return JsonResponse({'status': 'success', 'message': '电影删除成功'})
+    except Movie.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': '电影不存在'}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
 def get_collection(request, collection_id):
     """获取单个合集详情"""
     try:
