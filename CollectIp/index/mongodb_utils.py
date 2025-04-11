@@ -7,6 +7,7 @@ from typing import List, Dict, Any, Tuple, Optional, Union
 from bson.objectid import ObjectId
 import json
 import jieba
+import importlib
 
 logger = logging.getLogger(__name__)
 
@@ -776,7 +777,7 @@ class MongoDBClient:
             text = ' '.join(comment_texts)
             
             # 使用jieba进行分词
-            jieba = get_jieba()
+            jieba = self._get_jieba()
             words = jieba.analyse.extract_tags(text, topK=100, withWeight=True)
             
             # 转换为词云需要的格式
@@ -800,6 +801,16 @@ class MongoDBClient:
         except Exception as e:
             logging.error(f"获取电影词云数据失败: {str(e)}", exc_info=True)
             return []
+
+    def _get_jieba(self):
+        """动态导入jieba模块"""
+        if self._jieba is None:
+            try:
+                self._jieba = importlib.import_module('jieba')
+            except ImportError as e:
+                logger.error(f"导入jieba模块失败: {str(e)}")
+                raise
+        return self._jieba
 
 if __name__ == "__main__":
     # 测试MongoDB连接和词云生成功能
