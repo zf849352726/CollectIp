@@ -682,7 +682,7 @@ class DoubanSpider(scrapy.Spider):
     def parse_with_selenium(self, url, movie_names):
         """使用Selenium解析搜索结果页"""
         # 获取WebDriver
-        driver = self.get_driver()
+            driver = self.get_driver()
         if not driver:
             logger.error("无法获取WebDriver")
             return
@@ -1011,12 +1011,12 @@ class DoubanSpider(scrapy.Spider):
             
             # 正确的方式：如果需要yield item，请使用Request对象包装
             # 使用dont_filter=True确保请求不会被过滤
-            yield scrapy.Request(
+                    yield scrapy.Request(
                 url=driver.current_url,
                 callback=self.parse_item,
                 meta={'item': movie_item},
-                dont_filter=True
-            )
+                        dont_filter=True
+                    )
             
             # 构建评论页URL
             comments_url = url + 'comments'
@@ -1069,7 +1069,7 @@ class DoubanSpider(scrapy.Spider):
                     # 处理当前页评论
                     self.process_current_page_comments(driver, movie_item['comments'])
                     
-                except Exception as e:
+            except Exception as e:
                     logger.error(f"访问第{page_num}页评论时出错: {str(e)}")
                     import traceback as tb
                     tb.print_exc()
@@ -1123,7 +1123,7 @@ class DoubanSpider(scrapy.Spider):
         if item:
             return item  # 直接返回item给管道处理
         return None
-
+           
     def random_sleep(self, min_seconds=1, max_seconds=3):
         """随机延时，防止反爬"""
         time.sleep(random.uniform(min_seconds, max_seconds))
