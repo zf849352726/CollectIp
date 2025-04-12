@@ -30,7 +30,6 @@ from django.middleware.csrf import get_token
 import re
 import time
 from index.mongodb_utils import MongoDBClient
-from utlis.decode_apache_log import decode_utf8_hex_sequences
 
 logger = logging.getLogger(__name__)
 
@@ -1503,19 +1502,6 @@ def logs_view(request):
                     log_type = 'other'
                     description = '其他系统日志'
                     
-                # 使用decode_apache_log解码日志内容
-                preview_content = ""
-                try:
-                    with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                        for i, line in enumerate(f):
-                            if i >= 20:
-                                break
-                            # 解码行内容
-                            decoded_line = decode_utf8_hex_sequences(line)
-                            preview_content += decoded_line
-                except Exception as e:
-                    preview_content = f"无法读取日志内容: {str(e)}"
-                
                 log_files.append({
                     'name': file,
                     'path': log_path,
@@ -1523,9 +1509,7 @@ def logs_view(request):
                     'last_modified': last_modified,
                     'type': log_type,
                     'has_error': has_error,
-                    'description': description,
-                    'decoded': True,
-                    'preview': preview_content[:500] + '...' if len(preview_content) > 500 else preview_content
+                    'description': description
                 })
     
     # 检查Apache日志目录
@@ -1543,21 +1527,10 @@ def logs_view(request):
                         
                         # 确定日志类型和描述
                         log_type = 'apache'
-                        description = 'Apache错误日志'
-                        has_error = True
-                        
-                        # 使用decode_apache_log解码日志内容
-                        preview_content = ""
-                        try:
-                            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                                for i, line in enumerate(f):
-                                    if i >= 20:
-                                        break
-                                    # 解码行内容
-                                    decoded_line = decode_utf8_hex_sequences(line)
-                                    preview_content += decoded_line
-                        except Exception as e:
-                            preview_content = f"无法读取日志内容: {str(e)}"
+                        description = 'Apache服务器日志'
+                        if 'error' in file:                            
+                            description = 'Apache错误日志'
+                            has_error = True
                         
                         log_files.append({
                             'name': file,
@@ -1566,9 +1539,7 @@ def logs_view(request):
                             'last_modified': last_modified,
                             'type': log_type,
                             'has_error': has_error,
-                            'description': description,
-                            'decoded': True,
-                            'preview': preview_content[:500] + '...' if len(preview_content) > 500 else preview_content
+                            'description': description
                         })
                     except (PermissionError, OSError):
                         # 如果没有权限读取Apache日志，跳过
@@ -1616,7 +1587,6 @@ def logs_view(request):
 def get_log_content(request):
     """获取日志内容API"""
     log_path = request.GET.get('path', '')
-    decode_content = request.GET.get('decode', 'true').lower() == 'true'
     
     if not log_path or not os.path.exists(log_path):
         return JsonResponse({
@@ -1666,19 +1636,9 @@ def get_log_content(request):
                 else:
                     content = f.read()
         
-        # 对内容进行解码，如果需要
-        if decode_content and is_apache_log:
-            # 使用decode_apache_log解码Apache日志内容
-            decoded_content = ""
-            for line in content.splitlines():
-                decoded_line = decode_utf8_hex_sequences(line)
-                decoded_content += decoded_line + "\n"
-            content = decoded_content
-        
         return JsonResponse({
             'status': 'success',
-            'content': content,
-            'decoded': decode_content and is_apache_log
+            'content': content
         })
     except Exception as e:
         logger.exception(f"读取日志文件失败: {e}")
@@ -1691,7 +1651,6 @@ def get_log_content(request):
 def download_log(request):
     """下载日志文件"""
     log_path = request.GET.get('path', '')
-    decode_content = request.GET.get('decode', 'true').lower() == 'true'
     
     if not log_path or not os.path.exists(log_path):
         return JsonResponse({
@@ -1710,26 +1669,14 @@ def download_log(request):
             import subprocess
             import tempfile
             
+            # 创建临时文件
+            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                temp_path = temp_file.name
+            
             try:
-                # 使用临时文件存储日志内容
-                with tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8') as temp_file:
-                    temp_path = temp_file.name
-                    
-                    # 获取日志内容
-                    process = subprocess.run(['sudo', 'cat', log_path], 
-                                            capture_output=True, text=True, check=True)
-                    content = process.stdout
-                    
-                    # 对日志内容进行解码
-                    if decode_content and is_apache_log:
-                        decoded_content = ""
-                        for line in content.splitlines():
-                            decoded_line = decode_utf8_hex_sequences(line)
-                            decoded_content += decoded_line + "\n"
-                        content = decoded_content
-                    
-                    # 写入临时文件
-                    temp_file.write(content)
+                # 尝试使用sudo复制文件到临时位置
+                subprocess.run(['sudo', 'cp', log_path, temp_path], check=True)
+                subprocess.run(['sudo', 'chmod', '644', temp_path], check=True)
                 
                 # 读取临时文件
                 with open(temp_path, 'rb') as f:
@@ -1745,27 +1692,8 @@ def download_log(request):
                 })
         else:
             # 常规文件处理
-            if decode_content and is_apache_log:
-                # 读取文件内容并解码
-                with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-                
-                # 对日志内容进行解码
-                decoded_content = ""
-                for line in content.splitlines():
-                    decoded_line = decode_utf8_hex_sequences(line)
-                    decoded_content += decoded_line + "\n"
-                
-                # 创建响应对象
-                response = HttpResponse(decoded_content.encode('utf-8'), content_type='application/octet-stream')
-            else:
-                # 直接读取二进制内容
-                with open(log_path, 'rb') as f:
-                    response = HttpResponse(f.read(), content_type='application/octet-stream')
-        
-        # 如果是解码后的日志，修改文件名
-        if decode_content and is_apache_log:
-            filename = f"{os.path.splitext(filename)[0]}_decoded{os.path.splitext(filename)[1]}"
+            with open(log_path, 'rb') as f:
+                response = HttpResponse(f.read(), content_type='application/octet-stream')
         
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response

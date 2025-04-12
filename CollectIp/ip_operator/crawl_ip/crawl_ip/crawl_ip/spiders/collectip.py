@@ -174,8 +174,12 @@ class CollectipSpider(scrapy.Spider):
         driver = None
 
         try:
-            # 配置 ChromeDriver
-            driver_path = r'/usr/local/CollectIp/CollectIp/ip_operator/chromedriver-linux64/chromedriver'
+            # 自动下载和配置 ChromeDriver
+            try:
+                driver_path = ChromeDriverManager().install()
+            except ValueError as e:
+                logger.warning(f"ChromeDriver自动安装失败: {e}，使用备用路径")
+                driver_path = r'D:\chorme_download\chromedriver-win32\chromedriver.exe'
 
             # 创建 Service 对象，传入 ChromeDriver 的路径
             service = Service(driver_path)
