@@ -345,7 +345,6 @@ class DoubanSpider(scrapy.Spider):
                 options = webdriver.ChromeOptions()
                 
                 # 基本安全设置
-                options.add_argument('--no-sandbox')  # 禁用沙箱
                 options.add_argument('--disable-dev-shm-usage')  # 禁用/dev/shm使用
                 
                 # 解决渲染器连接问题
@@ -353,6 +352,7 @@ class DoubanSpider(scrapy.Spider):
                 options.add_argument('--disable-software-rasterizer')  # 禁用软件光栅化器
                 
                 # 修复无头模式相关问题
+                options.add_argument('--no-sandbox')  # 禁用沙箱
                 options.add_argument('--headless=new')  # 使用新版无头模式
                 options.add_argument('--disable-features=VizDisplayCompositor')  # 禁用复合器
                 options.add_argument('--ignore-certificate-errors')  # 忽略证书错误
@@ -366,7 +366,7 @@ class DoubanSpider(scrapy.Spider):
                 options.add_argument('--disable-browser-side-navigation')  # 禁用浏览器侧导航
                 
                 # 设置固定端口，解决DevToolsActivePort文件问题
-                options.add_argument('--remote-debugging-port=9222')
+                options.add_argument('--remote-debugging-port=9230')
                 options.add_argument('--remote-debugging-address=0.0.0.0')  # 允许远程调试
                 
                 # 设置user-agent
