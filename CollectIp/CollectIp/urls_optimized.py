@@ -65,7 +65,6 @@ urlpatterns = [
     path('api/logs/content/', get_log_content, name='get_log_content'),
     path('api/logs/download/', download_log, name='download_log'),
     path('douban/movies/<int:movie_id>/delete/', delete_movie, name='delete_movie'),
-    path('douban/movies/<int:movie_id>/update_id/', update_movie_id, name='update_movie_id'),
 ]
 
 # 非调试模式下的静态文件配置
