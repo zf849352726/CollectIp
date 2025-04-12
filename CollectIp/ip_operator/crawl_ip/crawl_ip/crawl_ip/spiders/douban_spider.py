@@ -344,41 +344,49 @@ class DoubanSpider(scrapy.Spider):
                 # 设置 Chrome 选项
                 options = webdriver.ChromeOptions()
                 
-                # 解决DevToolsActivePort文件不存在的问题
+                # 基本安全设置
                 options.add_argument('--no-sandbox')  # 禁用沙箱
                 options.add_argument('--disable-dev-shm-usage')  # 禁用/dev/shm使用
-                options.add_argument('--disable-gpu')  # 禁用GPU加速
                 
-                # 添加无头模式（在服务器环境中运行）
-                options.add_argument('--headless=new')  # 新版无头模式
+                # 解决渲染器连接问题
+                options.add_argument('--disable-gpu')  # 禁用GPU加速
+                options.add_argument('--disable-software-rasterizer')  # 禁用软件光栅化器
+                
+                # 修复无头模式相关问题
+                options.add_argument('--headless=new')  # 使用新版无头模式
+                options.add_argument('--disable-features=VizDisplayCompositor')  # 禁用复合器
+                options.add_argument('--ignore-certificate-errors')  # 忽略证书错误
+                
+                # 确保单一进程，防止僵尸进程
+                options.add_argument('--single-process')
+                
+                # 内存相关设置
+                options.add_argument('--disable-crash-reporter')  # 禁用崩溃报告
+                options.add_argument('--disable-in-process-stack-traces')  # 禁用进程内堆栈跟踪
+                options.add_argument('--disable-browser-side-navigation')  # 禁用浏览器侧导航
+                
+                # 设置固定端口，解决DevToolsActivePort文件问题
+                options.add_argument('--remote-debugging-port=9222')
+                options.add_argument('--remote-debugging-address=0.0.0.0')  # 允许远程调试
                 
                 # 设置user-agent
                 options.add_argument(f'user-agent={self.headers["User-Agent"]}')
                 
-                # 禁用自动化控制检测
+                # 防检测设置
                 options.add_argument('--disable-blink-features=AutomationControlled')
+                options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
+                options.add_experimental_option('useAutomationExtension', False)
                 
                 # 设置窗口大小
                 options.add_argument('--window-size=1920,1080')
                 
-                # 解决在Docker容器中的问题
-                options.add_argument('--disable-extensions')
-                options.add_argument('--disable-software-rasterizer')
-                
-                # 禁用各种可能导致崩溃的功能
+                # 禁用可能导致问题的扩展和通知
                 options.add_argument('--disable-extensions')
                 options.add_argument('--disable-infobars')
                 options.add_argument('--mute-audio')
                 options.add_argument('--no-first-run')
                 options.add_argument('--no-service-autorun')
                 options.add_argument('--password-store=basic')
-                
-                # 添加排除自动化控制的实验选项
-                options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
-                options.add_experimental_option('useAutomationExtension', False)
-                
-                # 解决远程调试端口问题
-                options.add_argument('--remote-debugging-port=9222')
                 
                 logger.warning("Chrome浏览器配置已设置，准备启动")
                 
@@ -400,6 +408,16 @@ class DoubanSpider(scrapy.Spider):
             except Exception as e:
                 logger.error(f"创建WebDriver失败: {e}")
                 logger.error(traceback.format_exc())
+                
+                # 尝试查找Chrome进程并杀死
+                try:
+                    if os.name == 'posix':  # Linux/Mac
+                        os.system("pkill -f chrome")
+                        os.system("pkill -f chromedriver")
+                        logger.warning("已尝试杀死残留的Chrome和ChromeDriver进程")
+                except:
+                    pass
+                
                 return None
         elif self.driver is not None:
             logger.warning("使用现有的WebDriver实例")
