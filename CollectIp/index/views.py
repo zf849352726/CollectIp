@@ -1548,11 +1548,12 @@ def logs_view(request):
                         # 如果没有权限读取Apache日志，跳过
                         continue
     # 检查celery日志
-    celery_log_dir = ['/var/log/']
-    if os.path.exists(celery_log_dir):
-        for file in os.listdir(celery_log_dir):
-            if 'celery' in file and file.endswith('.log'):
-                log_path = os.path.join(celery_log_dir, file)
+    celery_log_dirs = ['/var/log/']
+    for celery_log_dir in celery_log_dirs:
+        if os.path.exists(celery_log_dir):
+            for file in os.listdir(celery_log_dir):
+                if 'celery' in file and file.endswith('.log'):
+                    log_path = os.path.join(celery_log_dir, file)
                 try:
                     file_stat = os.stat(log_path)
                     size_bytes = file_stat.st_size
@@ -1575,7 +1576,6 @@ def logs_view(request):
                 except (PermissionError, OSError):
                     # 如果没有权限读取celery日志，跳过
                     continue
-
                 
     # 按最后修改时间排序，最新的在前面
     log_files.sort(key=lambda x: x['last_modified'], reverse=True)
