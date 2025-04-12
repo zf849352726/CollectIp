@@ -268,6 +268,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>电影名称</th>
                                     <th>导演</th>
                                     <th>主演</th>
@@ -284,6 +285,15 @@
                             <tbody>
                                 {% for movie in movies %}
                                 <tr>
+                                    <td class="id-cell" data-id="{{ movie.id }}">
+                                        <span class="id-display">{{ movie.id }}</span>
+                                        <span class="id-edit" style="display:none;">
+                                            <input type="number" class="form-control form-control-sm new-id-input" value="{{ movie.id }}">
+                                            <button class="btn btn-sm btn-primary confirm-id">确认</button>
+                                            <button class="btn btn-sm btn-secondary cancel-id">取消</button>
+                                        </span>
+                                        <button class="btn-icon edit-id-btn" title="编辑ID">✏️</button>
+                                    </td>
                                     <td>{{ movie.title }}</td>
                                     <td>{{ movie.director }}</td>
                                     <td>{{ movie.actors }}</td>
@@ -299,7 +309,6 @@
                                         <button class="btn-icon toggle-published" data-id="{{ movie.id }}" data-published="{% if movie.is_published %}true{% else %}false{% endif %}" title="{% if movie.is_published %}已发表{% else %}未发表{% endif %}">
                                             {% if movie.is_published %}✅{% else %}❌{% endif %}
                                         </button>
-                                        <button class="btn-icon" title="更新">🔄</button>
                                         <a href="/douban/movies/{{ movie.id }}/delete/" class="btn-icon btn-delete" title="删除" data-id="{{ movie.id }}">🗑️</a>
                                     </td>
                                 </tr>

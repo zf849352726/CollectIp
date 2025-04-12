@@ -1314,33 +1314,185 @@ def delete_collection(request, collection_id):
         return JsonResponse({'status': 'error', 'message': '合集不存在'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    
+@login_required
+def delete_mongodb_movie(movie_id):
+    """从MongoDB中删除电影相关数据"""
+    try:
+        from django.conf import settings
+        import pymongo
+        
+        # 连接MongoDB
+        mongo_client = pymongo.MongoClient(
+            host=settings.MONGODB_HOST,
+            port=settings.MONGODB_PORT,
+            username=settings.MONGODB_USERNAME,
+            password=settings.MONGODB_PASSWORD
+        )
+        
+        # 获取数据库和集合
+        db = mongo_client[settings.MONGODB_DB]
+        comments_collection = db['douban_comments']
+        movies_collection = db['douban_movies']
+        wordcloud_collection = db['wordcloud']
+        
+        # 删除评论集合中的数据
+        comments_result = comments_collection.delete_many({'movie_id': str(movie_id)})
+        
+        # 删除电影集合中的数据
+        movies_result = movies_collection.delete_many({'movie_id': str(movie_id)})
+        
+        # 删除词云集合中的数据
+        wordcloud_result = wordcloud_collection.delete_many({'movie_id': str(movie_id)})
+        
+        total_deleted = comments_result.deleted_count + movies_result.deleted_count + wordcloud_result.deleted_count
+        
+        logger.info(f"MongoDB删除: 电影ID {movie_id}, 共删除 {total_deleted} 个文档")
+        
+        return total_deleted
+    except Exception as e:
+        logger.error(f"MongoDB删除失败: {str(e)}", exc_info=True)
+        return 0
 
 @login_required
 def delete_movie(request, movie_id):
     """删除电影"""
+    if request.method == 'POST':
+        try:
+            # 获取电影对象
+            movie = Movie.objects.get(id=movie_id)
+            
+            # 删除电影
+            movie.delete()
+
+             # 从MongoDB中删除电影相关数据
+            mongo_deleted = delete_mongodb_movie(movie_id)
+
+            # 获取所有剩余电影并按ID排序
+            remaining_movies = Movie.objects.all().order_by('id')
+            
+            # 记录ID映射关系，用于后续更新MongoDB
+            id_mapping = {}
+            
+            # 重新编号所有电影
+            for index, movie in enumerate(remaining_movies, 1):
+                # 如果当前ID不等于新的序号，则更新
+                if movie.id != index:
+                    # 先保存旧的ID
+                    old_id = movie.id
+                    # 更新ID
+                    movie.id = index
+                    # 保存更新
+                    movie.save(force_update=True)
+                    logger.info(f"电影ID从 {old_id} 更新为 {index}")
+                    
+                    # 记录ID映射关系
+                    id_mapping[old_id] = index
+            
+            # 同步更新MongoDB中的ID
+            mongo_updated = 0
+            for old_id, new_id in id_mapping.items():
+                mongo_updated += sync_mongodb_movie_id(old_id, new_id)
+            
+            # 重置数据库自增ID
+            try:
+                from django.db import connection
+                with connection.cursor() as cursor:
+                    # 获取当前表名
+                    table_name = Movie._meta.db_table
+                    # 获取当前最大ID
+                    cursor.execute(f"SELECT MAX(id) FROM {table_name}")
+                    max_id = cursor.fetchone()[0] or 0
+                    # 设置自增ID为当前最大ID+1
+                    cursor.execute(f"ALTER TABLE {table_name} AUTO_INCREMENT = {max_id + 1}")
+                    logger.info(f"已重置{table_name}表的自增ID为 {max_id + 1}")
+            except Exception as e:
+                logger.error(f"重置自增ID失败: {str(e)}")
+            
+            return JsonResponse({
+                'success': True, 
+                'message': '电影删除成功',
+                'mongo_deleted': mongo_deleted,
+                'mongo_updated': mongo_updated
+            })
+        except Movie.DoesNotExist:
+            return JsonResponse({'success': False, 'error': '电影不存在'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    
+    return JsonResponse({'success': False, 'error': '无效的请求方法'})
+    
+@login_required
+@require_http_methods(["POST"])
+def update_movie_id(request, movie_id):
+    """更新电影ID"""
     try:
         movie = Movie.objects.get(id=movie_id)
-        movie.delete()
-        # 记录日志
-        logger.info(f"电影已删除: ID={movie_id}, 标题={movie.title}")
-        
-        # 重置数据库自增ID
+        new_id = request.POST.get('new_id')
         try:
-            from django.db import connection
-            with connection.cursor() as cursor:
-                # 获取当前表名
-                table_name = Movie._meta.db_table
-                # 执行SQL重置自增ID
-                cursor.execute(f"ALTER TABLE {table_name} AUTO_INCREMENT = 1")
-                logger.info(f"已重置{table_name}表的自增ID")
-        except Exception as e:
-            logger.error(f"重置自增ID失败: {str(e)}")
-        return JsonResponse({'status': 'success', 'message': '电影删除成功'})
-    except Movie.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': '电影不存在'}, status=404)
+            if new_id:
+                movie.id = new_id
+                movie.save()
+                # 同步更新MongoDB中的ID
+                mongo_updated = sync_mongodb_movie_id(movie_id, new_id)
+                return JsonResponse({
+                    'status': 'success', 
+                    'message': '电影ID更新成功',
+                    'mongo_updated': mongo_updated
+                })  
+            return JsonResponse({'status': 'success', 'message': '电影ID更新成功'})
+        except Movie.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': '电影不存在'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+def sync_mongodb_movie_id(old_id, new_id):
+    """同步MongoDB中的电影ID"""
+    try:
+        from django.conf import settings
+        import pymongo
+        
+        # 连接MongoDB
+        mongo_client = pymongo.MongoClient(
+            host=settings.MONGODB_HOST,
+            port=settings.MONGODB_PORT,
+            username=settings.MONGODB_USERNAME,
+            password=settings.MONGODB_PASSWORD
+        )
+        
+        # 获取数据库和集合
+        db = mongo_client[settings.MONGODB_DB]
+        comments_collection = db['douban_comments']
+        movies_collection = db['douban_movies']
+        wordcloud_collection = db['wordcloud']
+        
+        # 更新评论集合中的movie_id
+        comments_result = comments_collection.update_many(
+            {'movie_id': str(old_id)},
+            {'$set': {'movie_id': str(new_id)}}
+        )
+        
+        # 更新电影集合中的movie_id
+        movies_result = movies_collection.update_many(
+            {'movie_id': str(old_id)},
+            {'$set': {'movie_id': str(new_id)}}
+        )
+        
+        # 更新词云集合中的movie_id
+        wordcloud_result = wordcloud_collection.update_many(
+            {'movie_id': str(old_id)},
+            {'$set': {'movie_id': str(new_id)}}
+        )
+        
+        total_updated = comments_result.modified_count + movies_result.modified_count + wordcloud_result.modified_count
+        
+        logger.info(f"MongoDB同步更新: 电影ID从 {old_id} 更新为 {new_id}, 共更新 {total_updated} 个文档")
+        
+        return total_updated
+    except Exception as e:
+        logger.error(f"MongoDB同步更新失败: {str(e)}", exc_info=True)
+        return 0
+    
 @login_required
 def get_collection(request, collection_id):
     """获取单个合集详情"""

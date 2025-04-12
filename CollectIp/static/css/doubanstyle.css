@@ -825,3 +825,43 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
 } 
+
+/* ID编辑样式 */
+.id-cell {
+    position: relative;
+    min-width: 100px;
+}
+
+.id-display {
+    margin-right: 5px;
+}
+
+.edit-id-btn {
+    font-size: 14px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0 5px;
+    opacity: 0.5;
+}
+
+.edit-id-btn:hover {
+    opacity: 1;
+}
+
+.id-edit {
+    display: flex;
+    align-items: center;
+}
+
+.new-id-input {
+    width: 60px;
+    padding: 2px 5px;
+    margin-right: 5px;
+}
+
+.confirm-id, .cancel-id {
+    padding: 2px 5px;
+    margin-right: 2px;
+    font-size: 12px;
+} 
