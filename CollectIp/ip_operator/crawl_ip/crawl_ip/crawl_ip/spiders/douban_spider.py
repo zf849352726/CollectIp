@@ -799,7 +799,28 @@ class DoubanSpider(scrapy.Spider):
         try:
             # 访问搜索页面
             logger.warning(f"访问搜索页面: {url}")
-            driver.get(url)
+            
+            # 使用try/except包裹页面访问，以便在失败时重试
+            try:
+                driver.get(url)
+            except Exception as e:
+                logger.error(f"访问搜索页面失败: {str(e)}")
+                # 检查是否是会话相关错误
+                if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                    logger.error("检测到会话失效，尝试重新创建WebDriver")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话
+                    driver = self.get_driver()
+                    if not driver:
+                        logger.error("无法重新创建WebDriver，放弃搜索")
+                        return
+                    # 重试访问
+                    driver.get(url)
+            
             self.random_sleep()
             
             # 处理验证码或其他异常
@@ -838,11 +859,49 @@ class DoubanSpider(scrapy.Spider):
             except Exception as e:
                 logger.error(f"查找电影链接出错: {e}")
                 
+                # 检查是否是会话相关错误
+                if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                    logger.error("查找电影链接时检测到会话失效，尝试重新创建WebDriver")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话
+                    driver = self.get_driver()
+                    if not driver:
+                        logger.error("无法重新创建WebDriver，放弃搜索")
+                        return
+                    # 重试访问
+                    driver.get(url)
+                    self.random_sleep(2, 4)
+                
             # 如果没有找到结果，尝试直接在豆瓣主站搜索
             try:
                 direct_search_url = f"https://www.douban.com/search?q={urllib.parse.quote(movie_names)}"
                 logger.warning(f"尝试直接搜索: {direct_search_url}")
-                driver.get(direct_search_url)
+                
+                # 使用try/except包裹页面访问，以便在失败时重试
+                try:
+                    driver.get(direct_search_url)
+                except Exception as e:
+                    logger.error(f"访问直接搜索页面失败: {str(e)}")
+                    # 检查是否是会话相关错误
+                    if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                        logger.error("访问直接搜索页面时检测到会话失效，尝试重新创建WebDriver")
+                        # 清理旧会话
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                        # 重新获取会话
+                        driver = self.get_driver()
+                        if not driver:
+                            logger.error("无法重新创建WebDriver，放弃搜索")
+                            return
+                        # 重试访问
+                        driver.get(direct_search_url)
+                
                 self.random_sleep()
                 
                 # 处理验证码
@@ -870,9 +929,31 @@ class DoubanSpider(scrapy.Spider):
             except Exception as e:
                 logger.error(f"直接搜索出错: {e}")
                 
+                # 检查是否是会话相关错误
+                if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                    logger.error("直接搜索时检测到会话失效，尝试重新创建WebDriver")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话并设为None，后续流程会处理失败情况
+                    self.driver = None
+                
         except Exception as e:
             logger.error(f"Selenium解析出错: {e}")
             
+            # 检查是否是会话相关错误
+            if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                logger.error("Selenium解析过程中检测到会话失效，清理WebDriver")
+                # 清理旧会话
+                if self.driver:
+                    try:
+                        self.driver.quit()
+                    except:
+                        pass
+                    self.driver = None
+    
     def parse_search_results(self, response):
         """解析搜索结果页面"""
         try:
@@ -909,16 +990,62 @@ class DoubanSpider(scrapy.Spider):
             
         try:
             # 访问详情页
-            driver.get(url)
+            try:
+                driver.get(url)
+            except Exception as e:
+                logger.error(f"访问详情页失败: {str(e)}")
+                # 检查是否是会话相关错误
+                if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                    logger.error("访问详情页时检测到会话失效，尝试重新创建WebDriver")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话
+                    driver = self.get_driver()
+                    if not driver:
+                        logger.error("无法重新创建WebDriver，放弃详情页解析")
+                        return
+                    # 重试访问
+                    driver.get(url)
+            
             self.random_sleep()
             
             # 处理验证码
             # self.handle_verification(driver)
             
             # 等待页面加载
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.TAG_NAME, "h1"))
-            )
+            try:
+                WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.TAG_NAME, "h1"))
+                )
+            except Exception as e:
+                logger.error(f"等待页面加载失败: {str(e)}")
+                # 检查是否是会话相关错误
+                if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                    logger.error("等待页面加载时检测到会话失效，尝试重新创建WebDriver")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话
+                    driver = self.get_driver()
+                    if not driver:
+                        logger.error("无法重新创建WebDriver，放弃详情页解析")
+                        return
+                    # 重试访问
+                    driver.get(url)
+                    self.random_sleep(2, 4)
+                    # 再次等待页面加载
+                    try:
+                        WebDriverWait(driver, 15).until(
+                            EC.presence_of_element_located((By.TAG_NAME, "h1"))
+                        )
+                    except Exception as e2:
+                        logger.error(f"第二次等待页面加载失败: {str(e2)}")
+                        return
             
             # 创建电影项
             movie_item = MovieItem()
@@ -935,6 +1062,29 @@ class DoubanSpider(scrapy.Spider):
                 except Exception:
                     movie_item['title'] = "未知标题"
                     logger.error(f"无法提取电影标题: {url}")
+                    
+                    # 检查是否是会话相关错误
+                    if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                        logger.error("获取标题时检测到会话失效，尝试重新创建WebDriver")
+                        # 清理旧会话
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                        # 重新获取会话
+                        driver = self.get_driver()
+                        if not driver:
+                            logger.error("无法重新创建WebDriver，放弃详情页解析")
+                            return
+                        # 重试访问
+                        driver.get(url)
+                        self.random_sleep(2, 4)
+                        # 再次尝试获取标题
+                        try:
+                            title_elem = driver.find_element(By.CSS_SELECTOR, "h1 span:first-child") or driver.find_element(By.TAG_NAME, "h1")
+                            movie_item['title'] = title_elem.text.strip()
+                        except:
+                            movie_item['title'] = "未知标题"
                     
             # 检查电影是否已存在于数据库中
             exists, movie_id = self.check_movie_exists(movie_item['title'])
@@ -972,6 +1122,31 @@ class DoubanSpider(scrapy.Spider):
                 return
             
             # 如果电影不存在，正常爬取所有信息
+            # 在开始详细解析前再次检查会话是否有效
+            try:
+                driver.current_url  # 简单检查会话状态
+            except Exception as e:
+                logger.error(f"在解析详细数据前检测到会话无效: {str(e)}")
+                # 重新创建会话
+                try:
+                    driver.quit()
+                except:
+                    pass
+                driver = self.get_driver()
+                if not driver:
+                    logger.error("无法重新创建WebDriver，放弃详情页解析")
+                    return
+                # 重新访问URL并等待
+                driver.get(url)
+                self.random_sleep(2, 4)
+                try:
+                    WebDriverWait(driver, 10).until(
+                        EC.presence_of_element_located((By.TAG_NAME, "h1"))
+                    )
+                except Exception as e2:
+                    logger.error(f"重新加载页面失败: {str(e2)}")
+                    return
+
             # 提取导演信息
             try:
                 director_elem = driver.find_element(By.CSS_SELECTOR, 'a[rel="v:directedBy"]')
@@ -1089,6 +1264,31 @@ class DoubanSpider(scrapy.Spider):
             # 记录提取的关键信息
             logger.warning(f"电影数据: {movie_item['title']}, {movie_item['year']}, 评分:{movie_item['rating']}")
             
+            # 再次检查会话是否有效，再获取评论
+            try:
+                driver.current_url  # 简单检查会话状态
+            except Exception as e:
+                logger.error(f"获取评论前检测到会话无效: {str(e)}")
+                # 重新创建会话
+                try:
+                    driver.quit()
+                except:
+                    pass
+                driver = self.get_driver()
+                if not driver:
+                    logger.error("无法重新创建WebDriver，返回无评论电影数据")
+                    # 返回没有评论的电影基本信息
+                    yield scrapy.Request(
+                        url=url,
+                        callback=self.parse_item,
+                        meta={'item': movie_item},
+                        dont_filter=True
+                    )
+                    return
+                # 重新访问URL
+                driver.get(url)
+                self.random_sleep(2, 4)
+            
             # 获取评论
             yield from self.crawl_comments(driver, url, movie_item)
             
@@ -1098,6 +1298,18 @@ class DoubanSpider(scrapy.Spider):
             logger.error(f"Selenium解析电影详情出错: {str(e)}")
             import traceback
             logger.error(traceback.format_exc())
+            
+            # 检查是否是会话相关错误
+            if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                logger.error("电影详情解析过程中检测到会话失效，清理WebDriver")
+                # 清理旧会话
+                if self.driver:
+                    try:
+                        self.driver.quit()
+                    except:
+                        pass
+                    self.driver = None
+            
             return None
     
     def crawl_comments(self, driver, url, movie_item):
@@ -1119,8 +1331,8 @@ class DoubanSpider(scrapy.Spider):
                 url=driver.current_url,
                 callback=self.parse_item,
                 meta={'item': movie_item},
-                        dont_filter=True
-                    )
+                dont_filter=True
+            )
             
             # 构建评论页URL
             comments_url = url + 'comments'
@@ -1132,6 +1344,27 @@ class DoubanSpider(scrapy.Spider):
             
             # 处理第一页评论，第一页已加载
             if 1 in pages_to_crawl:
+                # 验证会话是否仍然有效
+                try:
+                    # 检查会话状态
+                    driver.current_url
+                except Exception as e:
+                    logger.error(f"会话已断开，尝试重新创建浏览器: {str(e)}")
+                    # 清理旧会话
+                    try:
+                        driver.quit()
+                    except:
+                        pass
+                    # 重新获取会话
+                    driver = self.get_driver()
+                    if not driver:
+                        logger.error("无法重新创建WebDriver，放弃评论获取")
+                        return
+                    # 重新访问URL
+                    driver.get(url)
+                    self.random_sleep(2, 4)
+                    
+                # 处理当前页评论
                 self.process_current_page_comments(driver, movie_item['comments'])
                 pages_to_crawl.remove(1)  # 已处理第1页，从列表中移除
             
@@ -1160,14 +1393,64 @@ class DoubanSpider(scrapy.Spider):
                     # 构建评论页URL
                     page_url = f"https://movie.douban.com/subject/{movie_id}/comments?start={(page_num-1)*20}&limit=20&status=P&sort=new_score"
                     logger.warning(f"访问第{page_num}页评论: {page_url}")
-                    time.sleep(1)
-                    driver.get(page_url)
+                    
+                    # 验证会话是否仍然有效
+                    try:
+                        # 检查会话状态
+                        current_url = driver.current_url
+                        logger.info(f"当前会话URL: {current_url}")
+                    except Exception as e:
+                        logger.error(f"访问评论页前会话已断开，尝试重新创建浏览器: {str(e)}")
+                        # 清理旧会话
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                        # 重新获取会话
+                        driver = self.get_driver()
+                        if not driver:
+                            logger.error("无法重新创建WebDriver，放弃评论获取")
+                            break
+                    
+                    # 使用try/except包裹页面导航，如果失败则重试
+                    try:
+                        time.sleep(1)
+                        driver.get(page_url)
+                    except Exception as e:
+                        logger.error(f"导航到评论页失败: {str(e)}，尝试重新创建浏览器")
+                        # 清理并重建会话
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                        driver = self.get_driver()
+                        if driver:
+                            time.sleep(2)
+                            driver.get(page_url)
+                        else:
+                            logger.error("无法重新创建WebDriver，跳过此评论页")
+                            continue
+                    
                     # # 处理验证码
                     # self.handle_verification(driver)
+                    
                     # 等待评论加载
-                    WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.CSS_SELECTOR, ".comment-item"))
-                    )
+                    try:
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.CSS_SELECTOR, ".comment-item"))
+                        )
+                    except Exception as e:
+                        logger.error(f"等待评论加载失败: {str(e)}")
+                        # 检查页面是否包含"没有找到符合条件的评论"
+                        if "没有找到符合条件的评论" in driver.page_source:
+                            logger.warning("该页无评论，跳过处理")
+                            continue
+                        # 检查是否存在其他错误页面指示
+                        if "出错了" in driver.page_source or "请求过于频繁" in driver.page_source:
+                            logger.warning("遇到错误页面或限流，等待更长时间后重试")
+                            time.sleep(10)  # 等待10秒后继续
+                            continue
+                    
                     self.random_sleep(2, 5)  # 增加随机等待时间
                     
                     # 处理当前页评论
@@ -1177,7 +1460,23 @@ class DoubanSpider(scrapy.Spider):
                     logger.error(f"访问第{page_num}页评论时出错: {str(e)}")
                     import traceback as tb
                     tb.print_exc()
-                    
+                    # 检查是否是会话失效
+                    if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                        logger.error("检测到会话失效，尝试重新创建浏览器")
+                        # 清理旧会话
+                        try:
+                            driver.quit()
+                        except:
+                            pass
+                        # 重新获取会话
+                        driver = self.get_driver()
+                        if not driver:
+                            logger.error("无法重新创建WebDriver，放弃剩余评论获取")
+                            break
+                    else:
+                        # 其他错误，等待一段时间后继续
+                        time.sleep(5)
+            
             # 将评论添加到电影数据中
             # 过滤掉可能的空评论，确保统计准确
             valid_comments = [comment for comment in movie_item['comments'] if comment]
@@ -1220,6 +1519,31 @@ class DoubanSpider(scrapy.Spider):
             import traceback as tb
             tb.print_exc()
             
+            # 如果是会话相关错误，尝试重新创建浏览器
+            if "invalid session id" in str(e) or "session deleted" in str(e) or "Unable to receive message from renderer" in str(e):
+                logger.error("总体评论获取过程中检测到会话失效，尝试重新创建浏览器")
+                # 清理旧会话
+                if self.driver:
+                    try:
+                        self.driver.quit()
+                    except:
+                        pass
+                    self.driver = None
+                
+                # 创建一个基本的评论项目并返回，避免完全失败
+                if movie_item and len(movie_item.get('comments', [])) > 0:
+                    logger.warning(f"返回已收集的{len(movie_item['comments'])}条评论")
+                    comment_item = movie_item.copy()
+                    comment_item['comment_details'] = movie_item['comments']
+                    
+                    # 包装成Request返回
+                    yield scrapy.Request(
+                        url=url,
+                        callback=self.parse_item,
+                        meta={'item': comment_item},
+                        dont_filter=True
+                    )
+    
     def parse_item(self, response):
         """处理由crawl_comments方法传递过来的item"""
         # 从response.meta中获取item
