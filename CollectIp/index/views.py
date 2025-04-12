@@ -1513,11 +1513,11 @@ def logs_view(request):
                 })
     
     # 检查Apache日志目录
-    apache_log_dirs = ['/var/log/apache2', '/var/log/httpd']
+    apache_log_dirs = ['/var/log/apache2']
     for apache_dir in apache_log_dirs:
         if os.path.exists(apache_dir):
             for file in os.listdir(apache_dir):
-                if 'collectip' in file and file.endswith('.log'):
+                if 'error' in file and file.endswith('.log'):
                     log_path = os.path.join(apache_dir, file)
                     try:
                         file_stat = os.stat(log_path)
@@ -1531,9 +1531,6 @@ def logs_view(request):
                         if 'error' in file:
                             description = 'Apache错误日志'
                             has_error = True
-                        elif 'access' in file:
-                            description = 'Apache访问日志'
-                            has_error = False
                         
                         log_files.append({
                             'name': file,
