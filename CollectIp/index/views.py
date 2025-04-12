@@ -1322,11 +1322,12 @@ def delete_mongodb_movie(movie_id):
     try:
         # 连接MongoDB
         client = MongoDBClient.get_instance()
+        db = client.db
         
-        # 获取数据库和集合
-        comments_collection = client.comments_collection
-        movies_collection = client.movies_collection
-        wordcloud_collection = client.wordcloud_collection
+        # 获取所有需要操作的集合
+        comments_collection = db['douban_comments']
+        movies_collection = db['douban_movies']
+        wordcloud_collection = db['wordcloud']
         
         # 删除评论集合中的数据
         comments_result = comments_collection.delete_many({'movie_id': str(movie_id)})
@@ -1441,14 +1442,14 @@ def update_movie_id(request, movie_id):
 def sync_mongodb_movie_id(old_id, new_id):
     """同步MongoDB中的电影ID"""
     try:
-        from django.conf import settings
-        import pymongo
-        
         # 连接MongoDB
         client = MongoDBClient.get_instance()
-        comments_collection = client.comments_collection
-        movies_collection = client.movies_collection
-        wordcloud_collection = client.wordcloud_collection
+        db = client.db
+        
+        # 获取所有需要更新的集合
+        comments_collection = db['douban_comments']
+        movies_collection = db['douban_movies']
+        wordcloud_collection = db['wordcloud']
         
         # 更新评论集合中的movie_id
         comments_result = comments_collection.update_many(
