@@ -268,7 +268,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>序号</th>
                                     <th>电影名称</th>
                                     <th>导演</th>
                                     <th>主演</th>
@@ -286,7 +286,7 @@
                                 {% for movie in movies %}
                                 <tr>
                                     <td class="id-cell" data-id="{{ movie.id }}">
-                                        <span class="id-display">{{ movie.id }}</span>
+                                        <span class="id-display">{{ forloop.counter }}</span>
                                         <span class="id-edit" style="display:none;">
                                             <input type="number" class="form-control form-control-sm new-id-input" value="{{ movie.id }}">
                                             <button class="btn btn-sm btn-primary confirm-id">确认</button>
