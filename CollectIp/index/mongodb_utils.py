@@ -86,6 +86,9 @@ class MongoDBClient:
     def get_instance(cls):
         """获取MongoDB客户端实例"""
         return cls()
+    def get_movie_id(self, movie_id):
+        """获取电影ID"""
+        return self.comments_collection.find_one({"movie_id": movie_id})
     
     def insert_comment(self, comment_data):
         """插入单条评论数据"""

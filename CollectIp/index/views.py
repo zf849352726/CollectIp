@@ -29,6 +29,7 @@ from django.http import HttpResponse
 from django.middleware.csrf import get_token
 import re
 import time
+from index.mongodb_utils import MongoDBClient
 
 logger = logging.getLogger(__name__)
 
@@ -1319,22 +1320,13 @@ def delete_collection(request, collection_id):
 def delete_mongodb_movie(movie_id):
     """从MongoDB中删除电影相关数据"""
     try:
-        from django.conf import settings
-        import pymongo
-        
         # 连接MongoDB
-        mongo_client = pymongo.MongoClient(
-            host=settings.MONGODB_HOST,
-            port=settings.MONGODB_PORT,
-            username=settings.MONGODB_USERNAME,
-            password=settings.MONGODB_PASSWORD
-        )
+        client = MongoDBClient.get_instance()
         
         # 获取数据库和集合
-        db = mongo_client[settings.MONGODB_DB]
-        comments_collection = db['douban_comments']
-        movies_collection = db['douban_movies']
-        wordcloud_collection = db['wordcloud']
+        comments_collection = client.comments_collection
+        movies_collection = client.movies_collection
+        wordcloud_collection = client.wordcloud_collection
         
         # 删除评论集合中的数据
         comments_result = comments_collection.delete_many({'movie_id': str(movie_id)})
@@ -1453,18 +1445,10 @@ def sync_mongodb_movie_id(old_id, new_id):
         import pymongo
         
         # 连接MongoDB
-        mongo_client = pymongo.MongoClient(
-            host=settings.MONGODB_HOST,
-            port=settings.MONGODB_PORT,
-            username=settings.MONGODB_USERNAME,
-            password=settings.MONGODB_PASSWORD
-        )
-        
-        # 获取数据库和集合
-        db = mongo_client[settings.MONGODB_DB]
-        comments_collection = db['douban_comments']
-        movies_collection = db['douban_movies']
-        wordcloud_collection = db['wordcloud']
+        client = MongoDBClient.get_instance()
+        comments_collection = client.comments_collection
+        movies_collection = client.movies_collection
+        wordcloud_collection = client.wordcloud_collection
         
         # 更新评论集合中的movie_id
         comments_result = comments_collection.update_many(
