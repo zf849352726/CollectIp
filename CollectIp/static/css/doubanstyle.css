@@ -285,20 +285,27 @@ body {
 
 /* 操作按钮样式 */
 .btn-icon {
-    padding: 8px;
-    background: none;
-    border: none;
+    font-size: 14px;
     cursor: pointer;
-    font-size: 18px;
-    opacity: 0.7;
-    transition: all 0.2s;
-    border-radius: 50%;
+    background: transparent;
+    border: none;
+    padding: 0 5px;
     margin: 0 2px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
 }
 
 .btn-icon:hover {
     opacity: 1;
-    background-color: #f5f5f5;
+}
+
+/* 删除按钮特殊样式 */
+.btn-delete {
+    color: #dc3545;
+}
+
+.btn-delete:hover {
+    color: #bd2130;
 }
 
 /* 分页样式优化 */
@@ -413,9 +420,8 @@ body {
     top: 20px;
     right: 20px;
     z-index: 9999;
-    min-width: 300px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    animation: slideIn 0.3s ease forwards;
+    max-width: 350px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 }
 
 @keyframes slideIn {
@@ -824,7 +830,7 @@ body {
 .placeholder-notice p:first-child {
     font-weight: 600;
     margin-bottom: 8px;
-} 
+}
 
 /* ID编辑样式 */
 .id-cell {

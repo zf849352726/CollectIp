@@ -309,7 +309,7 @@
                                         <button class="btn-icon toggle-published" data-id="{{ movie.id }}" data-published="{% if movie.is_published %}true{% else %}false{% endif %}" title="{% if movie.is_published %}已发表{% else %}未发表{% endif %}">
                                             {% if movie.is_published %}✅{% else %}❌{% endif %}
                                         </button>
-                                        <a href="/douban/movies/{{ movie.id }}/delete/" class="btn-icon btn-delete" title="删除" data-id="{{ movie.id }}">🗑️</a>
+                                        <button class="btn-icon btn-delete" title="删除" data-id="{{ movie.id }}">🗑️</button>
                                     </td>
                                 </tr>
                                 {% endfor %}
