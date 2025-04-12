@@ -330,6 +330,28 @@ class DoubanSpider(scrapy.Spider):
         """获取Chrome浏览器实例"""
         logger.warning("开始初始化Chrome浏览器")
         
+        # 如果已有driver但会话无效，则先关闭重建
+        if self.driver is not None:
+            try:
+                # 检查会话是否有效
+                self.driver.current_url
+            except Exception as e:
+                logger.warning(f"检测到无效的Chrome会话，错误: {str(e)}")
+                try:
+                    self.driver.quit()
+                except:
+                    pass
+                self.driver = None
+                # 清理可能存在的僵尸进程
+                try:
+                    if os.name == 'posix':  # Linux/Mac
+                        os.system("pkill -f chrome")
+                        os.system("pkill -f chromedriver")
+                        logger.warning("已尝试杀死残留的Chrome和ChromeDriver进程")
+                    time.sleep(2)  # 给进程清理一些时间
+                except:
+                    pass
+        
         if self.driver is None and self.driver_path:
             try:
                 logger.warning(f"ChromeDriver路径: {self.driver_path}")
@@ -344,67 +366,128 @@ class DoubanSpider(scrapy.Spider):
                 # 设置 Chrome 选项
                 options = webdriver.ChromeOptions()
                 
-                # 基本安全设置
+                # 基本安全设置 - 最关键的选项
+                options.add_argument('--no-sandbox')  # 禁用沙箱
                 options.add_argument('--disable-dev-shm-usage')  # 禁用/dev/shm使用
                 
-                # 解决渲染器连接问题
+                # 修复渲染器连接问题的关键选项
                 options.add_argument('--disable-gpu')  # 禁用GPU加速
                 options.add_argument('--disable-software-rasterizer')  # 禁用软件光栅化器
                 
-                # 修复无头模式相关问题
-                options.add_argument('--no-sandbox')  # 禁用沙箱
-                options.add_argument('--headless=new')  # 使用新版无头模式
+                # 无头模式配置 - 修复会话管理问题
+                options.add_argument('--headless=new')  # 新版无头模式
+                
+                # 重要：禁用各种可能导致崩溃的功能
+                options.add_argument('--disable-extensions')  # 禁用扩展
+                options.add_argument('--disable-infobars')  # 禁用信息栏
+                options.add_argument('--mute-audio')  # 静音
+                options.add_argument('--disable-notifications')  # 禁用通知
+                options.add_argument('--disable-popup-blocking')  # 禁用弹窗阻止
+                
+                # 解决连接丢失问题的关键选项
                 options.add_argument('--disable-features=VizDisplayCompositor')  # 禁用复合器
-                options.add_argument('--ignore-certificate-errors')  # 忽略证书错误
-                
-                # 确保单一进程，防止僵尸进程
-                options.add_argument('--single-process')
-                
-                # 内存相关设置
-                options.add_argument('--disable-crash-reporter')  # 禁用崩溃报告
-                options.add_argument('--disable-in-process-stack-traces')  # 禁用进程内堆栈跟踪
                 options.add_argument('--disable-browser-side-navigation')  # 禁用浏览器侧导航
                 
-                # 设置固定端口，解决DevToolsActivePort文件问题
-                options.add_argument('--remote-debugging-port=9230')
-                options.add_argument('--remote-debugging-address=0.0.0.0')  # 允许远程调试
+                # 新增：WebDriver 连接稳定性选项
+                options.add_argument('--disable-application-cache')  # 禁用应用缓存
+                options.add_argument('--disable-application-cookies')  # 禁用应用cookie
+                options.add_argument('--disable-features=NetworkPrediction')  # 禁用网络预测
                 
-                # 设置user-agent
+                # 内存管理优化 - 解决内存泄漏问题
+                options.add_argument('--disable-renderer-backgrounding')  # 防止渲染器在后台时被限制资源
+                options.add_argument('--disable-backing-store-limit')  # 禁用后台存储限制
+                options.add_argument('--disable-background-networking')  # 禁用后台网络活动
+                
+                # 调试端口设置 - 确保唯一性
+                import random
+                debug_port = random.randint(9222, 9999)  # 随机选择调试端口，避免冲突
+                options.add_argument(f'--remote-debugging-port={debug_port}')
+                options.add_argument('--remote-debugging-address=127.0.0.1')  # 仅本地调试接口
+                
+                # 用户代理设置
                 options.add_argument(f'user-agent={self.headers["User-Agent"]}')
                 
-                # 防检测设置
+                # 隐藏自动化控制标志
                 options.add_argument('--disable-blink-features=AutomationControlled')
                 options.add_experimental_option('excludeSwitches', ['enable-automation', 'enable-logging'])
                 options.add_experimental_option('useAutomationExtension', False)
                 
-                # 设置窗口大小
-                options.add_argument('--window-size=1920,1080')
+                # 新增：进程管理选项
+                options.add_argument('--no-first-run')  # 跳过首次运行设置
+                options.add_argument('--no-service-autorun')  # 禁止服务自动运行
+                options.add_argument('--password-store=basic')  # 使用基本密码存储
+                options.add_argument('--no-default-browser-check')  # 不检查默认浏览器
                 
-                # 禁用可能导致问题的扩展和通知
-                options.add_argument('--disable-extensions')
-                options.add_argument('--disable-infobars')
-                options.add_argument('--mute-audio')
-                options.add_argument('--no-first-run')
-                options.add_argument('--no-service-autorun')
-                options.add_argument('--password-store=basic')
+                # 调试日志记录级别
+                options.add_argument('--log-level=3')  # 只记录错误
+                options.add_argument('--silent')  # 静默模式
                 
                 logger.warning("Chrome浏览器配置已设置，准备启动")
                 
-                # 创建Chrome实例
-                self.driver = webdriver.Chrome(service=service, options=options)
+                # 创建Chrome实例 - 添加错误重试逻辑
+                max_retries = 3
+                retry_count = 0
+                last_error = None
                 
-                # 执行JS脚本绕过反自动化检测
-                self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                while retry_count < max_retries:
+                    try:
+                        # 尝试创建Chrome实例
+                        self.driver = webdriver.Chrome(service=service, options=options)
+                        
+                        # 验证会话是否有效
+                        self.driver.get("about:blank")
+                        
+                        # 执行JS脚本绕过反自动化检测
+                        self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                        
+                        logger.warning("创建新的Chrome实例成功")
+                        logger.warning(f"浏览器地址: {self.driver.current_url}")
+                        
+                        # 设置页面加载超时
+                        self.driver.set_page_load_timeout(30)
+                        
+                        # 成功创建，退出重试循环
+                        break
+                    
+                    except Exception as e:
+                        retry_count += 1
+                        last_error = e
+                        logger.warning(f"Chrome启动失败 (尝试 {retry_count}/{max_retries}): {str(e)}")
+                        
+                        # 清理失败的实例
+                        try:
+                            if self.driver:
+                                self.driver.quit()
+                        except:
+                            pass
+                        self.driver = None
+                        
+                        # 清理进程并等待
+                        try:
+                            if os.name == 'posix':  # Linux/Mac
+                                os.system("pkill -f chrome")
+                                os.system("pkill -f chromedriver")
+                        except:
+                            pass
+                        
+                        # 添加延迟，让系统有时间回收资源
+                        time.sleep(5)
                 
-                logger.warning("创建新的Chrome实例成功")
-                logger.warning(f"浏览器地址: {self.driver.current_url}")
+                # 如果所有重试都失败
+                if self.driver is None:
+                    logger.error(f"经过 {max_retries} 次重试后创建Chrome实例失败: {str(last_error)}")
+                    return None
                 
-                # 加载已保存的Cookie
-                if self.load_cookies():
-                    logger.warning("已加载保存的Cookie")
-                    self.is_logged_in = True
+                # 加载Cookie
+                try:
+                    if self.load_cookies():
+                        logger.warning("已加载保存的Cookie")
+                        self.is_logged_in = True
+                except Exception as e:
+                    logger.warning(f"加载Cookie失败: {str(e)}")
                 
                 return self.driver
+            
             except Exception as e:
                 logger.error(f"创建WebDriver失败: {e}")
                 logger.error(traceback.format_exc())
@@ -418,7 +501,10 @@ class DoubanSpider(scrapy.Spider):
                 except:
                     pass
                 
+                # 确保driver被释放
+                self.driver = None
                 return None
+                
         elif self.driver is not None:
             logger.warning("使用现有的WebDriver实例")
             return self.driver
