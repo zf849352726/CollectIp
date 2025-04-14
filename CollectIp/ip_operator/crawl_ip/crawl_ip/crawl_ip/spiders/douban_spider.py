@@ -893,10 +893,43 @@ class DoubanSpider(scrapy.Spider):
             
             # 获取年份
             try:
-                year_element = driver.find_element(By.CSS_SELECTOR, 'span.year')
-                year = year_element.text.strip('()')
-            except:
+                year_element = driver.find_element(By.CSS_SELECTOR, '.year')
+                year_text = year_element.text.strip('()')
+                year = year_text if year_text and len(year_text) == 4 else None
+                
+                # 如果获取不到年份，尝试从info div中匹配
+                if not year or not year.isdigit():
+                    info_text = driver.find_element(By.CSS_SELECTOR, 'div#info').text
+                    import re
+                    year_match = re.search(r'(?:上映日期|首播|播出日期):\s*(\d{4})', info_text) 
+                    year = year_match.group(1) if year_match else '未知'
+                
+                logger.warning(f"获取到电影年份: {year}")
+            except Exception as e:
+                logger.error(f"获取年份出错: {str(e)}")
                 year = '未知'
+
+            # 获取片长
+            try:
+                # 先尝试常规方法
+                duration_element = driver.find_element(By.CSS_SELECTOR, 'span[property="v:runtime"]')
+                duration = duration_element.text.strip()
+                
+                # 记录获取到的片长信息
+                logger.warning(f"获取到片长: {duration}")
+            except:
+                try:
+                    # 获取整个info文本
+                    info_text = driver.find_element(By.CSS_SELECTOR, 'div#info').text
+                    import re
+                    duration_match = re.search(r'片长:\s*(.*?)(?:\n|$)', info_text)
+                    duration = duration_match.group(1).strip() if duration_match else '未知'
+                    
+                    # 记录获取到的片长信息
+                    logger.warning(f"通过正则获取到片长: {duration}")
+                except Exception as e:
+                    logger.error(f"获取片长出错: {str(e)}")
+                    duration = '未知'
             
             # 获取评分
             try:
@@ -912,32 +945,48 @@ class DoubanSpider(scrapy.Spider):
             
             # 获取类型
             try:
-                genre_elements = driver.find_elements(By.CSS_SELECTOR, 'span[property="v:genre"]')
-                genre = ','.join([g.text for g in genre_elements]) if genre_elements else '未知'
-            except:
-                try:
-                    genre_elements = driver.find_elements(By.XPATH, '//span[contains(text(), "类型")]/following-sibling::*//text()')
-                    genre = ','.join([g for g in genre_elements]) if genre_elements else '未知'
-                except:
-                    genre = '未知'
+                # 首先尝试通过property属性获取
+                genre_elements = [element.text.strip() for element in driver.find_elements(By.CSS_SELECTOR, 'span[property="v:genre"]')]
+                if genre_elements:
+                    genre = ','.join(genre_elements)
+                else:
+                    # 如果无法通过property获取，尝试通过info文本匹配
+                    info_text = driver.find_element(By.CSS_SELECTOR, 'div#info').text
+                    import re
+                    genre_match = re.search(r'类型:\s*(.*?)(?:\n|$)', info_text)
+                    genre = genre_match.group(1).strip() if genre_match else '未知'
+                    
+                    # 如果获取到的是多个类型（以 / 分隔），将其转换为逗号分隔
+                    if '/' in genre:
+                        genre = ','.join([g.strip() for g in genre.split('/')])
+                
+                # 记录获取到的类型信息
+                logger.warning(f"获取到电影类型: {genre}")
+            except Exception as e:
+                logger.error(f"获取电影类型出错: {str(e)}")
+                genre = '未知'
             
             # 获取制片国家/地区
             try:
-                region_text = driver.find_element(By.XPATH, '//span[contains(text(), "制片国家/地区:")]/following-sibling::text()[1]')
-                region = region_text.text.strip()
-            except:
+                # 首先尝试获取信息字段文本
+                info_text = driver.find_element(By.CSS_SELECTOR, 'div#info').text
+                # 使用正则表达式匹配制片国家/地区
+                import re
+                region_match = re.search(r'制片国家/地区:\s*(.*?)(?:\n|$)', info_text)
+                if region_match:
+                    region = region_match.group(1).strip()
+                else:
+                    # 尝试直接获取信息
+                    region_xpath = "//span[contains(text(), '制片国家/地区:')]/following-sibling::text()[1]"
+                    region_element = driver.find_element(By.XPATH, region_xpath)
+                    region = region_element.get_attribute('textContent').strip()
+                
+                # 记录获取到的地区信息
+                logger.warning(f"获取到制片国家/地区: {region}")
+            except Exception as e:
+                logger.error(f"获取制片国家/地区出错: {str(e)}")
                 region = '未知'
             
-            # 获取片长
-            try:
-                duration = driver.find_element(By.CSS_SELECTOR, 'span[property="v:runtime"]').text
-            except:
-                try:
-                    duration_element = driver.find_element(By.XPATH, '//span[contains(text(), "片长:")]/following-sibling::text()[1]')
-                    duration = duration_element.text.strip()
-                except:
-                    duration = '未知'
-                    
             # 获取海报URL
             try:
                 poster_element = driver.find_element(By.CSS_SELECTOR, '#mainpic img')
