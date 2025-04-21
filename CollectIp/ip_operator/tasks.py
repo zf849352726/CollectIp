@@ -246,7 +246,7 @@ def score_ip_task():
     """IP评分任务"""
     try:
         logger.info("开始执行IP评分任务")
-        from .services.crawler import start_score
+        from .services.scorer import start_score
         result = start_score()
         logger.info(f"IP评分任务完成: {result}")
         return result
