@@ -22,7 +22,7 @@
 
 1. 克隆项目
    ```bash
-   git clone https://github.com/你的用户名/项目名.git
+   git clone https://github.com/zf849352726/CollectIp.git
    ```
 
 2. 安装依赖
