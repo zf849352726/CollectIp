@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ proxy.server }} · CollectIP</title><link rel="stylesheet" href="{% static 'proxy_web/dashboard.css' %}"></head>
+<body><main class="shell">
+  <header class="hero"><div><p class="eyebrow">PROXY DETAIL</p><h1>{{ proxy.server }}</h1><p class="subtitle">{{ proxy.country }} · {{ proxy.proxy_type }} · 最近 100 次检测</p></div><a class="button secondary" href="{% url 'proxy_web:dashboard' %}">返回监控台</a></header>
+  <section class="stats">
+    <article><span>状态</span><strong class="{% if proxy.is_available %}good{% endif %}">{% if proxy.is_available %}可用{% elif proxy.is_archived %}已归档{% else %}不可用{% endif %}</strong></article>
+    <article><span>评分</span><strong>{{ proxy.score }}</strong></article>
+    <article><span>24h 成功率</span><strong>{{ proxy.success_rate|floatformat:1 }}<small>%</small></strong></article>
+    <article><span>平均延迟</span><strong>{{ proxy.latency_ms|default:"-" }}<small> ms</small></strong></article>
+  </section>
+  <section class="panel"><h2>检测历史</h2><div class="history-chart">
+    {% for check in history reversed %}<i class="{% if check.available %}ok{% else %}fail{% endif %}" style="height:{% if check.available %}{{ check.latency_ms|default:10 }}{% else %}8{% endif %}px" title="{{ check.checked_at }} · {{ check.latency_ms|default:'失败' }}"></i>{% empty %}<p class="empty">暂无检测历史</p>{% endfor %}
+  </div><div class="table-wrap"><table><thead><tr><th>时间</th><th>结果</th><th>协议</th><th>延迟</th><th>出口 IP</th><th>检测目标</th><th>错误</th></tr></thead><tbody>
+    {% for check in history %}<tr><td>{{ check.checked_at|date:"m-d H:i:s" }}</td><td>{% if check.available %}<span class="badge online">成功</span>{% else %}<span class="badge offline">失败</span>{% endif %}</td><td>{{ check.protocol }}</td><td>{{ check.latency_ms|default:"-" }}</td><td>{{ check.exit_ip|default:"-" }}</td><td>{{ check.test_url }}</td><td title="{{ check.error_message }}">{{ check.error_type|default:"-" }}</td></tr>{% endfor %}
+  </tbody></table></div></section>
+</main></body></html>

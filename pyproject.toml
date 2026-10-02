@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "collectip"
+version = "2.2.0"
+description = "Playwright proxy collector with a focused Django monitoring UI"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ddddocr>=1.5,<2",
+    "Django>=5.2,<6",
+    "playwright>=1.40,<2",
+    "requests>=2.32,<3",
+    "waitress>=3,<4",
+]
+
+[project.scripts]
+collectip = "ip_operator.ip_collection.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["ip_operator*", "proxy_web*", "webapp*"]
+
+[tool.setuptools.package-data]
+proxy_web = ["templates/**/*.html", "static/**/*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"

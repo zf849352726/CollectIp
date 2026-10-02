@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CollectIP 代理监控</title>
+  <link rel="stylesheet" href="{% static 'proxy_web/dashboard.css' %}">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">COLLECTIP · LIVE POOL</p>
+        <h1>代理 IP 监控台</h1>
+        <p class="subtitle">Playwright 采集 · 动态可用性检测 · 实时评分</p>
+      </div>
+      <div class="actions">
+        {% if request.user.is_staff %}
+        <button data-job="collect">开始采集</button>
+        <button class="secondary" data-job="score">检测并评分</button>
+        {% else %}
+        <a class="button secondary" href="/admin/login/?next=/">登录后操作</a>
+        {% endif %}
+      </div>
+    </header>
+
+    <section class="stats">
+      <article><span>代理总数</span><strong id="total">{{ stats.total|default:0 }}</strong></article>
+      <article><span>当前可用</span><strong class="good" id="available">{{ stats.available|default:0 }}</strong></article>
+      <article><span>平均评分</span><strong>{{ stats.average_score|floatformat:0|default:"-" }}</strong></article>
+      <article><span>平均延迟</span><strong>{{ stats.average_latency|floatformat:0|default:"-" }}<small> ms</small></strong></article>
+      <article><span>24h 成功率</span><strong>{{ stats.average_success_rate|floatformat:1|default:"0" }}<small>%</small></strong></article>
+      <article><span>已归档</span><strong>{{ stats.archived|default:0 }}</strong></article>
+    </section>
+
+    <section class="panel jobs" id="jobs">
+      <div><span>采集任务</span><b data-state="collect">{{ jobs.collect.status }}</b><small data-message="collect">{{ jobs.collect.message }}</small></div>
+      <div><span>评分任务</span><b data-state="score">{{ jobs.score.status }}</b><small data-message="score">{{ jobs.score.message }}</small></div>
+    </section>
+
+    <section class="panel">
+      <form class="filters" method="get">
+        <input name="q" value="{{ search }}" placeholder="搜索 IP 或国家">
+        <select name="status">
+          <option value="">全部状态</option>
+          <option value="available" {% if status == 'available' %}selected{% endif %}>可用</option>
+          <option value="unavailable" {% if status == 'unavailable' %}selected{% endif %}>不可用</option>
+          <option value="archived" {% if status == 'archived' %}selected{% endif %}>已归档</option>
+        </select>
+        <input name="min_score" type="number" min="0" max="100" placeholder="最低分">
+        <button type="submit" class="secondary">筛选</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>代理地址</th><th>状态</th><th>评分</th><th>延迟</th><th>类型</th><th>国家</th><th>失败次数</th><th>最后检测</th></tr></thead>
+          <tbody>
+          {% for proxy in page %}
+            <tr>
+              <td class="mono"><a href="{% url 'proxy_web:proxy_detail' proxy.pk %}">{{ proxy.server }}</a></td>
+              <td><span class="badge {% if proxy.is_available %}online{% else %}offline{% endif %}">{% if proxy.is_available %}可用{% else %}不可用{% endif %}</span></td>
+              <td><span class="score"><i style="width:{{ proxy.score }}%"></i></span> {{ proxy.score }}</td>
+              <td>{% if proxy.latency_ms %}{{ proxy.latency_ms }} ms{% else %}-{% endif %}</td>
+              <td>{{ proxy.proxy_type }}</td><td>{{ proxy.country }}</td>
+              <td>{{ proxy.consecutive_failures }}</td>
+              <td>{{ proxy.last_checked_at|date:"m-d H:i:s"|default:"尚未检测" }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="8" class="empty">暂无代理，点击“开始采集”创建 IP 池。</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if page.has_other_pages %}<nav class="pagination">第 {{ page.number }} / {{ page.paginator.num_pages }} 页</nav>{% endif %}
+    </section>
+
+    {% if request.user.is_staff %}
+    <details class="panel settings">
+      <summary>自动化与淘汰设置</summary>
+      <form method="post" action="{% url 'proxy_web:update_settings' %}" class="settings-grid">
+        {% csrf_token %}
+        <label><input type="checkbox" name="auto_collect" {% if settings.auto_collect %}checked{% endif %}> 自动采集</label>
+        <label><input type="checkbox" name="auto_score" {% if settings.auto_score %}checked{% endif %}> 自动评分</label>
+        <label>采集间隔（秒）<input type="number" name="collection_interval" value="{{ settings.collection_interval }}"></label>
+        <label>评分间隔（秒）<input type="number" name="score_interval" value="{{ settings.score_interval }}"></label>
+        <label>采集页数<input type="number" name="max_pages" value="{{ settings.max_pages }}"></label>
+        <label>验证码重试<input type="number" name="captcha_retries" value="{{ settings.captcha_retries }}"></label>
+        <label>检测超时（秒）<input type="number" name="check_timeout" value="{{ settings.check_timeout }}"></label>
+        <label>检测并发<input type="number" name="check_workers" value="{{ settings.check_workers }}"></label>
+        <label>归档失败次数<input type="number" name="archive_after_failures" value="{{ settings.archive_after_failures }}"></label>
+        <label>归档保留天数<input type="number" name="purge_after_days" value="{{ settings.purge_after_days }}"></label>
+        <button type="submit">保存设置</button>
+      </form>
+    </details>
+    {% endif %}
+  </main>
+  <script>
+    const csrf = () => document.cookie.split('; ').find(x => x.startsWith('csrftoken='))?.split('=')[1] || '';
+    document.querySelectorAll('[data-job]').forEach(button => button.addEventListener('click', async () => {
+      button.disabled = true;
+      await fetch(`/api/jobs/${button.dataset.job}/`, {method: 'POST', headers: {'X-CSRFToken': csrf()}});
+      button.disabled = false;
+      updateStatus();
+    }));
+    let running = false;
+    async function updateStatus() {
+      const response = await fetch('/api/status/');
+      const data = await response.json();
+      document.querySelector('#total').textContent = data.stats.total;
+      document.querySelector('#available').textContent = data.stats.available;
+      const wasRunning = running;
+      running = false;
+      for (const [name, job] of Object.entries(data.jobs)) {
+        document.querySelector(`[data-state="${name}"]`).textContent = job.status;
+        document.querySelector(`[data-message="${name}"]`).textContent = job.message;
+        running ||= ['queued', 'running'].includes(job.status);
+        const total = job.total || 0;
+        if (total) document.querySelector(`[data-message="${name}"]`).textContent = `${job.progress}/${total} ${job.message || ''}`;
+      }
+      if (wasRunning && !running) location.reload();
+    }
+    setInterval(updateStatus, 3000);
+  </script>
+</body>
+</html>

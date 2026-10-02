@@ -1,0 +1,13 @@
+[Unit]
+Description=CollectIP web service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/collectip
+EnvironmentFile=/opt/collectip/.env
+ExecStart=/opt/collectip/.venv/bin/waitress-serve --listen=127.0.0.1:8000 webapp.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
