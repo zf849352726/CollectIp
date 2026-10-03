@@ -27,6 +27,10 @@ class Proxy(models.Model):
     last_seen_at = models.DateTimeField(auto_now_add=True, db_index=True)
     archived_at = models.DateTimeField(null=True, blank=True)
     last_error = models.CharField(max_length=255, blank=True, default="")
+    collection_successes = models.PositiveIntegerField(default=0)
+    collection_failures = models.PositiveIntegerField(default=0)
+    last_collection_used_at = models.DateTimeField(null=True, blank=True, db_index=True)
+    collection_last_error = models.CharField(max_length=255, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -70,6 +74,15 @@ class SystemSettings(models.Model):
     check_workers = models.PositiveSmallIntegerField(default=20)
     archive_after_failures = models.PositiveSmallIntegerField(default=10)
     purge_after_days = models.PositiveSmallIntegerField(default=30)
+    use_proxy_for_collection = models.BooleanField(default=True)
+    collection_proxy_min_score = models.PositiveSmallIntegerField(default=60)
+    collection_proxy_attempts = models.PositiveSmallIntegerField(default=3)
+    allow_direct_fallback = models.BooleanField(default=True)
+    collection_min_delay_ms = models.PositiveIntegerField(default=500)
+    collection_max_delay_ms = models.PositiveIntegerField(default=1500)
+    collection_retry_backoff = models.PositiveSmallIntegerField(default=15)
+    collection_max_runtime = models.PositiveIntegerField(default=300)
+    log_retention_days = models.PositiveSmallIntegerField(default=30)
     last_collection_at = models.DateTimeField(null=True, blank=True)
     last_score_at = models.DateTimeField(null=True, blank=True)
 
@@ -106,3 +119,30 @@ class BackgroundJob(models.Model):
                 name="valid_background_job_status",
             )
         ]
+
+
+class OperationLog(models.Model):
+    LEVEL_CHOICES = [
+        ("DEBUG", "调试"),
+        ("INFO", "信息"),
+        ("WARNING", "警告"),
+        ("ERROR", "错误"),
+    ]
+
+    level = models.CharField(max_length=8, choices=LEVEL_CHOICES, db_index=True)
+    module = models.CharField(max_length=32, db_index=True)
+    event = models.CharField(max_length=64, db_index=True)
+    message = models.TextField()
+    details = models.JSONField(default=dict, blank=True)
+    proxy_server = models.CharField(max_length=64, blank=True, default="", db_index=True)
+    job = models.ForeignKey(
+        BackgroundJob,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="logs",
+    )
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ["-created_at"]

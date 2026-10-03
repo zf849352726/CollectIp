@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "collectip"
-version = "2.2.1"
+version = "2.3.0"
 description = "Playwright proxy collector with a focused Django monitoring UI"
 readme = "README.md"
 requires-python = ">=3.10"

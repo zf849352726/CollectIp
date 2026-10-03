@@ -76,7 +76,7 @@ class ProxyScorer:
                     url,
                     proxies={"http": proxy_url, "https": proxy_url},
                     timeout=self.timeout,
-                    headers={"User-Agent": "CollectIP/2.2"},
+                    headers={"User-Agent": "CollectIP/2.3"},
                 )
                 response.raise_for_status()
                 latency = max(1, round((time.perf_counter() - started) * 1000))

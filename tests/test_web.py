@@ -5,10 +5,24 @@ from unittest.mock import Mock, patch
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from ip_operator.ip_collection import ProxyRecord
-from proxy_web.jobs import claim_next_job, enqueue_job, recover_stale_jobs
-from proxy_web.models import BackgroundJob, Proxy, ProxyCheckHistory, SystemSettings
+from proxy_web.jobs import (
+    claim_next_job,
+    enqueue_job,
+    enqueue_due_jobs,
+    process_job,
+    recover_stale_jobs,
+    select_collection_proxies,
+)
+from proxy_web.models import (
+    BackgroundJob,
+    OperationLog,
+    Proxy,
+    ProxyCheckHistory,
+    SystemSettings,
+)
 from proxy_web.repository import upsert_records
 from proxy_web.scoring import CheckAttempt, CheckResult, ProxyScorer, score_all_proxies
 
@@ -114,6 +128,123 @@ class JobTests(TestCase):
         self.assertEqual(job.status, "failed")
         self.assertIsNone(job.active_key)
 
+    def test_selects_only_recent_high_quality_proxies_without_duplicates(self):
+        eligible = [
+            Proxy.objects.create(
+                server=f"127.0.0.{index}:8080",
+                is_available=True,
+                score=80 + index,
+                last_success_at=timezone.now(),
+            )
+            for index in range(1, 4)
+        ]
+        Proxy.objects.create(
+            server="127.0.0.9:8080",
+            is_available=True,
+            score=10,
+            last_success_at=timezone.now(),
+        )
+        config = SystemSettings.load()
+        config.collection_proxy_attempts = 2
+        selected = select_collection_proxies(config)
+        self.assertEqual(len(selected), 2)
+        self.assertEqual(len({proxy.pk for proxy in selected}), 2)
+        self.assertTrue(set(selected).issubset(set(eligible)))
+
+    @patch("proxy_web.jobs.time.sleep")
+    @patch("ip_operator.ip_collection.collect_proxies")
+    def test_collection_rotates_proxy_then_falls_back_to_direct(self, collect, sleep):
+        route = Proxy.objects.create(
+            server="127.0.0.1:8080",
+            is_available=True,
+            score=90,
+            last_success_at=timezone.now(),
+        )
+        collect.side_effect = [
+            RuntimeError("proxy rejected"),
+            [ProxyRecord(server="127.0.0.2:8080")],
+        ]
+        config = SystemSettings.load()
+        config.collection_proxy_attempts = 1
+        config.collection_retry_backoff = 0
+        config.save()
+        job, _ = enqueue_job("collect")
+        process_job(job)
+        job.refresh_from_db()
+        route.refresh_from_db()
+        self.assertEqual(job.status, "success")
+        self.assertEqual(route.collection_failures, 1)
+        self.assertEqual(collect.call_count, 2)
+        self.assertEqual(
+            collect.call_args_list[0].args[0].proxy_server,
+            "http://127.0.0.1:8080",
+        )
+        self.assertIsNone(collect.call_args_list[1].args[0].proxy_server)
+        self.assertTrue(Proxy.objects.filter(server="127.0.0.2:8080").exists())
+        self.assertTrue(OperationLog.objects.filter(event="collection_succeeded").exists())
+
+    def test_failed_automatic_job_respects_collection_interval(self):
+        config = SystemSettings.load()
+        config.auto_collect = True
+        config.auto_score = False
+        config.collection_interval = 3600
+        config.save()
+        BackgroundJob.objects.create(
+            kind="collect",
+            status="failed",
+            message="failed",
+            started_at=timezone.now(),
+            finished_at=timezone.now(),
+        )
+        self.assertEqual(enqueue_due_jobs(), 1)
+        self.assertFalse(
+            BackgroundJob.objects.filter(kind="collect", status="queued").exists()
+        )
+
+    @patch("ip_operator.ip_collection.collect_proxies")
+    def test_missing_browser_does_not_penalize_proxy_or_retry_routes(self, collect):
+        collect.side_effect = RuntimeError("Executable doesn't exist")
+        route = Proxy.objects.create(
+            server="127.0.0.1:8080",
+            is_available=True,
+            score=90,
+            last_success_at=timezone.now(),
+        )
+        config = SystemSettings.load()
+        config.collection_proxy_attempts = 1
+        config.save()
+        job, _ = enqueue_job("collect")
+        process_job(job)
+        route.refresh_from_db()
+        job.refresh_from_db()
+        self.assertEqual(job.status, "failed")
+        self.assertEqual(route.collection_failures, 0)
+        self.assertEqual(collect.call_count, 1)
+        self.assertTrue(OperationLog.objects.filter(event="browser_missing").exists())
+
+    @patch("ip_operator.ip_collection.collect_proxies")
+    def test_collector_events_are_flushed_after_browser_call(self, collect):
+        def fake_collect(config, *, event_callback):
+            event_callback(
+                "INFO",
+                "page_collected",
+                "Collected page 1",
+                {"page": 1, "unique_proxies": 1},
+            )
+            return [ProxyRecord(server="127.0.0.2:8080")]
+
+        collect.side_effect = fake_collect
+        config = SystemSettings.load()
+        config.use_proxy_for_collection = False
+        config.save()
+        job, _ = enqueue_job("collect")
+        process_job(job)
+        self.assertTrue(
+            OperationLog.objects.filter(
+                job=job, event="page_collected", message="Collected page 1"
+            ).exists()
+        )
+
 
 class WebTests(TestCase):
     def setUp(self):
@@ -141,6 +272,24 @@ class WebTests(TestCase):
         self.assertEqual(css.status_code, 200)
         self.assertEqual(favicon.status_code, 301)
         self.assertEqual(favicon["Location"], "/static/proxy_web/favicon.svg")
+
+    def test_operation_logs_require_staff_and_support_filters(self):
+        OperationLog.objects.create(
+            level="WARNING",
+            module="collector",
+            event="blocked",
+            message="HTTP 429",
+            proxy_server="127.0.0.1:8080",
+        )
+        anonymous = self.client.get(reverse("proxy_web:operation_logs"))
+        self.assertEqual(anonymous.status_code, 302)
+        self.client.force_login(self.staff)
+        response = self.client.get(
+            reverse("proxy_web:operation_logs"),
+            {"level": "WARNING", "q": "429"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "HTTP 429")
 
     def test_list_detail_and_random_api(self):
         proxy = Proxy.objects.create(

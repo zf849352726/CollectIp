@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 import logging
+import os
+import random
+import time
 from dataclasses import dataclass
-from typing import Any, Optional, Protocol
+from pathlib import Path
+from typing import Any, Callable, Optional, Protocol
 from urllib.parse import urljoin
 
 from .captcha import DdddOcrCaptchaSolver
@@ -21,6 +25,13 @@ class CollectionError(RuntimeError):
     pass
 
 
+class CollectionBlockedError(CollectionError):
+    pass
+
+
+EventCallback = Callable[[str, str, str, dict[str, Any]], None]
+
+
 @dataclass(frozen=True)
 class PlaywrightCollectorConfig:
     source_url: str = "https://freeproxylist.org/en/free-proxy-list.htm"
@@ -29,11 +40,12 @@ class PlaywrightCollectorConfig:
     timeout_ms: int = 30_000
     headless: bool = True
     locale: str = "en-US"
-    user_agent: str = (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/124.0.0.0 Safari/537.36"
-    )
+    timezone_id: str = "UTC"
+    user_agent: str | None = None
+    proxy_server: str | None = None
+    min_delay_ms: int = 500
+    max_delay_ms: int = 1500
+    max_runtime_seconds: int = 300
 
     def __post_init__(self) -> None:
         if self.max_pages < 1:
@@ -42,6 +54,10 @@ class PlaywrightCollectorConfig:
             raise ValueError("captcha_retries must be at least 1")
         if self.timeout_ms < 1:
             raise ValueError("timeout_ms must be positive")
+        if self.min_delay_ms < 0 or self.max_delay_ms < self.min_delay_ms:
+            raise ValueError("delay range is invalid")
+        if self.max_runtime_seconds < 1:
+            raise ValueError("max_runtime_seconds must be positive")
 
 
 class FreeProxyListCollector:
@@ -54,12 +70,44 @@ class FreeProxyListCollector:
         *,
         captcha_solver: Optional[CaptchaSolver] = None,
         logger: Optional[logging.Logger] = None,
+        event_callback: EventCallback | None = None,
     ) -> None:
         self.config = config or PlaywrightCollectorConfig()
         self.captcha_solver = captcha_solver or DdddOcrCaptchaSolver()
         self.logger = logger or LOGGER
+        self.event_callback = event_callback
+        self._started_at = 0.0
+
+    def _emit(
+        self, level: str, event: str, message: str, **details: Any
+    ) -> None:
+        getattr(self.logger, level.lower(), self.logger.info)(message)
+        if self.event_callback:
+            self.event_callback(level.upper(), event, message, details)
+
+    def _human_delay(self, page: Any) -> None:
+        if self.config.max_delay_ms:
+            page.wait_for_timeout(
+                random.randint(self.config.min_delay_ms, self.config.max_delay_ms)
+            )
+
+    def _check_runtime(self) -> None:
+        if time.monotonic() - self._started_at > self.config.max_runtime_seconds:
+            raise CollectionError("Collection exceeded its maximum runtime")
+
+    @staticmethod
+    def _browser_user_agent(browser: Any) -> str:
+        version = browser.version
+        return (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            f"Chrome/{version} Safari/537.36"
+        )
 
     def collect(self) -> list[ProxyRecord]:
+        project_browsers = Path(__file__).resolve().parents[2] / ".playwright-browsers"
+        if project_browsers.is_dir():
+            os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(project_browsers))
         try:
             from playwright.sync_api import sync_playwright
         except ImportError as exc:
@@ -69,24 +117,52 @@ class FreeProxyListCollector:
             ) from exc
 
         records: dict[str, ProxyRecord] = {}
+        self._started_at = time.monotonic()
         with sync_playwright() as playwright:
+            launch_options: dict[str, Any] = {
+                "headless": self.config.headless,
+                "args": ["--disable-dev-shm-usage", "--no-sandbox"],
+            }
+            if self.config.proxy_server:
+                launch_options["proxy"] = {"server": self.config.proxy_server}
             browser = playwright.chromium.launch(
-                headless=self.config.headless,
-                args=["--disable-dev-shm-usage", "--no-sandbox"],
+                **launch_options,
             )
             try:
+                viewport = random.choice(
+                    ((1366, 768), (1440, 900), (1536, 864), (1920, 1080))
+                )
+                user_agent = self.config.user_agent or self._browser_user_agent(browser)
                 context = browser.new_context(
                     locale=self.config.locale,
-                    user_agent=self.config.user_agent,
-                    viewport={"width": 1920, "height": 1080},
+                    timezone_id=self.config.timezone_id,
+                    user_agent=user_agent,
+                    viewport={"width": viewport[0], "height": viewport[1]},
+                    extra_http_headers={
+                        "Accept-Language": f"{self.config.locale},en;q=0.8",
+                        "DNT": "1",
+                    },
                 )
                 page = context.new_page()
                 page.set_default_timeout(self.config.timeout_ms)
-                page.goto(
+                self._emit(
+                    "INFO",
+                    "browser_started",
+                    "Browser session started",
+                    route="proxy" if self.config.proxy_server else "direct",
+                    viewport=f"{viewport[0]}x{viewport[1]}",
+                    user_agent=user_agent,
+                )
+                response = page.goto(
                     self.config.source_url,
                     wait_until="domcontentloaded",
                     timeout=self.config.timeout_ms,
                 )
+                if response and response.status in {403, 429}:
+                    raise CollectionBlockedError(
+                        f"Source returned HTTP {response.status}"
+                    )
+                self._human_delay(page)
                 self._unlock_table(page)
                 self._collect_pages(page, records)
             finally:
@@ -100,6 +176,7 @@ class FreeProxyListCollector:
 
     def _unlock_table(self, page: Any) -> None:
         for attempt in range(1, self.config.captcha_retries + 1):
+            self._check_runtime()
             self._select_free_proxies(page)
             image = page.locator(self._CAPTCHA_IMAGE)
             image.wait_for(state="visible")
@@ -109,10 +186,21 @@ class FreeProxyListCollector:
                 page.locator("#filter").click()
                 page.locator("#proxytable").wait_for(state="visible")
                 if self._wait_for_unlocked_table(page):
-                    self.logger.info("Captcha accepted on attempt %s", attempt)
+                    self._emit(
+                        "INFO",
+                        "captcha_accepted",
+                        f"Captcha accepted on attempt {attempt}",
+                        attempt=attempt,
+                    )
                     return
-            self.logger.warning("Captcha failed on attempt %s", attempt)
+            self._emit(
+                "WARNING",
+                "captcha_failed",
+                f"Captcha failed on attempt {attempt}",
+                attempt=attempt,
+            )
             if attempt < self.config.captcha_retries:
+                self._human_delay(page)
                 page.reload(
                     wait_until="domcontentloaded", timeout=self.config.timeout_ms
                 )
@@ -158,6 +246,7 @@ class FreeProxyListCollector:
 
     def _collect_pages(self, page: Any, records: dict[str, ProxyRecord]) -> None:
         for page_number in range(1, self.config.max_pages + 1):
+            self._check_runtime()
             raw_rows = page.locator(self._TABLE_ROWS).evaluate_all(
                 self._extract_rows_script()
             )
@@ -167,8 +256,12 @@ class FreeProxyListCollector:
                 except ValueError:
                     continue
                 records[record.server] = record
-            self.logger.info(
-                "Collected page %s (%s unique proxies)", page_number, len(records)
+            self._emit(
+                "INFO",
+                "page_collected",
+                f"Collected page {page_number} ({len(records)} unique proxies)",
+                page=page_number,
+                unique_proxies=len(records),
             )
             if page_number == self.config.max_pages or not self._go_to_page(
                 page, page_number + 1
@@ -183,6 +276,7 @@ class FreeProxyListCollector:
             if candidate.inner_text().strip() != str(target):
                 continue
             previous = self._first_server(page)
+            self._human_delay(page)
             candidate.click()
             page.wait_for_timeout(500)
             try:

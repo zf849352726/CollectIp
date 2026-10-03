@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
 from .jobs import enqueue_job, job_snapshot
-from .models import Proxy, SystemSettings
+from .models import OperationLog, Proxy, SystemSettings
 
 
 def _filtered_proxies(request):
@@ -77,6 +77,39 @@ def proxy_detail(request, pk: int):
         request,
         "proxy_web/detail.html",
         {"proxy": proxy, "history": history},
+    )
+
+
+@staff_member_required
+@require_GET
+def operation_logs(request):
+    query = OperationLog.objects.select_related("job")
+    level = request.GET.get("level", "").upper()
+    module = request.GET.get("module", "").strip()
+    search = request.GET.get("q", "").strip()
+    if level in {choice[0] for choice in OperationLog.LEVEL_CHOICES}:
+        query = query.filter(level=level)
+    if module:
+        query = query.filter(module=module)
+    if search:
+        query = query.filter(
+            Q(message__icontains=search) | Q(proxy_server__icontains=search)
+        )
+    page = Paginator(query, 100).get_page(request.GET.get("page"))
+    modules = (
+        OperationLog.objects.order_by().values_list("module", flat=True).distinct()
+    )
+    return render(
+        request,
+        "proxy_web/logs.html",
+        {
+            "page": page,
+            "levels": OperationLog.LEVEL_CHOICES,
+            "modules": modules,
+            "selected_level": level,
+            "selected_module": module,
+            "search": search,
+        },
     )
 
 
@@ -158,6 +191,8 @@ def update_settings(request):
     config = SystemSettings.load()
     config.auto_collect = request.POST.get("auto_collect") == "on"
     config.auto_score = request.POST.get("auto_score") == "on"
+    config.use_proxy_for_collection = request.POST.get("use_proxy_for_collection") == "on"
+    config.allow_direct_fallback = request.POST.get("allow_direct_fallback") == "on"
     numeric_fields = {
         "collection_interval": (60, 86400),
         "score_interval": (30, 86400),
@@ -167,6 +202,13 @@ def update_settings(request):
         "check_workers": (1, 100),
         "archive_after_failures": (1, 100),
         "purge_after_days": (1, 3650),
+        "collection_proxy_min_score": (0, 100),
+        "collection_proxy_attempts": (1, 20),
+        "collection_min_delay_ms": (0, 30000),
+        "collection_max_delay_ms": (0, 30000),
+        "collection_retry_backoff": (0, 300),
+        "collection_max_runtime": (30, 3600),
+        "log_retention_days": (1, 365),
     }
     for field, (minimum, maximum) in numeric_fields.items():
         try:
@@ -174,6 +216,9 @@ def update_settings(request):
         except (TypeError, ValueError):
             value = getattr(config, field)
         setattr(config, field, min(maximum, max(minimum, value)))
+    config.collection_max_delay_ms = max(
+        config.collection_min_delay_ms, config.collection_max_delay_ms
+    )
     config.save()
     return redirect("proxy_web:dashboard")
 

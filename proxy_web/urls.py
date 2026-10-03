@@ -6,6 +6,7 @@ app_name = "proxy_web"
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
     path("proxies/<int:pk>/", views.proxy_detail, name="proxy_detail"),
+    path("logs/", views.operation_logs, name="operation_logs"),
     path("api/status/", views.api_status, name="api_status"),
     path("api/proxies/", views.api_proxies, name="api_proxies"),
     path("api/proxies/random/", views.api_random_proxy, name="api_random_proxy"),

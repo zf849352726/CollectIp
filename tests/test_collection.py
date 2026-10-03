@@ -47,6 +47,10 @@ class ConfigurationTests(unittest.TestCase):
             PlaywrightCollectorConfig(captcha_retries=0)
         with self.assertRaises(ValueError):
             PlaywrightCollectorConfig(timeout_ms=0)
+        with self.assertRaises(ValueError):
+            PlaywrightCollectorConfig(min_delay_ms=10, max_delay_ms=5)
+        with self.assertRaises(ValueError):
+            PlaywrightCollectorConfig(max_runtime_seconds=0)
 
 
 class CommandLineTests(unittest.TestCase):

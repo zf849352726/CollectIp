@@ -18,6 +18,7 @@
       </div>
       <div class="actions">
         {% if request.user.is_staff %}
+        <a class="button secondary" href="{% url 'proxy_web:operation_logs' %}">运行日志</a>
         <button data-job="collect">开始采集</button>
         <button class="secondary" data-job="score">检测并评分</button>
         {% else %}
@@ -83,6 +84,8 @@
         {% csrf_token %}
         <label><input type="checkbox" name="auto_collect" {% if settings.auto_collect %}checked{% endif %}> 自动采集</label>
         <label><input type="checkbox" name="auto_score" {% if settings.auto_score %}checked{% endif %}> 自动评分</label>
+        <label><input type="checkbox" name="use_proxy_for_collection" {% if settings.use_proxy_for_collection %}checked{% endif %}> 采集时使用代理池</label>
+        <label><input type="checkbox" name="allow_direct_fallback" {% if settings.allow_direct_fallback %}checked{% endif %}> 代理失败后允许直连</label>
         <label>采集间隔（秒）<input type="number" name="collection_interval" value="{{ settings.collection_interval }}"></label>
         <label>评分间隔（秒）<input type="number" name="score_interval" value="{{ settings.score_interval }}"></label>
         <label>采集页数<input type="number" name="max_pages" value="{{ settings.max_pages }}"></label>
@@ -91,6 +94,13 @@
         <label>检测并发<input type="number" name="check_workers" value="{{ settings.check_workers }}"></label>
         <label>归档失败次数<input type="number" name="archive_after_failures" value="{{ settings.archive_after_failures }}"></label>
         <label>归档保留天数<input type="number" name="purge_after_days" value="{{ settings.purge_after_days }}"></label>
+        <label>采集代理最低分<input type="number" min="0" max="100" name="collection_proxy_min_score" value="{{ settings.collection_proxy_min_score }}"></label>
+        <label>每次代理尝试数<input type="number" min="1" max="20" name="collection_proxy_attempts" value="{{ settings.collection_proxy_attempts }}"></label>
+        <label>最小操作延迟（毫秒）<input type="number" name="collection_min_delay_ms" value="{{ settings.collection_min_delay_ms }}"></label>
+        <label>最大操作延迟（毫秒）<input type="number" name="collection_max_delay_ms" value="{{ settings.collection_max_delay_ms }}"></label>
+        <label>重试退避基数（秒）<input type="number" name="collection_retry_backoff" value="{{ settings.collection_retry_backoff }}"></label>
+        <label>单次最长时间（秒）<input type="number" name="collection_max_runtime" value="{{ settings.collection_max_runtime }}"></label>
+        <label>日志保留天数<input type="number" name="log_retention_days" value="{{ settings.log_retention_days }}"></label>
         <button type="submit">保存设置</button>
       </form>
     </details>

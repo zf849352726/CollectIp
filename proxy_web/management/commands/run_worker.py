@@ -22,6 +22,8 @@ class Command(BaseCommand):
             if job:
                 self.stdout.write(f"Running {job.kind} job #{job.pk}")
                 process_job(job)
+                if options["once"]:
+                    return
             elif options["once"]:
                 return
             else:
