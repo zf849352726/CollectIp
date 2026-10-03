@@ -6,6 +6,8 @@ After=network.target
 Type=simple
 WorkingDirectory=/opt/collectip
 EnvironmentFile=/opt/collectip/.env
+ExecStartPre=/opt/collectip/.venv/bin/python manage.py migrate --noinput
+ExecStartPre=/opt/collectip/.venv/bin/python manage.py collectstatic --noinput --clear
 ExecStart=/opt/collectip/.venv/bin/waitress-serve --listen=127.0.0.1:8000 webapp.wsgi:application
 Restart=always
 

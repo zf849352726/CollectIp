@@ -135,6 +135,13 @@ class WebTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok", "database": "ok"})
 
+    def test_static_assets_and_favicon_are_served(self):
+        css = self.client.get("/static/proxy_web/dashboard.css")
+        favicon = self.client.get("/favicon.ico")
+        self.assertEqual(css.status_code, 200)
+        self.assertEqual(favicon.status_code, 301)
+        self.assertEqual(favicon["Location"], "/static/proxy_web/favicon.svg")
+
     def test_list_detail_and_random_api(self):
         proxy = Proxy.objects.create(
             server="127.0.0.1:8080", is_available=True, score=90

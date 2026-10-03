@@ -7,7 +7,7 @@ COPY proxy_web proxy_web
 COPY webapp webapp
 COPY manage.py ./
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python manage.py collectstatic --noinput || true
+RUN python manage.py collectstatic --noinput
 
 ENV COLLECTIP_DEBUG=false
 EXPOSE 8000

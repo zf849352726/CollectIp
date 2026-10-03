@@ -3,9 +3,11 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .venv/
+.env
 .playwright-browsers/
 dist/
 build/
+staticfiles/
 *.egg-info/
 db.sqlite3
 logs/

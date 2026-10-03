@@ -3,3 +3,4 @@ Django>=5.2,<6
 playwright>=1.40,<2
 requests>=2.32,<3
 waitress>=3,<4
+whitenoise>=6.9,<7

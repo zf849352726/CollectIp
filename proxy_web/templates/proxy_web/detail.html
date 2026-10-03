@@ -1,7 +1,7 @@
 {% load static %}
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ proxy.server }} · CollectIP</title><link rel="stylesheet" href="{% static 'proxy_web/dashboard.css' %}"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ proxy.server }} · CollectIP</title><link rel="icon" href="{% static 'proxy_web/favicon.svg' %}" type="image/svg+xml"><link rel="stylesheet" href="{% static 'proxy_web/dashboard.css' %}"></head>
 <body><main class="shell">
   <header class="hero"><div><p class="eyebrow">PROXY DETAIL</p><h1>{{ proxy.server }}</h1><p class="subtitle">{{ proxy.country }} · {{ proxy.proxy_type }} · 最近 100 次检测</p></div><a class="button secondary" href="{% url 'proxy_web:dashboard' %}">返回监控台</a></header>
   <section class="stats">
